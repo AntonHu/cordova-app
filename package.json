@@ -52,7 +52,7 @@
     "ios": "cordova run ios --target='iPhone-6s'",
     "android": "cordova run android",
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "build": "node scripts/build.js && cordova prepare",
     "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {

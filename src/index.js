@@ -6,7 +6,7 @@ import registerServiceWorker from './registerServiceWorker';
 
 const startApp = () => {
   ReactDOM.render(<App />, document.getElementById('root'));
-  registerServiceWorker();
+  // registerServiceWorker();
 };
 
 if (window.cordova) {
