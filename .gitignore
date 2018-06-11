@@ -23,6 +23,9 @@ yarn-error.log*
 # "www" is a build path
 www
 
+#no plugins
+plugins/*
+
 #Android
 .idea
 .gradle
