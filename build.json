@@ -1,0 +1,18 @@
+{
+  "android": {
+    "debug": {
+      "keystore": "debug.keystore",
+      "storePassword": "android",
+      "alias": "androiddebugkey",
+      "password" : "android",
+      "keystoreType": ""
+    },
+    "release": {
+      "keystore": "./blockChain-release.keystore",
+      "storePassword": "leishu",
+      "alias": "block-chain-alias",
+      "password" : "blockchain",
+      "keystoreType": ""
+    }
+  }
+}

@@ -23,5 +23,9 @@ yarn-error.log*
 # "www" is a build path
 www
 
-#webstorm
+#Android
 .idea
+.gradle
+local.properties
+/platforms/android/app/build
+/platforms/android/CordovaLib/build
