@@ -69,4 +69,7 @@
     <feature name="Zip">
         <param name="ios-package" value="ZipPlugin" />
     </feature>
+    <feature name="JAnalyticsPlugin">
+        <param name="ios-package" value="JAnalyticsPlugin" />
+    </feature>
 </widget>

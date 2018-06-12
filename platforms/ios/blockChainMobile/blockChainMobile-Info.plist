@@ -52,5 +52,10 @@
       <key>NSAllowsArbitraryLoads</key>
       <true/>
     </dict>
+    <key>JAnalytics</key>
+    <dict>
+      <key>APP_KEY</key>
+      <string>fd96956cb315ba658d256156</string>
+    </dict>
   </dict>
 </plist>

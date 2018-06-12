@@ -31,4 +31,7 @@
     <plugin name="cordova-plugin-file-transfer" spec="^1.6.3" />
     <plugin name="cordova-plugin-zip" spec="^3.1.0" />
     <engine name="android" spec="~6.4.0" />
+    <plugin name="cordova-plugin-janalytics" spec="^1.1.3">
+        <variable name="APP_KEY" value="fd96956cb315ba658d256156" />
+    </plugin>
 </widget>

@@ -70,5 +70,23 @@
     },
     "is_top_level": true,
     "variables": {}
+  },
+  "cordova-plugin-janalytics": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-janalytics"
+    },
+    "is_top_level": true,
+    "variables": {
+      "APP_KEY": "fd96956cb315ba658d256156"
+    }
+  },
+  "cordova-plugin-jcore": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-jcore@1.1.12"
+    },
+    "is_top_level": false,
+    "variables": {}
   }
 }

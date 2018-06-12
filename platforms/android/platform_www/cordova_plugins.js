@@ -304,6 +304,14 @@ module.exports = [
     "clobbers": [
       "zip"
     ]
+  },
+  {
+    "id": "cordova-plugin-janalytics.JAnalytics",
+    "file": "plugins/cordova-plugin-janalytics/www/JAnalytics.js",
+    "pluginId": "cordova-plugin-janalytics",
+    "clobbers": [
+      "JAnalytics"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -316,7 +324,9 @@ module.exports.metadata =
   "cordova-plugin-file": "4.3.3",
   "cordova-plugin-file-transfer": "1.6.3",
   "cordova-plugin-whitelist": "1.3.3",
-  "cordova-plugin-zip": "3.1.0"
+  "cordova-plugin-zip": "3.1.0",
+  "cordova-plugin-jcore": "1.1.12",
+  "cordova-plugin-janalytics": "1.1.3"
 };
 // BOTTOM OF METADATA
 });

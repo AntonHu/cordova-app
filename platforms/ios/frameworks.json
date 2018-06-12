@@ -1,4 +1,14 @@
 {
     "AudioToolbox.framework": 1,
-    "libz.dylib": 1
+    "libz.dylib": 1,
+    "UIKit.framework": 1,
+    "SystemConfiguration.framework": 1,
+    "CoreTelephony.framework": 1,
+    "Security.framework": 1,
+    "Foundation.framework": 1,
+    "CoreLocation.framework": 1,
+    "CoreFoundation.framework": 1,
+    "CFNetwork.framework": 1,
+    "libz.tbd": 1,
+    "libresolv.tbd": 1
 }

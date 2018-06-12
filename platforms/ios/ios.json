@@ -27,11 +27,25 @@
             {
               "xml": "<feature name=\"FileTransfer\"><param name=\"ios-package\" value=\"CDVFileTransfer\" /></feature>",
               "count": 1
+            },
+            {
+              "xml": "<feature name=\"JAnalyticsPlugin\"><param name=\"ios-package\" value=\"JAnalyticsPlugin\" /></feature>",
+              "count": 1
             }
           ],
           "/widget": [
             {
               "xml": "<feature name=\"Zip\"><param name=\"ios-package\" value=\"ZipPlugin\" /></feature>",
+              "count": 1
+            }
+          ]
+        }
+      },
+      "*-Info.plist": {
+        "parents": {
+          "JAnalytics": [
+            {
+              "xml": "<dict><key>APP_KEY</key><string>fd96956cb315ba658d256156</string></dict>",
               "count": 1
             }
           ]
@@ -65,6 +79,13 @@
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
     "cordova-plugin-zip": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-jcore": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-janalytics": {
+      "APP_KEY": "fd96956cb315ba658d256156",
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     }
   },
@@ -366,6 +387,14 @@
       "clobbers": [
         "zip"
       ]
+    },
+    {
+      "id": "cordova-plugin-janalytics.JAnalytics",
+      "file": "plugins/cordova-plugin-janalytics/www/JAnalytics.js",
+      "pluginId": "cordova-plugin-janalytics",
+      "clobbers": [
+        "JAnalytics"
+      ]
     }
   ],
   "plugin_metadata": {
@@ -377,6 +406,8 @@
     "cordova-plugin-compat": "1.2.0",
     "cordova-plugin-file": "4.3.3",
     "cordova-plugin-file-transfer": "1.6.3",
-    "cordova-plugin-zip": "3.1.0"
+    "cordova-plugin-zip": "3.1.0",
+    "cordova-plugin-jcore": "1.1.12",
+    "cordova-plugin-janalytics": "1.1.3"
   }
 }

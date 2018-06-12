@@ -21,6 +21,10 @@
     },
     "cordova-plugin-zip": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-janalytics": {
+      "APP_KEY": "fd96956cb315ba658d256156",
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     }
   },
   "dependent_plugins": {
@@ -31,6 +35,9 @@
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
     "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-jcore": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     }
   }
