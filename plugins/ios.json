@@ -25,6 +25,10 @@
     "cordova-plugin-janalytics": {
       "APP_KEY": "fd96956cb315ba658d256156",
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "jpush-phonegap-plugin": {
+      "APP_KEY": "fd96956cb315ba658d256156",
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     }
   },
   "dependent_plugins": {

@@ -46,4 +46,7 @@
     <feature name="JAnalyticsPlugin">
         <param name="android-package" value="cn.jiguang.cordova.analytics.JAnalyticsPlugin" />
     </feature>
+    <feature name="JPushPlugin">
+        <param name="android-package" value="cn.jiguang.cordova.push.JPushPlugin" />
+    </feature>
 </widget>

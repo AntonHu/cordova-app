@@ -304,6 +304,14 @@ module.exports = [
     "clobbers": [
       "JAnalytics"
     ]
+  },
+  {
+    "id": "jpush-phonegap-plugin.JPushPlugin",
+    "file": "plugins/jpush-phonegap-plugin/www/JPushPlugin.js",
+    "pluginId": "jpush-phonegap-plugin",
+    "clobbers": [
+      "JPush"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -319,7 +327,8 @@ module.exports.metadata =
   "cordova-plugin-file-transfer": "1.6.3",
   "cordova-plugin-zip": "3.1.0",
   "cordova-plugin-jcore": "1.1.12",
-  "cordova-plugin-janalytics": "1.1.3"
+  "cordova-plugin-janalytics": "1.1.3",
+  "jpush-phonegap-plugin": "3.4.1"
 };
 // BOTTOM OF METADATA
 });

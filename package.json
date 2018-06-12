@@ -41,6 +41,7 @@
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
+    "jpush-phonegap-plugin": "^3.4.2",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.8",
@@ -115,6 +116,9 @@
       "cordova-plugin-file-transfer": {},
       "cordova-plugin-zip": {},
       "cordova-plugin-janalytics": {
+        "APP_KEY": "fd96956cb315ba658d256156"
+      },
+      "jpush-phonegap-plugin": {
         "APP_KEY": "fd96956cb315ba658d256156"
       }
     },

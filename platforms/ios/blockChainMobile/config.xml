@@ -72,4 +72,7 @@
     <feature name="JAnalyticsPlugin">
         <param name="ios-package" value="JAnalyticsPlugin" />
     </feature>
+    <feature name="JPushPlugin">
+        <param name="ios-package" value="JPushPlugin" />
+    </feature>
 </widget>
