@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Demo from './pages/Demo';
 
 class App extends React.Component {
   componentWillMount() {
@@ -21,6 +22,7 @@ class App extends React.Component {
         <p className="App-intro">
           打完包，发蒲公英。还要集成codePush，jpush
         </p>
+        <Demo />
       </div>
     );
   }
