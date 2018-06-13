@@ -335,7 +335,7 @@ module.exports.metadata =
   "cordova-plugin-zip": "3.1.0",
   "cordova-plugin-jcore": "1.1.12",
   "cordova-plugin-janalytics": "1.1.3",
-  "jpush-phonegap-plugin": "3.4.1"
+  "jpush-phonegap-plugin": "3.3.2"
 };
 // BOTTOM OF METADATA
 });

@@ -80,12 +80,12 @@
 		A660543793014E2BB60749FE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62475097D23547E59CE41C92 /* CFNetwork.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		7184980E817547BBBAD3645C /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 782148C2119B446BBA9FB7AE /* libz.tbd */; settings = {ATTRIBUTES = (Weak, ); }; };
 		6B34AA70853E4C869421EC28 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 83C5AA638EC6402E9E037908 /* libresolv.tbd */; settings = {ATTRIBUTES = (Weak, ); }; };
-		F7EEDD97F2B14F8BB2CD027F /* JPushPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B71E31676747C7814CC379 /* JPushPlugin.m */; };
-		8F6F90451CEC46A396620426 /* AppDelegate+JPush.m in Sources */ = {isa = PBXBuildFile; fileRef = 5910050E6DA24B0B81490460 /* AppDelegate+JPush.m */; };
-		D5EAAE8099054E308B8296C0 /* jpush-ios-3.0.7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF45A7AA5A84206812A541F /* jpush-ios-3.0.7.a */; };
-		84578E206C3745C78E9C589B /* JPushConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3E957558FC524A2080437062 /* JPushConfig.plist */; };
-		2870D68621B845269D4141AB /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 264EFD622B29413DB97C4DCB /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		1004763E65AB4F13B30BF068 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4714321A24EB47E79E483C06 /* UserNotifications.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		0067BC113B604B02AAC8C48B /* JPushPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E9301C973489B98A95E9F /* JPushPlugin.m */; };
+		8E2FD9C52729469C840E1092 /* AppDelegate+JPush.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AA9DEC868E74E4CB1045DB4 /* AppDelegate+JPush.m */; };
+		A0D7FA3B6232427794916065 /* jpush-ios-3.0.7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C51552A16F84739A17D2F46 /* jpush-ios-3.0.7.a */; };
+		C97AF3A043B641109BCE74D4 /* JPushConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEF5D9C050B5405CA1BDC143 /* JPushConfig.plist */; };
+		018D1D49CA6E4FCF9508D5AC /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B70F367F5DD64AAA81A232A2 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		06A41EA73EDE42328964904F /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663F22ED44924090B4AE3CB8 /* UserNotifications.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -264,16 +264,16 @@
 		62475097D23547E59CE41C92 /* CFNetwork.framework */ = {isa = PBXFileReference; name = "CFNetwork.framework"; path = "System/Library/Frameworks/CFNetwork.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 		782148C2119B446BBA9FB7AE /* libz.tbd */ = {isa = PBXFileReference; name = "libz.tbd"; path = "usr/lib/libz.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
 		83C5AA638EC6402E9E037908 /* libresolv.tbd */ = {isa = PBXFileReference; name = "libresolv.tbd"; path = "usr/lib/libresolv.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
-		53B71E31676747C7814CC379 /* JPushPlugin.m */ = {isa = PBXFileReference; name = "JPushPlugin.m"; path = "jpush-phonegap-plugin/JPushPlugin.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
-		5910050E6DA24B0B81490460 /* AppDelegate+JPush.m */ = {isa = PBXFileReference; name = "AppDelegate+JPush.m"; path = "jpush-phonegap-plugin/AppDelegate+JPush.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
-		4FF45A7AA5A84206812A541F /* jpush-ios-3.0.7.a */ = {isa = PBXFileReference; name = "jpush-ios-3.0.7.a"; path = "blockChainMobile/Plugins/jpush-phonegap-plugin/jpush-ios-3.0.7.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		F35B98776C984B8484C6B0D3 /* JPushDefine.h */ = {isa = PBXFileReference; name = "JPushDefine.h"; path = "jpush-phonegap-plugin/JPushDefine.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
-		7F01D1A486684B81BB3F14D1 /* JPushPlugin.h */ = {isa = PBXFileReference; name = "JPushPlugin.h"; path = "jpush-phonegap-plugin/JPushPlugin.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
-		7585026C4BF34F5E9E3B555F /* AppDelegate+JPush.h */ = {isa = PBXFileReference; name = "AppDelegate+JPush.h"; path = "jpush-phonegap-plugin/AppDelegate+JPush.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
-		C2FAA6E61C72405F9C0DEAA1 /* JPUSHService.h */ = {isa = PBXFileReference; name = "JPUSHService.h"; path = "jpush-phonegap-plugin/JPUSHService.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
-		3E957558FC524A2080437062 /* JPushConfig.plist */ = {isa = PBXFileReference; name = "JPushConfig.plist"; path = "JPushConfig.plist"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = text.plist.xml; explicitFileType = undefined; includeInIndex = 0; };
-		264EFD622B29413DB97C4DCB /* AdSupport.framework */ = {isa = PBXFileReference; name = "AdSupport.framework"; path = "System/Library/Frameworks/AdSupport.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
-		4714321A24EB47E79E483C06 /* UserNotifications.framework */ = {isa = PBXFileReference; name = "UserNotifications.framework"; path = "System/Library/Frameworks/UserNotifications.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		1C9E9301C973489B98A95E9F /* JPushPlugin.m */ = {isa = PBXFileReference; name = "JPushPlugin.m"; path = "jpush-phonegap-plugin/JPushPlugin.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		6AA9DEC868E74E4CB1045DB4 /* AppDelegate+JPush.m */ = {isa = PBXFileReference; name = "AppDelegate+JPush.m"; path = "jpush-phonegap-plugin/AppDelegate+JPush.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		1C51552A16F84739A17D2F46 /* jpush-ios-3.0.7.a */ = {isa = PBXFileReference; name = "jpush-ios-3.0.7.a"; path = "blockChainMobile/Plugins/jpush-phonegap-plugin/jpush-ios-3.0.7.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		D5853EF9C1A347469A7B4EE8 /* JPushDefine.h */ = {isa = PBXFileReference; name = "JPushDefine.h"; path = "jpush-phonegap-plugin/JPushDefine.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		28F21F541B82440BB55E8D22 /* JPushPlugin.h */ = {isa = PBXFileReference; name = "JPushPlugin.h"; path = "jpush-phonegap-plugin/JPushPlugin.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		5610541686B847C1A77C5EF3 /* AppDelegate+JPush.h */ = {isa = PBXFileReference; name = "AppDelegate+JPush.h"; path = "jpush-phonegap-plugin/AppDelegate+JPush.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		4193CA30762D426F92113CEF /* JPUSHService.h */ = {isa = PBXFileReference; name = "JPUSHService.h"; path = "jpush-phonegap-plugin/JPUSHService.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		CEF5D9C050B5405CA1BDC143 /* JPushConfig.plist */ = {isa = PBXFileReference; name = "JPushConfig.plist"; path = "JPushConfig.plist"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = text.plist.xml; explicitFileType = undefined; includeInIndex = 0; };
+		B70F367F5DD64AAA81A232A2 /* AdSupport.framework */ = {isa = PBXFileReference; name = "AdSupport.framework"; path = "System/Library/Frameworks/AdSupport.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		663F22ED44924090B4AE3CB8 /* UserNotifications.framework */ = {isa = PBXFileReference; name = "UserNotifications.framework"; path = "System/Library/Frameworks/UserNotifications.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -296,9 +296,9 @@
 				A660543793014E2BB60749FE /* CFNetwork.framework in Frameworks */,
 				7184980E817547BBBAD3645C /* libz.tbd in Frameworks */,
 				6B34AA70853E4C869421EC28 /* libresolv.tbd in Frameworks */,
-				D5EAAE8099054E308B8296C0 /* jpush-ios-3.0.7.a in Frameworks */,
-				2870D68621B845269D4141AB /* AdSupport.framework in Frameworks */,
-				1004763E65AB4F13B30BF068 /* UserNotifications.framework in Frameworks */,
+				A0D7FA3B6232427794916065 /* jpush-ios-3.0.7.a in Frameworks */,
+				018D1D49CA6E4FCF9508D5AC /* AdSupport.framework in Frameworks */,
+				06A41EA73EDE42328964904F /* UserNotifications.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,7 +362,7 @@
 				8D1107310486CEB800E47090 /* blockChainMobile-Info.plist */,
 				6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */,
 				452EADEE182E4E0A979FFE32 /* CDVNotification.bundle */,
-				3E957558FC524A2080437062 /* JPushConfig.plist */,
+				CEF5D9C050B5405CA1BDC143 /* JPushConfig.plist */,
 			);
 			name = Resources;
 			path = blockChainMobile/Resources;
@@ -385,9 +385,9 @@
 				62475097D23547E59CE41C92 /* CFNetwork.framework */,
 				782148C2119B446BBA9FB7AE /* libz.tbd */,
 				83C5AA638EC6402E9E037908 /* libresolv.tbd */,
-				4FF45A7AA5A84206812A541F /* jpush-ios-3.0.7.a */,
-				264EFD622B29413DB97C4DCB /* AdSupport.framework */,
-				4714321A24EB47E79E483C06 /* UserNotifications.framework */,
+				1C51552A16F84739A17D2F46 /* jpush-ios-3.0.7.a */,
+				B70F367F5DD64AAA81A232A2 /* AdSupport.framework */,
+				663F22ED44924090B4AE3CB8 /* UserNotifications.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -530,12 +530,12 @@
 				329266B8FDA14D0BB710BD4B /* JANALYTICSService.h */,
 				A0875B3F4F8E4BCF98E54D93 /* JANALYTICSEventObject.h */,
 				C0A9147EB67E45DF8E7E00B1 /* JAnalyticsPlugin.h */,
-				53B71E31676747C7814CC379 /* JPushPlugin.m */,
-				5910050E6DA24B0B81490460 /* AppDelegate+JPush.m */,
-				F35B98776C984B8484C6B0D3 /* JPushDefine.h */,
-				7F01D1A486684B81BB3F14D1 /* JPushPlugin.h */,
-				7585026C4BF34F5E9E3B555F /* AppDelegate+JPush.h */,
-				C2FAA6E61C72405F9C0DEAA1 /* JPUSHService.h */,
+				1C9E9301C973489B98A95E9F /* JPushPlugin.m */,
+				6AA9DEC868E74E4CB1045DB4 /* AppDelegate+JPush.m */,
+				D5853EF9C1A347469A7B4EE8 /* JPushDefine.h */,
+				28F21F541B82440BB55E8D22 /* JPushPlugin.h */,
+				5610541686B847C1A77C5EF3 /* AppDelegate+JPush.h */,
+				4193CA30762D426F92113CEF /* JPUSHService.h */,
 			);
 			name = Plugins;
 			path = blockChainMobile/Plugins;
@@ -633,7 +633,7 @@
 				0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */,
 				6AFF5BF91D6E424B00AB3073 /* CDVLaunchScreen.storyboard in Resources */,
 				96611306F34443EDB49AC0AA /* CDVNotification.bundle in Resources */,
-				84578E206C3745C78E9C589B /* JPushConfig.plist in Resources */,
+				C97AF3A043B641109BCE74D4 /* JPushConfig.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -717,8 +717,8 @@
 				FDE3ECA62884433AB94F8D9F /* mztools.c in Resources */,
 				B4745A4B04344B9F9F176909 /* ioapi.c in Resources */,
 				8080A9A8D25345D0922414E1 /* JAnalyticsPlugin.m in Sources */,
-				F7EEDD97F2B14F8BB2CD027F /* JPushPlugin.m in Sources */,
-				8F6F90451CEC46A396620426 /* AppDelegate+JPush.m in Sources */,
+				0067BC113B604B02AAC8C48B /* JPushPlugin.m in Sources */,
+				8E2FD9C52729469C840E1092 /* AppDelegate+JPush.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

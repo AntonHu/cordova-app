@@ -1,8 +1,16 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-class App extends Component {
+class App extends React.Component {
+  componentWillMount() {
+
+  }
+
+  componentWillUnmount() {
+
+  }
+
   render() {
     return (
       <div className="App">
@@ -11,7 +19,7 @@ class App extends Component {
           <h1 className="App-title">大海区块链</h1>
         </header>
         <p className="App-intro">
-          打完包，发蒲公英。还要集成codePush，jpush，友盟
+          打完包，发蒲公英。还要集成codePush，jpush
         </p>
       </div>
     );

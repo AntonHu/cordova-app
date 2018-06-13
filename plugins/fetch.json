@@ -92,7 +92,7 @@
   "jpush-phonegap-plugin": {
     "source": {
       "type": "registry",
-      "id": "jpush-phonegap-plugin"
+      "id": "jpush-phonegap-plugin@3.3.2"
     },
     "is_top_level": true,
     "variables": {
