@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'antd-mobile';
 import PropTypes from 'prop-types';
-import './style.css';
+import './style.less';
 
 /**
  * 常用的绿色按钮

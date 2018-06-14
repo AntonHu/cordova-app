@@ -17,12 +17,11 @@ class App extends React.Component {
   }
 
   render() {
-    // TODO: 换成less或者sass
-    // TODO: 整体的px响应式
     return (
       <div className="App">
         <Header title={'FWCSHHKJL'}/>
-        <GreenButton onClick={() => {}}>取消</GreenButton>
+        <BlueBox/>
+        <GreenButton size={'big'} onClick={() => {}}>取消</GreenButton>
         <Button>default</Button>
 
       </div>

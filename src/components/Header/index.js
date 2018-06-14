@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon, Button } from 'antd-mobile';
-import './style.css';
+import './style.less';
 
 /**
  * Header组件，包含后退按钮

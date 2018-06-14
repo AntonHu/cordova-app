@@ -1,0 +1,32 @@
+@import "../../styles/common";
+
+.block-chain-header{
+  height: 90 * @px;
+  width: 100%;
+  color: @main-text-color;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #ffffff;
+}
+
+.block-chain-header .left{
+  width: 100 * @px
+}
+.block-chain-header .center{
+  flex: 1
+}
+.block-chain-header .right {
+  width: 100 * @px
+}
+
+.header-back {
+  border: none;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  height: 90 * @px;
+}
+.header-back::before {
+  border: none !important;
+}
