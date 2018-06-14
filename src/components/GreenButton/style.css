@@ -1,0 +1,24 @@
+
+.green-button{
+    background: #5bd121;
+    border-radius: 8px;
+    color: #fff;
+}
+
+.green-button.big {
+    width: 620px;
+    height: 100px;
+    line-height: 100px;
+}
+
+.green-button.medium {
+    width: 300px;
+    height: 70px;
+    line-height: 70px;
+}
+
+.green-button.small {
+    width: 246px;
+    height: 70px;
+    line-height: 70px;
+}

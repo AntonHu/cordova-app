@@ -1,0 +1,29 @@
+.block-chain-header{
+    height: 90px;
+    width: 100%;
+    color: #333333;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: #ffffff;
+}
+
+.block-chain-header .left{
+    width: 100px
+}
+.block-chain-header .center{
+    flex: 1
+}
+.block-chain-header .right {
+    width: 100px
+}
+
+.header-back {
+    border: none;
+    text-align: left;
+    display: flex;
+    align-items: center;
+}
+.header-back::before {
+    border: none !important;
+}
