@@ -1,9 +1,14 @@
 import React, { PureComponent } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Demo from './pages/Demo';
-import {BlueBox, GreenButton, Header, PeakBox, Popup} from './components';
-import { Button } from 'antd-mobile';
+import Login from './pages/User/Login';
+import Register from './pages/User/Register';
+import ResetPW from './pages/User/ResetPW';
+import VerifyID from './pages/User/VerifyID';
+import MyData from './pages/User/MyData';
+import PersonalInfo from './pages/User/PersonalInfo';
+import User from './pages/User/User';
+import Apply from './pages/Apply/Apply';
 
 class App extends React.Component {
   componentWillMount() {
@@ -17,13 +22,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Header title={'FWCSHHKJL'}/>
-        <BlueBox/>
-        <PeakBox>
-          <GreenButton size={'big'} onClick={() => {}}>取消</GreenButton>
-          <Button>default</Button>
-        </PeakBox>
-        <Popup />
+        <Apply></Apply>
       </div>
     );
   }

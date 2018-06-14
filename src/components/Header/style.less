@@ -8,16 +8,31 @@
   flex-direction: row;
   align-items: center;
   background: #ffffff;
+  font-size: @h2;
+  .left{
+    width: 100 * @px
+  }
+  .center{
+    flex: 1
+  }
+  .right {
+    width: 100 * @px
+  }
 }
 
-.block-chain-header .left{
-  width: 100 * @px
-}
-.block-chain-header .center{
-  flex: 1
-}
-.block-chain-header .right {
-  width: 100 * @px
+.block-chain-header.transparent {
+  background: transparent;
+
+  .left,
+  .center,
+  .right {
+    color: #fff;
+  }
+
+  .header-back {
+    color: #fff;
+    background: transparent;
+  }
 }
 
 .header-back {

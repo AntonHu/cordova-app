@@ -10,7 +10,8 @@ class Comp extends React.PureComponent {
   static propTypes = {
     title: PropTypes.string.isRequired,
     leftComponent: PropTypes.element,
-    rightComponent: PropTypes.element
+    rightComponent: PropTypes.element,
+    transparent: PropTypes.bool
   };
 
   static defaultProps = {
@@ -18,13 +19,14 @@ class Comp extends React.PureComponent {
     leftComponent: <Button className={'header-back'}>
       <Icon type={'left'}/>
     </Button>,
-    rightComponent: null
+    rightComponent: null,
+    transparent: false
   };
 
   render() {
-    const { title, leftComponent, rightComponent } = this.props;
+    const { title, leftComponent, rightComponent, transparent } = this.props;
     return (
-      <div className={'block-chain-header'}>
+      <div className={`block-chain-header ${transparent && 'transparent'}`}>
         <div className={'left'}>{leftComponent}</div>
         <div className={'center'}>{title}</div>
         <div className={'right'}>{rightComponent}</div>

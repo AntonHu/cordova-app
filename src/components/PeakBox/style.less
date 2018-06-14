@@ -6,13 +6,16 @@
 .peak-box {
   background: #fff;
   padding: 20 * @px;
-  position: relative;
   z-index: 100;
   border-top-left-radius: @peak-border-radius;
   border-top-right-radius: @peak-border-radius;
   width: 100vw;
   box-sizing: border-box;
   margin-top: -@peak-border-radius;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .peak-box.show-peak::before {

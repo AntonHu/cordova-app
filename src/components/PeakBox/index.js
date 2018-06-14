@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
+import { getDeviceWidth, UI_PAGE_WIDTH } from '../../utils/getDevice';
 
 /**
  * 冒尖的容器
@@ -8,17 +9,24 @@ import './style.less';
  */
 class Comp extends React.PureComponent {
   static propTypes = {
-    showPeak: PropTypes.bool
+    showPeak: PropTypes.bool,
+    top: PropTypes.number
   };
 
   static defaultProps = {
-    showPeak: true
+    showPeak: false,
+    top: 400
   };
 
   render() {
-    const { showPeak } = this.props;
+    const { showPeak, top } = this.props;
     return (
-      <div className={`peak-box ${showPeak ? 'show-peak' : ''}`}>
+      <div
+        className={`peak-box ${showPeak ? 'show-peak' : ''}`}
+        style={{
+          top: (top * getDeviceWidth() / UI_PAGE_WIDTH) + 'px'
+        }}
+      >
         {this.props.children}
       </div>
     )
