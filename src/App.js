@@ -2,9 +2,7 @@ import React, { PureComponent } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Demo from './pages/Demo';
-import GreenButton from './components/GreenButton';
-import BlueBox from './components/BlueBox';
-import Header from './components/Header';
+import {BlueBox, GreenButton, Header, PeakBox, Popup} from './components';
 import { Button } from 'antd-mobile';
 
 class App extends React.Component {
@@ -21,9 +19,11 @@ class App extends React.Component {
       <div className="App">
         <Header title={'FWCSHHKJL'}/>
         <BlueBox/>
-        <GreenButton size={'big'} onClick={() => {}}>取消</GreenButton>
-        <Button>default</Button>
-
+        <PeakBox>
+          <GreenButton size={'big'} onClick={() => {}}>取消</GreenButton>
+          <Button>default</Button>
+        </PeakBox>
+        <Popup />
       </div>
     );
   }

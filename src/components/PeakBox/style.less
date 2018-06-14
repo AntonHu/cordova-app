@@ -1,0 +1,28 @@
+@import "../../styles/common";
+
+@peak-height: 20 * @px;
+@peak-border-radius: 20px;
+
+.peak-box {
+  background: #fff;
+  padding: 20 * @px;
+  position: relative;
+  z-index: 100;
+  border-top-left-radius: @peak-border-radius;
+  border-top-right-radius: @peak-border-radius;
+  width: 100vw;
+  box-sizing: border-box;
+  margin-top: -@peak-border-radius;
+}
+
+.peak-box.show-peak::before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-bottom: @peak-height solid white;
+  border-left: 10 * @px solid transparent;
+  border-right: 10 * @px solid transparent;
+  position: absolute;
+  top:-@peak-height;
+  z-index: 100;
+}
