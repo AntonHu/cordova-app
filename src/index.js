@@ -36,9 +36,14 @@ const startApp = () => {
   // registerServiceWorker();
 };
 
+const startSimpleApp = () => {
+  ReactDOM.render(<App />, document.getElementById('root'));
+  registerServiceWorker();
+};
+
 
 if (window.cordova) {
   document.addEventListener('deviceready', startApp, false);
 } else {
-  startApp();
+  startSimpleApp();
 }

@@ -8,18 +8,13 @@ import './style.less';
  */
 class Comp extends React.PureComponent {
   static propTypes = {
-    onClick: PropTypes.func,
-    size: PropTypes.oneOf(['big', 'medium', 'small'])
-  };
-
-  static defaultProps = {
-    size: 'medium'
+    onClick: PropTypes.func
   };
 
   render() {
     const { onClick, size } = this.props;
     return (
-      <Button className={`green-button ${size}`} onClick={onClick}>
+      <Button className={`plain-button big`} onClick={onClick}>
         {this.props.children}
       </Button>
     )

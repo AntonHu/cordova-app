@@ -8,7 +8,7 @@ class Comp extends React.PureComponent {
     return (
       <div className={'page-login'}>
         <BlueBox>
-          <div className={'title'}>EC新能源</div>
+          <div className={'h1 bolder white-text title'}>EC新能源</div>
         </BlueBox>
         <PeakBox showPeak={true}>
           <div className="body">

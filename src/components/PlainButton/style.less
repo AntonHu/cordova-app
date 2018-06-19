@@ -1,0 +1,21 @@
+@import "../../styles/common";
+
+.plain-button{
+  background: transparent;
+
+  color: @main-text-color;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+.plain-button::before {
+  border-radius: @border-radius;
+  border: @main-text-color 1px solid !important;
+}
+
+.plain-button.big {
+  width: 500 * @px;
+  height: 100 * @px;
+  line-height: 100 * @px;
+}

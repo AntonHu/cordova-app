@@ -10,7 +10,7 @@ class Comp extends React.PureComponent {
       <div className={'page-verifyID'}>
         <PageWithHeader title={'实名认证'}>
           <BlueBox>
-              <div className={'title-of-blue'}>身份认证</div>
+              <div className={'title-of-blue h2 white-text'}>身份认证</div>
           </BlueBox>
           <InputItem placeholder="请输入真实姓名" clear />
           <InputItem placeholder="请输入你的身份证号" clear />

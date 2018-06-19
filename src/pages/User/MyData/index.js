@@ -24,7 +24,7 @@ class Comp extends React.PureComponent {
           <WhiteSpace />
 
           <BlueBox>
-            <div className={'title-of-blue'}>我的数据私钥</div>
+            <div className={'h3 white-text title-of-blue'}>我的数据私钥</div>
             <GreenButton>一键生成</GreenButton>
           </BlueBox>
 
