@@ -17,6 +17,9 @@ const ListData = [
   }
 ];
 
+/**
+ * 消息中心
+ */
 class Comp extends React.PureComponent {
   render() {
     return (

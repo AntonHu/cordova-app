@@ -20,6 +20,9 @@ const ListData = [
   }
 ];
 
+/**
+ * 我的电站
+ */
 class Comp extends React.PureComponent {
   render() {
     return (

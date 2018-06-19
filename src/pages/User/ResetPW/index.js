@@ -3,6 +3,9 @@ import {BlueBox, PeakBox, GreenButton, Header} from '../../../components';
 import {List, InputItem, Flex, Button} from 'antd-mobile';
 import './style.less';
 
+/**
+ * 重置密码
+ */
 class Comp extends React.PureComponent {
   render() {
     //TODO: 加上验证码插件

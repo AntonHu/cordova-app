@@ -8,6 +8,9 @@ import './style.less';
 
 G2.track(false);
 
+/**
+ * 电站设备信息
+ */
 class Comp extends React.PureComponent {
   componentDidMount() {
     this.pieBarChart = this.renderPieBar();

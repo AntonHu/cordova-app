@@ -24,12 +24,15 @@ const ListData = [
   },
 ];
 
+/**
+ * 个人信息
+ */
 class Comp extends React.PureComponent {
   // TODO: 头像等组件
   render() {
     return (
       <div className={'page-personal-info'}>
-        <PageWithHeader title={'我的数据'}>
+        <PageWithHeader title={'个人信息'}>
 
           <BlueBox>
 

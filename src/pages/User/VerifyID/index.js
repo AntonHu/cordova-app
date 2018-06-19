@@ -3,6 +3,9 @@ import {BlueBox, PeakBox, GreenButton, Header, PageWithHeader} from '../../../co
 import {List, InputItem, Flex, Button} from 'antd-mobile';
 import './style.less';
 
+/**
+ * 实名认证
+ */
 class Comp extends React.PureComponent {
   render() {
     // TODO: 字体的组件抽象

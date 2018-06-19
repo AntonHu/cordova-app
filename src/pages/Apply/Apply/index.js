@@ -50,6 +50,9 @@ const Recommends = [
   }
 ];
 
+/**
+ * 应用
+ */
 class Comp extends React.PureComponent {
   render() {
     return (

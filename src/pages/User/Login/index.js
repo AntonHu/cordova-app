@@ -3,6 +3,9 @@ import {BlueBox, PeakBox, GreenButton} from '../../../components';
 import {List, InputItem, Flex, Button} from 'antd-mobile';
 import './style.less';
 
+/**
+ * 登录
+ */
 class Comp extends React.PureComponent {
   render() {
     return (

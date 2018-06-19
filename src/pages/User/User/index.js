@@ -3,6 +3,8 @@ import {BlueBox, PeakBox, GreenButton, Header, PageWithHeader} from '../../../co
 import {List, InputItem, Flex, Button, WhiteSpace} from 'antd-mobile';
 import './style.less';
 
+
+
 const Item = List.Item;
 
 const ListData = [
@@ -24,6 +26,9 @@ const ListData = [
   },
 ];
 
+/**
+ * 我的
+ */
 class Comp extends React.PureComponent {
   // TODO: Icon加上来
   // TODO: 头像的组件

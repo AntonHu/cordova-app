@@ -14,9 +14,11 @@ const ListData = [
   '丢失Data-Key会怎么样？如何备份',
 ];
 
+/**
+ * 我的数据
+ */
 class Comp extends React.PureComponent {
   render() {
-    // TODO: 整个antd的字体设置
     return (
       <div className={'page-my-data'}>
         <PageWithHeader title={'我的数据'}>

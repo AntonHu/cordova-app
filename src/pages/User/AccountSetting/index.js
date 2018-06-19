@@ -16,6 +16,9 @@ const ListData = [
   },
 ];
 
+/**
+ * 账号设置
+ */
 class Comp extends React.PureComponent {
   render() {
     return (
