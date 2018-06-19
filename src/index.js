@@ -12,7 +12,7 @@ const startJAnalytics = () => {
     JAnalytics.init();
     JAnalytics.setDebugMode();
   } catch (err) {
-    navigator.notification.alert(err);
+    // navigator.notification.alert(err);
   }
 };
 
@@ -25,7 +25,7 @@ const startJPush = () => {
       JPush.setApplicationIconBadgeNumber(0);
     }
   } catch (err) {
-    navigator.notification.alert(err);
+    // navigator.notification.alert(err);
   }
 };
 
