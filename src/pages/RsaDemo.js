@@ -9,12 +9,20 @@ class Comp extends React.PureComponent {
     privateKey: '',
     appPath: '',
     msg: 'hello',
-    cMsg: '',
+    msgSign: '',
+    verifySign: false,
     cOut: '0e5b9afcc0a67286a9be10b487bc3a617e033f3fafae317f36d9d87940e961e1',
     out: ''
   };
 
   readFileInWWWFolder = (filename, onSuccess, onFailure) => {
+    let fileFullPath = '';
+    if (window.cordova) {
+       fileFullPath = window.cordova.file.applicationDirectory + 'www/' + filename;
+    } else {
+      fileFullPath = 'http://localhost:3000/' + filename;
+    }
+
     var request = new XMLHttpRequest();
 
     request.onload = function() {
@@ -30,52 +38,61 @@ class Comp extends React.PureComponent {
         onFailure();
       }
     };
-    request.open("GET", filename, true);
+    request.open("GET", fileFullPath, true);
     request.responseType = "text";
     request.send();
   };
 
   componentDidMount() {
-    if (window.cordova && window.cordova.file) {
-      this.setState({
-        appPath: window.cordova.file.applicationDirectory
-      });
-      this.readFileInWWWFolder(
-        window.cordova.file.applicationDirectory + 'www/test_private.pem',
-        res => {
-          // alert(res)
-          this.setState({
-            privateKey: res
-          })
-        },
-        err => {
-          console.log('test_private_error');
-        }
-      );
-      this.readFileInWWWFolder(
-        window.cordova.file.applicationDirectory + 'www/test_public.pem',
-        res => {
-          // alert(res)
-          this.setState({
-            publicKey: res
-          })
-        },
-        err => {
-          console.log('test_private_error');
-        }
-      )
-    } else {
-      alert('cordova.file不存在')
-    }
+    this.readFileInWWWFolder(
+      'test_private.pem',
+      res => {
+        // alert(res)
+        this.setState({
+          privateKey: res
+        })
+      },
+      err => {
+        console.log('test_private_error');
+      }
+    );
+    this.readFileInWWWFolder(
+      'test_public.pem',
+      res => {
+        // alert(res)
+        this.setState({
+          publicKey: res
+        })
+      },
+      err => {
+        console.log('test_private_error');
+      }
+    )
   }
 
-  encrypt = () => {
+  sign = () => {
     try {
-      const encrypt = new JSEncrypt();
-      encrypt.setPrivateKey(this.state.privateKey);
-      const cMsg = encrypt.getKey().encrypt(this.state.msg);
-      console.log(cMsg);
-      this.setState({ cMsg });
+      const rsa = new JSRsasign.RSAKey();
+      rsa.readPrivateKeyFromPEMString(this.state.privateKey);
+      const hash = 'md5';
+      const msgSign = rsa.sign(this.state.msg, hash);
+      console.log(msgSign);
+      this.setState({ msgSign });
+    }catch (err) {
+      alert(err);
+    }
+  };
+
+  verify = () => {
+    try {
+      // const hash = 'md5';
+      const sign = this.state.msgSign;
+      const msgToVerify = this.state.msg;
+      const pubKey = JSRsasign.KEYUTIL.getKey(this.state.publicKey);
+
+      const verifySign = pubKey.verify(msgToVerify, sign);
+
+      this.setState({ verifySign });
     }catch (err) {
       alert(err);
     }
@@ -84,8 +101,8 @@ class Comp extends React.PureComponent {
   decrypt = () => {
     try {
       const jsEncrypt = new JSEncrypt();
-      jsEncrypt.setPublicKey(this.state.publicKey);
-      const out = jsEncrypt.getKey().decrypt(this.state.cMsg);
+      jsEncrypt.setPrivateKey(this.state.privateKey);
+      const out = jsEncrypt.getKey().decrypt(this.state.cOut);
       this.setState({
         out
       });
@@ -111,15 +128,28 @@ class Comp extends React.PureComponent {
         </div>
 
         <div>
-          加密过程
+          加签过程
           <div>
             原文：
           </div>
           <div>{this.state.msg}</div>
-          <div>密文：</div>
-          <div>{this.state.cMsg}</div>
-          <Button onClick={this.encrypt} style={{ marginTop: '30px'}}>
-            加密
+          <div>签名：</div>
+          <div>{this.state.msgSign}</div>
+          <Button onClick={this.sign} style={{ marginTop: '30px'}}>
+            加签
+          </Button>
+        </div>
+
+        <div>
+          验签过程
+          <div>
+            签名：
+          </div>
+          <div>{this.state.msgSign}</div>
+          <div>校验结果：</div>
+          <div>{this.state.verifySign ? '正确' : '错误'}</div>
+          <Button onClick={this.verify} style={{ marginTop: '30px'}}>
+            校验
           </Button>
         </div>
 
@@ -128,7 +158,7 @@ class Comp extends React.PureComponent {
           <div>
             密文：
           </div>
-          <div>{this.state.cMsg}</div>
+          <div>{this.state.cOut}</div>
           <div>原文：</div>
           <div>{this.state.out}</div>
           <Button onClick={this.decrypt} style={{ marginTop: '30px'}}>
