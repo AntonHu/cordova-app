@@ -1,0 +1,99 @@
+@import '../../styles/common';
+.page-sunCity-info {
+  .notice {
+    text-align: left;
+    padding: 5px * @px 10px * @px;
+    background: @main-color;
+    color: @white-text-color;
+  }
+  .sun-content {
+    height: 421px;
+    background: url('../../images/sunBg.png');
+    background-size: 100%;
+    .info {
+      display: flex;
+      height: 90px;
+      justify-content: space-between;
+      align-items: center;
+      padding-left: 20px;
+      .detail {
+        color: @white-text-color;
+        div {
+          margin-top: 10px;
+          &:nth-child(1) {
+            line-height: 24px;
+            background: #ccc;
+            border-radius: 12px;
+          }
+        }
+      }
+      .powerStation {
+        padding: 5px 20px;
+        background: #ccc;
+        border-radius: 12px;
+      }
+    }
+    .sun-items {
+      height: calc(100% - 90px);
+      position: relative;
+      .sun {
+        display: inline-block;
+        height: 30px;
+        width: 30px;
+        border-radius: 20px;
+        background: #ff0;
+        position: absolute;
+        // left: calc(100% - 30px);
+        // top: calc(100% - 30px);
+      }
+    }
+    .news {
+      width: 80%;
+      background: @white-text-color;
+      margin: 0 auto;
+      margin-top: -10px;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .promote {
+      padding: 10px;
+      text-align: left;
+      background: @white-text-color;
+      height: 70px;
+      margin-top: 20px;
+      div {
+        &:nth-child(2) {
+          font-size: 18px;
+          span {
+            color: #f00;
+          }
+        }
+      }
+    }
+    .equipment {
+      margin-top: 10px;
+      .title {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        text-align: left;
+        &::before {
+          content: '';
+          display: inline-block;
+          height: 20px;
+          width: 5px;
+          background: blue;
+          margin-right: 10px;
+        }
+      }
+      .item {
+        background: @white-text-color;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+      }
+    }
+  }
+}

@@ -1,7 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {
+  HashRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from 'react-router-dom';
 import './index.css';
 import App from './App';
+import MyPowerStation from './pages/SunCity/MyPowerStation';
+import EquipmentInfo from './pages/SunCity/EquipmentInfo';
 import registerServiceWorker from './registerServiceWorker';
 
 const device = window.device;
@@ -21,7 +29,7 @@ const startJPush = () => {
   try {
     JPush.init();
     JPush.setDebugMode(true);
-    if (device.platform != "Android") {
+    if (device.platform != 'Android') {
       JPush.setApplicationIconBadgeNumber(0);
     }
   } catch (err) {
@@ -37,10 +45,18 @@ const startApp = () => {
 };
 
 const startSimpleApp = () => {
-  ReactDOM.render(<App />, document.getElementById('root'));
+  ReactDOM.render(
+    <Router>
+      <Switch>
+        <Route exact path="/" component={App} />
+        <Route exact path="/powerStation" component={MyPowerStation} />
+        <Route exact path="/equipmentInfo/:id" component={EquipmentInfo} />
+      </Switch>
+    </Router>,
+    document.getElementById('root')
+  );
   registerServiceWorker();
 };
-
 
 if (window.cordova) {
   document.addEventListener('deviceready', startApp, false);

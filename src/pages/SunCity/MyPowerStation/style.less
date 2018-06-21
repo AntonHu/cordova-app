@@ -1,0 +1,89 @@
+@import '../../../styles/common';
+
+.page-equipment-info {
+  .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    color: @white-text-color;
+    height: 40px;
+    .screen {
+      display: flex;
+      div {
+        padding: 5px;
+        margin-left: 10px;
+        background: #ccc;
+        border-radius: 15px;
+      }
+      .selected {
+        background: green;
+      }
+    }
+  }
+  #pie-bar-chart {
+    width: 94%;
+    margin: 0 auto;
+    height: 300px;
+  }
+  .type {
+    display: flex;
+    justify-content: space-between;
+    background: @white-text-color;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: -30px;
+    padding: 10px;
+    border-radius: 5px;
+    .type-item {
+      width: 25%;
+      padding: 10px;
+      background: #ccc;
+      border-radius: 5px;
+    }
+  }
+  .detail {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 90%;
+    margin: 0 auto;
+    background: @white-text-color;
+    padding: 10px;
+    border-radius: 5px;
+    .detail-item {
+      width: 25%;
+      padding: 5px 10px;
+
+      .number {
+        font-size: 16px;
+        color: green;
+      }
+    }
+  }
+  .equipment {
+    margin-top: 10px;
+    .equipment-title {
+      display: flex;
+      align-items: center;
+      padding: 10px 0;
+      text-align: left;
+      &::before {
+        content: '';
+        display: inline-block;
+        height: 20px;
+        width: 5px;
+        background: blue;
+        margin-right: 10px;
+      }
+    }
+    .item {
+      background: @white-text-color;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+    }
+  }
+}
