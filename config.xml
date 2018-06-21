@@ -35,6 +35,10 @@
         <variable name="APP_KEY" value="fd96956cb315ba658d256156" />
     </plugin>
     <plugin name="cordova-plugin-file" spec="^4.3.3" />
+    <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+    <preference name="iosPersistentFileLocation" value="Compatibility" />
+    <preference name="iosExtraFilesystems" value="library,library-nosync,documents,documents-nosync,cache,bundle,root" />
+    <preference name="AndroidExtraFilesystems" value="files,files-external,documents,sdcard,cache,cache-external,assets,root" />
     <engine name="ios" spec="^4.5.4" />
     <engine name="android" spec="^6.4.0" />
 </widget>
