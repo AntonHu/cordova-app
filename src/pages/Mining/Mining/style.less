@@ -1,0 +1,96 @@
+@import '../../../styles/common';
+
+.page-mining {
+  .sun-info {
+    height: 200px;
+    padding: 10px;
+    background: @main-color;
+    .my-sun {
+      height: 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      color: @white-text-color;
+      border-bottom: 1px solid #fff;
+      .my-pic {
+        width: 60px;
+        height: 60px;
+        background: #fff;
+        border-radius: 40px;
+      }
+      .rank {
+        font-size: 24px;
+      }
+    }
+    .my-profit {
+      height: 80px;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: @white-text-color;
+    }
+  }
+  .expect {
+    padding: 0 15px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    .expect-item {
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      width: 47%;
+      height: 60px;
+      background: @white-text-color;
+    }
+  }
+  .treasure-data {
+    margin-top: 10px;
+    padding: 0 15px;
+    .treasure-title {
+      display: flex;
+      align-items: center;
+      padding: 10px 0;
+      text-align: left;
+      &::before {
+        content: '';
+        display: inline-block;
+        height: 20px;
+        width: 5px;
+        background: blue;
+        margin-right: 10px;
+      }
+    }
+    .item {
+      background: @white-text-color;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+    }
+  }
+  .ranking {
+    padding: 0 15px;
+    margin-top: 15px;
+    .ranking-list {
+      background: @white-text-color;
+      .ranking-item {
+        background: @white-text-color;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        .ranking-title {
+          display: flex;
+          align-items: center;
+          span {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+}

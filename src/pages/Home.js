@@ -1,7 +1,7 @@
 import React from 'react';
 import { Apply } from './Apply';
 import SunCity from './SunCity/index';
-import { Mining } from './Mining';
+import Mining from './Mining/Mining';
 import { User } from './User';
 import { TabBar, Icon } from 'antd-mobile';
 
@@ -33,7 +33,7 @@ const TabsData = [
  */
 class Comp extends React.PureComponent {
   state = {
-    selectedTab: 'sunCity'
+    selectedTab: 'mining'
   };
 
   render() {

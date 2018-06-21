@@ -10,6 +10,7 @@ import './index.css';
 import App from './App';
 import MyPowerStation from './pages/SunCity/MyPowerStation';
 import EquipmentInfo from './pages/SunCity/EquipmentInfo';
+import SunIntegral from './pages/Mining/SunIntegral';
 import registerServiceWorker from './registerServiceWorker';
 
 const device = window.device;
@@ -51,6 +52,7 @@ const startSimpleApp = () => {
         <Route exact path="/" component={App} />
         <Route exact path="/powerStation" component={MyPowerStation} />
         <Route exact path="/equipmentInfo/:id" component={EquipmentInfo} />
+        <Route exact path="/sunIntegral" component={SunIntegral} />
       </Switch>
     </Router>,
     document.getElementById('root')
