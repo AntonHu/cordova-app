@@ -3,6 +3,9 @@ import JSEncrypt from 'jsencrypt';
 import {Button} from 'antd-mobile';
 import JSRsasign from 'jsrsasign';
 
+/**
+ * RSA相关的代码，先别删，先放这里。
+ */
 class Comp extends React.PureComponent {
   state = {
     publicKey: '',

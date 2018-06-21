@@ -12,6 +12,7 @@ import MyPowerStation from './pages/SunCity/MyPowerStation';
 import EquipmentInfo from './pages/SunCity/EquipmentInfo';
 import SunIntegral from './pages/Mining/SunIntegral';
 import registerServiceWorker from './registerServiceWorker';
+import MyRoutes from './router';
 
 const device = window.device;
 
@@ -47,14 +48,7 @@ const startApp = () => {
 
 const startSimpleApp = () => {
   ReactDOM.render(
-    <Router>
-      <Switch>
-        <Route exact path="/" component={App} />
-        <Route exact path="/powerStation" component={MyPowerStation} />
-        <Route exact path="/equipmentInfo/:id" component={EquipmentInfo} />
-        <Route exact path="/sunIntegral" component={SunIntegral} />
-      </Switch>
-    </Router>,
+    <App />,
     document.getElementById('root')
   );
   registerServiceWorker();

@@ -1,6 +1,7 @@
 import React from 'react';
 import {BlueBox, PeakBox, GreenButton, Header, PageWithHeader} from '../../../components';
 import {List, InputItem, Flex, Button, WhiteSpace} from 'antd-mobile';
+import {Link} from 'react-router-dom';
 import './style.less';
 
 
@@ -10,19 +11,23 @@ const Item = List.Item;
 const ListData = [
   {
     text: '我的数据',
-    extra: 'avatar'
+    extra: 'avatar',
+    path: 'myData'
   },
   {
     text: '我的电站',
-    extra: '华'
+    extra: '华',
+    path: 'myStation'
   },
   {
     text: '消息中心',
-    extra: '女'
+    extra: '女',
+    path: 'msgCenter'
   },
   {
     text: '账号设置',
-    horizontal: true
+    horizontal: true,
+    path: 'accountSetting'
   },
 ];
 
@@ -45,7 +50,9 @@ class Comp extends React.PureComponent {
             {
               ListData.map((v, i) => (
                 <Item key={i} arrow={'horizontal'}>
-                  {v.text}
+                  <Link to={`/user/${v.path}`}>
+                    {v.text}
+                  </Link>
                 </Item>
               ))
             }
