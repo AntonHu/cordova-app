@@ -1,9 +1,12 @@
 import React from 'react';
 import {BlueBox, PeakBox, GreenButton, Header, PageWithHeader} from '../../../components';
 import {List, InputItem, Flex, Button, WhiteSpace} from 'antd-mobile';
+import jsrsasign from 'jsrsasign';
 import './style.less';
 
 const Item = List.Item;
+// const LocalFileSystem = window.LocalFileSystem;
+// const readFile = window.readFile;
 
 const ListData = [
   '什么是数据上链？',
@@ -14,10 +17,145 @@ const ListData = [
   '丢失Data-Key会怎么样？如何备份',
 ];
 
+const onErrorLoadFs = (err) => {
+  console.log(err);
+};
+
+const onErrorCreateFile = (err) => {
+  console.log(err)
+};
+
+//读取文件
+function readFile(fileEntry) {
+  fileEntry.file(function (file) {
+    var reader = new FileReader();
+    reader.onloadend = function(e) {
+      alert(e.target.result);
+    };
+    reader.readAsText(file);
+  }, onErrorReadFile);
+}
+
+//读取文件失败响应
+function onErrorReadFile(){
+  console.log("文件读取失败!");
+}
+
+function writeFile(fileEntry, dataObj) {
+  // Create a FileWriter object for our FileEntry (log.txt).
+  fileEntry.createWriter(function (fileWriter) {
+
+    fileWriter.onwriteend = function() {
+      console.log("Successful file write...");
+      // readFile(fileEntry);
+    };
+
+    fileWriter.onerror = function (e) {
+      console.log("Failed file write: " + e.toString());
+    };
+
+    // If data object is not passed in,
+    // create a new Blob instead.
+    if (!dataObj) {
+      dataObj = new Blob(['some file data'], { type: 'text/plain' });
+    }
+
+    if (typeof dataObj === 'string') {
+      dataObj = new Blob([dataObj], { type: 'text/plain' });
+    }
+
+    fileWriter.write(dataObj);
+  });
+}
+
 /**
  * 我的数据
  */
 class Comp extends React.PureComponent {
+  state = {
+    publicKey: '',
+    privateKey: ''
+  };
+
+  generateKeyPair = () => {
+    const keyObj = jsrsasign.KEYUTIL.generateKeypair('RSA', 1024);
+    const privateKey = jsrsasign.KEYUTIL.getPEM(keyObj.prvKeyObj, 'PKCS1PRV');
+    const publicKey = jsrsasign.KEYUTIL.getPEM(keyObj.pubKeyObj, 'PKCS8PUB');
+    console.log(privateKey);
+
+    this.setState({
+      publicKey,
+      privateKey
+    });
+
+    return {
+      publicKey,
+      privateKey
+    }
+  };
+
+  validateBeforeGenerate = () => {
+    return true;
+  };
+
+  sendPublicPEMToServer = (publicPEM) => {
+
+  };
+
+  readPrivatePEMFromLocal = () => {
+    if (window.cordova) {
+      try  {
+        window.requestFileSystem(window.LocalFileSystem.PERSISTENT, 0, function (fs) {
+          fs.root.getFile('my_private.pem', { create: false, exclusive: false }, function (fileEntry) {
+            readFile(fileEntry);
+          })
+        }, onErrorReadFile)
+      } catch (err) {
+        alert(err)
+      }
+    }
+  };
+
+  savePrivatePEMToLocal = (privatePEM) => {
+    if (window.cordova) {
+      try {
+        console.log(window.LocalFileSystem.PERSISTENT);
+
+        window.requestFileSystem(window.LocalFileSystem.PERSISTENT, 0, function (fs) {
+
+          console.log('file system open: ' + fs.name);
+          fs.root.getFile("my_private.pem", { create: true, exclusive: false }, function (fileEntry) {
+
+            console.log("fileEntry is file?" + fileEntry.isFile.toString());
+            // fileEntry.name == 'someFile.txt'
+            // fileEntry.fullPath == '/someFile.txt'
+            writeFile(fileEntry, privatePEM);
+
+          }, onErrorCreateFile);
+
+        }, onErrorLoadFs);
+      } catch (err) {
+        alert(err);
+      }
+    }
+  };
+
+  /**
+   * 1.检查生成条件
+   * 2.生成keyPair
+   * 3.把public传到服务器
+   * 4.把private存到本地
+   */
+  onPress = () => {
+    if (this.validateBeforeGenerate()) {
+      const keyPair = this.generateKeyPair();
+      this.sendPublicPEMToServer(keyPair.publicKey);
+      this.savePrivatePEMToLocal(keyPair.privateKey);
+    }
+  };
+
+
+
   render() {
     return (
       <div className={'page-my-data'}>
@@ -27,7 +165,8 @@ class Comp extends React.PureComponent {
 
           <BlueBox>
             <div className={'h3 white-text title-of-blue'}>我的数据私钥</div>
-            <GreenButton>一键生成</GreenButton>
+            <GreenButton onClick={this.onPress}>一键生成</GreenButton>
+            <GreenButton onClick={this.readPrivatePEMFromLocal}>读取密钥</GreenButton>
           </BlueBox>
 
           <WhiteSpace />
