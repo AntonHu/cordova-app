@@ -166,7 +166,7 @@ class Comp extends React.PureComponent {
 
   render() {
     return (
-      <div className={'page-equipment-info'}>
+      <div className={'page-powerStation-info'}>
         <PageWithHeader title={'我的电站'}>
           <BlueBox type={'pure'}>
             <div className="title">

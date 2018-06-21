@@ -8,18 +8,14 @@ import RsaDemo from './pages/RsaDemo';
 import MyData from './pages/User/MyData';
 
 class App extends React.Component {
-  componentWillMount() {
+  componentWillMount() {}
 
-  }
-
-  componentWillUnmount() {
-
-  }
+  componentWillUnmount() {}
 
   render() {
     return (
       <div className="App">
-        <MyData></MyData>
+        <Home />
       </div>
     );
   }

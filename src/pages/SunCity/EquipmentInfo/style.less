@@ -1,6 +1,37 @@
 @import '../../../styles/common';
 
 .page-equipment-info {
+  .survey {
+    height: 200px;
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: @main-color;
+  }
+  .equipment-content {
+    height: 300px;
+    padding: 10px;
+    width: 90%;
+    margin: 0 auto;
+    background: @white-text-color;
+    .screen {
+      display: flex;
+      justify-content: space-around;
+      div {
+        padding: 5px;
+        margin-left: 10px;
+        background: #ccc;
+        border-radius: 15px;
+      }
+      .selected {
+        background: green;
+      }
+    }
+    #curve-chart {
+      width: 100%;
+    }
+  }
   #pie-bar-chart {
     //width: 320 * @px;
     //height: 320 * @px;
