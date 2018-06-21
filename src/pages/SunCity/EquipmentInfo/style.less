@@ -8,12 +8,20 @@
     justify-content: center;
     align-items: center;
     background: @main-color;
+    color: @white-text-color;
+    .survey-item-number {
+      font-size: 16px;
+    }
   }
   .equipment-content {
     height: 300px;
-    padding: 10px;
+    padding: 20px 10px;
     width: 90%;
     margin: 0 auto;
+    border-radius: 5px;
+    margin-top: -10px;
+    position: relative;
+    z-index: 10;
     background: @white-text-color;
     .screen {
       display: flex;
@@ -28,11 +36,26 @@
         background: green;
       }
     }
+    .curve-chart-title {
+      margin-top: 10px;
+    }
     #curve-chart {
       width: 100%;
     }
+    .curve-chart-info {
+      display: flex;
+      justify-content: center;
+      .curve-info {
+        width: 33.3%;
+        text-align: center;
+        .curve-number {
+          font-size: 16px;
+        }
+      }
+    }
   }
   #pie-bar-chart {
+    position: relative;
     //width: 320 * @px;
     //height: 320 * @px;
   }

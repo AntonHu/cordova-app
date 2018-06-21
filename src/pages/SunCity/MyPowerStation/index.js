@@ -24,27 +24,7 @@ import './style.less';
 const RadioItem = Radio.RadioItem;
 
 G2.track(false);
-const Util = F2.Util;
 
-// 坐标轴的默认样式配置
-const defaultAxis = {
-  label: {
-    fill: '#fff',
-    fontSize: 10
-  }, // 坐标轴文本的样式
-  line: {
-    stroke: '#fff',
-    lineWidth: 1,
-    top: true
-  }, // 坐标轴线的样式
-  grid: {
-    stroke: '#fff',
-    lineWidth: 1,
-    lineDash: [2]
-  }, // 坐标轴网格线的样式
-  tickLine: null, // 坐标轴刻度线，默认不展示
-  labelOffset: 7.5 // 坐标轴文本距离坐标轴线的距离
-};
 /**
  * 电站设备信息
  */
@@ -124,22 +104,7 @@ class Comp extends React.PureComponent {
       pixelRatio: window.devicePixelRatio
     });
 
-    chart.source(data, {
-      sales: {
-        tickCount: 5
-      }
-    });
-    F2.Global.setTheme({
-      colors: ['white'],
-      axis: {
-        bottom: Util.mix({}, defaultAxis, {
-          grid: null
-        }), // 底部坐标轴配置
-        left: Util.mix({}, defaultAxis, {
-          line: null
-        }) // 左侧坐标轴配置
-      } // 各种坐标轴配置
-    });
+    chart.source(data);
     chart.tooltip({
       showItemMarker: false,
       onShow: function onShow(ev) {
@@ -149,7 +114,22 @@ class Comp extends React.PureComponent {
         items[0].value = '¥ ' + items[0].value;
       }
     });
-    chart.interval().position('year*sales');
+    chart.axis('year', {
+      label: {
+        fill: '#fff',
+        fontSize: 10
+      }
+    });
+    chart.axis('sales', {
+      label: {
+        fill: '#fff',
+        fontSize: 10
+      }
+    });
+    chart
+      .interval()
+      .position('year*sales')
+      .color('#fff');
     chart.render();
   };
 

@@ -123,8 +123,9 @@ class Comp extends React.PureComponent {
 
     const chart = new F2.Chart({
       id: 'pie-bar-chart',
-      width: px(320),
-      height: px(320),
+      width: px(360),
+      height: px(360),
+      padding: 10,
       pixelRatio: window.devicePixelRatio
     });
     const data = [
@@ -144,7 +145,7 @@ class Comp extends React.PureComponent {
     chart.coord('polar', {
       transposed: true,
       innerRadius: 0.8,
-      radius: 0.85
+      radius: 0.9
     });
     chart.guide().arc({
       start: [0, 0],
@@ -155,13 +156,21 @@ class Comp extends React.PureComponent {
         stroke: '#ccc'
       }
     });
-    chart.guide().text({
-      position: ['50%', '50%'],
-      content: '85%',
-      style: {
-        fontSize: 24,
-        fill: '#1890FF'
-      }
+    // chart.guide().text({
+    //   position: ['50%', '50%'],
+    //   content: '85%',
+    //   style: {
+    //     fontSize: 24,
+    //     fill: '#1890FF'
+    //   }
+    // });
+    chart.guide().html({
+      position: ['110%', '60%'],
+      html:
+        '<div style="width: 250px;height: 40px;text-align: center;">' +
+        '<div style="font-size: 14px">321313w</div>' +
+        '<div style="font-size: 14px">总资产</div>' +
+        '</div>'
     });
     chart
       .interval()
@@ -230,7 +239,22 @@ class Comp extends React.PureComponent {
                 全部
               </div>
             </div>
+            <div className="curve-chart-title">日功率走势图</div>
             <canvas id="curve-chart" />
+            <div className="curve-chart-info">
+              <div className="curve-info">
+                <div className="curve-number">5098</div>
+                <div className="curve-type">总量</div>
+              </div>
+              <div className="curve-info">
+                <div className="curve-number">5098</div>
+                <div className="curve-type">总量</div>
+              </div>
+              <div className="curve-info">
+                <div className="curve-number">5098</div>
+                <div className="curve-type">总量</div>
+              </div>
+            </div>
           </div>
         </PageWithHeader>
       </div>
