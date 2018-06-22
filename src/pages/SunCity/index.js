@@ -1,19 +1,9 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import {
-  BlueBox,
-  PeakBox,
-  GreenButton,
-  Header,
-  PageWithHeader
-} from '../../components';
-import { List, InputItem, Flex, Button, WhiteSpace, Icon } from 'antd-mobile';
-import F2 from '@antv/f2';
-import { getDeviceWidth, px } from '../../utils/getDevice';
+import { Title } from '../../components';
+import { NoticeBar, Icon } from 'antd-mobile';
 import './style.less';
 import { div } from 'gl-matrix/src/gl-matrix/vec2';
-
-const Item = List.Item;
 /**
  * 太阳城-首页
  */
@@ -79,10 +69,10 @@ class Comp extends React.PureComponent {
   render() {
     return (
       <div className={'page-sunCity-info'}>
-        <div className="notice">最新公告：端午节挖宝活动开始送太阳积分啦~</div>
-        {/* <BlueBox type={'pic'} picType={'blue'}>
-          <div>太阳城首页</div>
-        </BlueBox> */}
+        <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
+          最新公告：端午节挖宝活动开始送太阳积分啦~
+        </NoticeBar>
+        {/* <div className="notice">最新公告：端午节挖宝活动开始送太阳积分啦~</div> */}
         <div className="sun-content">
           <div className="info">
             <div className="detail">
@@ -120,7 +110,7 @@ class Comp extends React.PureComponent {
             </div>
           </div>
           <div className="equipment">
-            <div className="title">太阳城蓄力装备</div>
+            <Title title="太阳城蓄力装备" />
             {this.state.equipmentList.map((item, index) => {
               return (
                 <div key={index} className="item">

@@ -1,27 +1,10 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import {
-  BlueBox,
-  PeakBox,
-  GreenButton,
-  Header,
-  PageWithHeader
-} from '../../../components';
-import {
-  List,
-  InputItem,
-  Flex,
-  Button,
-  WhiteSpace,
-  Radio,
-  Icon
-} from 'antd-mobile';
+import { BlueBox, Title, PageWithHeader } from '../../../components';
+import { Radio, Icon } from 'antd-mobile';
 import G2 from '@antv/g2';
 import F2 from '@antv/f2';
-import { getDeviceWidth, px } from '../../../utils/getDevice';
 import './style.less';
-
-const RadioItem = Radio.RadioItem;
 
 G2.track(false);
 
@@ -214,7 +197,7 @@ class Comp extends React.PureComponent {
             </div>
           </div>
           <div className="equipment">
-            <div className="equipment-title">太阳城蓄力装备</div>
+            <Title title="太阳城蓄力装备" />
             {this.state.equipmentList.map((item, index) => {
               return (
                 <div

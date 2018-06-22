@@ -33,7 +33,7 @@ const TabsData = [
  */
 class Comp extends React.PureComponent {
   state = {
-    selectedTab: 'mining'
+    selectedTab: 'sunCity'
   };
 
   render() {

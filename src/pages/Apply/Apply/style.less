@@ -1,9 +1,49 @@
-@import "../../../styles/common";
+@import '../../../styles/common';
 
 .page-apply {
-  .blue-box {
-    margin: 30 * @px;
-    width: auto;
+  .apply-survey {
+    height: 200px;
+    margin: 15px;
+    background: @main-color;
     border-radius: @border-radius;
+  }
+  .apply {
+    .apply-list {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 20px;
+      background: @white-text-color;
+      .apply-item {
+        padding: 10px;
+        width: 33.3%;
+
+        .apply-pic {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+  .recommend {
+    .recommend-list {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 10px;
+      background: @white-text-color;
+      .recommend-item {
+        padding: 5px;
+        width: 33.3%;
+
+        .recommend-pic {
+          margin-bottom: 10px;
+          border-radius: 5px;
+          height: 100px;
+          background: #ccc;
+        }
+      }
+    }
+  }
+  .admission {
+    height: 150px;
+    background: #ccc;
   }
 }

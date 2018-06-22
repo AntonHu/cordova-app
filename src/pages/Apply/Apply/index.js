@@ -1,9 +1,8 @@
 import React from 'react';
-import {BlueBox, PeakBox, GreenButton, Header, PageWithHeader} from '../../../components';
-import {List, InputItem, Flex, Button, WhiteSpace, Grid} from 'antd-mobile';
+import { Title, PageWithHeader } from '../../../components';
+import {} from 'antd-mobile';
 import './style.less';
-
-const Item = List.Item;
+import { div } from 'gl-matrix/src/gl-matrix/vec4';
 
 const Apps = [
   {
@@ -32,24 +31,6 @@ const Apps = [
   }
 ];
 
-const Recommends = [
-  {
-    title: '得力双层保温盒',
-    subTitle: '150积分',
-    icon: 'icon'
-  },
-  {
-    title: '得力双层保温盒',
-    subTitle: '150积分',
-    icon: 'icon'
-  },
-  {
-    title: '得力双层保温盒',
-    subTitle: '150积分',
-    icon: 'icon'
-  }
-];
-
 /**
  * 应用
  */
@@ -58,17 +39,44 @@ class Comp extends React.PureComponent {
     return (
       <div className={'page-apply'}>
         <PageWithHeader title={'应用'}>
-
-          <BlueBox>
-
-          </BlueBox>
-
-          <Grid data={Apps} columnNum={3}/>
-          <Grid data={Recommends} columnNum={3}/>
-
+          <div className="apply-survey">应用</div>
+          <div className="apply">
+            <Title title="太阳城蓄力装备" />
+            <div className="apply-list">
+              {Apps.map((item, index) => {
+                return (
+                  <div key={index} className="apply-item">
+                    <div className="apply-pic">{item.icon}</div>
+                    <div>{item.text}</div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="recommend">
+              <Title title="为你推荐" />
+              <div className="recommend-list">
+                <div className="recommend-item">
+                  <div className="recommend-pic">rw</div>
+                  <div className="recommend-name">得力双层保温盒</div>
+                  <div className="recommend-price">121积分</div>
+                </div>
+                <div className="recommend-item">
+                  <div className="recommend-pic">rw</div>
+                  <div className="recommend-name">得力双层保温盒</div>
+                  <div className="recommend-price">121积分</div>
+                </div>
+                <div className="recommend-item">
+                  <div className="recommend-pic">rw</div>
+                  <div className="recommend-name">得力双层保温盒</div>
+                  <div className="recommend-price">121积分</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="admission">入驻申请</div>
         </PageWithHeader>
       </div>
-    )
+    );
   }
 }
 
