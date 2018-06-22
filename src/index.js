@@ -6,6 +6,7 @@ import {
   Switch,
   Redirect
 } from 'react-router-dom';
+import 'babel-polyfill'; // 添加async函数支持
 import './index.css';
 import App from './App';
 import MyPowerStation from './pages/SunCity/MyPowerStation';
@@ -47,10 +48,7 @@ const startApp = () => {
 };
 
 const startSimpleApp = () => {
-  ReactDOM.render(
-    <App />,
-    document.getElementById('root')
-  );
+  ReactDOM.render(<App />, document.getElementById('root'));
   registerServiceWorker();
 };
 

@@ -1,5 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { toJS } from 'mobx';
+import { observer, inject } from 'mobx-react';
 import { Title } from '../../components';
 import { NoticeBar, Icon } from 'antd-mobile';
 import './style.less';
@@ -9,7 +11,10 @@ import { div } from 'gl-matrix/src/gl-matrix/vec2';
  */
 const radius = 15; // 小太阳半径
 const padding = 10; // 包含小图形的大图形的内边距
-class Comp extends React.PureComponent {
+
+@inject('sunCityStore') // 如果注入多个store，用数组表示
+@observer
+class Comp extends React.Component {
   state = {
     sunList: [10, 11, 23, 14, 56, 34, 24],
     sunCoordinateArr: null,
@@ -33,6 +38,10 @@ class Comp extends React.PureComponent {
   };
   sunArea = null; // 大图形
   componentDidMount() {
+    this.props.sunCityStore.fetchOSOrderList({
+      page: 1,
+      pageNums: 8
+    });
     this.setState({
       sunCoordinateArr: this.getSunCoordinateArr()
     });
