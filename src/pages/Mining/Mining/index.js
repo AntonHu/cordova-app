@@ -1,13 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import {
-  BlueBox,
-  PeakBox,
-  GreenButton,
-  Header,
-  PageWithHeader
-} from '../../../components';
+import { Title, PageWithHeader } from '../../../components';
 import {
   List,
   InputItem,
@@ -50,13 +44,17 @@ class Comp extends React.PureComponent {
         <PageWithHeader title={'挖宝池'}>
           <div className="sun-info">
             <div className="my-sun">
-              <div className="my-pic" />
+              <img
+                className="my-pic"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR72yqdE9opUl3aiimoZ-MilU5QdxFkK8AaAN6zUY1yrC2SuDWq"
+                alt=""
+              />
               <div>
-                <div>我的太阳积分</div>
+                <div className="sun-type">我的太阳积分</div>
                 <div className="rank">552</div>
               </div>
               <div>
-                <div>当前排行</div>
+                <div className="sun-type">当前排行</div>
                 <div className="rank">552</div>
               </div>
               <Icon
@@ -81,24 +79,24 @@ class Comp extends React.PureComponent {
           </div>
           <div className="expect">
             <div className="expect-item">
-              <div>pic</div>
-              <div>
+              <i class="iconfont icon-shangcheng11" />
+              <div className="expect-title">
                 <div>挖宝商城</div>
                 <div>敬请期待</div>
               </div>
               <Icon type="right" />
             </div>
             <div className="expect-item">
-              <div>pic</div>
-              <div>
+              <i class="iconfont icon-ai250" />
+              <div className="expect-title">
                 <div>挖宝商城</div>
                 <div>敬请期待</div>
               </div>
               <Icon type="right" />
             </div>
           </div>
+          <Title title="挖宝数据" />
           <div className="treasure-data">
-            <div className="treasure-title">挖宝数据</div>
             {this.state.equipmentList.map((item, index) => {
               return (
                 <div key={index} className="item">

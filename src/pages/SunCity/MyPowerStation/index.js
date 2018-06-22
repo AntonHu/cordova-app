@@ -44,7 +44,7 @@ const data = [
 class Comp extends React.PureComponent {
   state = {
     selected: {
-      daySelected: false,
+      daySelected: true,
       monthSelected: false,
       yearSelected: false,
       allSelected: false
@@ -133,7 +133,12 @@ class Comp extends React.PureComponent {
         <PageWithHeader title={'我的电站'}>
           <BlueBox type={'pure'}>
             <div className="title">
-              <div>晴</div>
+              <div className="weather">
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy_QupXlXwJsn3uSAdfg2PDnuAYJlsavDh5TXvHjypKj5t6I61Xg"
+                  alt=""
+                />雨
+              </div>
               <div className="screen" onClick={this.screenChange}>
                 <div
                   data-class="daySelected"
@@ -198,27 +203,38 @@ class Comp extends React.PureComponent {
           </div>
           <div className="equipment">
             <Title title="太阳城蓄力装备" />
-            {this.state.equipmentList.map((item, index) => {
-              return (
-                <div
-                  key={index}
-                  className="item"
-                  onClick={() =>
-                    this.props.history.push(`/equipmentInfo/${index}`)
-                  }
-                >
-                  <div>111</div>
-                  <div>
-                    <div>{item.name}</div>
-                    <div>
-                      <span>功率：{item.power}</span>
-                      <span>日电量：{item.electric}</span>
-                    </div>
-                  </div>
-                  <Icon type="right" />
+            <div
+              className="item"
+              onClick={() => this.props.history.push(`/equipmentInfo/${0}`)}
+            >
+              <div className="item-pic">
+                <i class="iconfont icon-shebeiliebiao" />
+              </div>
+              <div className="item-detail">
+                <div className="item-name">FWCSHHKJL</div>
+                <div className="item-info">
+                  <span>功率：312312w</span>
+                  <span>日电量：321312kw/h</span>
                 </div>
-              );
-            })}
+              </div>
+              <Icon type="right" />
+            </div>
+            <div
+              className="item"
+              onClick={() => this.props.history.push(`/equipmentInfo/${1}`)}
+            >
+              <div className="item-pic">
+                <i class="iconfont icon-shebeiguanli" />
+              </div>
+              <div className="item-detail">
+                <div className="item-name">FWCSHHKJL</div>
+                <div className="item-info">
+                  <span>功率：312312w</span>
+                  <span>日电量：321312kw/h</span>
+                </div>
+              </div>
+              <Icon type="right" />
+            </div>
           </div>
         </PageWithHeader>
       </div>

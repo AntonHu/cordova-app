@@ -46,7 +46,11 @@ class Comp extends React.PureComponent {
               {Apps.map((item, index) => {
                 return (
                   <div key={index} className="apply-item">
-                    <div className="apply-pic">{item.icon}</div>
+                    <img
+                      className="apply-pic"
+                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR72yqdE9opUl3aiimoZ-MilU5QdxFkK8AaAN6zUY1yrC2SuDWq"
+                      alt=""
+                    />
                     <div>{item.text}</div>
                   </div>
                 );
@@ -56,17 +60,29 @@ class Comp extends React.PureComponent {
               <Title title="为你推荐" />
               <div className="recommend-list">
                 <div className="recommend-item">
-                  <div className="recommend-pic">rw</div>
+                  <img
+                    className="recommend-pic"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR72yqdE9opUl3aiimoZ-MilU5QdxFkK8AaAN6zUY1yrC2SuDWq"
+                    alt=""
+                  />
                   <div className="recommend-name">得力双层保温盒</div>
                   <div className="recommend-price">121积分</div>
                 </div>
                 <div className="recommend-item">
-                  <div className="recommend-pic">rw</div>
+                  <img
+                    className="recommend-pic"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR72yqdE9opUl3aiimoZ-MilU5QdxFkK8AaAN6zUY1yrC2SuDWq"
+                    alt=""
+                  />
                   <div className="recommend-name">得力双层保温盒</div>
                   <div className="recommend-price">121积分</div>
                 </div>
                 <div className="recommend-item">
-                  <div className="recommend-pic">rw</div>
+                  <img
+                    className="recommend-pic"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR72yqdE9opUl3aiimoZ-MilU5QdxFkK8AaAN6zUY1yrC2SuDWq"
+                    alt=""
+                  />
                   <div className="recommend-name">得力双层保温盒</div>
                   <div className="recommend-price">121积分</div>
                 </div>

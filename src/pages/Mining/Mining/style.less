@@ -2,25 +2,28 @@
 
 .page-mining {
   .sun-info {
-    height: 200px;
+    height: 190px;
     padding: 10px;
     background: @main-color;
     .my-sun {
-      height: 80px;
+      height: 90px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 0 20px;
       color: @white-text-color;
-      border-bottom: 1px solid #fff;
+      border-bottom: 1px solid @bule-border;
       .my-pic {
         width: 60px;
         height: 60px;
-        background: #fff;
         border-radius: 40px;
+      }
+      .sun-type {
+        color: @light-text-color;
       }
       .rank {
         font-size: 24px;
+        margin-top: 5px;
       }
     }
     .my-profit {
@@ -30,6 +33,10 @@
       justify-content: space-between;
       align-items: center;
       color: @white-text-color;
+      .profit-title {
+        margin-bottom: 5px;
+        color: @light-text-color;
+      }
     }
   }
   .expect {
@@ -45,31 +52,39 @@
       width: 47%;
       height: 60px;
       background: @white-text-color;
+
+      .iconfont {
+        font-size: 28px;
+        color: @main-color;
+      }
+      .expect-title {
+        div {
+          &:nth-child(1) {
+            font-weight: bold;
+          }
+          &:nth-child(2) {
+            color: @light-text-color;
+            margin-top: 3px;
+          }
+        }
+      }
+      .am-icon {
+        color: @light-text-color;
+      }
     }
   }
   .treasure-data {
-    margin-top: 10px;
-    padding: 0 15px;
-    .treasure-title {
-      display: flex;
-      align-items: center;
-      padding: 10px 0;
-      text-align: left;
-      &::before {
-        content: '';
-        display: inline-block;
-        height: 20px;
-        width: 5px;
-        background: blue;
-        margin-right: 10px;
-      }
-    }
+    margin: 0 15px;
+    background: @white-text-color;
+    padding: 5px;
     .item {
-      background: @white-text-color;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 10px;
+      span {
+        color: @blue-text-color;
+      }
     }
   }
   .ranking {
