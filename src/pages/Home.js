@@ -42,7 +42,7 @@ const TabsData = [
  */
 class Comp extends React.PureComponent {
   state = {
-    selectedTab: 'apply'
+    selectedTab: 'user'
   };
 
   render() {
@@ -66,8 +66,8 @@ class Comp extends React.PureComponent {
                   selectedTab: tab.key
                 });
               }}
-              icon={<i class="iconfont">{tab.unicode}</i>}
-              selectedIcon={<i class="iconfont">{tab.selectedUnicode}</i>}
+              icon={<i className="iconfont">{tab.unicode}</i>}
+              selectedIcon={<i className="iconfont">{tab.selectedUnicode}</i>}
             >
               {tab.content()}
             </TabBar.Item>

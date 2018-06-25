@@ -18,8 +18,11 @@ import {
   MyData,
   MyStation,
   PersonalInfo,
+  PersonalNickname,
   Register,
   ResetPW,
+  ResetTradePW,
+  ResetLoginPW,
   User,
   VerifyID
 } from '../pages/User';
@@ -54,9 +57,16 @@ class AllRoutes extends React.PureComponent {
             <Route exact path={'/user/myData'} component={MyData} />
             <Route exact path={'/user/myStation'} component={MyStation} />
             <Route exact path={'/user/personalInfo'} component={PersonalInfo} />
+            <Route
+              exact
+              path={'/user/personalNickname/:id'}
+              component={PersonalNickname}
+            />
             <Route exact path={'/user/register'} component={Register} />
             <Route exact path={'/user/resetPW'} component={ResetPW} />
-            <Route exact path={'/user/verifyID'} component={VerifyID} />
+            <Route exact path={'/user/resetTradePW'} component={ResetTradePW} />
+            <Route exact path={'/user/resetLoginPW'} component={ResetLoginPW} />
+            <Route exact path={'/user/verifyID/:id'} component={VerifyID} />
           </Switch>
         </HashRouter>
       </Provider>

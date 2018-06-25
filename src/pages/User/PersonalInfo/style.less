@@ -1,9 +1,61 @@
-@import "../../../styles/common";
+@import '../../../styles/common';
 
 .page-personal-info {
   .blue-box {
+    position: relative;
     margin: 30 * @px;
     width: auto;
     border-radius: @border-radius;
+    // justify-content: center;
+    color: @white-text-color;
+    padding: 40px 15%;
+    box-sizing: border-box;
+    .personal-info {
+      display: flex;
+      align-items: center;
+      .personal-pic {
+        height: 60px;
+        border-radius: 30px;
+        border: 3px solid @white-text-color;
+        margin-right: 10px;
+      }
+      .personal-prompt {
+        font-size: 16px;
+      }
+    }
+    .personal-name,
+    .personal-id {
+      margin-top: 10px;
+      text-align: left;
+    }
+    .go-authentication {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      right: 0;
+      bottom: 20px;
+      color: @white-text-color;
+    }
+  }
+  .personal-list {
+    .personal-item {
+      background: @white-text-color;
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 15px;
+      border-bottom: 1px solid @light-text-color;
+    }
+    .am-list-arrow {
+      display: none;
+    }
+  }
+}
+
+.am-picker-col {
+  height: 180px;
+  .am-picker {
+    .am-picker-col-mask {
+      // top: 20px;
+    }
   }
 }

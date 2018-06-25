@@ -147,7 +147,7 @@ class Comp extends React.Component {
               onClick={() => this.props.history.push(`/equipmentInfo/${0}`)}
             >
               <div className="item-pic">
-                <i class="iconfont icon-shebeiliebiao" />
+                <i className="iconfont icon-shebeiliebiao" />
               </div>
               <div className="item-detail">
                 <div className="item-name">FWCSHHKJL</div>
@@ -163,7 +163,7 @@ class Comp extends React.Component {
               onClick={() => this.props.history.push(`/equipmentInfo/${1}`)}
             >
               <div className="item-pic">
-                <i class="iconfont icon-shebeiguanli" />
+                <i className="iconfont icon-shebeiguanli" />
               </div>
               <div className="item-detail">
                 <div className="item-name">FWCSHHKJL</div>

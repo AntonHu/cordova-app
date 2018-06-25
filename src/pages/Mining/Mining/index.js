@@ -79,7 +79,7 @@ class Comp extends React.PureComponent {
           </div>
           <div className="expect">
             <div className="expect-item">
-              <i class="iconfont icon-shangcheng11" />
+              <i className="iconfont icon-shangcheng11" />
               <div className="expect-title">
                 <div>挖宝商城</div>
                 <div>敬请期待</div>
@@ -87,7 +87,7 @@ class Comp extends React.PureComponent {
               <Icon type="right" />
             </div>
             <div className="expect-item">
-              <i class="iconfont icon-ai250" />
+              <i className="iconfont icon-ai250" />
               <div className="expect-title">
                 <div>挖宝商城</div>
                 <div>敬请期待</div>
