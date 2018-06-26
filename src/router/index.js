@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { HashRouter, Route, Switch, Redirect, BrowserRouter } from 'react-router-dom';
 import { Provider } from 'mobx-react';
 import * as stores from '../stores';
 import {

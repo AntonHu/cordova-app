@@ -11,7 +11,7 @@ const AuthorizedRoute = (props) => {
     <Route
       path={path}
       render={props =>
-        user.isLogin() ? <Component {...props} /> : <Redirect to="/login" />
+        user.isLogin() ? <Component {...props} /> : <Redirect to={"/login"} />
       }
     />
   );

@@ -37,7 +37,7 @@ class Comp extends React.PureComponent {
         const data = res.data;
         const user = new User();
         user.login(data.access_token);
-        this.props.history.push('/app');
+        this.props.history.push('/');
       } else {
 
       }

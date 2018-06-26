@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { PageWithHeader, PlainButton } from '../../../components';
 import { List } from 'antd-mobile';
+import User from '../../../utils/user';
 import './style.less';
 
 const Item = List.Item;
@@ -27,6 +28,13 @@ const ListData = [
  * 账号设置
  */
 class Comp extends React.PureComponent {
+  onLogout = (e) => {
+    e.preventDefault();
+    const user = new User();
+    user.logout();
+    this.props.history.replace('/');
+  };
+
   render() {
     return (
       <div className={'page-account-setting'}>
@@ -39,7 +47,7 @@ class Comp extends React.PureComponent {
             ))}
           </List>
 
-          <PlainButton>退出登录</PlainButton>
+          <PlainButton onClick={this.onLogout}>退出登录</PlainButton>
         </PageWithHeader>
       </div>
     );

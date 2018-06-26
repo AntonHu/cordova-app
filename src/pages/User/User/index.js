@@ -37,8 +37,6 @@ const ListData = [
  * 我的
  */
 class Comp extends React.PureComponent {
-  // TODO: Icon加上来
-  // TODO: 头像的组件
   render() {
     return (
       <div className={'page-user'}>
