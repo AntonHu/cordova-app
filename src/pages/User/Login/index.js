@@ -15,7 +15,9 @@ class Comp extends React.PureComponent {
         </BlueBox>
         <PeakBox showPeak={true}>
           <div className="body">
-            <InputItem placeholder="请输入手机号" clear type="phone" />
+            <InputItem placeholder="请输入手机号" clear type="phone">
+              +86
+            </InputItem>
             <InputItem placeholder="请输入密码" clear type="password" />
             <Flex direction="row">
               <Flex.Item>

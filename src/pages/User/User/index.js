@@ -42,7 +42,7 @@ class Comp extends React.PureComponent {
   render() {
     return (
       <div className={'page-user'}>
-        <PageWithHeader title={'个人中心'}>
+        <PageWithHeader leftComponent={null} title={'个人中心'}>
           {/* <BlueBox>
 
           </BlueBox> */}

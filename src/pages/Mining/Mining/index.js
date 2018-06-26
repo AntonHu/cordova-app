@@ -32,7 +32,7 @@ class Comp extends React.PureComponent {
   render() {
     return (
       <div className={'page-mining'}>
-        <PageWithHeader title={'挖宝池'}>
+        <PageWithHeader leftComponent={null} title={'挖宝池'}>
           <div className="sun-info">
             <div className="my-sun">
               <img

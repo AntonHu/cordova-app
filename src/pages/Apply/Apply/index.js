@@ -38,7 +38,7 @@ class Comp extends React.PureComponent {
   render() {
     return (
       <div className={'page-apply'}>
-        <PageWithHeader title={'应用'}>
+        <PageWithHeader leftComponent={null} title={'应用'}>
           <div className="apply-survey">应用</div>
           <div className="apply">
             <Title title="太阳城蓄力装备" />

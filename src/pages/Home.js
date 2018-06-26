@@ -42,7 +42,7 @@ const TabsData = [
  */
 class Comp extends React.PureComponent {
   state = {
-    selectedTab: 'user'
+    selectedTab: 'sunCity'
   };
 
   render() {
