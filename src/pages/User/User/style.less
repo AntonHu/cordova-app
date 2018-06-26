@@ -1,9 +1,51 @@
-@import "../../../styles/common";
+@import '../../../styles/common';
 
 .page-user {
-  .blue-box {
+  .user-wrap {
+    height: 200px;
     margin: 30 * @px;
-    width: auto;
     border-radius: @border-radius;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('../../../images/blue_bg.png');
+    background-size: 100%;
+    position: relative;
+    .user-info {
+      margin-top: -10px;
+      .user-pic {
+        height: 60px;
+        border-radius: 30px;
+        border: 3px solid @white-text-color;
+      }
+      .user-name {
+        color: @white-text-color;
+      }
+    }
+    a {
+      display: flex;
+      font-size: 12px;
+      align-items: center;
+      position: absolute;
+      right: -8px;
+      bottom: 50px;
+      background: @white-text-color;
+      padding: 0 10px;
+      border-radius: 10px;
+      color: @blue-text-color;
+    }
+  }
+  .am-list {
+    margin-top: -40px;
+    a {
+      display: flex;
+      align-items: center;
+      color: @main-text-color;
+      .iconfont {
+        margin-right: 5px;
+        font-size: 24px;
+        color: @icon-color;
+      }
+    }
   }
 }

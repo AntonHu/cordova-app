@@ -3,27 +3,36 @@ import { Apply } from './Apply';
 import SunCity from './SunCity/index';
 import Mining from './Mining/Mining';
 import { User } from './User';
-import { TabBar, Icon } from 'antd-mobile';
+import { TabBar } from 'antd-mobile';
+import './Home.less';
 
 const TabsData = [
   {
     title: '太阳城',
     key: 'sunCity',
+    unicode: '\ue604',
+    selectedUnicode: '\ue600',
     content: () => <SunCity />
   },
   {
     title: '挖宝',
     key: 'mining',
+    unicode: '\ue605',
+    selectedUnicode: '\ue601',
     content: () => <Mining />
   },
   {
     title: '应用',
     key: 'apply',
+    unicode: '\ue606',
+    selectedUnicode: '\ue603',
     content: () => <Apply />
   },
   {
     title: '我的',
     key: 'user',
+    unicode: '\ue607',
+    selectedUnicode: '\ue602',
     content: () => <User />
   }
 ];
@@ -33,7 +42,7 @@ const TabsData = [
  */
 class Comp extends React.PureComponent {
   state = {
-    selectedTab: 'mining'
+    selectedTab: 'sunCity'
   };
 
   render() {
@@ -57,14 +66,8 @@ class Comp extends React.PureComponent {
                   selectedTab: tab.key
                 });
               }}
-              icon={{
-                uri:
-                  'https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg'
-              }}
-              selectedIcon={{
-                uri:
-                  'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg'
-              }}
+              icon={<i className="iconfont">{tab.unicode}</i>}
+              selectedIcon={<i className="iconfont">{tab.selectedUnicode}</i>}
             >
               {tab.content()}
             </TabBar.Item>

@@ -1,24 +1,7 @@
 import React from 'react';
-import {BlueBox, PeakBox, GreenButton, Header, PageWithHeader} from '../../../components';
-import {List, InputItem, Flex, Button, WhiteSpace} from 'antd-mobile';
+import { PageWithHeader } from '../../../components';
+import { Icon, WhiteSpace } from 'antd-mobile';
 import './style.less';
-
-const Item = List.Item;
-
-const ListData = [
-  {
-    text: '备案号',
-    extra: '去提交'
-  },
-  {
-    text: '电费清单',
-    extra: '审核中'
-  },
-  {
-    text: '组件编号',
-    extra: '审核通过'
-  }
-];
 
 /**
  * 我的电站
@@ -28,25 +11,44 @@ class Comp extends React.PureComponent {
     return (
       <div className={'page-my-station'}>
         <PageWithHeader title={'我的电站'}>
-          <WhiteSpace/>
-
-          <BlueBox type={'pure'}>
-            <div className={'h3 white-text'}>完善以下资料提升算力值</div>
-          </BlueBox>
-
-          <List>
-            {
-              ListData.map((v, i) => (
-                <Item key={i} arrow={v.horizontal && 'horizontal'} extra={v.extra}>
-                  {v.text}
-                </Item>
-              ))
-            }
-          </List>
-
+          <WhiteSpace />
+          <div className="station-list">
+            <div
+              className="item"
+              onClick={() => this.props.history.push(`/equipmentInfo/${0}`)}
+            >
+              <div className="item-pic">
+                <i className="iconfont icon-shebeiliebiao" />
+              </div>
+              <div className="item-detail">
+                <div className="item-name">FWCSHHKJL</div>
+                <div className="item-info">
+                  <span>功率：312312w</span>
+                  <span>日电量：321312kw/h</span>
+                </div>
+              </div>
+              <Icon type="right" />
+            </div>
+            <div
+              className="item"
+              onClick={() => this.props.history.push(`/equipmentInfo/${1}`)}
+            >
+              <div className="item-pic">
+                <i className="iconfont icon-shebeiguanli" />
+              </div>
+              <div className="item-detail">
+                <div className="item-name">FWCSHHKJL</div>
+                <div className="item-info">
+                  <span>功率：312312w</span>
+                  <span>日电量：321312kw/h</span>
+                </div>
+              </div>
+              <Icon type="right" />
+            </div>
+          </div>
         </PageWithHeader>
       </div>
-    )
+    );
   }
 }
 

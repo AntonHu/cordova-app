@@ -3,7 +3,11 @@
   .notice {
     text-align: left;
     padding: 5px * @px 10px * @px;
-    background: @main-color;
+    background: @deep-blue-bg;
+    color: @white-text-color;
+  }
+  .am-notice-bar {
+    background: @deep-blue-bg;
     color: @white-text-color;
   }
   .sun-content {
@@ -17,34 +21,89 @@
       align-items: center;
       padding-left: 20px;
       .detail {
+        text-align: left;
         color: @white-text-color;
         div {
-          margin-top: 10px;
-          &:nth-child(1) {
-            line-height: 24px;
-            background: #ccc;
-            border-radius: 12px;
+          margin-top: 5px;
+          font-size: 12px;
+          span {
+            color: @light-blue-bg;
+          }
+        }
+        .person-info {
+          font-weight: bold;
+          display: flex;
+          align-items: center;
+          height: 25px;
+          padding: 0 5px 0 30px;
+          background: @light-blue-bg;
+          border-radius: 15px;
+          color: @main-color;
+          position: relative;
+          .person-pic {
+            height: 25px;
+            width: 25px;
+            border-radius: 15px;
+            position: absolute;
+            left: 0;
+          }
+          .am-icon-md {
+            width: 18px;
+            height: 18px;
           }
         }
       }
       .powerStation {
-        padding: 5px 20px;
-        background: #ccc;
+        height: 25px;
+        padding: 0 10px 0 30px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        background: @light-blue-bg;
+        color: @main-color;
         border-radius: 12px;
+        position: relative;
+        .powerStation-pic {
+          height: 25px;
+          width: 25px;
+          border-radius: 15px;
+          position: absolute;
+          left: 0;
+        }
       }
     }
     .sun-items {
       height: calc(100% - 90px);
       position: relative;
+      @keyframes slidein {
+        from {
+          margin-top: 0;
+        }
+
+        to {
+          margin-top: 6px;
+        }
+      }
       .sun {
-        display: inline-block;
-        height: 30px;
-        width: 30px;
+        display: flex;
+        flex-direction: column;
         border-radius: 20px;
-        background: #ff0;
         position: absolute;
-        // left: calc(100% - 30px);
-        // top: calc(100% - 30px);
+        animation-duration: 2s;
+        animation-name: slidein;
+        animation-iteration-count: infinite;
+        .sun-pic {
+          display: inline-block;
+          height: 40px;
+          width: 40px;
+          background: url('../../images/sun.png');
+          background-size: 100%;
+        }
+        .sun-number {
+          color: @sun-color;
+          font-size: 12px;
+          margin-top: 3px;
+        }
       }
     }
     .news {
@@ -54,6 +113,15 @@
       margin-top: -10px;
       padding: 10px;
       border-radius: 5px;
+      text-align: left;
+      box-shadow: 0 5px 20px @shadow-color;
+      span {
+        background: @main-color;
+        padding: 3px 5px;
+        color: @white-text-color;
+        margin-right: 5px;
+        border-radius: 5px;
+      }
     }
     .promote {
       padding: 10px;
@@ -71,21 +139,6 @@
       }
     }
     .equipment {
-      margin-top: 10px;
-      .title {
-        display: flex;
-        align-items: center;
-        padding: 10px 0;
-        text-align: left;
-        &::before {
-          content: '';
-          display: inline-block;
-          height: 20px;
-          width: 5px;
-          background: blue;
-          margin-right: 10px;
-        }
-      }
       .item {
         background: @white-text-color;
         margin-bottom: 10px;
@@ -93,6 +146,33 @@
         align-items: center;
         justify-content: space-between;
         padding: 10px;
+        .item-pic {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: @light-blue-bg;
+          border-radius: 25px;
+          height: 50px;
+          width: 50px;
+          .iconfont {
+            margin-top: 6px;
+            color: @white-text-color;
+            font-size: 40px;
+          }
+          .icon-shebeiguanli {
+            font-size: 28px;
+          }
+        }
+        .item-detail {
+          text-align: left;
+          .item-info {
+            margin-top: 5px;
+            color: @light-text-color;
+          }
+        }
+        .am-icon-right {
+          color: @light-text-color;
+        }
       }
     }
   }

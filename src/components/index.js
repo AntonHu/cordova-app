@@ -5,6 +5,7 @@ import PageWithHeader from './PageWithHeader';
 import PeakBox from './PeakBox';
 import Popup from './Popup';
 import PlainButton from './PlainButton';
+import Title from './Title';
 
 export {
   BlueBox,
@@ -13,5 +14,6 @@ export {
   PageWithHeader,
   PeakBox,
   Popup,
-  PlainButton
-}
+  PlainButton,
+  Title
+};

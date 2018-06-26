@@ -7,19 +7,23 @@ import Header from '../Header';
  */
 class Comp extends React.PureComponent {
   static propTypes = {
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    leftComponent: PropTypes.element,
+    rightComponent: PropTypes.element
   };
 
   render() {
-    const { title } = this.props;
+    const { title, rightComponent, leftComponent } = this.props;
     return (
       <div className={'page-with-header'}>
-        <Header title={title}/>
-        {
-          this.props.children
-        }
+        <Header
+          title={title}
+          rightComponent={rightComponent}
+          leftComponent={leftComponent}
+        />
+        {this.props.children}
       </div>
-    )
+    );
   }
 }
 

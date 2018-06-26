@@ -12,12 +12,12 @@ class Comp extends React.PureComponent {
   };
 
   render() {
-    const { onClick, size } = this.props;
+    const { onClick } = this.props;
     return (
       <Button className={`plain-button big`} onClick={onClick}>
         {this.props.children}
       </Button>
-    )
+    );
   }
 }
 

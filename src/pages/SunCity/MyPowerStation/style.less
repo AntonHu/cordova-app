@@ -5,19 +5,29 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 10px 20px 0 20px;
     color: @white-text-color;
     height: 40px;
+    .weather {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      img {
+        height: 30px;
+        margin-right: 10px;
+      }
+    }
     .screen {
       display: flex;
       div {
-        padding: 5px;
+        padding: 7px;
         margin-left: 10px;
-        background: #ccc;
+        background: @blue-color-bg;
         border-radius: 15px;
       }
+
       .selected {
-        background: green;
+        background: @assist-color;
       }
     }
   }
@@ -35,6 +45,7 @@
     margin-top: -30px;
     padding: 10px;
     border-radius: 5px;
+    box-shadow: 0 5px 20px @shadow-color;
     .type-item {
       width: 25%;
       padding: 10px;
@@ -51,32 +62,25 @@
     background: @white-text-color;
     padding: 10px;
     border-radius: 5px;
+    box-shadow: 0 5px 20px @shadow-color;
     .detail-item {
       width: 25%;
       padding: 5px 10px;
 
       .number {
         font-size: 16px;
-        color: green;
+        color: @main-color;
+        font-weight: bold;
+      }
+      .detail-type {
+        margin-top: 5px;
+        color: @light-text-color;
+        font-size: 12px;
       }
     }
   }
   .equipment {
     margin-top: 10px;
-    .equipment-title {
-      display: flex;
-      align-items: center;
-      padding: 10px 0;
-      text-align: left;
-      &::before {
-        content: '';
-        display: inline-block;
-        height: 20px;
-        width: 5px;
-        background: blue;
-        margin-right: 10px;
-      }
-    }
     .item {
       background: @white-text-color;
       margin-bottom: 10px;
@@ -84,6 +88,33 @@
       align-items: center;
       justify-content: space-between;
       padding: 10px;
+      .item-pic {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: @light-blue-bg;
+        border-radius: 25px;
+        height: 50px;
+        width: 50px;
+        .iconfont {
+          margin-top: 6px;
+          color: @white-text-color;
+          font-size: 40px;
+        }
+        .icon-shebeiguanli {
+          font-size: 28px;
+        }
+      }
+      .item-detail {
+        text-align: left;
+        .item-info {
+          margin-top: 5px;
+          color: @light-text-color;
+        }
+      }
+      .am-icon-right {
+        color: @light-text-color;
+      }
     }
   }
 }

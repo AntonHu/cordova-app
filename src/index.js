@@ -1,18 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {
-  HashRouter as Router,
-  Route,
-  Switch,
-  Redirect
-} from 'react-router-dom';
+import 'babel-polyfill'; // 添加async函数支持
 import './index.css';
 import App from './App';
-import MyPowerStation from './pages/SunCity/MyPowerStation';
-import EquipmentInfo from './pages/SunCity/EquipmentInfo';
-import SunIntegral from './pages/Mining/SunIntegral';
 import registerServiceWorker from './registerServiceWorker';
-import MyRoutes from './router';
 
 const device = window.device;
 
@@ -31,7 +22,7 @@ const startJPush = () => {
   try {
     JPush.init();
     JPush.setDebugMode(true);
-    if (device.platform != 'Android') {
+    if (device.platform !== 'Android') {
       JPush.setApplicationIconBadgeNumber(0);
     }
   } catch (err) {
@@ -47,10 +38,7 @@ const startApp = () => {
 };
 
 const startSimpleApp = () => {
-  ReactDOM.render(
-    <App />,
-    document.getElementById('root')
-  );
+  ReactDOM.render(<App />, document.getElementById('root'));
   registerServiceWorker();
 };
 

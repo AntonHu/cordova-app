@@ -1,0 +1,42 @@
+@import '../../../../styles/common';
+
+.page-reset-trade-pw {
+  .progress-prompt {
+    height: 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .line {
+      width: 80px;
+      border-bottom: 1px solid @light-text-color;
+      margin-top: -16px;
+      margin-left: -5px;
+    }
+    .progress {
+      .number {
+        height: 50px;
+        width: 50px;
+        border-radius: 25px;
+        color: @white-text-color;
+        font-size: 24px;
+        margin-bottom: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: @main-color;
+      }
+    }
+    .progress-no {
+      color: @light-text-color;
+      .number {
+        background: @light-text-color;
+      }
+    }
+  }
+  .green-button {
+    margin-top: 50px;
+  }
+  .step-hide {
+    display: none;
+  }
+}

@@ -1,6 +1,6 @@
 import React from 'react';
-import {BlueBox, PeakBox, GreenButton} from '../../../components';
-import {List, InputItem, Flex, Button} from 'antd-mobile';
+import { BlueBox, PeakBox, GreenButton } from '../../../components';
+import { InputItem, Flex, Button } from 'antd-mobile';
 import './style.less';
 
 /**
@@ -15,8 +15,10 @@ class Comp extends React.PureComponent {
         </BlueBox>
         <PeakBox showPeak={true}>
           <div className="body">
-            <InputItem placeholder="请输入手机号" clear type="phone"/>
-            <InputItem placeholder="请输入密码" clear type="password"/>
+            <InputItem placeholder="请输入手机号" clear type="phone">
+              +86
+            </InputItem>
+            <InputItem placeholder="请输入密码" clear type="password" />
             <Flex direction="row">
               <Flex.Item>
                 <Button>忘记密码？</Button>
@@ -29,7 +31,7 @@ class Comp extends React.PureComponent {
           </div>
         </PeakBox>
       </div>
-    )
+    );
   }
 }
 

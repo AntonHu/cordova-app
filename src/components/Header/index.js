@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Icon, Button } from 'antd-mobile';
 import './style.less';
@@ -16,9 +17,11 @@ class Comp extends React.PureComponent {
 
   static defaultProps = {
     title: '标题',
-    leftComponent: <Button className={'header-back'}>
-      <Icon type={'left'}/>
-    </Button>,
+    leftComponent: (
+      <Button className={'header-back'}>
+        <Icon type={'left'} />
+      </Button>
+    ),
     rightComponent: null,
     transparent: false
   };
@@ -27,12 +30,14 @@ class Comp extends React.PureComponent {
     const { title, leftComponent, rightComponent, transparent } = this.props;
     return (
       <div className={`block-chain-header ${transparent && 'transparent'}`}>
-        <div className={'left'}>{leftComponent}</div>
+        <div onClick={() => this.props.history.goBack()} className={'left'}>
+          {leftComponent}
+        </div>
         <div className={'center'}>{title}</div>
         <div className={'right'}>{rightComponent}</div>
       </div>
-    )
+    );
   }
 }
 
-export default Comp;
+export default withRouter(Comp);

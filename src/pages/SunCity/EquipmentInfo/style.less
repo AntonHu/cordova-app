@@ -11,6 +11,7 @@
     color: @white-text-color;
     .survey-item-number {
       font-size: 16px;
+      margin-bottom: 5px;
     }
   }
   .equipment-content {
@@ -27,29 +28,34 @@
       display: flex;
       justify-content: space-around;
       div {
-        padding: 5px;
+        padding: 7px;
         margin-left: 10px;
-        background: #ccc;
         border-radius: 15px;
+        background: @light-text-color;
+        color: @main-text-color;
       }
       .selected {
-        background: green;
+        background: @blue-color-bg;
+        color: @white-text-color;
       }
     }
     .curve-chart-title {
-      margin-top: 10px;
+      margin-top: 20px;
+      text-align: left;
     }
     #curve-chart {
       width: 100%;
     }
     .curve-chart-info {
+      margin-top: 10px;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       .curve-info {
         width: 33.3%;
         text-align: center;
         .curve-number {
           font-size: 16px;
+          margin-top: 5px;
         }
       }
     }

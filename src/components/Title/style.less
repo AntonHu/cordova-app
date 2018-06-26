@@ -1,0 +1,16 @@
+@import '../../styles/common';
+
+.common-title {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  text-align: left;
+  &::before {
+    content: '';
+    display: inline-block;
+    height: 20px;
+    width: 4px;
+    background: @main-color;
+    margin-right: 10px;
+  }
+}

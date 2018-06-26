@@ -1,15 +1,9 @@
 import React from 'react';
-import {
-  BlueBox,
-  PeakBox,
-  GreenButton,
-  Header,
-  PageWithHeader
-} from '../../../components';
-import { List, InputItem, Flex, Button, WhiteSpace } from 'antd-mobile';
+import { PageWithHeader } from '../../../components';
+// import { List, InputItem, Flex, Button, WhiteSpace } from 'antd-mobile';
 import G2 from '@antv/g2';
 import F2 from '@antv/f2';
-import { getDeviceWidth, px } from '../../../utils/getDevice';
+import { px } from '../../../utils/getDevice';
 import './style.less';
 
 G2.track(false);
@@ -50,7 +44,7 @@ const data = [
 class Comp extends React.PureComponent {
   state = {
     selected: {
-      daySelected: false,
+      daySelected: true,
       monthSelected: false,
       yearSelected: false,
       allSelected: false
@@ -156,14 +150,6 @@ class Comp extends React.PureComponent {
         stroke: '#ccc'
       }
     });
-    // chart.guide().text({
-    //   position: ['50%', '50%'],
-    //   content: '85%',
-    //   style: {
-    //     fontSize: 24,
-    //     fill: '#1890FF'
-    //   }
-    // });
     chart.guide().html({
       position: ['110%', '60%'],
       html:
