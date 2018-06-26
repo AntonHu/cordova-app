@@ -24,7 +24,7 @@
         text-align: left;
         color: @white-text-color;
         div {
-          margin-top: 5px;
+          margin-top: 8px;
           font-size: 12px;
           span {
             color: @light-blue-bg;
@@ -64,11 +64,11 @@
         border-radius: 12px;
         position: relative;
         .powerStation-pic {
-          height: 25px;
-          width: 25px;
-          border-radius: 15px;
+          font-size: 40px;
           position: absolute;
-          left: 0;
+          left: -8px;
+          top: -8px;
+          color: @pink-color;
         }
       }
     }
@@ -79,7 +79,6 @@
         from {
           margin-top: 0;
         }
-
         to {
           margin-top: 6px;
         }
@@ -104,6 +103,21 @@
           font-size: 12px;
           margin-top: 3px;
         }
+      }
+      @keyframes disappear {
+        from {
+          opacity: 1;
+        }
+        to {
+          top: 0;
+          opacity: 0;
+        }
+      }
+      .remove {
+        animation-duration: 2s;
+        animation-name: disappear;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
       }
     }
     .news {

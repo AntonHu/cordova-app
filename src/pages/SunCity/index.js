@@ -38,18 +38,20 @@ class Comp extends React.Component {
     ]
   };
   sunArea = null; // 大图形
-  componentDidMount() {
-    this.props.sunCityStore.fetchOSOrderList({
+  async componentDidMount() {
+    await this.props.sunCityStore.fetchSCSunIntegral({
       page: 1,
       pageNums: 8
     });
     this.setState({
-      sunCoordinateArr: this.getSunCoordinateArr()
+      sunCoordinateArr: this.getSunCoordinateArr(
+        toJS(this.props.sunCityStore.getSunIntegral)
+      )
     });
   }
   // 获取小太阳的坐标数组
-  getSunCoordinateArr = () => {
-    const len = this.state.sunList.length;
+  getSunCoordinateArr = sunIntegralArr => {
+    const len = sunIntegralArr.length;
     const maxLeft = this.sunArea.clientWidth - (radius * 2 + padding);
     const maxTop = this.sunArea.clientHeight - (radius * 2 + padding);
     const sunCoordinateArr = [];
@@ -69,6 +71,7 @@ class Comp extends React.Component {
       });
       if (!isIntersect) {
         sunCoordinateArr.push({
+          number: sunIntegralArr[sunCoordinateArr.length],
           left: left,
           top: top
         });
@@ -76,13 +79,25 @@ class Comp extends React.Component {
     }
     return sunCoordinateArr;
   };
+  // 收取太阳积分
+  selectSunIntegral = (e, sunIntegral) => {
+    e.target.parentNode.classList.add('remove');
+    // const sunCoordinateArr = this.state.sunCoordinateArr;
+    // const selectSun = sunCoordinateArr.find(
+    //   item => item.number === sunIntegral
+    // );
+    // const selectSunIndex = sunCoordinateArr.indexOf(selectSun);
+    // sunCoordinateArr.splice(selectSunIndex, 1);
+    // this.setState({ sunCoordinateArr });
+  };
   render() {
+    // console.log(toJS(this.props.sunCityStore.getSunIntegral));
+    // const sunIntegral = toJS(this.props.sunCityStore.getSunIntegral);
     return (
       <div className={'page-sunCity-info'}>
         <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
           最新公告：端午节挖宝活动开始送太阳积分啦~
         </NoticeBar>
-        {/* <div className="notice">最新公告：端午节挖宝活动开始送太阳积分啦~</div> */}
         <div className="sun-content">
           <div className="info">
             <div className="detail">
@@ -105,28 +120,27 @@ class Comp extends React.Component {
               className="powerStation"
               onClick={() => this.props.history.push('/powerStation')}
             >
-              <img
-                className="powerStation-pic"
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR72yqdE9opUl3aiimoZ-MilU5QdxFkK8AaAN6zUY1yrC2SuDWq"
-                alt=""
-              />
+              <i className="iconfont powerStation-pic">&#xe609;</i>
               电站
             </div>
           </div>
           <div className="sun-items" ref={el => (this.sunArea = el)}>
             {this.state.sunCoordinateArr &&
-              this.state.sunList.map((item, index) => {
+              this.state.sunCoordinateArr.map((item, index) => {
                 return (
                   <div
                     className="sun"
                     key={index}
                     style={{
-                      left: `${this.state.sunCoordinateArr[index].left}px`,
-                      top: `${this.state.sunCoordinateArr[index].top}px`
+                      left: `${item.left}px`,
+                      top: `${item.top}px`
                     }}
+                    ref={ele => (this.currentEle = ele)}
+                    // onClick={() => this.selectSunIntegral(item.number)}
+                    onClick={e => this.selectSunIntegral(e, item.number)}
                   >
                     <span className="sun-pic" />
-                    <span className="sun-number">{item}</span>
+                    <span className="sun-number">{item.number}</span>
                   </div>
                 );
               })}
