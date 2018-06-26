@@ -11,7 +11,7 @@ const ListData = [
     path: 'resetTradePW'
   },
   {
-    text: '重置登陆密码',
+    text: '重置登录密码',
     path: 'resetLoginPW'
   }
 ];

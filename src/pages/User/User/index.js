@@ -2,6 +2,7 @@ import React from 'react';
 import { PageWithHeader } from '../../../components';
 import { List, Icon } from 'antd-mobile';
 import { Link } from 'react-router-dom';
+import {getOwnerInfo} from '../../../stores/user/request';
 import './style.less';
 
 const Item = List.Item;
@@ -37,6 +38,11 @@ const ListData = [
  * 我的
  */
 class Comp extends React.PureComponent {
+
+  componentDidMount() {
+    getOwnerInfo()
+  }
+
   render() {
     return (
       <div className={'page-user'}>

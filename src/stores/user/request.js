@@ -62,8 +62,8 @@ export const getMessages = async () => {
  * 修改登录密码
  * @returns {Promise.<*>}
  */
-export const modifyLoginPassword = async ({access_token, newPassword, oldPassword}) => {
-  const response = await post(`${userServer}/resource/user/updatePassword`, {access_token, newPassword, oldPassword});
+export const modifyLoginPassword = async ({newPassword, oldPassword}) => {
+  const response = await post(`${userServer}/resource/user/updatePassword`, {newPassword, oldPassword});
   return response;
 };
 

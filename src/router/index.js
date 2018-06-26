@@ -26,8 +26,8 @@ class AllRoutes extends React.PureComponent {
       <Provider {...stores}>
         <HashRouter>
           <Switch>
-            <AuthorizedRoute path="/" component={PrimaryRoute} />
             <Route path="/login" component={Login}/>
+            <AuthorizedRoute path="/" component={PrimaryRoute} />
             <Route component={RouteFallback} />
           </Switch>
         </HashRouter>
