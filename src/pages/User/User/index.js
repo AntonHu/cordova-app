@@ -1,12 +1,6 @@
 import React from 'react';
-import {
-  BlueBox,
-  PeakBox,
-  GreenButton,
-  Header,
-  PageWithHeader
-} from '../../../components';
-import { List, InputItem, Flex, Button, Icon } from 'antd-mobile';
+import { PageWithHeader } from '../../../components';
+import { List, Icon } from 'antd-mobile';
 import { Link } from 'react-router-dom';
 import './style.less';
 

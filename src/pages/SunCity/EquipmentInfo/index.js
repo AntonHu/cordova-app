@@ -1,9 +1,9 @@
 import React from 'react';
-import { Title, PageWithHeader } from '../../../components';
-import { List, InputItem, Flex, Button, WhiteSpace } from 'antd-mobile';
+import { PageWithHeader } from '../../../components';
+// import { List, InputItem, Flex, Button, WhiteSpace } from 'antd-mobile';
 import G2 from '@antv/g2';
 import F2 from '@antv/f2';
-import { getDeviceWidth, px } from '../../../utils/getDevice';
+import { px } from '../../../utils/getDevice';
 import './style.less';
 
 G2.track(false);

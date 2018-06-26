@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  HashRouter,
-  Route,
-  Link,
-  Switch,
-  BrowserRouter,
-  withRouter
-} from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'mobx-react';
 import * as stores from '../stores';
 import Home from '../pages/Home';

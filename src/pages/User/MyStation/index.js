@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  BlueBox,
-  PeakBox,
-  GreenButton,
-  Header,
-  PageWithHeader
-} from '../../../components';
+import { PageWithHeader } from '../../../components';
 import { Icon, WhiteSpace } from 'antd-mobile';
 import './style.less';
 

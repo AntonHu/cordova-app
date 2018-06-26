@@ -3,7 +3,7 @@ import { Apply } from './Apply';
 import SunCity from './SunCity/index';
 import Mining from './Mining/Mining';
 import { User } from './User';
-import { TabBar, Icon } from 'antd-mobile';
+import { TabBar } from 'antd-mobile';
 import './Home.less';
 
 const TabsData = [

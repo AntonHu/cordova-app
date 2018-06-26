@@ -1,7 +1,6 @@
 import React from 'react';
-import { PageWithHeader, GreenButton } from '../../../../components';
-import { List, InputItem } from 'antd-mobile';
-import { Link } from 'react-router-dom';
+import { PageWithHeader } from '../../../../components';
+import { InputItem } from 'antd-mobile';
 import './style.less';
 
 /**

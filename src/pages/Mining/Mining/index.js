@@ -2,16 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 import { Title, PageWithHeader } from '../../../components';
-import {
-  List,
-  InputItem,
-  Flex,
-  Button,
-  Icon,
-  Tabs,
-  WhiteSpace,
-  Badge
-} from 'antd-mobile';
+import { Icon, Tabs, WhiteSpace } from 'antd-mobile';
 import './style.less';
 
 const tabs2 = [

@@ -1,6 +1,6 @@
 import React from 'react';
-import {BlueBox, PeakBox, GreenButton, Header, PageWithHeader} from '../../../components';
-import {List, InputItem, Flex, Button, WhiteSpace} from 'antd-mobile';
+import { BlueBox, PageWithHeader } from '../../../components';
+import { List } from 'antd-mobile';
 import './style.less';
 
 const Item = List.Item;
@@ -28,24 +28,24 @@ class Comp extends React.PureComponent {
     return (
       <div className={'page-about'}>
         <PageWithHeader title={'关于'}>
-
           <BlueBox>
-            <div className='h1 white-text'>EBC新能源</div>
+            <div className="h1 white-text">EBC新能源</div>
           </BlueBox>
 
           <List>
-            {
-              ListData.map((v, i) => (
-                <Item key={i} arrow={v.horizontal && 'horizontal'} extra={v.extra}>
-                  {v.text}
-                </Item>
-              ))
-            }
+            {ListData.map((v, i) => (
+              <Item
+                key={i}
+                arrow={v.horizontal && 'horizontal'}
+                extra={v.extra}
+              >
+                {v.text}
+              </Item>
+            ))}
           </List>
-
         </PageWithHeader>
       </div>
-    )
+    );
   }
 }
 

@@ -1,16 +1,9 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import {
-  BlueBox,
-  PeakBox,
-  GreenButton,
-  Header,
-  PageWithHeader
-} from '../../../components';
+import { BlueBox, PageWithHeader } from '../../../components';
 import { List, Picker, Icon } from 'antd-mobile';
 import './style.less';
 
-const Item = List.Item;
 const seasons = [
   {
     label: '男',
