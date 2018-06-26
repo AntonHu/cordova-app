@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 import { Title, PageWithHeader } from '../../../components';
 import { Icon, Tabs, WhiteSpace } from 'antd-mobile';
+import { getNearbyWalletTopRank, gainTokens, getTokenRecords, getWalletData, getWalletTopRank} from '../../../stores/mining/request';
 import './style.less';
 
 const tabs2 = [
@@ -29,6 +30,19 @@ class Comp extends React.PureComponent {
       }
     ]
   };
+
+  componentDidMount() {
+    this.makeRequest();
+  }
+
+  makeRequest = () => {
+    getWalletTopRank({});
+    getNearbyWalletTopRank({});
+    gainTokens({});
+    getTokenRecords({});
+    getWalletData({});
+  };
+
   render() {
     return (
       <div className={'page-mining'}>

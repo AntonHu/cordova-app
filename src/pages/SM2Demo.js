@@ -22,8 +22,25 @@ class SM2Demo extends React.PureComponent {
   };
 
   componentDidMount() {
-    this.test();
+    console.log(JSRsasign.hextob64(this.state.publicKey))
+    // this.test();
   }
+
+  getPublicKeyFromPriv = () => {
+    const ec = new JSRsasign.crypto.ECDSA({curve});
+    const biPrv = new BigInteger(this.state.privateKey, 16);
+    const epPub = ec.ecparams['G'].multiply(biPrv);
+    var biX = epPub.getX().toBigInteger();
+    var biY = epPub.getY().toBigInteger();
+
+    var charlen = ec.ecparams['keylen'] / 4;
+    var hX   = ("0000000000" + biX.toString(16)).slice(- charlen);
+    var hY   = ("0000000000" + biY.toString(16)).slice(- charlen);
+    var hPub = "04" + hX + hY;
+
+    console.log(hPub);
+    console.log(hPub === this.state.publicKey)
+  };
 
   /**
    * 生成公私钥
