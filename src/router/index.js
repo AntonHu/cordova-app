@@ -12,7 +12,7 @@ const RouteFallback = props => {
   return (
     <Redirect
       to={{
-        pathname: '/app',
+        pathname: '/',
         from: props.location
       }}
     />
@@ -26,7 +26,7 @@ class AllRoutes extends React.PureComponent {
       <Provider {...stores}>
         <HashRouter>
           <Switch>
-            <AuthorizedRoute path="/app" component={PrimaryRoute} />
+            <AuthorizedRoute path="/" component={PrimaryRoute} />
             <Route path="/login" component={Login}/>
             <Route component={RouteFallback} />
           </Switch>

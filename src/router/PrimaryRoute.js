@@ -25,7 +25,7 @@ class PrimaryRoute extends React.PureComponent {
   render() {
     return (
       <Switch>
-        <Route exact path={'/app'} component={Home}/>
+        <Route exact path={'/'} component={Home}/>
         {/* 太阳城 */}
         <Route exact path="/powerStation" component={MyPowerStation}/>
         <Route exact path="/equipmentInfo/:id" component={EquipmentInfo}/>
@@ -38,7 +38,7 @@ class PrimaryRoute extends React.PureComponent {
         <Route exact path={'/user/about'} component={About}/>
         <Route
           exact
-          path={'/user/accountSetting'}
+          path={`/user/accountSetting`}
           component={AccountSetting}
         />
         <Route exact path={'/user/msgCenter'} component={MsgCenter}/>

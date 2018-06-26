@@ -40,12 +40,12 @@ const postInstance = axios.create({
 export const get = (url, params) => {
   const token = getSessionStorage('token');
   let urlStr = url;
-  // if (params && Object.keys(params).length > 0) {
-  //   urlStr += `?access_token=${token}&`;
-  //   urlStr += qs.stringify(params);
-  // } else {
-  //   urlStr += `?access_token=${token}`;
-  // }
+  if (params && Object.keys(params).length > 0) {
+    urlStr += `?access_token=${token}&`;
+    urlStr += qs.stringify(params);
+  } else {
+    urlStr += `?access_token=${token}`;
+  }
   return JSONInstance.get(urlStr);
 };
 

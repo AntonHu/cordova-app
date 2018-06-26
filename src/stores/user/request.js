@@ -39,3 +39,39 @@ export const reqRegister = async ({username, password}) => {
     msg: response.msg || '注册失败'
   }
 };
+
+/**
+ * 获取个人信息
+ * @returns {Promise.<*>}
+ */
+export const getOwnerInfo = async () => {
+  const response = await get(`${backendServer}/user/getOwnerInfo`);
+  return response;
+};
+
+/**
+ * 获取消息列表
+ * @returns {Promise.<*>}
+ */
+export const getMessages = async () => {
+  const response = await get(`${backendServer}/message/getMessages`);
+  return response;
+};
+
+/**
+ * 修改登录密码
+ * @returns {Promise.<*>}
+ */
+export const modifyLoginPassword = async ({access_token, newPassword, oldPassword}) => {
+  const response = await post(`${userServer}/resource/user/updatePassword`, {access_token, newPassword, oldPassword});
+  return response;
+};
+
+/**
+ * 用户信息修改（头像，昵称）
+ * @returns {Promise.<*>}
+ */
+export const reqUpdateUser = async () => {
+  const response = await post(`${backendServer}/user/update`);
+  return response
+};
