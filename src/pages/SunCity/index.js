@@ -18,24 +18,7 @@ const padding = 30; // 包含小图形的大图形的内边距
 class Comp extends React.Component {
   state = {
     sunList: [1.032, 1.323, 2.323, 1.2334, 5.2336, 3.2334, 2.3234],
-    sunCoordinateArr: null,
-    equipmentList: [
-      {
-        name: '测试1',
-        power: '12345w',
-        electric: '21.1kw/h'
-      },
-      {
-        name: '测试2',
-        power: '12345w',
-        electric: '21.1kw/h'
-      },
-      {
-        name: '测试3',
-        power: '12345w',
-        electric: '21.1kw/h'
-      }
-    ]
+    sunCoordinateArr: null
   };
   sunArea = null; // 大图形
   async componentDidMount() {
@@ -81,6 +64,15 @@ class Comp extends React.Component {
   };
   // 收取太阳积分
   selectSunIntegral = (e, sunIntegral) => {
+    // this.props.sunCityStore
+    //   .fetchSCGetSunIntegral({
+    //     value: sunIntegral
+    //   })
+    //   .then(result => {
+    //     if (result.code === 200) {
+    //       e.target.parentNode.classList.add('remove');
+    //     }
+    //   });
     e.target.parentNode.classList.add('remove');
     // const sunCoordinateArr = this.state.sunCoordinateArr;
     // const selectSun = sunCoordinateArr.find(

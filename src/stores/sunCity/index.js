@@ -1,5 +1,5 @@
 import { observable, action, runInAction, computed } from 'mobx';
-import { fetchSunIntegral } from './request';
+import { fetchSunIntegral, fetchGetSunIntegral } from './request';
 
 class SunCityStore {
   @observable sunIntegral;
@@ -10,7 +10,7 @@ class SunCityStore {
     return this.sunIntegral;
   }
 
-  // 订单列表
+  // 太阳积分列表
   @action
   fetchSCSunIntegral = async params => {
     let result;
@@ -35,6 +35,19 @@ class SunCityStore {
         //   );
         // }
       });
+    } catch (err) {
+      console.log(err);
+    }
+    return result;
+  };
+
+  // 收取太阳积分
+  @action
+  fetchSCGetSunIntegral = async params => {
+    let result;
+    try {
+      result = await fetchGetSunIntegral(params);
+      runInAction(() => {});
     } catch (err) {
       console.log(err);
     }
