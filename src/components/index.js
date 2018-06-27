@@ -6,6 +6,7 @@ import PeakBox from './PeakBox';
 import Popup from './Popup';
 import PlainButton from './PlainButton';
 import Title from './Title';
+import Countdown from './Countdown';
 
 export {
   BlueBox,
@@ -15,5 +16,6 @@ export {
   PeakBox,
   Popup,
   PlainButton,
-  Title
+  Title,
+  Countdown
 };

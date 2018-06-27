@@ -4,6 +4,7 @@ import { Provider } from 'mobx-react';
 import * as stores from '../stores';
 import {
   Login,
+  Register
 } from '../pages/User';
 import AuthorizedRoute from './AuthorizedRoute';
 import PrimaryRoute from './PrimaryRoute';
@@ -27,6 +28,7 @@ class AllRoutes extends React.PureComponent {
         <HashRouter>
           <Switch>
             <Route path="/login" component={Login}/>
+            <Route path="/register" component={Register}/>
             <AuthorizedRoute path="/" component={PrimaryRoute} />
             <Route component={RouteFallback} />
           </Switch>

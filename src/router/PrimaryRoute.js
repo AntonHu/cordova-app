@@ -4,13 +4,11 @@ import Home from '../pages/Home';
 import {
   About,
   AccountSetting,
-  Login,
   MsgCenter,
   MyData,
   MyStation,
   PersonalInfo,
   PersonalNickname,
-  Register,
   ResetPW,
   ResetTradePW,
   ResetLoginPW,
@@ -50,7 +48,6 @@ class PrimaryRoute extends React.PureComponent {
           path={'/user/personalNickname/:id'}
           component={PersonalNickname}
         />
-        <Route exact path={'/user/register'} component={Register}/>
         <Route exact path={'/user/resetPW'} component={ResetPW}/>
         <Route exact path={'/user/resetTradePW'} component={ResetTradePW}/>
         <Route exact path={'/user/resetLoginPW'} component={ResetLoginPW}/>

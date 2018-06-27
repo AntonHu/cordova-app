@@ -1,5 +1,5 @@
 import React from 'react';
-import { BlueBox, PeakBox, GreenButton } from '../../../components';
+import { BlueBox, PeakBox, GreenButton, Countdown } from '../../../components';
 import { InputItem, Flex, Button } from 'antd-mobile';
 import './style.less';
 import {reqLogin} from '../../../stores/user/request';
@@ -44,6 +44,10 @@ class Comp extends React.PureComponent {
     });
   };
 
+  toRegister = () => {
+    this.props.history.push('/register')
+  };
+
   render() {
     return (
       <div className={'page-login'}>
@@ -73,7 +77,7 @@ class Comp extends React.PureComponent {
                 <Button>忘记密码？</Button>
               </Flex.Item>
               <Flex.Item>
-                <Button>注册账号</Button>
+                <Button onClick={this.toRegister}>注册账号</Button>
               </Flex.Item>
             </Flex>
             <GreenButton size={'big'} onClick={this.onLogin}>登录</GreenButton>

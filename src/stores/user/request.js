@@ -1,4 +1,4 @@
-import {get, post} from '../../utils/fetch';
+import {get, post, authPost} from '../../utils/fetch';
 import {backendServer, userServer} from '../../utils/variable';
 
 /**
@@ -24,20 +24,31 @@ export const reqLogin = async ({username, password}) => {
  * 用户注册
  * @returns {Promise.<{success, msg: string}>}
  */
-export const reqRegister = async ({username, password}) => {
+export const reqRegister = async ({mobile, password, verification_code}) => {
+  const userServer = 'http://192.168.1.167:8195';
   const response = await post(`${userServer}/authz/users/register`,
     {
-      username,
+      mobile,
       password,
       scope: 'read',
       client_id: 'test',
       client_secret: 'test',
-      register_type: 'password'
+      register_type: 'phone',
+      verification_code
     });
-  return {
-    success: response.success,
-    msg: response.msg || '注册失败'
-  }
+  return response
+};
+
+/**
+ * 发送验证码
+ * @param mobile 手机号
+ * @param type   0 注册 1 修改密码
+ * @returns {Promise.<void>}
+ */
+export const reqSendCode = async ({mobile, type = '0'}) => {
+  const userServer = 'http://192.168.1.167:8195';
+  const response = await post(`${userServer}/authz/sms/send`, {mobile, type});
+  return response;
 };
 
 /**

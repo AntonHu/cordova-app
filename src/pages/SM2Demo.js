@@ -11,8 +11,8 @@ const curve = 'sm2';
 
 class SM2Demo extends React.PureComponent {
   state = {
-    privateKey: '7a26c592475aa38a49ef7237e97af29eb094008cfc888d1a39272276d06bd509',
-    publicKey: '0424cf6f4416c7c17e9fd12236216db3fa8210b37a0e3a3a8e90112e2ca118b3c557a267f4a1294ae8f243214b838f94e0b3025888de6118050ae12df3c24069ec',
+    privateKey: 'e469d6bcae3f9bef883828a629d12c89bd4e0ce67cab70a5557971f6dc7f4e29',
+    publicKey: '0439ad8cd4dd8be0a809f7808c9d07fcf0f85a71c079ad9fd265e43f5d5ba114251941c2908b2f42ba393421368ed4da585837cd4a303ffc0ee09a5427a6df2605',
     msg: '{"name":"你好世界","value":[1,2,3]}',
     sign: '304502207ca516d6d9f3865c1cb40317eb5b394d1554a8294d12c9965def9de5c0adc788022100ad76fcd9b1759afde8253858264e16bbc23ceb45313addf148e050c52021424e',
     isValid: false,
@@ -22,7 +22,14 @@ class SM2Demo extends React.PureComponent {
   };
 
   componentDidMount() {
-    console.log(JSRsasign.hextob64(this.state.publicKey))
+    const pub64 = JSRsasign.hextob64(this.state.publicKey);
+    const pri64 = JSRsasign.hextob64(this.state.privateKey);
+    console.log('pub: ', pub64)
+    console.log('priv: ', pri64)
+
+    console.log('encode pub: ', encodeURIComponent(pub64))
+    console.log('encode priv: ', encodeURIComponent(pri64))
+
     // this.test();
   }
 
