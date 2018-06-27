@@ -19,3 +19,11 @@ export const fetchGetSunIntegral = async params => {
   const response = await get(`${backendServer}/wallet/gainTokens`, params);
   return response.data || [];
 };
+
+/**
+ * 获取电站数据
+ */
+export const fetchPowerstationData = async params => {
+  const response = await get(`${backendServer}/wallet/gainTokens`, params);
+  return response.data || [];
+};

@@ -132,7 +132,7 @@ class Comp extends React.PureComponent {
           <BlueBox type={'pure'}>
             <div className="title">
               <div className="weather">
-                <i class="iconfont">&#xe636;</i>晴
+                <i className="iconfont">&#xe636;</i>晴
               </div>
               <div className="screen" onClick={this.screenChange}>
                 <div
