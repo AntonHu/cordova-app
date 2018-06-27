@@ -54,7 +54,8 @@ export const reqSendCode = async ({mobile, type = '0'}) => {
  * @returns {Promise.<*>}
  */
 export const getOwnerInfo = async () => {
-  const response = await get(`${backendServer}/user/getOwnerInfo`);
+  const userServer = 'http://192.168.1.167:8196';
+  const response = await get(`${userServer}/resource/rs/checkToken`);
   return response;
 };
 
@@ -80,7 +81,13 @@ export const modifyLoginPassword = async ({newPassword, oldPassword}) => {
  * 用户信息修改（头像，昵称）
  * @returns {Promise.<*>}
  */
-export const reqUpdateUser = async () => {
-  const response = await post(`${backendServer}/user/update`);
+export const reqUpdateUser = async ({header, nickName}) => {
+  const userServer = 'http://192.168.1.167:8196';
+  const response = await post(`${userServer}/resource/user/updateUserInfo`,
+    {
+      header,
+      nickName
+    }
+  );
   return response
 };

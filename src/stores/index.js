@@ -1,2 +1,4 @@
 import sunCityStore from './sunCity';
-export { sunCityStore };
+import userStore from './user';
+
+export { sunCityStore, userStore };

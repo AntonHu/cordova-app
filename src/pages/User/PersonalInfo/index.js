@@ -1,40 +1,58 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { BlueBox, PageWithHeader } from '../../../components';
-import { List, Picker, Icon } from 'antd-mobile';
+import { List, Picker, Icon, Modal, Button } from 'antd-mobile';
+import { observer, inject } from 'mobx-react';
 import './style.less';
 
-const seasons = [
+const avatarModalData = [
   {
-    label: '男',
-    value: '男'
+    text: '拍照',
+    onPress: function () {
+
+    }
   },
   {
-    label: '女',
-    value: '女'
+    text: '相册选取',
+    onPress: function () {
+
+    }
+  },
+  {
+    text: '取消',
+    onPress: function () {
+      this.setState({
+        modal1Visible: false
+      })
+    },
+    color: ''
   }
 ];
 
 /**
  * 个人信息
  */
+@inject('userStore') // 如果注入多个store，用数组表示
+@observer
 class Comp extends React.Component {
   state = {
-    sexArr: ['男']
+    sexArr: ['男'],
+    modal1Visible: false
   };
   // 头像更改
-  picChange = () => {};
+  picChange = () => {
+    this.setState({
+      modal1Visible: true
+    })
+  };
+
   onChange = (files, type, index) => {
     console.log(files, type, index);
   };
-  // 性别更改
-  sexChange = value => {
-    this.setState({
-      sexArr: value
-    });
-  };
-  // TODO: 头像等组件
+
   render() {
+    const {userInfo} = this.props.userStore;
+    const {username, avatar, nickName} = userInfo;
     return (
       <div className={'page-personal-info'}>
         <PageWithHeader title={'个人信息'}>
@@ -42,13 +60,13 @@ class Comp extends React.Component {
             <div className="personal-info">
               <img
                 className="personal-pic"
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR72yqdE9opUl3aiimoZ-MilU5QdxFkK8AaAN6zUY1yrC2SuDWq"
+                src={avatar}
                 alt=""
               />
               <div className="personal-prompt">您已实名认证成功!</div>
             </div>
-            <div className="personal-name">test</div>
-            <div className="personal-id">31232245678</div>
+            <div className="personal-name">{nickName || '未知'}</div>
+            {/*<div className="personal-id">31232245678</div>*/}
             <div
               className="go-authentication"
               onClick={() => this.props.history.push(`/user/verifyID/${1}`)}
@@ -60,7 +78,11 @@ class Comp extends React.Component {
           <div className="personal-list" onClick={this.picChange}>
             <div className="personal-item">
               <div className="item-title">头像</div>
-              <div>322432</div>
+              <img
+                className="personal-pic"
+                src={avatar}
+                alt=""
+              />
             </div>
             <div
               className="personal-item"
@@ -69,18 +91,30 @@ class Comp extends React.Component {
               }
             >
               <div className="item-title">昵称</div>
-              <div>322432</div>
+              <div>{nickName || ''}</div>
             </div>
-            <Picker
-              data={seasons}
-              cols={1}
-              value={this.state.sexArr}
-              onChange={this.sexChange}
-            >
-              <List.Item arrow="horizontal">性别</List.Item>
-            </Picker>
           </div>
         </PageWithHeader>
+
+        <Modal
+          popup
+          visible={this.state.modal1Visible}
+          onClose={() => this.setState({ modal1Visible: false })}
+          animationType="slide-up"
+        >
+          <List>
+            {avatarModalData.map((i, index) => (
+              <Button
+                onClick={(e) => {
+                  // i.onPress.bind(this);
+                  i.onPress.call(this);
+                }}
+              >
+                <List.Item key={index}>{i.text}</List.Item>
+              </Button>
+            ))}
+          </List>
+        </Modal>
       </div>
     );
   }

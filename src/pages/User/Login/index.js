@@ -1,9 +1,11 @@
 import React from 'react';
-import { BlueBox, PeakBox, GreenButton, Countdown } from '../../../components';
-import { InputItem, Flex, Button } from 'antd-mobile';
+import {BlueBox, PeakBox, GreenButton, Countdown} from '../../../components';
+import {InputItem, Flex, Button, Modal} from 'antd-mobile';
 import './style.less';
 import {reqLogin} from '../../../stores/user/request';
-import User from '../../../utils/user'
+import User from '../../../utils/user';
+
+const alert = Modal.alert;
 
 /**
  * 登录
@@ -20,6 +22,7 @@ class Comp extends React.PureComponent {
         [stateName]: value
       })
     }
+
     _setState = _setState.bind(this);
     return _setState;
   };
@@ -31,17 +34,31 @@ class Comp extends React.PureComponent {
     reqLogin({
       username: trimPhone,
       password
-    }).then(res => {
-      console.log(res);
-      if (res.status === 200) {
-        const data = res.data;
-        const user = new User();
-        user.login(data.access_token);
-        this.props.history.push('/');
-      } else {
+    })
+      .then(res => {
+        console.log(res);
+        if (res.status === 200) {
+          const data = res.data;
+          const user = new User();
+          user.login(data.access_token);
+          this.props.history.push('/');
+        } else {
 
-      }
-    });
+        }
+      })
+      .catch(err => {
+        const data = err.response.data;
+        let msg = '登录失败';
+        if (data.error_description) {
+          if (data.error_description === 'Bad credentials') {
+            msg = '用户名或密码错误'
+          } else {
+            msg = data.error_description
+          }
+        }
+        alert('错误', msg, [{ text: '确定'}]);
+      })
+
   };
 
   toRegister = () => {

@@ -63,7 +63,7 @@ class Comp extends React.PureComponent {
       });
       const data = res.data;
       this.isRegistering = false;
-      if (data && data.code === 2000) {
+      if (data && data.code === 20000) {
         this.registerSuccess();
       } else {
         this.registerFail(data.msg)

@@ -3,6 +3,8 @@ import { PageWithHeader } from '../../../components';
 import { List, Icon } from 'antd-mobile';
 import { Link } from 'react-router-dom';
 import {getOwnerInfo} from '../../../stores/user/request';
+import { toJS } from 'mobx';
+import { observer, inject } from 'mobx-react';
 import './style.less';
 
 const Item = List.Item;
@@ -37,13 +39,17 @@ const ListData = [
 /**
  * 我的
  */
+@inject('userStore') // 如果注入多个store，用数组表示
+@observer
 class Comp extends React.PureComponent {
 
   componentDidMount() {
-    getOwnerInfo()
+    this.props.userStore.fetchUserInfo()
   }
 
   render() {
+    const {userInfo} = this.props.userStore;
+    const {username, avatar, nickName} = userInfo;
     return (
       <div className={'page-user'}>
         <PageWithHeader leftComponent={null} title={'个人中心'}>
@@ -54,10 +60,10 @@ class Comp extends React.PureComponent {
             <div className="user-info">
               <img
                 className="user-pic"
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR72yqdE9opUl3aiimoZ-MilU5QdxFkK8AaAN6zUY1yrC2SuDWq"
+                src={avatar}
                 alt=""
               />
-              <div className="user-name">test</div>
+              <div className="user-name">{nickName || username || '未知'}</div>
             </div>
             <div className="to-detial">
               <Link to="/user/personalInfo">
