@@ -18,7 +18,9 @@ class Countdown extends Component {
     });
   }
   componentWillUnmount() {
-    clearInterval(this.clock);
+    if (this.clock) {
+      clearInterval(this.clock);
+    }
   }
 
   startCounting = () => {

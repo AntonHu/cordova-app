@@ -24,8 +24,7 @@ export const reqLogin = async ({username, password}) => {
  * 用户注册
  * @returns {Promise.<{success, msg: string}>}
  */
-export const reqRegister = async ({mobile, password, verification_code}) => {
-  const userServer = 'http://192.168.1.167:8195';
+export const reqRegister = async ({mobile, password, verificationCode}) => {
   const response = await post(`${userServer}/authz/users/register`,
     {
       mobile,
@@ -34,7 +33,7 @@ export const reqRegister = async ({mobile, password, verification_code}) => {
       client_id: 'test',
       client_secret: 'test',
       register_type: 'phone',
-      verification_code
+      verification_code: verificationCode
     });
   return response
 };
@@ -46,7 +45,6 @@ export const reqRegister = async ({mobile, password, verification_code}) => {
  * @returns {Promise.<void>}
  */
 export const reqSendCode = async ({mobile, type = '0'}) => {
-  const userServer = 'http://192.168.1.167:8195';
   const response = await post(`${userServer}/authz/sms/send`, {mobile, type});
   return response;
 };

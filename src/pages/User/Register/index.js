@@ -59,7 +59,7 @@ class Comp extends React.PureComponent {
       const res = await reqRegister({
         mobile: clearSpace(phone),
         password,
-        verification_code: code
+        verificationCode: code
       });
       const data = res.data;
       this.isRegistering = false;
