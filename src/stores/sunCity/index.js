@@ -2,12 +2,14 @@ import { observable, action, runInAction, computed } from 'mobx';
 import {
   fetchSunIntegral,
   fetchGetSunIntegral,
-  fetchPowerstationData
+  fetchPowerstationData,
+  fetchEquipmentData
 } from './request';
 
 class SunCityStore {
   @observable sunIntegral;
   @observable powerstationData;
+  @observable equipmentData;
 
   // 太阳积分列表
   @computed
@@ -71,6 +73,34 @@ class SunCityStore {
     let result;
     try {
       // result = await fetchPowerstationData(params);
+      runInAction(() => {
+        // if (result.responseCode === 200) {
+        //   const order = JSON.parse(result.responseJson);
+        //   this.orderNums = order.total;
+        //   // 按时间排序处理数组
+        //   this.orderList = order.list.sort(
+        //     (a, b) => Number(b.date) - Number(a.date)
+        //   );
+        // }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    return result;
+  };
+
+  // 获取设备数据
+  @computed
+  get getEquipmentData() {
+    return this.equipmentData;
+  }
+
+  // 获取设备数据
+  @action
+  fetchSCEquipmentData = async params => {
+    let result;
+    try {
+      // result = await fetchEquipmentData(params);
       runInAction(() => {
         // if (result.responseCode === 200) {
         //   const order = JSON.parse(result.responseJson);

@@ -27,3 +27,11 @@ export const fetchPowerstationData = async params => {
   const response = await get(`${backendServer}/wallet/gainTokens`, params);
   return response.data || [];
 };
+
+/**
+ * 获取设备数据
+ */
+export const fetchEquipmentData = async params => {
+  const response = await get(`${backendServer}/wallet/gainTokens`, params);
+  return response.data || [];
+};
