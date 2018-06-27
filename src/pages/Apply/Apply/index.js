@@ -10,7 +10,7 @@ const Apps = [
     icon: 'avatar'
   },
   {
-    text: '积分商城',
+    text: '积分层次',
     icon: 'avatar'
   },
   {
