@@ -2,6 +2,7 @@ import axios from 'axios';
 import qs from 'qs';
 import { getSessionStorage } from './storage';
 
+// 暂时的publicKey
 const publicKey =
   '0439ad8cd4dd8be0a809f7808c9d07fcf0f85a71c079ad9fd265e43f5d5ba114251941c2908b2f42ba393421368ed4da585837cd4a303ffc0ee09a5427a6df2605';
 /*
