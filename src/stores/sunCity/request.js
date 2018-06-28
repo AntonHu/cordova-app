@@ -5,7 +5,12 @@ import { backendServer } from '../../utils/variable';
  * 太阳积分列表
  */
 export const fetchSunIntegral = async params => {
-  const response = await get(`${backendServer}/wallet/getWalletData`, params);
+  let response = {};
+  try {
+    response = await get(`${backendServer}/wallet/getWalletData`, params);
+  } catch (err) {
+    console.log(err);
+  }
   return response.data || [];
 };
 
@@ -13,7 +18,12 @@ export const fetchSunIntegral = async params => {
  * 收取太阳积分
  */
 export const fetchGetSunIntegral = async params => {
-  const response = await get(`${backendServer}/wallet/gainTokens`, params);
+  let response = {};
+  try {
+    response = await get(`${backendServer}/wallet/gainTokens`, params);
+  } catch (err) {
+    console.log(err);
+  }
   return response.data || [];
 };
 
@@ -21,7 +31,12 @@ export const fetchGetSunIntegral = async params => {
  * 获取电站数据
  */
 export const fetchPowerstationData = async params => {
-  const response = await get(`${backendServer}/wallet/gainTokens`, params);
+  let response = {};
+  try {
+    response = await get(`${backendServer}/wallet/gainTokens`, params);
+  } catch (err) {
+    console.log(err);
+  }
   return response.data || [];
 };
 
@@ -29,7 +44,12 @@ export const fetchPowerstationData = async params => {
  * 获取设备列表
  */
 export const fetchEquipmentList = async params => {
-  const response = await get(`${backendServer}/equipment/equipments`, params);
+  let response = {};
+  try {
+    response = await get(`${backendServer}/equipment/equipments`, params);
+  } catch (err) {
+    console.log(err);
+  }
   return response.data || [];
 };
 
@@ -37,10 +57,12 @@ export const fetchEquipmentList = async params => {
  * 获取设备信息
  */
 export const fetchEquipmentInfo = async params => {
-  const response = await get(
-    `${backendServer}/equipment/equipmentInfo`,
-    params
-  );
+  let response = {};
+  try {
+    response = await get(`${backendServer}/equipment/equipmentInfo`, params);
+  } catch (err) {
+    console.log(err);
+  }
   return response.data || [];
 };
 
@@ -48,9 +70,11 @@ export const fetchEquipmentInfo = async params => {
  * 获取设备发电量
  */
 export const fetchEquipmentPower = async params => {
-  const response = await get(
-    `${backendServer}/equipment/dailyGeneration`,
-    params
-  );
+  let response = {};
+  try {
+    response = await get(`${backendServer}/equipment/dailyGeneration`, params);
+  } catch (err) {
+    console.log(err);
+  }
   return response.data || [];
 };

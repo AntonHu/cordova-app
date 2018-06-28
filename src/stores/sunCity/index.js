@@ -24,7 +24,7 @@ class SunCityStore {
   // 太阳积分列表
   @action
   fetchSCSunIntegral = async params => {
-    let result;
+    let result = {};
     try {
       // result = await fetchSunIntegral(params);
       runInAction(() => {
@@ -39,12 +39,7 @@ class SunCityStore {
           7.3234
         ];
         // if (result.responseCode === 200) {
-        //   const order = JSON.parse(result.responseJson);
-        //   this.orderNums = order.total;
-        //   // 按时间排序处理数组
-        //   this.orderList = order.list.sort(
-        //     (a, b) => Number(b.date) - Number(a.date)
-        //   );
+        //   this.sunIntegral = order.total;
         // }
       });
     } catch (err) {
@@ -56,7 +51,7 @@ class SunCityStore {
   // 收取太阳积分
   @action
   fetchSCGetSunIntegral = async params => {
-    let result;
+    let result = {};
     try {
       result = await fetchGetSunIntegral(params);
       runInAction(() => {});
@@ -75,17 +70,12 @@ class SunCityStore {
   // 获取电站数据
   @action
   fetchSCPowerstationData = async params => {
-    let result;
+    let result = {};
     try {
       // result = await fetchPowerstationData(params);
       runInAction(() => {
         // if (result.responseCode === 200) {
-        //   const order = JSON.parse(result.responseJson);
-        //   this.orderNums = order.total;
-        //   // 按时间排序处理数组
-        //   this.orderList = order.list.sort(
-        //     (a, b) => Number(b.date) - Number(a.date)
-        //   );
+        //   this.powerstationData = order.total;
         // }
       });
     } catch (err) {
@@ -103,17 +93,12 @@ class SunCityStore {
   // 获取设备列表
   @action
   fetchSCEquipmentList = async params => {
-    let result;
+    let result = {};
     try {
       // result = await fetchEquipmentList(params);
       runInAction(() => {
         // if (result.responseCode === 200) {
-        //   const order = JSON.parse(result.responseJson);
-        //   this.orderNums = order.total;
-        //   // 按时间排序处理数组
-        //   this.orderList = order.list.sort(
-        //     (a, b) => Number(b.date) - Number(a.date)
-        //   );
+        //   this.equipmentList = order.total;
         // }
       });
     } catch (err) {
@@ -131,17 +116,12 @@ class SunCityStore {
   // 获取设备信息
   @action
   fetchSCEquipmentInfo = async params => {
-    let result;
+    let result = {};
     try {
       // result = await fetchEquipmentInfo(params);
       runInAction(() => {
         // if (result.responseCode === 200) {
-        //   const order = JSON.parse(result.responseJson);
-        //   this.orderNums = order.total;
-        //   // 按时间排序处理数组
-        //   this.orderList = order.list.sort(
-        //     (a, b) => Number(b.date) - Number(a.date)
-        //   );
+        //   this.equipmentInfo = order.total;
         // }
       });
     } catch (err) {
@@ -159,17 +139,12 @@ class SunCityStore {
   // 获取设备发电量
   @action
   fetchSCEquipmentPower = async params => {
-    let result;
+    let result = {};
     try {
       // result = await fetchEquipmentPower(params);
       runInAction(() => {
         // if (result.responseCode === 200) {
-        //   const order = JSON.parse(result.responseJson);
-        //   this.orderNums = order.total;
-        //   // 按时间排序处理数组
-        //   this.orderList = order.list.sort(
-        //     (a, b) => Number(b.date) - Number(a.date)
-        //   );
+        //   this.equipmentPower = order.total;
         // }
       });
     } catch (err) {

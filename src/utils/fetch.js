@@ -6,7 +6,7 @@ import { getSessionStorage } from './storage';
   请求头为application/json
 */
 const JSONInstance = axios.create({
-  timeout: 60000,
+  timeout: 6000,
   headers: {
     'Content-Type': 'application/json'
   },
@@ -22,7 +22,7 @@ const JSONInstance = axios.create({
   post请求
 */
 const postInstance = axios.create({
-  timeout: 60000,
+  timeout: 6000,
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded'
   },
