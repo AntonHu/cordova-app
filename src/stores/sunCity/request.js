@@ -5,10 +5,7 @@ import { backendServer } from '../../utils/variable';
  * 太阳积分列表
  */
 export const fetchSunIntegral = async params => {
-  const response = await get(
-    `http://47.96.158.229:30135/wallet/getWalletData?publicKey=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCQFJmSxkkIOvFnyhTqxz5NeWI93tMkgT3CIUJ40ypifONF21QRB067c4gNOkfLnvwX2IqWNjBjvizD7KxxoHnGezLwJFAnJjmAmqLK2+QXeyz82xnsHczbl+GUIAy18my2+lcmnDMdgfcaksamnQUDB+tTDwnkV7fMvrC13nNcYQIDAQAB`,
-    params
-  );
+  const response = await get(`${backendServer}/wallet/getWalletData`, params);
   return response.data || [];
 };
 
@@ -29,9 +26,31 @@ export const fetchPowerstationData = async params => {
 };
 
 /**
- * 获取设备数据
+ * 获取设备列表
  */
-export const fetchEquipmentData = async params => {
-  const response = await get(`${backendServer}/wallet/gainTokens`, params);
+export const fetchEquipmentList = async params => {
+  const response = await get(`${backendServer}/equipment/equipments`, params);
+  return response.data || [];
+};
+
+/**
+ * 获取设备信息
+ */
+export const fetchEquipmentInfo = async params => {
+  const response = await get(
+    `${backendServer}/equipment/equipmentInfo`,
+    params
+  );
+  return response.data || [];
+};
+
+/**
+ * 获取设备发电量
+ */
+export const fetchEquipmentPower = async params => {
+  const response = await get(
+    `${backendServer}/equipment/dailyGeneration`,
+    params
+  );
   return response.data || [];
 };

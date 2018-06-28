@@ -1,9 +1,12 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { BlueBox, Title, PageWithHeader } from '../../../components';
-import { Icon } from 'antd-mobile';
+import { Icon, Popover } from 'antd-mobile';
+
 import F2 from '@antv/f2';
 import './style.less';
+
+const Item = Popover.Item;
 
 
 /**
@@ -125,10 +128,32 @@ class Comp extends React.PureComponent {
     this.setState({ selected });
   };
 
+  // 添加逆变器
+  addInverter = () => {};
   render() {
     return (
       <div className={'page-powerStation-info'}>
-        <PageWithHeader title={'我的电站'}>
+        <PageWithHeader
+          title={'我的电站'}
+          rightComponent={
+            <Popover
+              overlayClassName="fortest"
+              visible={this.state.visible}
+              overlay={[
+                <Item key="1">
+                  <img
+                    src="https://gw.alipayobjects.com/zos/rmsportal/tOtXhkIWzwotgGSeptou.svg"
+                    className="am-icon"
+                    alt=""
+                  />添加逆变器
+                </Item>
+              ]}
+              onSelect={this.addInverter}
+            >
+              <i className="iconfont">&#xe650;</i>
+            </Popover>
+          }
+        >
           <BlueBox type={'pure'}>
             <div className="title">
               <div className="weather">

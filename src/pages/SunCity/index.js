@@ -5,6 +5,7 @@ import { observer, inject } from 'mobx-react';
 import { Title } from '../../components';
 import { NoticeBar, Icon } from 'antd-mobile';
 import './style.less';
+
 /**
  * 太阳城-首页
  */
