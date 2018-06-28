@@ -1,4 +1,4 @@
-import { observable, action, runInAction, computed } from 'mobx';
+import { observable, action, runInAction } from 'mobx';
 import {
   fetchSunIntegral,
   fetchGetSunIntegral,
@@ -16,7 +16,6 @@ class SunCityStore {
   @observable equipmentPower;
 
   // 太阳积分列表
-  @computed
   get getSunIntegral() {
     return this.sunIntegral;
   }
@@ -62,7 +61,6 @@ class SunCityStore {
   };
 
   // 获取电站数据
-  @computed
   get getPowerstationData() {
     return this.powerstationData;
   }
@@ -85,7 +83,6 @@ class SunCityStore {
   };
 
   // 获取设备列表
-  @computed
   get getEquipmentList() {
     return this.equipmentList;
   }
@@ -108,7 +105,6 @@ class SunCityStore {
   };
 
   // 获取设备信息
-  @computed
   get getEquipmentInfo() {
     return this.equipmentInfo;
   }
@@ -131,7 +127,6 @@ class SunCityStore {
   };
 
   // 获取设备发电量
-  @computed
   get getEquipmentPower() {
     return this.equipmentPower;
   }
