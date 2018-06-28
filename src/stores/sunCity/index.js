@@ -16,11 +16,6 @@ class SunCityStore {
   @observable equipmentPower;
 
   // 太阳积分列表
-  get getSunIntegral() {
-    return this.sunIntegral;
-  }
-
-  // 太阳积分列表
   @action
   fetchSCSunIntegral = async params => {
     let result = {};
@@ -61,11 +56,6 @@ class SunCityStore {
   };
 
   // 获取电站数据
-  get getPowerstationData() {
-    return this.powerstationData;
-  }
-
-  // 获取电站数据
   @action
   fetchSCPowerstationData = async params => {
     let result = {};
@@ -81,11 +71,6 @@ class SunCityStore {
     }
     return result;
   };
-
-  // 获取设备列表
-  get getEquipmentList() {
-    return this.equipmentList;
-  }
 
   // 获取设备列表
   @action
@@ -105,11 +90,6 @@ class SunCityStore {
   };
 
   // 获取设备信息
-  get getEquipmentInfo() {
-    return this.equipmentInfo;
-  }
-
-  // 获取设备信息
   @action
   fetchSCEquipmentInfo = async params => {
     let result = {};
@@ -125,11 +105,6 @@ class SunCityStore {
     }
     return result;
   };
-
-  // 获取设备发电量
-  get getEquipmentPower() {
-    return this.equipmentPower;
-  }
 
   // 获取设备发电量
   @action
