@@ -28,7 +28,7 @@ class Comp extends React.Component {
     });
     this.setState({
       sunCoordinateArr: this.getSunCoordinateArr(
-        toJS(this.props.sunCityStore.getSunIntegral)
+        toJS(this.props.sunCityStore.sunIntegral)
       )
     });
   }
