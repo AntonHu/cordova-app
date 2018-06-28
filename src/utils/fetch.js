@@ -41,7 +41,7 @@ const postInstance = axios.create({
   get请求，参数：params
 */
 export const get = (url, params) => {
-  // const token = getSessionStorage('token');
+  // const token = getSessionStorage('token'); 测试
   let urlStr = url;
   if (params && Object.keys(params).length > 0) {
     urlStr += `?publicKey=${publicKey}&`;
