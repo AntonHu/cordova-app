@@ -5,7 +5,7 @@ import { observer, inject } from 'mobx-react';
 import { Title } from '../../components';
 import { NoticeBar, Icon } from 'antd-mobile';
 import './style.less';
-import { div } from 'gl-matrix/src/gl-matrix/vec2';
+
 /**
  * 太阳城-首页
  */
