@@ -1,7 +1,7 @@
 import {get, post} from '../../utils/fetch';
-import {backendServer} from '../../utils/variable';
+import {backendServer, PAGE_SIZE, testPublicKey} from '../../utils/variable';
 
-const defaultPublicKey = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCQFJmSxkkIOvFnyhTqxz5NeWI93tMkgT3CIUJ40ypifONF21QRB067c4gNOkfLnvwX2IqWNjBjvizD7KxxoHnGezLwJFAnJjmAmqLK2+QXeyz82xnsHczbl+GUIAy18my2+lcmnDMdgfcaksamnQUDB+tTDwnkV7fMvrC13nNcYQIDAQAB';
+
 
 /**
  * 获取挖宝数据
@@ -9,7 +9,7 @@ const defaultPublicKey = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCQFJmSxkkIOvFnyh
  * @returns {Promise.<void>}
  */
 export const getWalletData = async ({publicKey}) => {
-  const response = await get(`${backendServer}/wallet/getWalletData`, {publicKey: defaultPublicKey});
+  const response = await get(`${backendServer}/wallet/getWalletData`, {publicKey: testPublicKey});
   return response.success
 };
 
@@ -19,7 +19,7 @@ export const getWalletData = async ({publicKey}) => {
  * @returns {Promise.<void>}
  */
 export const gainTokens = async ({publicKey, tokenId, value}) => {
-  const response = await get(`${backendServer}/wallet/gainTokens`, {publicKey: defaultPublicKey, tokenId, value});
+  const response = await get(`${backendServer}/wallet/gainTokens`, {publicKey: testPublicKey, tokenId, value});
   return response.success
 };
 
@@ -28,9 +28,9 @@ export const gainTokens = async ({publicKey, tokenId, value}) => {
  * @param params
  * @returns {Promise.<void>}
  */
-export const getWalletTopRank = async params => {
-  const response = await get(`${backendServer}/wallet/getWalletTopRank`, params);
-  return response.success
+export const getAllRanking = async params => {
+  const response = await get(`${backendServer}/wallet/getAllRanking`, params);
+  return response
 };
 
 /**
@@ -40,16 +40,16 @@ export const getWalletTopRank = async params => {
  */
 export const getNearbyWalletTopRank = async params => {
   const response = await get(`${backendServer}/wallet/getNearbyWalletTopRank`, params);
-  return response.success
+  return response
 };
 
 /**
- * 获取积分记录
+ * 获取积分记录(获取太阳积分)
  * @param params
  * @returns {Promise.<void>}
  */
-export const getTokenRecords = async params => {
-  const response = await get(`${backendServer}/wallet/getTokenRecords`, params);
-  return response.success
+export const getTokenRecords = async ({publicKey, page}) => {
+  const response = await get(`${backendServer}/wallet/getTokenRecords`, {publicKey: testPublicKey, page, pageSize: PAGE_SIZE});
+  return response
 };
 

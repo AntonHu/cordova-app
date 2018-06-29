@@ -4,7 +4,7 @@
  * @param value
  */
 export const setSessionStorage = (name, value) => {
-  sessionStorage.setItem(name, value);
+  localStorage.setItem(name, value);
 };
 
 /**
@@ -13,7 +13,7 @@ export const setSessionStorage = (name, value) => {
  * @param value
  */
 export const getSessionStorage = name => {
-  return sessionStorage.getItem(name);
+  return localStorage.getItem(name);
 };
 
 /**
@@ -22,5 +22,5 @@ export const getSessionStorage = name => {
  * @param value
  */
 export const deleteSessionStorage = name => {
-  sessionStorage.removeItem(name);
+  localStorage.removeItem(name);
 };

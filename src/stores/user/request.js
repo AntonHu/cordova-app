@@ -1,5 +1,5 @@
 import {get, post, authPost} from '../../utils/fetch';
-import {backendServer, userServer} from '../../utils/variable';
+import {backendServer, userServer, PAGE_SIZE, testPublicKey} from '../../utils/variable';
 
 /**
  * 用户密码登录
@@ -63,8 +63,8 @@ export const getOwnerInfo = async () => {
  * 获取消息列表
  * @returns {Promise.<*>}
  */
-export const getMessages = async () => {
-  const response = await get(`${backendServer}/message/getMessages`);
+export const getMessages = async ({page}) => {
+  const response = await get(`${backendServer}/info/latestNews`, {page, pageSize: PAGE_SIZE});
   return response;
 };
 
@@ -90,4 +90,15 @@ export const reqUpdateUser = async ({header, nickName}) => {
     }
   );
   return response
+};
+
+/**
+ * 上传用户地理位置
+ * @param publicKey
+ * @param rectangle 经纬度字符串：'30.123,25.66'
+ * @returns {Promise.<*>}
+ */
+export const reqUpdateGeolocation = async ({publicKey, rectangle}) => {
+  const response = await post(`${backendServer}/info/rectangle`, {publicKey: testPublicKey, rectangle});
+  return response;
 };

@@ -5,7 +5,6 @@
   "homepage": "./",
   "dependencies": {
     "@antv/f2": "^3.1.10",
-    "@antv/g2": "^3.1.2",
     "antd-mobile": "^2.1.11",
     "autoprefixer": "7.1.6",
     "axios": "^0.18.0",
@@ -22,12 +21,14 @@
     "code-push": "^2.0.4",
     "cordova-android": "^6.4.0",
     "cordova-ios": "^4.5.4",
+    "cordova-plugin-camera": "^4.0.3",
     "cordova-plugin-code-push": "^1.11.11",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-dialogs": "^2.0.1",
     "cordova-plugin-file": "^4.3.3",
     "cordova-plugin-file-transfer": "^1.6.3",
+    "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-janalytics": "^1.1.3",
     "cordova-plugin-jcore": "^1.1.12",
     "cordova-plugin-whitelist": "^1.3.3",
@@ -138,7 +139,9 @@
       },
       "jpush-phonegap-plugin": {
         "APP_KEY": "fd96956cb315ba658d256156"
-      }
+      },
+      "cordova-plugin-camera": {},
+      "cordova-plugin-geolocation": {}
     },
     "platforms": [
       "ios",
@@ -148,6 +151,10 @@
   "devDependencies": {
     "@types/react": "^16.3.17",
     "babel-plugin-import": "^1.8.0",
+    "babel-plugin-transform-decorators": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "babel-preset-react-native-stage-0": "^1.0.1",
     "babel-preset-stage-2": "^6.24.1",
     "less": "^3.0.4",

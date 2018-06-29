@@ -30,6 +30,9 @@ const startJPush = () => {
   }
 };
 
+/**
+ * app环境
+ */
 const startApp = () => {
   ReactDOM.render(<App />, document.getElementById('root'));
   startJAnalytics();
@@ -37,6 +40,9 @@ const startApp = () => {
   // registerServiceWorker();
 };
 
+/**
+ * 浏览器环境
+ */
 const startSimpleApp = () => {
   ReactDOM.render(<App />, document.getElementById('root'));
   registerServiceWorker();

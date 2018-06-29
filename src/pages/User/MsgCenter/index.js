@@ -23,14 +23,15 @@ const ListData = [
  */
 class Comp extends React.PureComponent {
   state = {
-    list: []
+    list: [],
+    page: 0
   };
 
   componentDidMount() {
-    getMessages()
+    getMessages({page: this.state.page})
       .then(res => {
         const data = res.data;
-        if (data.success) {
+        if (data.code === 200) {
           this.setState({
             list: data.data
           })
@@ -54,13 +55,14 @@ class Comp extends React.PureComponent {
   }
 
   render() {
+    console.log(this.state.list)
     return (
       <div className={'page-msg-center'}>
         <PageWithHeader title={'消息中心'}>
           <List>
             {this.state.list.map((v, i) => (
               <Item key={i} arrow={'horizontal'}>
-                {v.text}
+                {v.title}
               </Item>
             ))}
           </List>

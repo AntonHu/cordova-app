@@ -2,7 +2,6 @@ import React from 'react';
 import { Title, PageWithHeader } from '../../../components';
 import {} from 'antd-mobile';
 import './style.less';
-import { div } from 'gl-matrix/src/gl-matrix/vec4';
 
 const Apps = [
   {

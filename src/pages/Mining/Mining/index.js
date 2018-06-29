@@ -1,9 +1,10 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-
+import { toJS } from 'mobx';
+import { observer, inject } from 'mobx-react';
 import { Title, PageWithHeader } from '../../../components';
 import { Icon, Tabs, WhiteSpace } from 'antd-mobile';
-import { getNearbyWalletTopRank, gainTokens, getTokenRecords, getWalletData, getWalletTopRank} from '../../../stores/mining/request';
+import { getNearbyWalletTopRank, gainTokens, getTokenRecords, getWalletData, getAllRanking} from '../../../stores/mining/request';
 import './style.less';
 
 const tabs2 = [
@@ -13,6 +14,8 @@ const tabs2 = [
 /**
  * 挖宝
  */
+@inject('miningStore')
+@observer
 class Comp extends React.PureComponent {
   state = {
     equipmentList: [
@@ -36,11 +39,8 @@ class Comp extends React.PureComponent {
   }
 
   makeRequest = () => {
-    getWalletTopRank({});
-    getNearbyWalletTopRank({});
-    gainTokens({});
-    getTokenRecords({});
-    getWalletData({});
+    this.props.miningStore.fetchAllRanking();
+    this.props.miningStore.fetchNearbyRanking();
   };
 
   render() {
@@ -73,12 +73,8 @@ class Comp extends React.PureComponent {
                 <div className="profit-number">899kw/h</div>
               </div>
               <div className="profit-item">
-                <div className="profit-title">今日发电</div>
-                <div className="profit-number">899kw/h</div>
-              </div>
-              <div className="profit-item">
-                <div className="profit-title">今日发电</div>
-                <div className="profit-number">899kw/h</div>
+                <div className="profit-title">今日太阳积分</div>
+                <div className="profit-number">18</div>
               </div>
             </div>
           </div>
@@ -118,7 +114,7 @@ class Comp extends React.PureComponent {
               renderTab={tab => <span>{tab.title}</span>}
             >
               <div className="ranking-list">
-                {this.state.equipmentList.map((item, index) => {
+                {this.props.miningStore.allRanking.map((item, index) => {
                   return (
                     <div key={index} className="ranking-item">
                       <div className="ranking-title">
@@ -127,15 +123,15 @@ class Comp extends React.PureComponent {
                         ) : (
                           <span>{index + 1} </span>
                         )}
-                        {item.title}
+                        {item.id}
                       </div>
-                      <span>{item.number}</span>
+                      <span>{item.totalSolarIntegral}</span>
                     </div>
                   );
                 })}
               </div>
               <div className="ranking-list">
-                {this.state.equipmentList.map((item, index) => {
+                {this.props.miningStore.nearbyRank.map((item, index) => {
                   return (
                     <div key={index} className="ranking-item">
                       <div className="ranking-title">
@@ -144,9 +140,9 @@ class Comp extends React.PureComponent {
                         ) : (
                           <span>{index + 1} </span>
                         )}
-                        {item.title}
+                        {item.id}
                       </div>
-                      <span>{item.number}</span>
+                      <span>{item.totalSolarIntegral}</span>
                     </div>
                   );
                 })}

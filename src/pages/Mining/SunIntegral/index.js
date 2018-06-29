@@ -1,31 +1,24 @@
 import React from 'react';
 import { PageWithHeader } from '../../../components';
+import { toJS } from 'mobx';
+import { observer, inject } from 'mobx-react';
 // import { List } from 'antd-mobile';
 import './style.less';
 /**
  * 挖宝
  */
+@inject('miningStore')
+@observer
 class Comp extends React.PureComponent {
-  state = {
-    integralList: [
-      {
-        title: '测试1',
-        number: '12345'
-      },
-      {
-        title: '测试2',
-        number: '12345'
-      },
-      {
-        title: '测试3',
-        number: '12345'
-      }
-    ]
-  };
+
+  componentDidMount() {
+    this.props.miningStore.fetchTokenRecords({page: 0, publicKey: ''})
+  }
+
   render() {
     return (
       <div className={'page-sun-integral'}>
-        <PageWithHeader title={'挖宝池'}>
+        <PageWithHeader title={'太阳积分'}>
           <div className="integral">
             <div className="integral-survey">
               <div>我的太阳积分</div>
@@ -33,11 +26,11 @@ class Comp extends React.PureComponent {
             </div>
             <div className="integral-list">
               <div>积分记录</div>
-              {this.state.integralList.map((item, index) => {
+              {this.props.miningStore.tokenRecords.map((item, index) => {
                 return (
-                  <div key={index} className="integral-item">
-                    <div>{item.title}</div>
-                    <div>{item.number}</div>
+                  <div key={item.tokenId} className="integral-item">
+                    <div>{item.solarIntegral}</div>
+                    <div>{item.gmtCreate.slice(0, 10)}</div>
                   </div>
                 );
               })}

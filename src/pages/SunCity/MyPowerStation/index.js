@@ -2,11 +2,9 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { BlueBox, Title, PageWithHeader } from '../../../components';
 import { Icon } from 'antd-mobile';
-import G2 from '@antv/g2';
 import F2 from '@antv/f2';
 import './style.less';
 
-G2.track(false);
 
 /**
  * 电站设备信息

@@ -4,4 +4,8 @@
 const backendServer = 'http://47.96.158.229:30135';
 const userServer = 'https://api.thundersdata.com';
 
-export { backendServer, userServer };
+const PAGE_SIZE = 10;
+
+const testPublicKey = '0439ad8cd4dd8be0a809f7808c9d07fcf0f85a71c079ad9fd265e43f5d5ba114251941c2908b2f42ba393421368ed4da585837cd4a303ffc0ee09a5427a6df2605';
+
+export { backendServer, userServer, PAGE_SIZE, testPublicKey };

@@ -1,31 +1,88 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import { BlueBox, PageWithHeader } from '../../../components';
-import { List, Picker, Icon, Modal, Button } from 'antd-mobile';
-import { observer, inject } from 'mobx-react';
+import {withRouter} from 'react-router-dom';
+import {BlueBox, PageWithHeader} from '../../../components';
+import {List, Picker, Icon, Modal, Button, ActionSheet} from 'antd-mobile';
+import {observer, inject} from 'mobx-react';
 import './style.less';
+
+const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
+let wrapProps;
+if (isIPhone) {
+  wrapProps = {
+    onTouchStart: e => e.preventDefault(),
+  };
+}
+
+function onFail(message) {
+  alert('Failed because: ' + message);
+}
+
+function onPhotoDataSuccess(imageData) {
+  var smallImage = document.getElementById('smallImage');
+
+  // Unhide image elements
+  smallImage.style.display = 'block';
+
+  // Show the captured photo
+  // The inline CSS rules are used to resize the image
+  //
+  smallImage.src = "data:image/jpeg;base64," + imageData;
+}
+
+function onPhotoURISuccess(imageURI) {
+  var largeImage = document.getElementById('largeImage');
+
+  // Unhide image elements
+  //
+  largeImage.style.display = 'block';
+
+  // Show the captured photo
+  // The inline CSS rules are used to resize the image
+  //
+  largeImage.src = imageURI;
+}
+
+function capturePhoto() {
+  const destinationType = navigator.camera.DestinationType;
+  // Take picture using device camera and retrieve image as base64-encoded string
+  navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
+    quality: 50,
+    destinationType: destinationType.DATA_URL
+  });
+}
+
+function getPhoto(source) {
+  // Retrieve image file location from specified source
+  const destinationType = navigator.camera.DestinationType;
+  navigator.camera.getPicture(onPhotoURISuccess, onFail, {
+    quality: 50,
+    destinationType: destinationType.FILE_URI,
+    sourceType: source
+  });
+}
 
 const avatarModalData = [
   {
     text: '拍照',
     onPress: function () {
-
+      if (window.cordova) {
+        capturePhoto()
+      }
     }
   },
   {
     text: '相册选取',
     onPress: function () {
-
+      if (window.cordova) {
+        const pictureSource = navigator.camera.PictureSourceType;
+        getPhoto(pictureSource.PHOTOLIBRARY)
+      }
     }
   },
   {
     text: '取消',
     onPress: function () {
-      this.setState({
-        modal1Visible: false
-      })
-    },
-    color: ''
+    }
   }
 ];
 
@@ -37,13 +94,19 @@ const avatarModalData = [
 class Comp extends React.Component {
   state = {
     sexArr: ['男'],
-    modal1Visible: false
   };
   // 头像更改
   picChange = () => {
-    this.setState({
-      modal1Visible: true
-    })
+
+    ActionSheet.showActionSheetWithOptions({
+        options: avatarModalData.map(item => item.text),
+        maskClosable: true,
+        wrapProps
+      },
+      (i) => {
+        avatarModalData[i].onPress.call(this)
+      }
+    )
   };
 
   onChange = (files, type, index) => {
@@ -52,7 +115,7 @@ class Comp extends React.Component {
 
   render() {
     const {userInfo} = this.props.userStore;
-    const {username, avatar, nickName} = userInfo;
+    const {avatar, nickName} = userInfo;
     return (
       <div className={'page-personal-info'}>
         <PageWithHeader title={'个人信息'}>
@@ -71,7 +134,7 @@ class Comp extends React.Component {
               className="go-authentication"
               onClick={() => this.props.history.push(`/user/verifyID/${1}`)}
             >
-              去认证<Icon type="right" />
+              去认证<Icon type="right"/>
             </div>
           </BlueBox>
 
@@ -94,27 +157,10 @@ class Comp extends React.Component {
               <div>{nickName || ''}</div>
             </div>
           </div>
+          <img id="smallImage" src=""/>
+          <img id="largeImage" src=""/>
         </PageWithHeader>
 
-        <Modal
-          popup
-          visible={this.state.modal1Visible}
-          onClose={() => this.setState({ modal1Visible: false })}
-          animationType="slide-up"
-        >
-          <List>
-            {avatarModalData.map((i, index) => (
-              <Button
-                onClick={(e) => {
-                  // i.onPress.bind(this);
-                  i.onPress.call(this);
-                }}
-              >
-                <List.Item key={index}>{i.text}</List.Item>
-              </Button>
-            ))}
-          </List>
-        </Modal>
       </div>
     );
   }
