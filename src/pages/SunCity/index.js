@@ -26,7 +26,7 @@ class Comp extends React.Component {
   sunArea = null; // 大图形
   async componentDidMount() {
     await this.props.sunCityStore.fetchSCSunIntegral({
-      testPublicKey: testPublicKey
+      publicKey: testPublicKey
     });
     this.props.sunCityStore.fetchSCEquipmentList({
       userPubKey: testPublicKey

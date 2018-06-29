@@ -65,6 +65,8 @@ class Comp extends React.PureComponent {
   componentWillUnmount() {
     if (this.pieBarChart) {
       this.pieBarChart = undefined;
+    }
+    if (this.curveChart) {
       this.curveChart = undefined;
     }
   }
