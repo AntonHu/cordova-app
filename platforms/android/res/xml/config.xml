@@ -24,6 +24,12 @@
     <feature name="JPushPlugin">
         <param name="android-package" value="cn.jiguang.cordova.push.JPushPlugin" />
     </feature>
+    <feature name="Camera">
+        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
+    </feature>
+    <feature name="Geolocation">
+        <param name="android-package" value="org.apache.cordova.geolocation.Geolocation" />
+    </feature>
     <feature name="Zip">
         <param name="android-package" value="org.apache.cordova.Zip" />
     </feature>
