@@ -9,8 +9,12 @@ import {backendServer, PAGE_SIZE, testPublicKey} from '../../utils/variable';
  * @returns {Promise.<void>}
  */
 export const getWalletData = async ({publicKey}) => {
-  const response = await get(`${backendServer}/wallet/getWalletData`, {publicKey: testPublicKey});
-  return response.success
+  try {
+    const response = await get(`${backendServer}/wallet/getWalletData`, {publicKey: testPublicKey});
+    return response.success
+  } catch (err) {
+    return err.response;
+  }
 };
 
 /**
@@ -19,8 +23,12 @@ export const getWalletData = async ({publicKey}) => {
  * @returns {Promise.<void>}
  */
 export const gainTokens = async ({publicKey, tokenId, value}) => {
-  const response = await get(`${backendServer}/wallet/gainTokens`, {publicKey: testPublicKey, tokenId, value});
-  return response.success
+  try {
+    const response = await get(`${backendServer}/wallet/gainTokens`, {publicKey: testPublicKey, tokenId, value});
+    return response.success
+  } catch (err) {
+    return err.response;
+  }
 };
 
 /**
@@ -29,8 +37,12 @@ export const gainTokens = async ({publicKey, tokenId, value}) => {
  * @returns {Promise.<void>}
  */
 export const getAllRanking = async params => {
-  const response = await get(`${backendServer}/wallet/getAllRanking`, params);
-  return response
+  try {
+    const response = await get(`${backendServer}/wallet/getAllRanking`, params);
+    return response
+  } catch (err) {
+    return err.response;
+  }
 };
 
 /**
@@ -39,8 +51,12 @@ export const getAllRanking = async params => {
  * @returns {Promise.<void>}
  */
 export const getNearbyWalletTopRank = async params => {
-  const response = await get(`${backendServer}/wallet/getNearbyWalletTopRank`, params);
-  return response
+  try {
+    const response = await get(`${backendServer}/wallet/getNearbyWalletTopRank`, params);
+    return response
+  } catch (err) {
+    return err.response;
+  }
 };
 
 /**
@@ -49,7 +65,11 @@ export const getNearbyWalletTopRank = async params => {
  * @returns {Promise.<void>}
  */
 export const getTokenRecords = async ({publicKey, page}) => {
-  const response = await get(`${backendServer}/wallet/getTokenRecords`, {publicKey: testPublicKey, page, pageSize: PAGE_SIZE});
-  return response
+  try {
+    const response = await get(`${backendServer}/wallet/getTokenRecords`, {publicKey: testPublicKey, page, pageSize: PAGE_SIZE});
+    return response
+  } catch (err) {
+    return err.response;
+  }
 };
 
