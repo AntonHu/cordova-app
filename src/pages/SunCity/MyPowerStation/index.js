@@ -2,12 +2,10 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { BlueBox, Title, PageWithHeader } from '../../../components';
 import { Icon, Popover } from 'antd-mobile';
-
 import F2 from '@antv/f2';
 import './style.less';
 
 const Item = Popover.Item;
-
 
 /**
  * 电站设备信息
