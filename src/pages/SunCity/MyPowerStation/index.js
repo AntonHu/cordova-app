@@ -78,6 +78,13 @@ class Comp extends React.PureComponent {
 
   // 初始化柱形图
   renderPieBar = () => {
+    // 创建渐变对象
+    const canvas = document.getElementById('pie-bar-chart');
+    const ctx = canvas.getContext('2d');
+    const grd = ctx.createLinearGradient(0, 200, 0, 0);
+    grd.addColorStop(0, '#fff');
+    grd.addColorStop(1, '#0082f6');
+
     F2.Global.setTheme({
       pixelRatio: 2
     }); // 设为双精度
@@ -103,6 +110,9 @@ class Comp extends React.PureComponent {
       }
     });
     chart.axis('sales', {
+      grid: {
+        lineDash: [0]
+      },
       label: {
         fill: '#fff',
         fontSize: 10
@@ -110,8 +120,9 @@ class Comp extends React.PureComponent {
     });
     chart
       .interval()
+      .size(18)
       .position('year*sales')
-      .color('#fff');
+      .color(grd);
     chart.render();
   };
 
@@ -191,20 +202,11 @@ class Comp extends React.PureComponent {
           <div className="type">
             <div className="type-item">功率</div>
             <div className="type-item">发电量</div>
-            <div className="type-item">收益</div>
           </div>
           <div className="detail">
             <div className="detail-item">
               <div className="number">15.0kw</div>
               <div className="detail-type">当前</div>
-            </div>
-            <div className="detail-item">
-              <div className="number">18.0kw</div>
-              <div className="detail-type">今日</div>
-            </div>
-            <div className="detail-item">
-              <div className="number">18.0kw</div>
-              <div className="detail-type">今日</div>
             </div>
             <div className="detail-item">
               <div className="number">18.0kw</div>

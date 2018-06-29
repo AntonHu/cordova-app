@@ -1,8 +1,10 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 import { PageWithHeader } from '../../../components';
 // import { List, InputItem, Flex, Button, WhiteSpace } from 'antd-mobile';
 import F2 from '@antv/f2';
 import { px } from '../../../utils/getDevice';
+import { powerType, testPublicKey } from '../../../utils/variable';
 import './style.less';
 
 const data = [
@@ -38,79 +40,43 @@ const data = [
 /**
  * 电站设备信息
  */
+@inject('sunCityStore') // 如果注入多个store，用数组表示
+@observer
 class Comp extends React.PureComponent {
   state = {
     selected: {
-      daySelected: true,
-      monthSelected: false,
-      yearSelected: false,
-      allSelected: false
+      day: true,
+      month: false,
+      year: false,
+      all: false
     }
   };
-  componentDidMount() {
+  async componentDidMount() {
+    const deviceNo = this.props.match.params.id;
+    await this.props.sunCityStore.fetchSCEquipmentInfo({
+      sourceData: 'ASDFGHH123456789ZXCVBNM',
+      deviceNo: deviceNo,
+      userPubKey: testPublicKey
+    });
     this.pieBarChart = this.renderPieBar();
-    this.pieBarChart = this.renderCurve();
+    this.curveChart = this.renderCurve();
   }
 
   componentWillUnmount() {
     if (this.pieBarChart) {
       this.pieBarChart = undefined;
+      this.curveChart = undefined;
     }
   }
-  renderCurve = () => {
-    const chart = new F2.Chart({
-      id: 'curve-chart',
-      pixelRatio: window.devicePixelRatio
-    });
 
-    const defs = {
-      time: {
-        type: 'timeCat',
-        mask: 'MM/DD',
-        tickCount: data.length,
-        range: [0, 1]
-      },
-      tem: {
-        tickCount: 5,
-        min: 0,
-        alias: '日均温度'
-      }
-    };
-    chart.source(data, defs);
-    chart.axis('time', {
-      label: function label(text, index, total) {
-        var textCfg = {};
-        if (index === 0) {
-          textCfg.textAlign = 'left';
-        } else if (index === total - 1) {
-          textCfg.textAlign = 'right';
-        }
-        return textCfg;
-      }
-    });
-    chart.tooltip({
-      showCrosshairs: true
-    });
-    chart
-      .line()
-      .position('time*tem')
-      .shape('smooth');
-    chart
-      .point()
-      .position('time*tem')
-      .shape('smooth')
-      .style({
-        stroke: '#fff',
-        lineWidth: 1
-      });
-    chart.render();
-  };
+  // 绘制发电环图
   renderPieBar = () => {
+    // 创建渐变对象
     const canvas = document.getElementById('pie-bar-chart');
     const ctx = canvas.getContext('2d');
-    const grd = ctx.createLinearGradient(0, 0, 320, 0);
-    grd.addColorStop(0, '#dbb768');
-    grd.addColorStop(1, '#8de737');
+    const grd = ctx.createLinearGradient(0, 0, 140, 0);
+    grd.addColorStop(0, '#fa5a21');
+    grd.addColorStop(1, '#5bd121');
 
     const chart = new F2.Chart({
       id: 'pie-bar-chart',
@@ -144,7 +110,7 @@ class Comp extends React.PureComponent {
       top: false,
       style: {
         lineWidth: 15,
-        stroke: '#ccc'
+        stroke: '#024dc8'
       }
     });
     chart.guide().html({
@@ -170,9 +136,74 @@ class Comp extends React.PureComponent {
 
     return chart;
   };
+
+  // 绘制发电曲线图
+  renderCurve = () => {
+    const chart = new F2.Chart({
+      id: 'curve-chart',
+      pixelRatio: window.devicePixelRatio
+    });
+
+    const defs = {
+      time: {
+        type: 'timeCat',
+        mask: 'YY/MM',
+        tickCount: data.length,
+        range: [0, 1]
+      },
+      tem: {
+        tickCount: 5,
+        min: 0,
+        alias: '功率'
+      }
+    };
+    chart.source(data, defs);
+    chart.axis('time', {
+      label: (text, index, total) => {
+        const cfg = {
+          textAlign: 'center'
+        };
+        if (index === 0) {
+          cfg.textAlign = 'start';
+        }
+        if (index > 0 && index === total - 1) {
+          cfg.textAlign = 'end';
+        }
+        return cfg;
+      }
+    });
+    chart.tooltip({
+      showCrosshairs: true
+    });
+    chart
+      .line()
+      .position('time*tem')
+      .shape('smooth');
+    chart
+      .point()
+      .position('time*tem')
+      .shape('smooth')
+      .style({
+        stroke: '#fff',
+        lineWidth: 1
+      });
+    chart.render();
+  };
+
+  // 获取设备发电数据
+  getEquipmentPower = type => {
+    this.props.sunCityStore.fetchSCEquipmentPower({
+      sourceData: 'ASDFGHH123456789ZXCVBNM',
+      deviceNo: '逆变器Id',
+      userPubKey: '公钥',
+      type: powerType[type]
+    });
+  };
+
   // 筛选条件更改
   screenChange = e => {
     const type = e.target.dataset.class;
+    this.getEquipmentPower(type);
     const selected = Object.assign({}, this.state.selected);
     Object.keys(selected).forEach(item => {
       selected[item] = false;
@@ -198,26 +229,26 @@ class Comp extends React.PureComponent {
           <div className="equipment-content">
             <div className="screen" onClick={this.screenChange}>
               <div
-                data-class="daySelected"
-                className={this.state.selected.daySelected ? 'selected' : ''}
+                data-class="day"
+                className={this.state.selected.day ? 'selected' : ''}
               >
                 日
               </div>
               <div
-                data-class="monthSelected"
-                className={this.state.selected.monthSelected ? 'selected' : ''}
+                data-class="month"
+                className={this.state.selected.month ? 'selected' : ''}
               >
                 月
               </div>
               <div
-                data-class="yearSelected"
-                className={this.state.selected.yearSelected ? 'selected' : ''}
+                data-class="year"
+                className={this.state.selected.year ? 'selected' : ''}
               >
                 年
               </div>
               <div
-                data-class="allSelected"
-                className={this.state.selected.allSelected ? 'selected' : ''}
+                data-class="all"
+                className={this.state.selected.all ? 'selected' : ''}
               >
                 全部
               </div>

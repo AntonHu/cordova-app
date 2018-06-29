@@ -4,6 +4,7 @@ import { toJS } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { Title } from '../../components';
 import { NoticeBar, Icon } from 'antd-mobile';
+import { testPublicKey } from '../../utils/variable';
 import './style.less';
 
 /**
@@ -12,25 +13,40 @@ import './style.less';
 const radius = 20; // 小太阳半径
 const sunDistance = 60; // 小太阳之间的距离
 const padding = 30; // 包含小图形的大图形的内边距
-
+const pickNumber = 0;
 @inject('sunCityStore') // 如果注入多个store，用数组表示
 @observer
 class Comp extends React.Component {
   state = {
-    sunList: [1.032, 1.323, 2.323, 1.2334, 5.2336, 3.2334, 2.3234],
     sunCoordinateArr: null
   };
+  sunIntegralArr = [];
+  selectSunNode = null;
+  timeoutID = null;
   sunArea = null; // 大图形
   async componentDidMount() {
     await this.props.sunCityStore.fetchSCSunIntegral({
-      page: 1,
-      pageNums: 8
+      testPublicKey: testPublicKey
     });
-    this.setState({
-      sunCoordinateArr: this.getSunCoordinateArr(
-        toJS(this.props.sunCityStore.sunIntegral)
-      )
+    this.props.sunCityStore.fetchSCEquipmentList({
+      userPubKey: testPublicKey
     });
+    const sunCoordinateArr = toJS(this.props.sunCityStore.sunIntegral);
+    // 将获取的积分数组，分割成每10个一组
+    for (
+      var i = 0, len = sunCoordinateArr && sunCoordinateArr.length;
+      i < len;
+      i += 10
+    ) {
+      this.sunIntegralArr.push(sunCoordinateArr.slice(i, i + 10));
+    }
+    this.sunIntegralArr.length > 0 &&
+      this.setState({
+        sunCoordinateArr: this.getSunCoordinateArr(this.sunIntegralArr[0])
+      });
+  }
+  componentWillUnmount() {
+    this.timeoutID = null;
   }
   // 获取小太阳的坐标数组
   getSunCoordinateArr = sunIntegralArr => {
@@ -40,51 +56,62 @@ class Comp extends React.Component {
     const sunCoordinateArr = [];
     while (sunCoordinateArr.length < len) {
       let isIntersect = false;
-      const left = Math.random() * (maxLeft - padding) + padding;
-      const top = Math.random() * (maxTop - padding) + padding;
-      sunCoordinateArr.forEach(item => {
+      const left = parseInt(Math.random() * (maxLeft - padding), 10) + padding;
+      const top = parseInt(Math.random() * (maxTop - padding), 10) + padding;
+      isIntersect = sunCoordinateArr.some(item => {
         const x = item.left;
         const y = item.top;
-        const centerDistance = Math.sqrt(
-          (left - x) * (left - x) + (top - y) * (top - y)
+        return (
+          x - sunDistance < left &&
+          left < x + sunDistance &&
+          y - sunDistance < top &&
+          top < y + sunDistance
         );
-        if (centerDistance < sunDistance) {
-          isIntersect = true;
-        }
       });
       if (!isIntersect) {
         sunCoordinateArr.push({
-          number: sunIntegralArr[sunCoordinateArr.length],
+          info: sunIntegralArr[sunCoordinateArr.length],
           left: left,
           top: top
         });
       }
     }
+
     return sunCoordinateArr;
   };
   // 收取太阳积分
-  selectSunIntegral = (e, sunIntegral) => {
-    // this.props.sunCityStore
-    //   .fetchSCGetSunIntegral({
-    //     value: sunIntegral
-    //   })
-    //   .then(result => {
-    //     if (result.code === 200) {
-    //       e.target.parentNode.classList.add('remove');
-    //     }
-    //   });
-    e.target.parentNode.classList.add('remove');
-    // const sunCoordinateArr = this.state.sunCoordinateArr;
-    // const selectSun = sunCoordinateArr.find(
-    //   item => item.number === sunIntegral
-    // );
-    // const selectSunIndex = sunCoordinateArr.indexOf(selectSun);
-    // sunCoordinateArr.splice(selectSunIndex, 1);
-    // this.setState({ sunCoordinateArr });
+  selectSunIntegral = (e, sunIntegralInfo) => {
+    this.selectSunNode = e.target.parentNode;
+    this.props.sunCityStore
+      .fetchSCGetSunIntegral({
+        tokenId: sunIntegralInfo.id,
+        value: sunIntegralInfo.amount,
+        testPublicKey
+      })
+      .then(result => {
+        if (result.code === 200) {
+          pickNumber += 1;
+          this.selectSunNode.classList.add('remove');
+          // 每删除10个，重置一次，并进入下一个
+          if (pickNumber && pickNumber % 10 === 0) {
+            this.timeoutID = setTimeout(() => {
+              document
+                .querySelectorAll('.remove')
+                .forEach(item => item.classList.remove('remove'));
+              this.setState({
+                sunCoordinateArr: this.getSunCoordinateArr(
+                  this.sunIntegralArr[pickNumber / 10]
+                )
+              });
+            }, 1000);
+          }
+        }
+      });
   };
   render() {
-    // console.log(toJS(this.props.sunCityStore.getSunIntegral));
-    // const sunIntegral = toJS(this.props.sunCityStore.getSunIntegral);
+    const equipmentList = toJS(this.props.sunCityStore.equipmentList);
+    const equipmentNameList =
+      (equipmentList && Object.keys(equipmentList)) || [];
     return (
       <div className={'page-sunCity-info'}>
         <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
@@ -129,10 +156,10 @@ class Comp extends React.Component {
                     }}
                     ref={ele => (this.currentEle = ele)}
                     // onClick={() => this.selectSunIntegral(item.number)}
-                    onClick={e => this.selectSunIntegral(e, item.number)}
+                    onClick={e => this.selectSunIntegral(e, item.info)}
                   >
                     <span className="sun-pic" />
-                    <span className="sun-number">{item.number}</span>
+                    <span className="sun-number">{item.info.amount}</span>
                   </div>
                 );
               })}
@@ -148,38 +175,31 @@ class Comp extends React.Component {
           </div>
           <div className="equipment">
             <Title title="太阳城蓄力装备" />
-            <div
-              className="item"
-              onClick={() => this.props.history.push(`/equipmentInfo/${0}`)}
-            >
-              <div className="item-pic">
-                <i className="iconfont icon-shebeiliebiao" />
-              </div>
-              <div className="item-detail">
-                <div className="item-name">FWCSHHKJL</div>
-                <div className="item-info">
-                  <span>功率：312312w</span>
-                  <span>日电量：321312kw/h</span>
+            {equipmentNameList.map((equipment, index) => {
+              return (
+                <div
+                  key={index}
+                  className="item"
+                  onClick={() =>
+                    this.props.history.push(
+                      `/equipmentInfo/${equipmentList[equipment].deviceNo}`
+                    )
+                  }
+                >
+                  <div className="item-pic">
+                    <i className="iconfont icon-shebeiliebiao" />
+                  </div>
+                  <div className="item-detail">
+                    <div className="item-name">{equipment}</div>
+                    <div className="item-info">
+                      <span>功率：312312w</span>
+                      <span>日电量：321312kw/h</span>
+                    </div>
+                  </div>
+                  <Icon type="right" />
                 </div>
-              </div>
-              <Icon type="right" />
-            </div>
-            <div
-              className="item"
-              onClick={() => this.props.history.push(`/equipmentInfo/${1}`)}
-            >
-              <div className="item-pic">
-                <i className="iconfont icon-shebeiguanli" />
-              </div>
-              <div className="item-detail">
-                <div className="item-name">FWCSHHKJL</div>
-                <div className="item-info">
-                  <span>功率：312312w</span>
-                  <span>日电量：321312kw/h</span>
-                </div>
-              </div>
-              <Icon type="right" />
-            </div>
+              );
+            })}
           </div>
         </div>
       </div>

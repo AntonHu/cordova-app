@@ -1,5 +1,6 @@
 import { observable, action, runInAction } from 'mobx';
 import {
+  fetchNews,
   fetchSunIntegral,
   fetchGetSunIntegral,
   fetchPowerstationData,
@@ -9,32 +10,40 @@ import {
 } from './request';
 
 class SunCityStore {
+  @observable news;
   @observable sunIntegral;
   @observable powerstationData;
   @observable equipmentList;
   @observable equipmentInfo;
   @observable equipmentPower;
 
+  // 获取最新公告
+  @action
+  fetchSCNews = async params => {
+    let result = {};
+    try {
+      // result = await fetchNews(params);
+      runInAction(() => {
+        // if (result.responseCode === 200) {
+        //   this.powerstationData = order.total;
+        // }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    return result;
+  };
+
   // 太阳积分列表
   @action
   fetchSCSunIntegral = async params => {
     let result = {};
     try {
-      // result = await fetchSunIntegral(params);
+      result = await fetchSunIntegral(params);
       runInAction(() => {
-        // 测试数据
-        this.sunIntegral = [
-          1.032,
-          2.323,
-          3.323,
-          4.2334,
-          5.2336,
-          6.2334,
-          7.3234
-        ];
-        // if (result.responseCode === 200) {
-        //   this.sunIntegral = order.total;
-        // }
+        if (result.code === 200) {
+          this.sunIntegral = JSON.parse(result.data).filter(item => !item.pick);
+        }
       });
     } catch (err) {
       console.log(err);
@@ -77,11 +86,11 @@ class SunCityStore {
   fetchSCEquipmentList = async params => {
     let result = {};
     try {
-      // result = await fetchEquipmentList(params);
+      result = await fetchEquipmentList(params);
       runInAction(() => {
-        // if (result.responseCode === 200) {
-        //   this.equipmentList = order.total;
-        // }
+        if (result.code === 200) {
+          this.equipmentList = JSON.parse(result.data);
+        }
       });
     } catch (err) {
       console.log(err);
@@ -94,7 +103,7 @@ class SunCityStore {
   fetchSCEquipmentInfo = async params => {
     let result = {};
     try {
-      // result = await fetchEquipmentInfo(params);
+      result = await fetchEquipmentInfo(params);
       runInAction(() => {
         // if (result.responseCode === 200) {
         //   this.equipmentInfo = order.total;
