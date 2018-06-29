@@ -8,16 +8,21 @@ import {backendServer, userServer, PAGE_SIZE, testPublicKey} from '../../utils/v
  * @returns {Promise.<{success, msg: string}>}
  */
 export const reqLogin = async ({username, password}) => {
-  const response = await post(`${userServer}/authz/oauth/token`,
-    {
-      username,
-      password,
-      scope: 'read',
-      client_id: 'test',
-      client_secret: 'test',
-      grant_type: 'password'
-    });
-  return response
+  try {
+    const response = await post(`${userServer}/authz/oauth/token`,
+      {
+        username,
+        password,
+        scope: 'read',
+        client_id: 'test',
+        client_secret: 'test',
+        grant_type: 'password'
+      });
+    return response
+  } catch (err) {
+    return err.response;
+  }
+
 };
 
 /**
@@ -25,17 +30,22 @@ export const reqLogin = async ({username, password}) => {
  * @returns {Promise.<{success, msg: string}>}
  */
 export const reqRegister = async ({mobile, password, verificationCode}) => {
-  const response = await post(`${userServer}/authz/users/register`,
-    {
-      mobile,
-      password,
-      scope: 'read',
-      client_id: 'test',
-      client_secret: 'test',
-      register_type: 'phone',
-      verification_code: verificationCode
-    });
-  return response
+  try {
+    const response = await post(`${userServer}/authz/users/register`,
+      {
+        mobile,
+        password,
+        scope: 'read',
+        client_id: 'test',
+        client_secret: 'test',
+        register_type: 'phone',
+        verification_code: verificationCode
+      });
+    return response
+  } catch (err) {
+    return err.response;
+  }
+
 };
 
 /**
@@ -45,8 +55,12 @@ export const reqRegister = async ({mobile, password, verificationCode}) => {
  * @returns {Promise.<void>}
  */
 export const reqSendCode = async ({mobile, type = '0'}) => {
-  const response = await post(`${userServer}/authz/sms/send`, {mobile, type});
-  return response;
+  try {
+    const response = await post(`${userServer}/authz/sms/send`, {mobile, type});
+    return response;
+  } catch (err) {
+    return err.response;
+  }
 };
 
 /**
@@ -54,9 +68,12 @@ export const reqSendCode = async ({mobile, type = '0'}) => {
  * @returns {Promise.<*>}
  */
 export const getOwnerInfo = async () => {
-  const userServer = 'http://192.168.1.167:8196';
-  const response = await get(`${userServer}/resource/rs/checkToken`);
-  return response;
+  try {
+    const response = await get(`${userServer}/resource/rs/checkToken`);
+    return response;
+  } catch (err) {
+    return err.response;
+  }
 };
 
 /**
@@ -64,8 +81,12 @@ export const getOwnerInfo = async () => {
  * @returns {Promise.<*>}
  */
 export const getMessages = async ({page}) => {
-  const response = await get(`${backendServer}/info/latestNews`, {page, pageSize: PAGE_SIZE});
-  return response;
+  try {
+    const response = await get(`${backendServer}/info/latestNews`, {page, pageSize: PAGE_SIZE});
+    return response;
+  } catch (err) {
+    return err.response;
+  }
 };
 
 /**
@@ -73,8 +94,12 @@ export const getMessages = async ({page}) => {
  * @returns {Promise.<*>}
  */
 export const modifyLoginPassword = async ({newPassword, oldPassword}) => {
-  const response = await post(`${userServer}/resource/user/updatePassword`, {newPassword, oldPassword});
-  return response;
+  try {
+    const response = await post(`${userServer}/resource/user/updatePassword`, {newPassword, oldPassword});
+    return response;
+  } catch (err) {
+    return err.response;
+  }
 };
 
 /**
@@ -82,14 +107,17 @@ export const modifyLoginPassword = async ({newPassword, oldPassword}) => {
  * @returns {Promise.<*>}
  */
 export const reqUpdateUser = async ({header, nickName}) => {
-  const userServer = 'http://192.168.1.167:8196';
-  const response = await post(`${userServer}/resource/user/updateUserInfo`,
-    {
-      header,
-      nickName
-    }
-  );
-  return response
+  try {
+    const response = await post(`${userServer}/resource/user/updateUserInfo`,
+      {
+        header,
+        nickName
+      }
+    );
+    return response
+  } catch (err) {
+    return err.response;
+  }
 };
 
 /**
@@ -99,6 +127,10 @@ export const reqUpdateUser = async ({header, nickName}) => {
  * @returns {Promise.<*>}
  */
 export const reqUpdateGeolocation = async ({publicKey, rectangle}) => {
-  const response = await post(`${backendServer}/info/rectangle`, {publicKey: testPublicKey, rectangle});
-  return response;
+  try {
+    const response = await post(`${backendServer}/info/rectangle`, {publicKey: testPublicKey, rectangle});
+    return response;
+  } catch (err) {
+    return err.response;
+  }
 };

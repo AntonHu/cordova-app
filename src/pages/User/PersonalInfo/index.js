@@ -13,11 +13,11 @@ if (isIPhone) {
   };
 }
 
-function onFail(message) {
+const onFail = (message) => {
   alert('Failed because: ' + message);
-}
+};
 
-function onPhotoDataSuccess(imageData) {
+const onPhotoDataSuccess = (imageData) => {
   var smallImage = document.getElementById('smallImage');
 
   // Unhide image elements
@@ -29,7 +29,7 @@ function onPhotoDataSuccess(imageData) {
   smallImage.src = "data:image/jpeg;base64," + imageData;
 }
 
-function onPhotoURISuccess(imageURI) {
+const onPhotoURISuccess = (imageURI) => {
   var largeImage = document.getElementById('largeImage');
 
   // Unhide image elements
@@ -42,7 +42,7 @@ function onPhotoURISuccess(imageURI) {
   largeImage.src = imageURI;
 }
 
-function capturePhoto() {
+const capturePhoto = () => {
   const destinationType = navigator.camera.DestinationType;
   // Take picture using device camera and retrieve image as base64-encoded string
   navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
@@ -51,7 +51,7 @@ function capturePhoto() {
   });
 }
 
-function getPhoto(source) {
+const getPhoto = (source) => {
   // Retrieve image file location from specified source
   const destinationType = navigator.camera.DestinationType;
   navigator.camera.getPicture(onPhotoURISuccess, onFail, {

@@ -1,10 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { toJS } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { Title, PageWithHeader } from '../../../components';
 import { Icon, Tabs, WhiteSpace } from 'antd-mobile';
-import { getNearbyWalletTopRank, gainTokens, getTokenRecords, getWalletData, getAllRanking} from '../../../stores/mining/request';
 import './style.less';
 
 const tabs2 = [
