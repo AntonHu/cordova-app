@@ -69,6 +69,7 @@ async function onPhotoURISuccess (imageURI) {
 /**
  * 上传头像，并且更新用户头像地址
  * @param imgBlob
+ * @param nickName
  */
 const updateAvatar = (imgBlob, nickName) => {
   reqUploadAvatar(imgBlob)
@@ -87,6 +88,8 @@ const updateAvatar = (imgBlob, nickName) => {
             Toast.show('更新头像失败');
           }
         })
+      } else {
+        Toast.show('上传头像失败');
       }
     })
     .catch(err => {
