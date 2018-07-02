@@ -36,3 +36,77 @@ export const testPassword = password => {
   const reg = /^[a-zA-Z0-9_]{6,16}$/;
   return reg.test(password);
 };
+
+/**
+ * 相当于window.resolveLocalFileSystemURL(uri, onSuccess, onFail)
+ * 返回fileEntry
+ * @param fileURL
+ * @returns {Promise}
+ */
+export const getFileEntryFromURL = fileURL => {
+  return new Promise((resolve, reject) => {
+    if (window.resolveLocalFileSystemURL) {
+      window.resolveLocalFileSystemURL(fileURL, function (fileEntry) {
+        resolve(fileEntry);
+      }, function (err) {
+        reject(err)
+      })
+    } else {
+      reject('there is no window.resolveLocalFileSystemURL');
+    }
+  });
+};
+
+/**
+ * 相当于fileEntry.file(onSuccess, onFail)
+ * 返回file
+ * @param fileEntry
+ * @returns {Promise}
+ */
+export const getFileFromFileEntry = (fileEntry) => {
+  return new Promise((resolve, reject) => {
+    fileEntry.file(function (file) {
+      resolve(file)
+    }, function (err) {
+      reject(err)
+    })
+  })
+};
+
+/**
+ * 调用FileReader返回result
+ * @param file
+ * @returns {Promise}
+ */
+export const readFileAsBuffer = (file) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const reader = new FileReader();
+      reader.onloadend = function (e) {
+        resolve(e.target.result);
+      };
+      reader.readAsArrayBuffer(file)
+    } catch (err) {
+      reject(err)
+    }
+  })
+};
+
+/**
+ * 把readFileAsBuffer的返回值转成blob
+ * @param result
+ * @returns {*}
+ */
+export const turnJpegIntoBlob = (result) => {
+  return new Blob([result], {type: 'image/jpeg'});
+};
+
+/**
+ * cordova文件操作相关
+ */
+export const FileMethods = {
+  getFileEntryFromURL,
+  getFileFromFileEntry,
+  readFileAsBuffer,
+  turnJpegIntoBlob
+};
