@@ -62,7 +62,7 @@ class Comp extends React.PureComponent {
               </div>
               <Icon
                 type="right"
-                onClick={() => this.props.history.push('/sunIntegral')}
+                onClick={() => this.props.history.push('/mining/sunIntegral')}
               />
             </div>
             <div className="my-profit">

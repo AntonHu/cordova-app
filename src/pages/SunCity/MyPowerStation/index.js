@@ -223,7 +223,7 @@ class Comp extends React.PureComponent {
             <Title title="太阳城蓄力装备" />
             <div
               className="item"
-              onClick={() => this.props.history.push(`/equipmentInfo/${0}`)}
+              onClick={() => this.props.history.push(`/sunCity/equipmentInfo/${0}`)}
             >
               <div className="item-pic">
                 <i className="iconfont icon-shebeiliebiao" />
@@ -239,7 +239,7 @@ class Comp extends React.PureComponent {
             </div>
             <div
               className="item"
-              onClick={() => this.props.history.push(`/equipmentInfo/${1}`)}
+              onClick={() => this.props.history.push(`/sunCity/equipmentInfo/${1}`)}
             >
               <div className="item-pic">
                 <i className="iconfont icon-shebeiguanli" />

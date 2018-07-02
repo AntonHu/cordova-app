@@ -110,7 +110,7 @@ class Comp extends React.Component {
             </div>
             <div
               className="powerStation"
-              onClick={() => this.props.history.push('/powerStation')}
+              onClick={() => this.props.history.push('/sunCity/powerStation')}
             >
               <i className="iconfont powerStation-pic">&#xe609;</i>
               电站
@@ -150,7 +150,7 @@ class Comp extends React.Component {
             <Title title="太阳城蓄力装备" />
             <div
               className="item"
-              onClick={() => this.props.history.push(`/equipmentInfo/${0}`)}
+              onClick={() => this.props.history.push(`/sunCity/equipmentInfo/${0}`)}
             >
               <div className="item-pic">
                 <i className="iconfont icon-shebeiliebiao" />
@@ -166,7 +166,7 @@ class Comp extends React.Component {
             </div>
             <div
               className="item"
-              onClick={() => this.props.history.push(`/equipmentInfo/${1}`)}
+              onClick={() => this.props.history.push(`/sunCity/equipmentInfo/${1}`)}
             >
               <div className="item-pic">
                 <i className="iconfont icon-shebeiguanli" />

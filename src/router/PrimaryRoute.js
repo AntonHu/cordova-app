@@ -24,15 +24,19 @@ class PrimaryRoute extends React.PureComponent {
     return (
       <Switch>
         <Route exact path={'/'} component={Home}/>
+        <Route exact path={'/sunCity'} component={Home}/>
+        <Route exact path={'/mining'} component={Home}/>
+        <Route exact path={'/user'} component={Home}/>
+        <Route exact path={'/apply'} component={Home}/>
         {/* 太阳城 */}
-        <Route exact path="/powerStation" component={MyPowerStation}/>
-        <Route exact path="/equipmentInfo/:id" component={EquipmentInfo}/>
+        <Route exact path="/sunCity/powerStation" component={MyPowerStation}/>
+        <Route exact path="/sunCity/equipmentInfo/:id" component={EquipmentInfo}/>
 
         {/* 挖宝 */}
-        <Route exact path="/sunIntegral" component={SunIntegral}/>
+        <Route exact path="/mining/sunIntegral" component={SunIntegral}/>
 
         {/* 用户 */}
-        <Route exact path={'/user'} component={User}/>
+
         <Route exact path={'/user/about'} component={About}/>
         <Route
           exact
