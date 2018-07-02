@@ -1,5 +1,6 @@
-import {get, post, authPost} from '../../utils/fetch';
+import {get, post, authPost, post2} from '../../utils/fetch';
 import {backendServer, userServer, PAGE_SIZE, testPublicKey} from '../../utils/variable';
+import axios from 'axios';
 
 /**
  * 用户密码登录
@@ -114,6 +115,8 @@ export const reqUpdateUser = async ({header, nickName}) => {
         nickName
       }
     );
+    console.log('reqUpdateUser');
+    console.log(JSON.stringify(response))
     return response
   } catch (err) {
     return err.response;
@@ -134,3 +137,125 @@ export const reqUpdateGeolocation = async ({publicKey, rectangle}) => {
     return err.response;
   }
 };
+
+/**
+ * formData上传头像
+ * @param fileBlob
+ * @returns {Promise.<TResult>}
+ */
+export const reqUploadAvatar = (fileBlob) => {
+
+  const formData = new FormData();
+  formData.append('pngFile', fileBlob);
+
+  let config = {
+    headers:{'Content-Type':'multipart/form-data'}
+  };
+  return axios.post(`${backendServer}/user/headImg`, formData, config)
+  // axios.post(`http://192.168.1.100:8080/user/headImg`, formData, config)
+    .then(res => {
+      console.log('upload success!');
+      console.log(JSON.stringify(res));
+      return res;
+    })
+    .catch(err => {
+      console.log('upload fail!');
+      console.log(err);
+      console.log(Object.keys(err));
+      console.log(JSON.stringify(err.response))
+      throw err;
+    })
+};
+
+/**
+ * formData方式，上传认证信息
+ * @param publicKey
+ * @param username
+ * @param idPositive 身份证正面图片文件
+ * @param idNegative 身份证反面图片文件
+ * @param idHandheld 身份证手持图片文件
+ * @returns {Promise.<TResult>}
+ */
+export const reqUploadVerifyId = ({publicKey, username, idPositive, idNegative, idHandheld}) => {
+  const formData = new FormData();
+  console.log(JSON.stringify({username, idPositive, idNegative, idHandheld}));
+  formData.append('publicKey', testPublicKey);
+  formData.append('username', username);
+  formData.append('idPositive', idPositive);
+  formData.append('idNegative', idNegative);
+  formData.append('idHandheld', idHandheld);
+
+  let config = {
+    headers:{'Content-Type':'multipart/form-data'}
+  };
+
+  return axios.post(`${backendServer}/user/verifiedUser`, formData, config)
+    .then(res => {
+      console.log('verifiedUser success');
+      console.log(JSON.stringify(res));
+      return res;
+    })
+    .catch(err => {
+      console.log('verifiedUser fail');
+      console.log(JSON.stringify(err.response));
+      throw err;
+    })
+};
+
+/**
+ * 重置交易密码
+ * @param phoneNumbe
+ * @param newPassword
+ * @param verificationCode
+ * @returns {Promise.<*>}
+ */
+export const reqResetTradePassword = async (
+  {
+    phoneNumber,
+    newPassword,
+    verificationCode
+  }) => {
+  try {
+    const response = await post(`${backendServer}/user/resetPassword`, {
+      phoneNumber,
+      newPassword,
+      verificationCode});
+    return response;
+  } catch (err) {
+    return err.response;
+  }
+};
+
+// TODO:上面的身份认证调通了，就把下面这个删掉
+/**
+ * 身份认证
+ * @param publicKey
+ * @param username
+ * @param idPositive 身份证正面图片文件
+ * @param idNegative 身份证反面图片文件
+ * @param idHandheld 身份证手持图片文件
+ * @returns {Promise.<*>}
+ */
+export const reqVerifyId = async (
+  {
+    publicKey,
+    username,
+    idPositive,
+    idNegative,
+    idHandheld
+  }
+  ) => {
+  try {
+    const response = await post2(`${backendServer}/user/verifiedUser`, {
+      publicKey: testPublicKey,
+      username,
+      idPositive,
+      idNegative,
+      idHandheld
+    });
+    return response;
+  } catch (err) {
+    return err.response;
+  }
+};
+

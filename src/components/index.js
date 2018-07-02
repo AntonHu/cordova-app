@@ -7,6 +7,7 @@ import Popup from './Popup';
 import PlainButton from './PlainButton';
 import Title from './Title';
 import Countdown from './Countdown';
+import Picture from './Picture'
 
 export {
   BlueBox,
@@ -17,5 +18,6 @@ export {
   Popup,
   PlainButton,
   Title,
-  Countdown
+  Countdown,
+  Picture
 };

@@ -54,7 +54,7 @@ class MiningStore {
   fetchNearbyRanking = async () => {
     try {
       const res = await getNearbyWalletTopRank({});
-      if (res.status === 200) {
+      if (res.data.code === 200) {
         runInAction(() => {
           this.nearbyRank = res.data.data;
         });
