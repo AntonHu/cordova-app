@@ -1,9 +1,11 @@
-@import '//at.alicdn.com/t/font_711696_6hytdc81mer.css';
+/*@import '//at.alicdn.com/t/font_711696_6hytdc81mer.css';*/
 @font-face {
-  font-family: 'iconfont';
-  /* project id 711696 */
-  src: url('//at.alicdn.com/t/font_711696_m7dvmq8kto.eot');
-  src: url('//at.alicdn.com/t/font_711696_m7dvmq8kto.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_711696_m7dvmq8kto.woff') format('woff'), url('//at.alicdn.com/t/font_711696_m7dvmq8kto.ttf') format('truetype'), url('//at.alicdn.com/t/font_711696_m7dvmq8kto.svg#iconfont') format('svg');
+  font-family: "iconfont";
+  src: url('iconfont/iconfont.eot'); /* IE9*/
+  src: url('iconfont/iconfont.eot#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont/iconfont.woff') format('woff'), /* chrome, firefox */
+  url('iconfont/iconfont.eot') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
