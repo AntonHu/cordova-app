@@ -1,8 +1,10 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
-import {BlueBox, PageWithHeader} from '../../../components';
-import {List, Picker, Icon, Modal, Button, ActionSheet} from 'antd-mobile';
+import {BlueBox, PageWithHeader, Picture} from '../../../components';
+import {List, Picker, Icon, Modal, Button, ActionSheet, Toast} from 'antd-mobile';
 import {observer, inject} from 'mobx-react';
+import {FileMethods} from '../../../utils/methods';
+import {reqUploadAvatar, reqUpdateUser} from '../../../stores/user/request';
 import './style.less';
 
 const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
@@ -13,60 +15,117 @@ if (isIPhone) {
   };
 }
 
-const onFail = (message) => {
-  alert('Failed because: ' + message);
+function onUploadFail() {
+  Toast.show('上传头像失败');
+}
+
+function onFail (message) {
 };
 
-const onPhotoDataSuccess = (imageData) => {
-  var smallImage = document.getElementById('smallImage');
+/**
+ * 拍照上传流程：
+ *
+ * 拍照之后获得照片在手机中的地址imageURI
+ * 然后去读取这个imageURI对应的file
+ * 把file转成blob，传给reqUploadAvatar
+ * reqUploadAvatar用formData上传图像，返回oss地址
+ * 调用reqUpdateUser更新昵称、头像oss地址
+ * @param imageURI
+ */
+async function onPhotoDataSuccess (imageURI) {
+  const nickName = this.props.userStore.userInfo.nickName || '';
+  const fileEntry = await FileMethods.getFileEntryFromURL(imageURI);
+  const file = await FileMethods.getFileFromFileEntry(fileEntry);
+  const result = await FileMethods.readFileAsBuffer(file);
+  const imgBlob = FileMethods.turnJpegIntoBlob(result);
 
-  // Unhide image elements
-  smallImage.style.display = 'block';
+  updateAvatar(imgBlob, nickName);
 
-  // Show the captured photo
-  // The inline CSS rules are used to resize the image
-  //
-  smallImage.src = "data:image/jpeg;base64," + imageData;
-}
+  this.props.userStore.updateAvatar(imageURI);
+};
 
-const onPhotoURISuccess = (imageURI) => {
-  var largeImage = document.getElementById('largeImage');
+/**
+ * 选取相册上传流程：
+ *
+ * 选择之后获得照片在手机中的地址imageURI
+ * 然后去读取这个imageURI对应的file
+ * 把file转成blob，传给reqUploadAvatar
+ * reqUploadAvatar用formData上传图像，返回oss地址
+ * 调用reqUpdateUser更新昵称、头像oss地址
+ * @param imageURI
+ */
+async function onPhotoURISuccess (imageURI) {
+  const nickName = this.props.userStore.userInfo.nickName || '';
+  const fileEntry = await FileMethods.getFileEntryFromURL(imageURI);
+  const file = await FileMethods.getFileFromFileEntry(fileEntry);
+  const result = await FileMethods.readFileAsBuffer(file);
+  const imgBlob = FileMethods.turnJpegIntoBlob(result);
 
-  // Unhide image elements
-  //
-  largeImage.style.display = 'block';
+  updateAvatar(imgBlob, nickName);
 
-  // Show the captured photo
-  // The inline CSS rules are used to resize the image
-  //
-  largeImage.src = imageURI;
-}
+  this.props.userStore.updateAvatar(imageURI);
+};
 
-const capturePhoto = () => {
+/**
+ * 上传头像，并且更新用户头像地址
+ * @param imgBlob
+ * @param nickName
+ */
+const updateAvatar = (imgBlob, nickName) => {
+  reqUploadAvatar(imgBlob)
+    .then(res => {
+      console.log(JSON.stringify(res));
+      // Toast.show('上传头像成功');
+      const data = res.data;
+      if (data && data.code === 200) {
+        reqUpdateUser({
+          header: data.data.imgSssKey,
+          nickName
+        }).then(updateRes => {
+          if (updateRes.data && updateRes.data.code ===  20000) {
+            Toast.show('更新头像成功');
+          } else {
+            Toast.show('更新头像失败');
+          }
+        })
+      } else {
+        Toast.show('上传头像失败');
+      }
+    })
+    .catch(err => {
+      onUploadFail();
+    });
+};
+
+function capturePhoto () {
   const destinationType = navigator.camera.DestinationType;
+  onPhotoDataSuccess = onPhotoDataSuccess.bind(this);
+  onFail = onFail.bind(this);
   // Take picture using device camera and retrieve image as base64-encoded string
   navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
-    quality: 50,
-    destinationType: destinationType.DATA_URL
+    quality: 25,
+    destinationType: destinationType.FILE_URI
   });
-}
+};
 
-const getPhoto = (source) => {
+function getPhoto(source)  {
   // Retrieve image file location from specified source
+  onPhotoURISuccess = onPhotoURISuccess.bind(this);
+  onFail = onFail.bind(this);
   const destinationType = navigator.camera.DestinationType;
   navigator.camera.getPicture(onPhotoURISuccess, onFail, {
-    quality: 50,
+    quality: 100,
     destinationType: destinationType.FILE_URI,
     sourceType: source
   });
-}
+};
 
 const avatarModalData = [
   {
     text: '拍照',
     onPress: function () {
       if (window.cordova) {
-        capturePhoto()
+        capturePhoto.call(this)
       }
     }
   },
@@ -75,7 +134,7 @@ const avatarModalData = [
     onPress: function () {
       if (window.cordova) {
         const pictureSource = navigator.camera.PictureSourceType;
-        getPhoto(pictureSource.PHOTOLIBRARY)
+        getPhoto.call(this, pictureSource.PHOTOLIBRARY)
       }
     }
   },
@@ -104,7 +163,9 @@ class Comp extends React.Component {
         wrapProps
       },
       (i) => {
-        avatarModalData[i].onPress.call(this)
+        if (avatarModalData[i]) {
+          avatarModalData[i].onPress.call(this)
+        }
       }
     )
   };
@@ -121,11 +182,7 @@ class Comp extends React.Component {
         <PageWithHeader title={'个人信息'}>
           <BlueBox>
             <div className="personal-info">
-              <img
-                className="personal-pic"
-                src={avatar}
-                alt=""
-              />
+              <Picture size={120} src={avatar} />
               <div className="personal-prompt">您已实名认证成功!</div>
             </div>
             <div className="personal-name">{nickName || '未知'}</div>
@@ -138,14 +195,10 @@ class Comp extends React.Component {
             </div>
           </BlueBox>
 
-          <div className="personal-list" onClick={this.picChange}>
-            <div className="personal-item">
+          <div className="personal-list">
+            <div className="personal-item" onClick={this.picChange}>
               <div className="item-title">头像</div>
-              <img
-                className="personal-pic"
-                src={avatar}
-                alt=""
-              />
+              <Picture size={60} src={avatar} alt='' showEmptyElement={false} />
             </div>
             <div
               className="personal-item"
@@ -157,8 +210,6 @@ class Comp extends React.Component {
               <div>{nickName || ''}</div>
             </div>
           </div>
-          <img id="smallImage" src=""/>
-          <img id="largeImage" src=""/>
         </PageWithHeader>
 
       </div>

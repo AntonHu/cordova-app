@@ -78,7 +78,9 @@ class Countdown extends Component {
       nums:this.props.nums,	// 重置时间
     });
     // 通知父组件
-    this.props.callback(false,'able');
+    if (this.props.callback) {
+      this.props.callback(false,'able');
+    }
   }
   render() {
     return (

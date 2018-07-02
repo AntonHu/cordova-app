@@ -17,7 +17,11 @@ class UserStore {
     } catch (err) {
       throw err;
     }
+  };
 
+  @action
+  updateAvatar = (src) => {
+    this.userInfo.avatar = src;
   }
 }
 

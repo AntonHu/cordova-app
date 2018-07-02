@@ -1,9 +1,7 @@
 import React from 'react';
-import { PageWithHeader } from '../../../components';
+import { PageWithHeader, Picture } from '../../../components';
 import { List, Icon } from 'antd-mobile';
 import { Link } from 'react-router-dom';
-import {getOwnerInfo} from '../../../stores/user/request';
-import { toJS } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import './style.less';
 
@@ -58,11 +56,8 @@ class Comp extends React.PureComponent {
           </BlueBox> */}
           <div className="user-wrap">
             <div className="user-info">
-              <img
-                className="user-pic"
-                src={avatar}
-                alt=""
-              />
+              <Picture size={120} src={avatar} />
+
               <div className="user-name">{nickName || username || '未知'}</div>
             </div>
             <div className="to-detial">
