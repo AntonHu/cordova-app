@@ -39,9 +39,12 @@ class Comp extends React.PureComponent {
   makeRequest = () => {
     this.props.miningStore.fetchAllRanking();
     this.props.miningStore.fetchNearbyRanking();
+    this.props.miningStore.fetchDigTimes();
+    this.props.miningStore.fetchBalanceRanking({publicKey: ''});
   };
 
   render() {
+    const { balanceRanking, digTimes } = this.props.miningStore;
     return (
       <div className={'page-mining'}>
         <PageWithHeader leftComponent={null} title={'挖宝池'}>
@@ -58,7 +61,7 @@ class Comp extends React.PureComponent {
               </div>
               <div>
                 <div className="sun-type">当前排行</div>
-                <div className="rank">552</div>
+                <div className="rank">{balanceRanking}</div>
               </div>
               <Icon
                 type="right"
@@ -96,14 +99,18 @@ class Comp extends React.PureComponent {
           </div>
           <Title title="挖宝数据" />
           <div className="treasure-data">
-            {this.state.equipmentList.map((item, index) => {
-              return (
-                <div key={index} className="item">
-                  <div>{item.title}</div>
-                  <span>{item.number}</span>
-                </div>
-              );
-            })}
+            <div className="item">
+              <div>当前挖宝排行</div>
+              <span>{balanceRanking}</span>
+            </div>
+            <div className="item">
+              <div>今日累计挖宝次数</div>
+              <span>{digTimes.countAllTimesToday}</span>
+            </div>
+            <div className="item">
+              <div>累计挖宝总数</div>
+              <span>{digTimes.countAllTimes}</span>
+            </div>
           </div>
           <div className="ranking">
             <Tabs

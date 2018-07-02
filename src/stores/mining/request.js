@@ -2,35 +2,6 @@ import {get, post} from '../../utils/fetch';
 import {backendServer, PAGE_SIZE, testPublicKey} from '../../utils/variable';
 
 
-
-/**
- * 获取挖宝数据
- * @param params
- * @returns {Promise.<void>}
- */
-export const getWalletData = async ({publicKey}) => {
-  try {
-    const response = await get(`${backendServer}/wallet/getWalletData`, {publicKey: testPublicKey});
-    return response.success
-  } catch (err) {
-    return err.response;
-  }
-};
-
-/**
- * 收取token
- * @param params
- * @returns {Promise.<void>}
- */
-export const gainTokens = async ({publicKey, tokenId, value}) => {
-  try {
-    const response = await get(`${backendServer}/wallet/gainTokens`, {publicKey: testPublicKey, tokenId, value});
-    return response.success
-  } catch (err) {
-    return err.response;
-  }
-};
-
 /**
  * 获取挖宝总排行榜
  * @param params
@@ -67,6 +38,33 @@ export const getNearbyWalletTopRank = async params => {
 export const getTokenRecords = async ({publicKey, page}) => {
   try {
     const response = await get(`${backendServer}/wallet/getTokenRecords`, {publicKey: testPublicKey, page, pageSize: PAGE_SIZE});
+    return response
+  } catch (err) {
+    return err.response;
+  }
+};
+
+/**
+ * 用户的"当前排行"
+ * @param publicKey
+ * @returns {Promise.<*>}
+ */
+export const getTokenBalanceRanking = async ({publicKey}) => {
+  try {
+    const response = await get(`${backendServer}/wallet/tokenBalanceRanking`, {publicKey: testPublicKey});
+    return response
+  } catch (err) {
+    return err.response;
+  }
+};
+
+/**
+ * 挖宝数据-今日全民累计挖宝次数、累计全民挖宝次数
+ * @returns {Promise.<void>}
+ */
+export const getDigTimes = async () => {
+  try {
+    const response = await get(`${backendServer}/wallet/digTimes`);
     return response
   } catch (err) {
     return err.response;
