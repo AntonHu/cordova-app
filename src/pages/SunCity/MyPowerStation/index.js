@@ -1,5 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { toJS } from 'mobx';
+import { observer, inject } from 'mobx-react';
 import { BlueBox, Title, PageWithHeader } from '../../../components';
 import { Icon, Popover } from 'antd-mobile';
 import F2 from '@antv/f2';
@@ -8,76 +10,38 @@ import './style.less';
 const Item = Popover.Item;
 
 /**
- * 电站设备信息
+ * 我的电站信息
  */
-const data = [
-  {
-    year: '1951 年',
-    sales: 38
-  },
-  {
-    year: '1952 年',
-    sales: 52
-  },
-  {
-    year: '1956 年',
-    sales: 61
-  },
-  {
-    year: '1957 年',
-    sales: 145
-  },
-  {
-    year: '1958 年',
-    sales: 48
-  },
-  {
-    year: '1959 年',
-    sales: 38
-  },
-  {
-    year: '1960 年',
-    sales: 38
-  }
-];
+@inject('sunCityStore') // 如果注入多个store，用数组表示
+@observer
 class Comp extends React.PureComponent {
   state = {
     selected: {
-      daySelected: true,
-      monthSelected: false,
-      yearSelected: false,
-      allSelected: false
-    },
-    equipmentList: [
-      {
-        name: '测试1',
-        power: '12345w',
-        electric: '21.1kw/h'
-      },
-      {
-        name: '测试2',
-        power: '12345w',
-        electric: '21.1kw/h'
-      },
-      {
-        name: '测试3',
-        power: '12345w',
-        electric: '21.1kw/h'
-      }
-    ]
+      day: true,
+      month: false,
+      year: false,
+      all: false
+    }
   };
   componentDidMount() {
-    this.pieBarChart = this.renderPieBar();
+    this.barChart = this.renderBarChart([]);
   }
 
   componentWillUnmount() {
-    if (this.pieBarChart) {
-      this.pieBarChart = undefined;
+    if (this.barChart) {
+      this.barChart = undefined;
     }
   }
 
   // 初始化柱形图
-  renderPieBar = () => {
+  renderBarChart = data => {
+    // 创建渐变对象
+    const canvas = document.getElementById('pie-bar-chart');
+    const ctx = canvas.getContext('2d');
+    const grd = ctx.createLinearGradient(0, 200, 0, 0);
+    grd.addColorStop(0, '#fff');
+    grd.addColorStop(1, '#0082f6');
+
     F2.Global.setTheme({
       pixelRatio: 2
     }); // 设为双精度
@@ -93,16 +57,19 @@ class Comp extends React.PureComponent {
         var items = ev.items;
         items[0].name = null;
         items[0].name = items[0].title;
-        items[0].value = '¥ ' + items[0].value;
+        items[0].value = `${items[0].value}kw/h`;
       }
     });
-    chart.axis('year', {
+    chart.axis('time', {
       label: {
         fill: '#fff',
         fontSize: 10
       }
     });
-    chart.axis('sales', {
+    chart.axis('number', {
+      grid: {
+        lineDash: [0]
+      },
       label: {
         fill: '#fff',
         fontSize: 10
@@ -110,8 +77,9 @@ class Comp extends React.PureComponent {
     });
     chart
       .interval()
-      .position('year*sales')
-      .color('#fff');
+      .size(18)
+      .position('time*number')
+      .color(grd);
     chart.render();
   };
 
@@ -129,6 +97,9 @@ class Comp extends React.PureComponent {
   // 添加逆变器
   addInverter = () => {};
   render() {
+    const equipmentList = toJS(this.props.sunCityStore.equipmentList);
+    const equipmentNameList =
+      (equipmentList && Object.keys(equipmentList)) || [];
     return (
       <div className={'page-powerStation-info'}>
         <PageWithHeader
@@ -159,28 +130,26 @@ class Comp extends React.PureComponent {
               </div>
               <div className="screen" onClick={this.screenChange}>
                 <div
-                  data-class="daySelected"
-                  className={this.state.selected.daySelected ? 'selected' : ''}
+                  data-class="day"
+                  className={this.state.selected.day ? 'selected' : ''}
                 >
                   日
                 </div>
                 <div
-                  data-class="monthSelected"
-                  className={
-                    this.state.selected.monthSelected ? 'selected' : ''
-                  }
+                  data-class="month"
+                  className={this.state.selected.month ? 'selected' : ''}
                 >
                   月
                 </div>
                 <div
-                  data-class="yearSelected"
-                  className={this.state.selected.yearSelected ? 'selected' : ''}
+                  data-class="year"
+                  className={this.state.selected.year ? 'selected' : ''}
                 >
                   年
                 </div>
                 <div
-                  data-class="allSelected"
-                  className={this.state.selected.allSelected ? 'selected' : ''}
+                  data-class="all"
+                  className={this.state.selected.all ? 'selected' : ''}
                 >
                   全部
                 </div>
@@ -191,7 +160,6 @@ class Comp extends React.PureComponent {
           <div className="type">
             <div className="type-item">功率</div>
             <div className="type-item">发电量</div>
-            <div className="type-item">收益</div>
           </div>
           <div className="detail">
             <div className="detail-item">
@@ -199,60 +167,49 @@ class Comp extends React.PureComponent {
               <div className="detail-type">当前</div>
             </div>
             <div className="detail-item">
-              <div className="number">18.0kw</div>
+              <div className="number">{`000kw`}</div>
               <div className="detail-type">今日</div>
             </div>
             <div className="detail-item">
               <div className="number">18.0kw</div>
-              <div className="detail-type">今日</div>
+              <div className="detail-type">逆变器容量</div>
             </div>
             <div className="detail-item">
-              <div className="number">18.0kw</div>
-              <div className="detail-type">今日</div>
-            </div>
-            <div className="detail-item">
-              <div className="number">18.0kw</div>
-              <div className="detail-type">今日</div>
-            </div>
-            <div className="detail-item">
-              <div className="number">18.0kw</div>
-              <div className="detail-type">今日</div>
+              <div className="number">{`000kw`}</div>
+              <div className="detail-type">累计</div>
             </div>
           </div>
           <div className="equipment">
             <Title title="太阳城蓄力装备" />
-            <div
-              className="item"
-              onClick={() => this.props.history.push(`/equipmentInfo/${0}`)}
-            >
-              <div className="item-pic">
-                <i className="iconfont icon-shebeiliebiao" />
-              </div>
-              <div className="item-detail">
-                <div className="item-name">FWCSHHKJL</div>
-                <div className="item-info">
-                  <span>功率：312312w</span>
-                  <span>日电量：321312kw/h</span>
+            {equipmentNameList.map((equipment, index) => {
+              return (
+                <div
+                  key={index}
+                  className="item"
+                  onClick={() =>
+                    this.props.history.push(
+                      `/equipmentInfo/${
+                        equipmentList[equipment].deviceNo
+                      }?source=${
+                        equipmentList[equipment].source
+                      }&name=${equipment}`
+                    )
+                  }
+                >
+                  <div className="item-pic">
+                    <i className="iconfont icon-shebeiliebiao" />
+                  </div>
+                  <div className="item-detail">
+                    <div className="item-name">{equipment}</div>
+                    <div className="item-info">
+                      <span>功率：312312w</span>
+                      <span>日电量：321312kw/h</span>
+                    </div>
+                  </div>
+                  <Icon type="right" />
                 </div>
-              </div>
-              <Icon type="right" />
-            </div>
-            <div
-              className="item"
-              onClick={() => this.props.history.push(`/equipmentInfo/${1}`)}
-            >
-              <div className="item-pic">
-                <i className="iconfont icon-shebeiguanli" />
-              </div>
-              <div className="item-detail">
-                <div className="item-name">FWCSHHKJL</div>
-                <div className="item-info">
-                  <span>功率：312312w</span>
-                  <span>日电量：321312kw/h</span>
-                </div>
-              </div>
-              <Icon type="right" />
-            </div>
+              );
+            })}
           </div>
         </PageWithHeader>
       </div>
