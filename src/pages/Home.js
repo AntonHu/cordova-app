@@ -45,7 +45,22 @@ class Comp extends React.PureComponent {
     selectedTab: 'sunCity'
   };
 
+  /**
+   * 把tab和url关联起来
+   * @param tabKey
+   * @returns {boolean}
+   */
+  isSelectedFromUrl = (tabKey) => {
+    const pathArray = this.props.match.path.split('/');
+    const pathName = pathArray[1];
+    if (tabKey === 'sunCity') {
+      return pathName === tabKey || pathName === '';
+    }
+    return pathName === tabKey
+  };
+
   render() {
+    console.log(this.props);
     return (
       <div
         className="page-home"
@@ -60,11 +75,9 @@ class Comp extends React.PureComponent {
             <TabBar.Item
               title={tab.title}
               key={tab.key}
-              selected={this.state.selectedTab === tab.key}
+              selected={this.isSelectedFromUrl(tab.key)}
               onPress={() => {
-                this.setState({
-                  selectedTab: tab.key
-                });
+                this.props.history.replace(`/${tab.key}`)
               }}
               icon={<i className="iconfont">{tab.unicode}</i>}
               selectedIcon={<i className="iconfont">{tab.selectedUnicode}</i>}

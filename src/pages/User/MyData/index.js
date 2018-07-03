@@ -202,6 +202,7 @@ class Comp extends React.Component {
     this.setState({});
   };
   render() {
+    console.log(this.props);
     return (
       <div className={'page-my-data'}>
         <PageWithHeader title={'我的数据'}>

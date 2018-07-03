@@ -2,11 +2,12 @@ import axios from 'axios';
 import qs from 'qs';
 import { getSessionStorage } from './storage';
 
+const TIME_OUT = 6000;
 /*
   请求头为application/json
 */
 const JSONInstance = axios.create({
-  timeout: 6000,
+  timeout: TIME_OUT,
   headers: {
     'Content-Type': 'application/json'
   },
@@ -22,7 +23,7 @@ const JSONInstance = axios.create({
   post请求
 */
 const postInstance = axios.create({
-  timeout: 6000,
+  timeout: TIME_OUT,
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded'
   },
@@ -33,6 +34,21 @@ const postInstance = axios.create({
     }
   ]
 });
+
+// 重新包装一下，使得超时的err有response
+const errHandler = err => {
+  if (err.message === `timeout of ${TIME_OUT}ms exceeded`) {
+    throw {
+      response: {
+        data: {
+          code: 0,
+          msg: '请求超时'
+        }
+      }
+    }
+  }
+  throw err
+};
 
 /*
   get请求，参数：params
@@ -46,7 +62,7 @@ export const get = (url, params) => {
   } else {
     urlStr += `?access_token=${token}`;
   }
-  return JSONInstance.get(urlStr);
+  return JSONInstance.get(urlStr).catch(errHandler);
 };
 
 /*
@@ -55,17 +71,17 @@ export const get = (url, params) => {
 export const post = (url, params) => {
   const token = getSessionStorage('token');
   const urlStr = `${url}?access_token=${token}`;
-  return postInstance.post(urlStr, qs.stringify(params));
+  return postInstance.post(urlStr, qs.stringify(params)).catch(errHandler);
 };
 
 /*
   登录post请求
 */
 export const authPost = (url, params) => {
-  return postInstance.post(url, qs.stringify(params));
+  return postInstance.post(url, qs.stringify(params)).catch(errHandler);
 };
 /*
   请求头为application/json的post请求
 */
 export const jsonPost = (url, params) =>
-  postInstance.post(url, JSON.stringify(params));
+  postInstance.post(url, JSON.stringify(params)).catch(errHandler);

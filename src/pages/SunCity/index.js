@@ -345,7 +345,7 @@ class Comp extends React.Component {
             </div>
             <div
               className="powerStation"
-              onClick={() => this.props.history.push('/powerStation')}
+              onClick={() => this.props.history.push('/sunCity/powerStation')}
             >
               <i className="iconfont powerStation-pic">&#xe609;</i>
               电站
