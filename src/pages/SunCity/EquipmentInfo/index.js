@@ -5,9 +5,9 @@ import { PageWithHeader } from '../../../components';
 import F2 from '@antv/f2';
 import { px } from '../../../utils/getDevice';
 import {
-  powerType,
-  testPublicKey,
-  testPrivateKey
+  POWER_TYPE,
+  TEST_PUBLIC_KEY,
+  TEST_PRIVATE_KEY
 } from '../../../utils/variable';
 import { JSRsasign } from '../../../jssign';
 import SM2Cipher from '../../../jssign/SM2Cipher';
@@ -40,6 +40,9 @@ class Comp extends React.PureComponent {
     const sourceData = params.split('&')[0].split('=')[1];
 
     const sortData = await this.getPowerData(sourceData, deviceNo, 1);
+    if (sortData.length >= 1) {
+      this.curveChart = this.renderCurve(sortData);
+    }
     const currentPower =
       sortData &&
       sortData[sortData.length - 1] &&
@@ -77,14 +80,11 @@ class Comp extends React.PureComponent {
     await this.props.sunCityStore.fetchSCEquipmentPower({
       sourceData,
       deviceNo,
-      userPubKey: testPublicKey,
+      userPubKey: TEST_PUBLIC_KEY,
       dateType
     });
     const receiveData = toJS(this.props.sunCityStore.equipmentPower);
     const sortData = (receiveData && this.handleData(receiveData)) || [];
-    if (sortData.length >= 1) {
-      this.curveChart = this.renderCurve(sortData);
-    }
     return sortData;
   }
 
@@ -123,7 +123,7 @@ class Comp extends React.PureComponent {
 
   // 数据解密
   doDecrypt = data => {
-    const privBI = new BigInteger(testPrivateKey, 16);
+    const privBI = new BigInteger(TEST_PRIVATE_KEY, 16);
     let cipherMode = '1'; // C1C3C2
     const cipher = new SM2Cipher(cipherMode);
 
@@ -257,7 +257,7 @@ class Comp extends React.PureComponent {
     this.getPowerData(
       this.state.sourceData,
       this.state.deviceNo,
-      powerType[type]
+      POWER_TYPE[type]
     );
     const selected = Object.assign({}, this.state.selected);
     Object.keys(selected).forEach(item => {

@@ -4,7 +4,7 @@ import { toJS } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { Title } from '../../components';
 import { NoticeBar, Icon } from 'antd-mobile';
-import { testPublicKey } from '../../utils/variable';
+import { TEST_PUBLIC_KEY, TEST_PRIVATE_KEY } from '../../utils/variable';
 import { setSessionStorage } from '../../utils/storage';
 import './style.less';
 
@@ -12,8 +12,6 @@ import { JSRsasign } from '../../jssign';
 import SM2Cipher from '../../jssign/SM2Cipher';
 
 const BigInteger = JSRsasign.BigInteger;
-const testPrivateKey =
-  'e469d6bcae3f9bef883828a629d12c89bd4e0ce67cab70a5557971f6dc7f4e29';
 
 /**
  * 太阳城-首页
@@ -57,11 +55,11 @@ class Comp extends React.Component {
     this.props.userStore.fetchUserInfo();
     // 获取积分列表
     await this.props.sunCityStore.fetchSCSunIntegral({
-      publicKey: testPublicKey
+      publicKey: TEST_PUBLIC_KEY
     });
     // 获取设备列表
     await this.props.sunCityStore.fetchSCEquipmentList({
-      userPubKey: testPublicKey
+      userPubKey: TEST_PUBLIC_KEY
     });
     const equipmentList = toJS(this.props.sunCityStore.equipmentList) || {};
     // 添加各个设备的功率和日电量
@@ -195,7 +193,7 @@ class Comp extends React.Component {
     await this.props.sunCityStore.fetchSCEquipmentPower({
       sourceData,
       deviceNo,
-      userPubKey: testPublicKey,
+      userPubKey: TEST_PUBLIC_KEY,
       dateType
     });
     const receiveData = toJS(this.props.sunCityStore.equipmentPower);
@@ -237,7 +235,7 @@ class Comp extends React.Component {
 
   // 数据解密
   doDecrypt = data => {
-    const privBI = new BigInteger(testPrivateKey, 16);
+    const privBI = new BigInteger(TEST_PRIVATE_KEY, 16);
     let cipherMode = '1'; // C1C3C2
     const cipher = new SM2Cipher(cipherMode);
 
@@ -272,8 +270,8 @@ class Comp extends React.Component {
     sunCoordinateArr.map((item, index) => {
       item.info = sunIntegralArr[index];
       // 小太阳随机上下左右浮动5个像素
-      item.left = item.left + parseInt(Math.random() * 10, 10) - 5;
-      item.top = item.top + parseInt(Math.random() * 10, 10) - 5;
+      item.left = item.left + Math.floor(Math.random() * 10) - 5;
+      item.top = item.top + Math.floor(Math.random() * 10) - 5;
       return item;
     });
     return sunCoordinateArr;
@@ -285,7 +283,7 @@ class Comp extends React.Component {
       .fetchSCGetSunIntegral({
         tokenId: sunIntegralInfo.id,
         value: sunIntegralInfo.amount,
-        publicKey: testPublicKey
+        publicKey: TEST_PUBLIC_KEY
       })
       .then(result => {
         if (result.code === 200) {
