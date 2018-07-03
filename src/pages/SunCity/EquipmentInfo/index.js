@@ -252,20 +252,23 @@ class Comp extends React.PureComponent {
   };
 
   // 筛选条件更改
-  screenChange = e => {
+  async screenChange(e) {
     const type = e.target.dataset.class;
-    this.getPowerData(
+    const sortData = await this.getPowerData(
       this.state.sourceData,
       this.state.deviceNo,
       POWER_TYPE[type]
     );
+    if (sortData.length >= 1) {
+      this.curveChart = this.renderCurve(sortData);
+    }
     const selected = Object.assign({}, this.state.selected);
     Object.keys(selected).forEach(item => {
       selected[item] = false;
     });
     selected[type] = true;
     this.setState({ selected });
-  };
+  }
   render() {
     return (
       <div className={'page-equipment-info'}>
@@ -293,7 +296,7 @@ class Comp extends React.PureComponent {
             </div>
           </div>
           <div className="equipment-content">
-            <div className="screen" onClick={this.screenChange}>
+            <div className="screen" onClick={this.screenChange.bind(this)}>
               <div
                 data-class="day"
                 className={this.state.selected.day ? 'selected' : ''}

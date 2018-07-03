@@ -64,27 +64,28 @@ class Comp extends React.Component {
     const equipmentList = toJS(this.props.sunCityStore.equipmentList) || {};
     // 添加各个设备的功率和日电量
     this.addEquipmentPower(equipmentList, 1);
-    const dayEquipmentDataObj = await this.getAllEquipmentData(
-      equipmentList,
-      1
-    );
-    const monthEquipmentDataObj = await this.getAllEquipmentData(
-      equipmentList,
-      2
-    );
-    const yearEquipmentDataObj = await this.getAllEquipmentData(
-      equipmentList,
-      3
-    );
-    const allEquipmentDataObj = await this.getAllEquipmentData(
-      equipmentList,
-      4
-    );
-    console.log(dayEquipmentDataObj);
-    const dayStationData = this.mergeEquipmentData(
-      dayEquipmentDataObj.equipmentDataArr
-    );
-    setSessionStorage('dayStationData', dayStationData); // 本地储存电站发电数据
+    // 暂时隐藏
+    // const dayEquipmentDataObj = await this.getAllEquipmentData(
+    //   equipmentList,
+    //   1
+    // );
+    // const monthEquipmentDataObj = await this.getAllEquipmentData(
+    //   equipmentList,
+    //   2
+    // );
+    // const yearEquipmentDataObj = await this.getAllEquipmentData(
+    //   equipmentList,
+    //   3
+    // );
+    // const allEquipmentDataObj = await this.getAllEquipmentData(
+    //   equipmentList,
+    //   4
+    // );
+    // console.log(dayEquipmentDataObj);
+    // const dayStationData = this.mergeEquipmentData(
+    //   dayEquipmentDataObj.equipmentDataArr
+    // );
+    // setSessionStorage('dayStationData', dayStationData); // 本地储存电站发电数据
 
     // 分割积分数组
     this.spliceArr(
