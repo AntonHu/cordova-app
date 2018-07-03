@@ -79,7 +79,7 @@ const updateAvatar = (imgBlob, nickName) => {
       const data = res.data;
       if (data && data.code === 200) {
         reqUpdateUser({
-          header: data.data.imgSssKey,
+          header: data.data.imgUrl,
           nickName
         }).then(updateRes => {
           if (updateRes.data && updateRes.data.code ===  20000) {

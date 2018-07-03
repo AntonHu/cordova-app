@@ -1,5 +1,7 @@
 @import "../../../styles/common";
 
+@register-btn-height: 100 * @px;
+
 .page-login {
   .title {
     padding-top: 160 * @px;
@@ -14,5 +16,12 @@
 
   .green-button {
     margin-top: 150 * @px;
+  }
+
+  .register-btn {
+    text-align: center;
+    color: @blue-text-color;
+    line-height: @register-btn-height;
+    height: @register-btn-height;
   }
 }

@@ -91,10 +91,10 @@ class Comp extends React.PureComponent {
             />
             <Flex direction="row">
               <Flex.Item>
-                <Button>忘记密码？</Button>
+                {/*<Button>忘记密码？</Button>*/}
               </Flex.Item>
               <Flex.Item>
-                <Button onClick={this.toRegister}>注册账号</Button>
+                <div className="register-btn" onClick={this.toRegister}>注册账号</div>
               </Flex.Item>
             </Flex>
             <GreenButton size={'big'} onClick={this.onLogin}>登录</GreenButton>
