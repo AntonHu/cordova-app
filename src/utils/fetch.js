@@ -40,8 +40,10 @@ const errHandler = err => {
   if (err.message === `timeout of ${TIME_OUT}ms exceeded`) {
     throw {
       response: {
-        code: 0,
-        msg: '请求超时'
+        data: {
+          code: 0,
+          msg: '请求超时'
+        }
       }
     }
   }
