@@ -4,39 +4,18 @@ import { PageWithHeader } from '../../../components';
 // import { List, InputItem, Flex, Button, WhiteSpace } from 'antd-mobile';
 import F2 from '@antv/f2';
 import { px } from '../../../utils/getDevice';
-import { powerType, testPublicKey } from '../../../utils/variable';
+import {
+  powerType,
+  testPublicKey,
+  testPrivateKey
+} from '../../../utils/variable';
+import { JSRsasign } from '../../../jssign';
+import SM2Cipher from '../../../jssign/SM2Cipher';
 import './style.less';
 
-const data = [
-  {
-    time: '2016-08-08',
-    tem: 10
-  },
-  {
-    time: '2016-08-09',
-    tem: 22
-  },
-  {
-    time: '2016-08-10',
-    tem: 20
-  },
-  {
-    time: '2016-08-11',
-    tem: 26
-  },
-  {
-    time: '2016-08-12',
-    tem: 20
-  },
-  {
-    time: '2016-08-13',
-    tem: 26
-  },
-  {
-    time: '2016-08-14',
-    tem: 28
-  }
-];
+import { toJS } from 'mobx';
+const BigInteger = JSRsasign.BigInteger;
+
 /**
  * 电站设备信息
  */
@@ -49,17 +28,39 @@ class Comp extends React.PureComponent {
       month: false,
       year: false,
       all: false
-    }
+    },
+    sourceData: '', // 数据来源
+    deviceNo: '', //设备编码
+    count: 0, // 日电量
+    maxValue: 0 // 总电量
   };
   async componentDidMount() {
     const deviceNo = this.props.match.params.id;
-    await this.props.sunCityStore.fetchSCEquipmentInfo({
-      sourceData: 'ASDFGHH123456789ZXCVBNM',
-      deviceNo: deviceNo,
-      userPubKey: testPublicKey
+    const params = this.props.location.search.substring(1);
+    const sourceData = params.split('&')[0].split('=')[1];
+
+    const sortData = await this.getPowerData(sourceData, deviceNo, 1);
+    const currentPower =
+      sortData &&
+      sortData[sortData.length - 1] &&
+      sortData[sortData.length - 1].power;
+    // 日电量
+    let count = 0;
+    // 总电量
+    let maxValue = 0;
+    sortData.forEach(item => {
+      count += item.number;
+      if (item.maxValue > maxValue) {
+        maxValue = item.maxValue;
+      }
     });
-    this.pieBarChart = this.renderPieBar();
-    this.curveChart = this.renderCurve();
+    this.setState({
+      deviceNo,
+      sourceData,
+      count,
+      maxValue
+    });
+    this.pieBarChart = this.renderPieBar(currentPower);
   }
 
   componentWillUnmount() {
@@ -71,8 +72,66 @@ class Comp extends React.PureComponent {
     }
   }
 
+  // 按照类型请求电量数据
+  async getPowerData(sourceData, deviceNo, dateType) {
+    await this.props.sunCityStore.fetchSCEquipmentPower({
+      sourceData,
+      deviceNo,
+      userPubKey: testPublicKey,
+      dateType
+    });
+    const receiveData = toJS(this.props.sunCityStore.equipmentPower);
+    const sortData = (receiveData && this.handleData(receiveData)) || [];
+    if (sortData.length >= 1) {
+      this.curveChart = this.renderCurve(sortData);
+    }
+    return sortData;
+  }
+
+  // 处理获取的解密数据
+  handleData = receiveData => {
+    const data = [];
+    Object.keys(receiveData).forEach(item => {
+      // 后端数据可能有问题，加一层处理
+      let powerInfo;
+      try {
+        powerInfo =
+          this.doDecrypt(receiveData[item]) &&
+          JSON.parse(this.doDecrypt(receiveData[item]));
+      } catch (err) {
+        console.log(err);
+      }
+      if (powerInfo) {
+        const value = +(powerInfo.maxEnergy - powerInfo.minEnergy).toFixed(2);
+        data.push({
+          time: item,
+          number: value,
+          maxValue: powerInfo.maxEnergy && +powerInfo.maxEnergy,
+          power: powerInfo.power || ''
+        });
+      }
+    });
+    const sortData = data.sort((pre, cur) => {
+      if (pre.time.indexOf('-') > 0 && cur.time.indexOf('-') > 0) {
+        return Date.parse(pre.time) - Date.parse(cur.time);
+      } else {
+        return pre.time - cur.time;
+      }
+    });
+    return sortData;
+  };
+
+  // 数据解密
+  doDecrypt = data => {
+    const privBI = new BigInteger(testPrivateKey, 16);
+    let cipherMode = '1'; // C1C3C2
+    const cipher = new SM2Cipher(cipherMode);
+
+    const decryptedMsg = cipher.Decrypt(privBI, data);
+    return decryptedMsg;
+  };
   // 绘制发电环图
-  renderPieBar = () => {
+  renderPieBar = currentPower => {
     // 创建渐变对象
     const canvas = document.getElementById('pie-bar-chart');
     const ctx = canvas.getContext('2d');
@@ -117,11 +176,9 @@ class Comp extends React.PureComponent {
     });
     chart.guide().html({
       position: ['110%', '60%'],
-      html:
-        '<div style="width: 250px;height: 40px;text-align: center;">' +
-        '<div style="font-size: 14px">321313w</div>' +
-        '<div style="font-size: 14px">总资产</div>' +
-        '</div>'
+      html: `<div style="width: 250px;height: 40px;text-align: center;"><div style="font-size: 14px">${(currentPower &&
+        currentPower.toFixed(2)) ||
+        ''}w</div><div style="font-size: 14px">当前功率</div></div>`
     });
     chart
       .interval()
@@ -140,7 +197,7 @@ class Comp extends React.PureComponent {
   };
 
   // 绘制发电曲线图
-  renderCurve = () => {
+  renderCurve = data => {
     const chart = new F2.Chart({
       id: 'curve-chart',
       pixelRatio: window.devicePixelRatio
@@ -148,12 +205,10 @@ class Comp extends React.PureComponent {
 
     const defs = {
       time: {
-        type: 'timeCat',
-        mask: 'YY/MM',
-        tickCount: data.length,
+        tickCount: 4,
         range: [0, 1]
       },
-      tem: {
+      number: {
         tickCount: 5,
         min: 0,
         alias: '功率'
@@ -175,15 +230,19 @@ class Comp extends React.PureComponent {
       }
     });
     chart.tooltip({
-      showCrosshairs: true
+      showCrosshairs: true,
+      onShow: function onShow(ev) {
+        var items = ev.items;
+        items[0].name = items[0].title;
+      }
     });
     chart
       .line()
-      .position('time*tem')
+      .position('time*number')
       .shape('smooth');
     chart
       .point()
-      .position('time*tem')
+      .position('time*number')
       .shape('smooth')
       .style({
         stroke: '#fff',
@@ -192,20 +251,14 @@ class Comp extends React.PureComponent {
     chart.render();
   };
 
-  // 获取设备发电数据
-  getEquipmentPower = type => {
-    this.props.sunCityStore.fetchSCEquipmentPower({
-      sourceData: 'ASDFGHH123456789ZXCVBNM',
-      deviceNo: '逆变器Id',
-      userPubKey: '公钥',
-      type: powerType[type]
-    });
-  };
-
   // 筛选条件更改
   screenChange = e => {
     const type = e.target.dataset.class;
-    this.getEquipmentPower(type);
+    this.getPowerData(
+      this.state.sourceData,
+      this.state.deviceNo,
+      powerType[type]
+    );
     const selected = Object.assign({}, this.state.selected);
     Object.keys(selected).forEach(item => {
       selected[item] = false;
@@ -216,15 +269,26 @@ class Comp extends React.PureComponent {
   render() {
     return (
       <div className={'page-equipment-info'}>
-        <PageWithHeader title={'某一台电站设备'}>
+        <PageWithHeader
+          title={
+            this.props.location.search
+              .substring(1)
+              .split('&')[1]
+              .split('=')[1]
+          }
+        >
           <div className="survey">
             <div className="survey-item">
-              <div className="survey-item-number">20.1kw/h</div>
+              <div className="survey-item-number">{`${
+                this.state.count
+              }kw/h`}</div>
               <div className="survey-item-type">日电量</div>
             </div>
             <canvas id="pie-bar-chart" />
             <div className="survey-item">
-              <div className="survey-item-number">60.1kw/h</div>
+              <div className="survey-item-number">{`${
+                this.state.maxValue
+              }kw/h`}</div>
               <div className="survey-item-type">总电量</div>
             </div>
           </div>
@@ -257,20 +321,6 @@ class Comp extends React.PureComponent {
             </div>
             <div className="curve-chart-title">日功率走势图</div>
             <canvas id="curve-chart" />
-            <div className="curve-chart-info">
-              <div className="curve-info">
-                <div className="curve-number">5098</div>
-                <div className="curve-type">总量</div>
-              </div>
-              <div className="curve-info">
-                <div className="curve-number">5098</div>
-                <div className="curve-type">总量</div>
-              </div>
-              <div className="curve-info">
-                <div className="curve-number">5098</div>
-                <div className="curve-type">总量</div>
-              </div>
-            </div>
           </div>
         </PageWithHeader>
       </div>

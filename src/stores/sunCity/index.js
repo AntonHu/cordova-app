@@ -10,7 +10,7 @@ import {
 } from './request';
 
 class SunCityStore {
-  @observable news;
+  @observable lastNews;
   @observable sunIntegral;
   @observable powerstationData;
   @observable equipmentList;
@@ -22,11 +22,11 @@ class SunCityStore {
   fetchSCNews = async params => {
     let result = {};
     try {
-      // result = await fetchNews(params);
+      result = await fetchNews(params);
       runInAction(() => {
-        // if (result.responseCode === 200) {
-        //   this.powerstationData = order.total;
-        // }
+        if (result.code === 200) {
+          this.lastNews = result.data && result.data[0];
+        }
       });
     } catch (err) {
       console.log(err);
@@ -89,7 +89,7 @@ class SunCityStore {
       result = await fetchEquipmentList(params);
       runInAction(() => {
         if (result.code === 200) {
-          this.equipmentList = JSON.parse(result.data);
+          this.equipmentList = result.data;
         }
       });
     } catch (err) {
@@ -105,9 +105,9 @@ class SunCityStore {
     try {
       result = await fetchEquipmentInfo(params);
       runInAction(() => {
-        // if (result.responseCode === 200) {
-        //   this.equipmentInfo = order.total;
-        // }
+        if (result.code === 200) {
+          this.equipmentInfo = result.data;
+        }
       });
     } catch (err) {
       console.log(err);
@@ -120,11 +120,11 @@ class SunCityStore {
   fetchSCEquipmentPower = async params => {
     let result = {};
     try {
-      // result = await fetchEquipmentPower(params);
+      result = await fetchEquipmentPower(params);
       runInAction(() => {
-        // if (result.responseCode === 200) {
-        //   this.equipmentPower = order.total;
-        // }
+        if (result.code === 200) {
+          this.equipmentPower = result.data;
+        }
       });
     } catch (err) {
       console.log(err);
