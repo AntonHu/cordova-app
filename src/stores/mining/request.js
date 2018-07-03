@@ -51,7 +51,7 @@ export const getTokenRecords = async ({publicKey, page}) => {
  */
 export const getTokenBalanceRanking = async ({publicKey}) => {
   try {
-    const response = await get(`${backendServer}/wallet/tokenBalanceRanking`, {publicKey: testPublicKey});
+    const response = await get(`${backendServer}/wallet/tokenBalanceRanking`, {publicKey: TEST_PUBLIC_KEY});
     return response
   } catch (err) {
     return err.response;
