@@ -56,9 +56,9 @@ class MiningStore {
    * @returns {Promise.<void>}
    */
   @action
-  fetchNearbyRanking = async () => {
+  fetchNearbyRanking = async ({publicKey}) => {
     try {
-      const res = await getNearbyWalletTopRank({});
+      const res = await getNearbyWalletTopRank({publicKey});
       if (res.data.code === 200) {
         runInAction(() => {
           this.nearbyRank = res.data.data;

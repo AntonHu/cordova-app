@@ -38,7 +38,7 @@ class Comp extends React.PureComponent {
 
   makeRequest = () => {
     this.props.miningStore.fetchAllRanking();
-    this.props.miningStore.fetchNearbyRanking();
+    this.props.miningStore.fetchNearbyRanking({publicKey: ''});
     this.props.miningStore.fetchDigTimes();
     this.props.miningStore.fetchBalanceRanking({publicKey: ''});
   };
@@ -123,11 +123,7 @@ class Comp extends React.PureComponent {
                   return (
                     <div key={index} className="ranking-item">
                       <div className="ranking-title">
-                        {index === 0 ? (
-                          <Icon type="loading" />
-                        ) : (
-                          <span>{index + 1} </span>
-                        )}
+                        <span>{index + 1} </span>
                         {item.id}
                       </div>
                       <span>{item.totalSolarIntegral}</span>
@@ -140,11 +136,7 @@ class Comp extends React.PureComponent {
                   return (
                     <div key={index} className="ranking-item">
                       <div className="ranking-title">
-                        {index === 0 ? (
-                          <Icon type="loading" />
-                        ) : (
-                          <span>{index + 1} </span>
-                        )}
+                        <span>{index + 1} </span>
                         {item.id}
                       </div>
                       <span>{item.totalSolarIntegral}</span>

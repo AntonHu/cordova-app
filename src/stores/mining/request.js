@@ -21,9 +21,9 @@ export const getAllRanking = async params => {
  * @param params
  * @returns {Promise.<void>}
  */
-export const getNearbyWalletTopRank = async params => {
+export const getNearbyWalletTopRank = async ({publicKey}) => {
   try {
-    const response = await get(`${backendServer}/wallet/getNearbyWalletTopRank`, params);
+    const response = await get(`${backendServer}/wallet/getNearbyWalletTopRank`, {publicKey: testPublicKey});
     return response
   } catch (err) {
     return err.response;
