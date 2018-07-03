@@ -2,6 +2,19 @@ import { get, post } from '../../utils/fetch';
 import { backendServer } from '../../utils/variable';
 
 /**
+ * 获取最新公告
+ */
+export const fetchNews = async params => {
+  let response = {};
+  try {
+    response = await get(`${backendServer}/info/latestNews`, params);
+  } catch (err) {
+    console.log(err);
+  }
+  return response.data || [];
+};
+
+/**
  * 太阳积分列表
  */
 export const fetchSunIntegral = async params => {

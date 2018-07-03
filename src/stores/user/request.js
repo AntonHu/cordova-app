@@ -1,5 +1,5 @@
 import {get, post, authPost, post2} from '../../utils/fetch';
-import {backendServer, userServer, PAGE_SIZE, testPublicKey} from '../../utils/variable';
+import {backendServer, userServer, PAGE_SIZE, TEST_PUBLIC_KEY} from '../../utils/variable';
 import axios from 'axios';
 
 /**
@@ -131,7 +131,7 @@ export const reqUpdateUser = async ({header, nickName}) => {
  */
 export const reqUpdateGeolocation = async ({publicKey, rectangle}) => {
   try {
-    const response = await post(`${backendServer}/info/rectangle`, {publicKey: testPublicKey, rectangle});
+    const response = await post(`${backendServer}/info/rectangle`, {publicKey: TEST_PUBLIC_KEY, rectangle});
     return response;
   } catch (err) {
     return err.response;
@@ -179,7 +179,7 @@ export const reqUploadAvatar = (fileBlob) => {
 export const reqUploadVerifyId = ({publicKey, username, idPositive, idNegative, idHandheld}) => {
   const formData = new FormData();
   console.log(JSON.stringify({username, idPositive, idNegative, idHandheld}));
-  formData.append('publicKey', testPublicKey);
+  formData.append('publicKey', TEST_PUBLIC_KEY);
   formData.append('username', username);
   formData.append('idPositive', idPositive);
   formData.append('idNegative', idNegative);
@@ -247,7 +247,7 @@ export const reqVerifyId = async (
   ) => {
   try {
     const response = await post2(`${backendServer}/user/verifiedUser`, {
-      publicKey: testPublicKey,
+      publicKey: TEST_PUBLIC_KEY,
       username,
       idPositive,
       idNegative,

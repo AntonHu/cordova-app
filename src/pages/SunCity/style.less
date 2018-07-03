@@ -9,6 +9,9 @@
   .am-notice-bar {
     background: @deep-blue-bg;
     color: @white-text-color;
+    .am-notice-bar-content {
+      text-align: left;
+    }
   }
   .sun-content {
     height: 421px;
@@ -46,6 +49,9 @@
             border-radius: 15px;
             position: absolute;
             left: 0;
+          }
+          .nick-name {
+            min-width: 25px;
           }
           .am-icon-md {
             width: 18px;
@@ -114,7 +120,7 @@
         }
       }
       .remove {
-        animation-duration: 2s;
+        animation-duration: 1s;
         animation-name: disappear;
         animation-iteration-count: 1;
         animation-fill-mode: forwards;
@@ -178,6 +184,7 @@
           }
         }
         .item-detail {
+          width: 65%;
           text-align: left;
           .item-info {
             margin-top: 5px;

@@ -1,5 +1,5 @@
 import {get, post} from '../../utils/fetch';
-import {backendServer, PAGE_SIZE, testPublicKey} from '../../utils/variable';
+import {backendServer, PAGE_SIZE, TEST_PUBLIC_KEY} from '../../utils/variable';
 
 
 /**
@@ -23,7 +23,7 @@ export const getAllRanking = async params => {
  */
 export const getNearbyWalletTopRank = async ({publicKey}) => {
   try {
-    const response = await get(`${backendServer}/wallet/getNearbyWalletTopRank`, {publicKey: testPublicKey});
+    const response = await get(`${backendServer}/wallet/getNearbyWalletTopRank`, {publicKey: TEST_PUBLIC_KEY});
     return response
   } catch (err) {
     return err.response;
@@ -37,7 +37,7 @@ export const getNearbyWalletTopRank = async ({publicKey}) => {
  */
 export const getTokenRecords = async ({publicKey, page}) => {
   try {
-    const response = await get(`${backendServer}/wallet/getTokenRecords`, {publicKey: testPublicKey, page, pageSize: PAGE_SIZE});
+    const response = await get(`${backendServer}/wallet/getTokenRecords`, {publicKey: TEST_PUBLIC_KEY, page, pageSize: PAGE_SIZE});
     return response
   } catch (err) {
     return err.response;

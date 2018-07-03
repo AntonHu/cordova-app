@@ -1,116 +1,143 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 import { PageWithHeader } from '../../../components';
 // import { List, InputItem, Flex, Button, WhiteSpace } from 'antd-mobile';
 import F2 from '@antv/f2';
 import { px } from '../../../utils/getDevice';
+import {
+  POWER_TYPE,
+  TEST_PUBLIC_KEY,
+  TEST_PRIVATE_KEY
+} from '../../../utils/variable';
+import { JSRsasign } from '../../../jssign';
+import SM2Cipher from '../../../jssign/SM2Cipher';
 import './style.less';
 
-const data = [
-  {
-    time: '2016-08-08',
-    tem: 10
-  },
-  {
-    time: '2016-08-09',
-    tem: 22
-  },
-  {
-    time: '2016-08-10',
-    tem: 20
-  },
-  {
-    time: '2016-08-11',
-    tem: 26
-  },
-  {
-    time: '2016-08-12',
-    tem: 20
-  },
-  {
-    time: '2016-08-13',
-    tem: 26
-  },
-  {
-    time: '2016-08-14',
-    tem: 28
-  }
-];
+import { toJS } from 'mobx';
+const BigInteger = JSRsasign.BigInteger;
+
 /**
  * 电站设备信息
  */
+@inject('sunCityStore') // 如果注入多个store，用数组表示
+@observer
 class Comp extends React.PureComponent {
   state = {
     selected: {
-      daySelected: true,
-      monthSelected: false,
-      yearSelected: false,
-      allSelected: false
-    }
+      day: true,
+      month: false,
+      year: false,
+      all: false
+    },
+    sourceData: '', // 数据来源
+    deviceNo: '', //设备编码
+    count: 0, // 日电量
+    maxValue: 0 // 总电量
   };
-  componentDidMount() {
-    this.pieBarChart = this.renderPieBar();
-    this.pieBarChart = this.renderCurve();
+  async componentDidMount() {
+    const deviceNo = this.props.match.params.id;
+    const params = this.props.location.search.substring(1);
+    const sourceData = params.split('&')[0].split('=')[1];
+
+    const sortData = await this.getPowerData(sourceData, deviceNo, 1);
+    if (sortData.length >= 1) {
+      this.curveChart = this.renderCurve(sortData);
+    }
+    const currentPower =
+      sortData &&
+      sortData[sortData.length - 1] &&
+      sortData[sortData.length - 1].power;
+    // 日电量
+    let count = 0;
+    // 总电量
+    let maxValue = 0;
+    sortData.forEach(item => {
+      count += item.number;
+      if (item.maxValue > maxValue) {
+        maxValue = item.maxValue;
+      }
+    });
+    this.setState({
+      deviceNo,
+      sourceData,
+      count,
+      maxValue
+    });
+    this.pieBarChart = this.renderPieBar(currentPower);
   }
 
   componentWillUnmount() {
     if (this.pieBarChart) {
       this.pieBarChart = undefined;
     }
+    if (this.curveChart) {
+      this.curveChart = undefined;
+    }
   }
-  renderCurve = () => {
-    const chart = new F2.Chart({
-      id: 'curve-chart',
-      pixelRatio: window.devicePixelRatio
-    });
 
-    const defs = {
-      time: {
-        type: 'timeCat',
-        mask: 'MM/DD',
-        tickCount: data.length,
-        range: [0, 1]
-      },
-      tem: {
-        tickCount: 5,
-        min: 0,
-        alias: '日均温度'
+  // 按照类型请求电量数据
+  async getPowerData(sourceData, deviceNo, dateType) {
+    await this.props.sunCityStore.fetchSCEquipmentPower({
+      sourceData,
+      deviceNo,
+      userPubKey: TEST_PUBLIC_KEY,
+      dateType
+    });
+    const receiveData = toJS(this.props.sunCityStore.equipmentPower);
+    const sortData = (receiveData && this.handleData(receiveData)) || [];
+    return sortData;
+  }
+
+  // 处理获取的解密数据
+  handleData = receiveData => {
+    const data = [];
+    Object.keys(receiveData).forEach(item => {
+      // 后端数据可能有问题，加一层处理
+      let powerInfo;
+      try {
+        powerInfo =
+          this.doDecrypt(receiveData[item]) &&
+          JSON.parse(this.doDecrypt(receiveData[item]));
+      } catch (err) {
+        console.log(err);
       }
-    };
-    chart.source(data, defs);
-    chart.axis('time', {
-      label: function label(text, index, total) {
-        var textCfg = {};
-        if (index === 0) {
-          textCfg.textAlign = 'left';
-        } else if (index === total - 1) {
-          textCfg.textAlign = 'right';
-        }
-        return textCfg;
+      if (powerInfo) {
+        const value = +(powerInfo.maxEnergy - powerInfo.minEnergy).toFixed(2);
+        data.push({
+          time: item,
+          number: value,
+          maxValue: powerInfo.maxEnergy && +powerInfo.maxEnergy,
+          power: powerInfo.power || ''
+        });
       }
     });
-    chart.tooltip({
-      showCrosshairs: true
+    const sortData = data.sort((pre, cur) => {
+      if (pre.time.indexOf('-') > 0 && cur.time.indexOf('-') > 0) {
+        return Date.parse(pre.time) - Date.parse(cur.time);
+      } else {
+        return pre.time - cur.time;
+      }
     });
-    chart
-      .line()
-      .position('time*tem')
-      .shape('smooth');
-    chart
-      .point()
-      .position('time*tem')
-      .shape('smooth')
-      .style({
-        stroke: '#fff',
-        lineWidth: 1
-      });
-    chart.render();
+    return sortData;
   };
-  renderPieBar = () => {
+
+  // 数据解密
+  doDecrypt = data => {
+    const privBI = new BigInteger(TEST_PRIVATE_KEY, 16);
+    let cipherMode = '1'; // C1C3C2
+    const cipher = new SM2Cipher(cipherMode);
+
+    const decryptedMsg = cipher.Decrypt(privBI, data);
+    return decryptedMsg;
+  };
+  // 绘制发电环图
+  renderPieBar = currentPower => {
+    // 创建渐变对象
     const canvas = document.getElementById('pie-bar-chart');
     const ctx = canvas.getContext('2d');
-    const grd = ctx.createLinearGradient(0, 0, 320, 0);
-    grd.addColorStop(0, '#dbb768');
-    grd.addColorStop(1, '#8de737');
+    const grd = ctx.createLinearGradient(0, 0, 140, 0);
+    grd.addColorStop(0, '#fa5a21');
+    grd.addColorStop(1, '#5bd121');
 
     const chart = new F2.Chart({
       id: 'pie-bar-chart',
@@ -144,16 +171,14 @@ class Comp extends React.PureComponent {
       top: false,
       style: {
         lineWidth: 15,
-        stroke: '#ccc'
+        stroke: '#024dc8'
       }
     });
     chart.guide().html({
       position: ['110%', '60%'],
-      html:
-        '<div style="width: 250px;height: 40px;text-align: center;">' +
-        '<div style="font-size: 14px">321313w</div>' +
-        '<div style="font-size: 14px">总资产</div>' +
-        '</div>'
+      html: `<div style="width: 250px;height: 40px;text-align: center;"><div style="font-size: 14px">${(currentPower &&
+        currentPower.toFixed(2)) ||
+        ''}w</div><div style="font-size: 14px">当前功率</div></div>`
     });
     chart
       .interval()
@@ -170,74 +195,135 @@ class Comp extends React.PureComponent {
 
     return chart;
   };
+
+  // 绘制发电曲线图
+  renderCurve = data => {
+    const chart = new F2.Chart({
+      id: 'curve-chart',
+      pixelRatio: window.devicePixelRatio
+    });
+
+    const defs = {
+      time: {
+        tickCount: 4,
+        range: [0, 1]
+      },
+      number: {
+        tickCount: 5,
+        min: 0,
+        alias: '功率'
+      }
+    };
+    chart.source(data, defs);
+    chart.axis('time', {
+      label: (text, index, total) => {
+        const cfg = {
+          textAlign: 'center'
+        };
+        if (index === 0) {
+          cfg.textAlign = 'start';
+        }
+        if (index > 0 && index === total - 1) {
+          cfg.textAlign = 'end';
+        }
+        return cfg;
+      }
+    });
+    chart.tooltip({
+      showCrosshairs: true,
+      onShow: function onShow(ev) {
+        var items = ev.items;
+        items[0].name = items[0].title;
+      }
+    });
+    chart
+      .line()
+      .position('time*number')
+      .shape('smooth');
+    chart
+      .point()
+      .position('time*number')
+      .shape('smooth')
+      .style({
+        stroke: '#fff',
+        lineWidth: 1
+      });
+    chart.render();
+  };
+
   // 筛选条件更改
-  screenChange = e => {
+  async screenChange(e) {
     const type = e.target.dataset.class;
+    const sortData = await this.getPowerData(
+      this.state.sourceData,
+      this.state.deviceNo,
+      POWER_TYPE[type]
+    );
+    if (sortData.length >= 1) {
+      this.curveChart = this.renderCurve(sortData);
+    }
     const selected = Object.assign({}, this.state.selected);
     Object.keys(selected).forEach(item => {
       selected[item] = false;
     });
     selected[type] = true;
     this.setState({ selected });
-  };
+  }
   render() {
     return (
       <div className={'page-equipment-info'}>
-        <PageWithHeader title={'某一台电站设备'}>
+        <PageWithHeader
+          title={
+            this.props.location.search
+              .substring(1)
+              .split('&')[1]
+              .split('=')[1]
+          }
+        >
           <div className="survey">
             <div className="survey-item">
-              <div className="survey-item-number">20.1kw/h</div>
+              <div className="survey-item-number">{`${
+                this.state.count
+              }kw/h`}</div>
               <div className="survey-item-type">日电量</div>
             </div>
             <canvas id="pie-bar-chart" />
             <div className="survey-item">
-              <div className="survey-item-number">60.1kw/h</div>
+              <div className="survey-item-number">{`${
+                this.state.maxValue
+              }kw/h`}</div>
               <div className="survey-item-type">总电量</div>
             </div>
           </div>
           <div className="equipment-content">
-            <div className="screen" onClick={this.screenChange}>
+            <div className="screen" onClick={this.screenChange.bind(this)}>
               <div
-                data-class="daySelected"
-                className={this.state.selected.daySelected ? 'selected' : ''}
+                data-class="day"
+                className={this.state.selected.day ? 'selected' : ''}
               >
                 日
               </div>
               <div
-                data-class="monthSelected"
-                className={this.state.selected.monthSelected ? 'selected' : ''}
+                data-class="month"
+                className={this.state.selected.month ? 'selected' : ''}
               >
                 月
               </div>
               <div
-                data-class="yearSelected"
-                className={this.state.selected.yearSelected ? 'selected' : ''}
+                data-class="year"
+                className={this.state.selected.year ? 'selected' : ''}
               >
                 年
               </div>
               <div
-                data-class="allSelected"
-                className={this.state.selected.allSelected ? 'selected' : ''}
+                data-class="all"
+                className={this.state.selected.all ? 'selected' : ''}
               >
                 全部
               </div>
             </div>
             <div className="curve-chart-title">日功率走势图</div>
             <canvas id="curve-chart" />
-            <div className="curve-chart-info">
-              <div className="curve-info">
-                <div className="curve-number">5098</div>
-                <div className="curve-type">总量</div>
-              </div>
-              <div className="curve-info">
-                <div className="curve-number">5098</div>
-                <div className="curve-type">总量</div>
-              </div>
-              <div className="curve-info">
-                <div className="curve-number">5098</div>
-                <div className="curve-type">总量</div>
-              </div>
-            </div>
           </div>
         </PageWithHeader>
       </div>

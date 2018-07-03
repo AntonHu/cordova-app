@@ -20,9 +20,9 @@ class UserStore {
   };
 
   @action
-  updateAvatar = (src) => {
+  updateAvatar = src => {
     this.userInfo.avatar = src;
-  }
+  };
 }
 
 const userStore = new UserStore();

@@ -132,7 +132,7 @@ class Comp extends React.PureComponent {
                 })}
               </div>
               <div className="ranking-list">
-                {this.props.miningStore.nearbyRank.map((item, index) => {
+                {this.props.miningStore.nearbyRank && this.props.miningStore.nearbyRank.map((item, index) => {
                   return (
                     <div key={index} className="ranking-item">
                       <div className="ranking-title">
