@@ -1,6 +1,6 @@
 import React from 'react';
-import {BlueBox, GreenButton, PageWithHeader, Picture} from '../../../components';
-import {InputItem, Modal, Button, ActionSheet} from 'antd-mobile';
+import {BlueBox, GreenButton, PageWithHeader, Picture, VerifyIdEmptyElement} from '../../../components';
+import {InputItem, Modal, Button, ActionSheet, Flex} from 'antd-mobile';
 import {reqVerifyId, reqUploadVerifyId} from '../../../stores/user/request';
 import {FileMethods} from '../../../utils/methods';
 import './style.less';
@@ -14,6 +14,7 @@ if (isIPhone) {
 }
 
 const alert = Modal.alert;
+const PICTURE_SIZE = 160;
 
 const showError = (text) => {
   alert('错误', text, [
@@ -222,21 +223,54 @@ class Comp extends React.PureComponent {
           <BlueBox>
             <div className={'title-of-blue h2 white-text'}>身份认证</div>
           </BlueBox>
-          <InputItem
-            placeholder="请输入真实姓名"
-            clear
-            onChange={this.changeState('username')}
-            value={username}
-          />
-          <Button onClick={() => this.onClick('idPositive')}>
-            <Picture circle={false} src={idPositive} size={120}/>
-          </Button>
-          <Button onClick={() => this.onClick('idNegative')}>
-            <Picture circle={false} src={idNegative} size={120}/>
-          </Button>
-          <Button onClick={() => this.onClick('idHandheld')}>
-            <Picture circle={false} src={idHandheld} size={120}/>
-          </Button>
+          <div className="white-area">
+            <InputItem
+              placeholder="请输入真实姓名"
+              clear
+              onChange={this.changeState('username')}
+              value={username}
+            />
+            <div className="tips-box">
+              <div className="title">* 上传证件材料</div>
+              您的照片仅用于审核，我们将为您严格保密，请注意证件上的信息无遮挡，清晰可识别
+            </div>
+            <Flex justify="between">
+              <Flex.Item>
+                <div onClick={() => this.onClick('idPositive')} className="click-picture">
+                  <Picture
+                    circle={false}
+                    src={idPositive}
+                    size={PICTURE_SIZE}
+                    emptyElement={(props) => <VerifyIdEmptyElement size={PICTURE_SIZE} text={'身份证正面上传'}/>}
+                  />
+                </div>
+              </Flex.Item>
+              <Flex.Item>
+                <div onClick={() => this.onClick('idNegative')} className="click-picture">
+                  <Picture
+                    circle={false}
+                    src={idNegative}
+                    size={PICTURE_SIZE}
+                    emptyElement={(props) => <VerifyIdEmptyElement size={PICTURE_SIZE} text={'身份证背面上传'}/>}
+                  />
+                </div>
+              </Flex.Item>
+            </Flex>
+            <Flex justify="between">
+              <Flex.Item>
+                <div onClick={() => this.onClick('idHandheld')} className="click-picture">
+                  <Picture
+                    circle={false}
+                    src={idHandheld}
+                    size={PICTURE_SIZE}
+                    emptyElement={(props) => <VerifyIdEmptyElement size={PICTURE_SIZE} text={'本人手持身份证'}/>}
+                  />
+                </div>
+              </Flex.Item>
+              <Flex.Item/>
+            </Flex>
+          </div>
+
 
           <GreenButton size={'big'} onClick={this.onSubmit}>提交认证</GreenButton>
         </PageWithHeader>

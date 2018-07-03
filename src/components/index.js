@@ -8,6 +8,7 @@ import PlainButton from './PlainButton';
 import Title from './Title';
 import Countdown from './Countdown';
 import Picture from './Picture'
+import VerifyIdEmptyElement from './VerifyIdEmptyElement'
 
 export {
   BlueBox,
@@ -19,5 +20,6 @@ export {
   PlainButton,
   Title,
   Countdown,
-  Picture
+  Picture,
+  VerifyIdEmptyElement
 };
