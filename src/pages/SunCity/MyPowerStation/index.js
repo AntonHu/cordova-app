@@ -188,7 +188,7 @@ class Comp extends React.PureComponent {
                   className="item"
                   onClick={() =>
                     this.props.history.push(
-                      `/equipmentInfo/${
+                      `/sunCity/equipmentInfo/${
                         equipmentList[equipment].deviceNo
                       }?source=${
                         equipmentList[equipment].source
