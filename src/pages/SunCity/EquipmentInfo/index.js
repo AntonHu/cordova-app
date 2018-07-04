@@ -43,7 +43,8 @@ class Comp extends React.PureComponent {
     if (sortData.length >= 1) {
       this.curveChart = this.renderCurve(sortData);
     } else {
-      this.curveChart = this.renderCurve([{ time: '03', number: 0 }]);
+      // 默认显示数据
+      this.curveChart = this.renderCurve([{ time: '00', number: 0 }]);
     }
     const currentPower =
       sortData &&
@@ -270,7 +271,8 @@ class Comp extends React.PureComponent {
     if (sortData.length >= 1) {
       this.curveChart = this.renderCurve(sortData);
     } else {
-      this.curveChart = this.renderCurve([{ time: '03', number: 0 }]);
+      // 默认显示数据
+      this.curveChart = this.renderCurve([{ time: '00', number: 0 }]);
     }
   }
   render() {
