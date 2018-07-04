@@ -34,7 +34,7 @@ const pickNumber = 0;
 @observer
 class Comp extends React.Component {
   state = {
-    equipmentList: null,
+    equipmentListObj: null,
     sunCoordinateArr: null,
     power: 0, // 功率
     dayPower: 0, // 日发电量
@@ -60,20 +60,20 @@ class Comp extends React.Component {
     await this.props.sunCityStore.fetchSCSunIntegral({
       publicKey: TEST_PUBLIC_KEY
     });
-    let equipmentList = {};
+    let equipmentListObj = {};
     // 储存设备列表整理后的数据
-    if (!getSessionStorage('equipmentList')) {
+    if (!getSessionStorage('equipmentListObj')) {
       // 获取设备列表
       await this.props.sunCityStore.fetchSCEquipmentList({
         userPubKey: TEST_PUBLIC_KEY
       });
-      equipmentList = toJS(this.props.sunCityStore.equipmentList) || {};
+      equipmentListObj = toJS(this.props.sunCityStore.equipmentList) || {};
       // 添加各个设备的功率和日电量
-      this.addEquipmentPower(equipmentList, 1);
+      this.addEquipmentPower(equipmentListObj, 1);
     } else {
-      equipmentList = JSON.parse(getSessionStorage('equipmentList'));
+      equipmentListObj = JSON.parse(getSessionStorage('equipmentListObj'));
       this.setState({
-        equipmentList
+        equipmentListObj
       });
     }
 
@@ -91,7 +91,7 @@ class Comp extends React.Component {
     // 储存电站数据
     if (!getSessionStorage('dayStationData')) {
       const dayStationData = await this.equipmentDataIntegrate(
-        equipmentList,
+        equipmentListObj,
         1
       );
       setSessionStorage('dayStationData', JSON.stringify(dayStationData)); // 本地储存电站每天发电数据
@@ -99,7 +99,7 @@ class Comp extends React.Component {
 
     if (!getSessionStorage('monthStationData')) {
       const monthStationData = await this.equipmentDataIntegrate(
-        equipmentList,
+        equipmentListObj,
         2
       );
       setSessionStorage('monthStationData', JSON.stringify(monthStationData)); // 本地储存电站每月发电数据
@@ -107,27 +107,30 @@ class Comp extends React.Component {
 
     if (!getSessionStorage('yearStationData')) {
       const yearStationData = await this.equipmentDataIntegrate(
-        equipmentList,
+        equipmentListObj,
         2
       );
       setSessionStorage('yearStationData', JSON.stringify(yearStationData)); // 本地储存电站每年发电数据
     }
 
     if (!getSessionStorage('allStationData')) {
-      const equipmentDataArr = await this.getAllEquipmentData(equipmentList, 4);
+      const equipmentDataArr = await this.getAllEquipmentData(
+        equipmentListObj,
+        4
+      );
       const allStationData = this.allEquipmentDataIntegrate(equipmentDataArr);
       setSessionStorage('allStationData', JSON.stringify(allStationData)); // 本地储存电站所有发电数据
     }
   }
 
   // 为每个添加设备的功率和日电量
-  async addEquipmentPower(equipmentList, dateType) {
+  async addEquipmentPower(equipmentListObj, dateType) {
     let currentStationPower = 0; // 当前电站功率
     let totalStationElectric = 0; // 电站累计发电量
     // 遍历每个设备，并添加功率和日电量
-    for (let i = 0; i < Object.keys(equipmentList).length; ++i) {
-      const name = Object.keys(equipmentList)[i];
-      const info = equipmentList[name];
+    for (let i = 0; i < Object.keys(equipmentListObj).length; ++i) {
+      const name = Object.keys(equipmentListObj)[i];
+      const info = equipmentListObj[name];
       const sourceData = info.source;
       const deviceNo = info.deviceNo;
       const sortData = await this.handleEquipmentData(
@@ -150,15 +153,15 @@ class Comp extends React.Component {
         (sortData[sortData.length - 1] &&
           sortData[sortData.length - 1].maxValue) ||
         0;
-      equipmentList[name].currentPower = currentPower || 0; // 设备功率
-      equipmentList[name].dayElectric = dayElectric.toFixed(2) || 0; // 设备日电量
+      equipmentListObj[name].currentPower = currentPower || 0; // 设备功率
+      equipmentListObj[name].dayElectric = dayElectric.toFixed(2) || 0; // 设备日电量
       currentStationPower += Number(currentPower); // 当前电站功率
       totalStationElectric += Number(maxValue); // 当前电站发电量
     }
     setSessionStorage('currentStationPower', currentStationPower); // 本地储存当前电站功率
     setSessionStorage('totalStationElectric', totalStationElectric); // 本地储存电站总发电量
-    setSessionStorage('equipmentList', JSON.stringify(equipmentList)); // 本地储存所有设备状态
-    this.setState({ equipmentList });
+    setSessionStorage('equipmentListObj', JSON.stringify(equipmentListObj)); // 本地储存所有设备状态
+    this.setState({ equipmentListObj: Object.assign({}, equipmentListObj) });
   }
 
   // 合并多个设备的数据
@@ -179,16 +182,16 @@ class Comp extends React.Component {
         .forEach(item => (sum += item.number));
       mergeEquipmentDataArr.push({
         time,
-        number: sum && sum.toFixed(2)
+        number: sum ? sum.toFixed(2) : 0
       });
     });
     return mergeEquipmentDataArr;
   };
 
   // 整合天，月，年数据
-  async equipmentDataIntegrate(equipmentList, type) {
+  async equipmentDataIntegrate(equipmentListObj, type) {
     const equipmentDataArr = await this.getAllEquipmentData(
-      equipmentList,
+      equipmentListObj,
       type
     );
     const stationData = this.mergeEquipmentData(equipmentDataArr);
@@ -198,7 +201,7 @@ class Comp extends React.Component {
   // 整合电站所有的数据
   allEquipmentDataIntegrate = allEquipmentData => {
     allEquipmentData.map(item => {
-      item.time = item.time.substring(0, 4);
+      item.time = item && item.time.substring(0, 4);
       return item;
     });
     const dataIntegrate = this.mergeEquipmentData(allEquipmentData);
@@ -206,13 +209,13 @@ class Comp extends React.Component {
   };
 
   // 请求所有设备数据
-  async getAllEquipmentData(equipmentList, dateType) {
+  async getAllEquipmentData(equipmentListObj, dateType) {
     let equipmentDataArr = [];
     let dayStationElectric = 0;
     // 遍历每个设备，并累计总电量
-    for (let i = 0; i < Object.keys(equipmentList).length; ++i) {
-      const name = Object.keys(equipmentList)[i];
-      const info = equipmentList[name];
+    for (let i = 0; i < Object.keys(equipmentListObj).length; ++i) {
+      const name = Object.keys(equipmentListObj)[i];
+      const info = equipmentListObj[name];
       const sourceData = info.source;
       const deviceNo = info.deviceNo;
       const sortData = await this.handleEquipmentData(
@@ -351,10 +354,10 @@ class Comp extends React.Component {
     const userInfo = toJS(this.props.userStore.userInfo);
     const { avatar, nickName } = userInfo;
     const { balance, balanceRanking } = this.props.miningStore;
-    const { equipmentList } = this.state;
+    const { equipmentListObj } = this.state;
     const lastNews = toJS(this.props.sunCityStore.lastNews);
     const equipmentNameList =
-      (equipmentList && Object.keys(equipmentList)) || [];
+      (equipmentListObj && Object.keys(equipmentListObj)) || [];
     return (
       <div className={'page-sunCity-info'}>
         <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
@@ -436,9 +439,9 @@ class Comp extends React.Component {
                     onClick={() =>
                       this.props.history.push(
                         `/sunCity/equipmentInfo/${
-                          equipmentList[equipment].deviceNo
+                          equipmentListObj[equipment].deviceNo
                         }?source=${
-                          equipmentList[equipment].source
+                          equipmentListObj[equipment].source
                         }&name=${equipment}`
                       )
                     }
@@ -450,10 +453,10 @@ class Comp extends React.Component {
                       <div className="item-name">{equipment}</div>
                       <div className="item-info">
                         <span>
-                          {`功率：${equipmentList[equipment].currentPower}w`}{' '}
+                          {`功率：${equipmentListObj[equipment].currentPower}w`}{' '}
                         </span>
                         <span>{`日电量：${
-                          equipmentList[equipment].dayElectric
+                          equipmentListObj[equipment].dayElectric
                         }kw/h`}</span>
                       </div>
                     </div>

@@ -25,14 +25,15 @@ class Comp extends React.PureComponent {
       year: false,
       all: false
     },
-    equipmentList: [],
+    equipmentListObj: {},
     dayStationData: [],
     monthStationData: [],
     yearStationData: [],
     allStationData: []
   };
   componentDidMount() {
-    const equipmentList = JSON.parse(getSessionStorage('equipmentList')) || []; // 获取本地储存的设备列表
+    const equipmentListObj =
+      JSON.parse(getSessionStorage('equipmentListObj')) || {}; // 获取本地储存的设备列表
     const dayStationData =
       JSON.parse(getSessionStorage('dayStationData')) || []; // 获取本地储存每天发电数据
     const monthStationData =
@@ -43,7 +44,7 @@ class Comp extends React.PureComponent {
       JSON.parse(getSessionStorage('allStationData')) || []; // 获取本地储存所有发电数据
 
     this.setState({
-      equipmentList,
+      equipmentListObj,
       dayStationData,
       monthStationData,
       yearStationData,
@@ -142,9 +143,9 @@ class Comp extends React.PureComponent {
     const totalStationElectric =
       getSessionStorage('totalStationElectric') || []; // 获取本地储存电站总发电量
 
-    const { equipmentList } = this.state;
+    const { equipmentListObj } = this.state;
     const equipmentNameList =
-      (equipmentList && Object.keys(equipmentList)) || [];
+      (equipmentListObj && Object.keys(equipmentListObj)) || [];
     return (
       <div className={'page-powerStation-info'}>
         <PageWithHeader
@@ -238,9 +239,9 @@ class Comp extends React.PureComponent {
                   onClick={() =>
                     this.props.history.push(
                       `/sunCity/equipmentInfo/${
-                        equipmentList[equipment].deviceNo
+                        equipmentListObj[equipment].deviceNo
                       }?source=${
-                        equipmentList[equipment].source
+                        equipmentListObj[equipment].source
                       }&name=${equipment}`
                     )
                   }
@@ -251,8 +252,14 @@ class Comp extends React.PureComponent {
                   <div className="item-detail">
                     <div className="item-name">{equipment}</div>
                     <div className="item-info">
-                      <span>功率：312312w</span>
-                      <span>日电量：321312kw/h</span>
+                      <span>
+                        {`功率：${equipmentListObj[equipment].currentPower}w`}{' '}
+                      </span>
+                      <span>
+                        {`日电量：${
+                          equipmentListObj[equipment].dayElectric
+                        }kw/h`}
+                      </span>
                     </div>
                   </div>
                   <Icon type="right" />
