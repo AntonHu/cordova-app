@@ -1,4 +1,4 @@
-import {testCode, clearSpace, testPassword, testPhoneNumber} from './methods';
+import {testCode, clearSpace, testPassword, testPhoneNumber, maskIfPhone} from './methods';
 
 test('去掉字符串里的空格', () => {
   expect(clearSpace('   123 456 789  ')).toBe('123456789');
@@ -32,3 +32,10 @@ test('检查是否合法密码', () => {
 
 });
 
+test('如果是手机号，用星号代替中间四位', () => {
+  expect(maskIfPhone('test')).toBe('test');
+  expect(maskIfPhone('15201458525')).toBe('152****8525');
+  expect(maskIfPhone('152****8525')).toBe('152****8525');
+  expect(maskIfPhone('1520***8525')).toBe('1520***8525');
+
+});

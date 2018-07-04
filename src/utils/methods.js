@@ -28,13 +28,25 @@ export const testCode = code => {
 };
 
 /**
- *
+ * 检查是否合法密码，长度6-16，大小写数字及_
  * @param password
  * @returns {boolean}
  */
 export const testPassword = password => {
   const reg = /^[a-zA-Z0-9_]{6,16}$/;
   return reg.test(password);
+};
+
+/**
+ * 如果是手机号，用星号代替中间四位
+ * @param string
+ * @returns {*}
+ */
+export const maskIfPhone = string => {
+  if (testPhoneNumber(string)) {
+    return string.slice(0, 3) + '****' + string.slice(7)
+  }
+  return string;
 };
 
 /**
