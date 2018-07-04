@@ -34,11 +34,12 @@
           }
         }
         .person-info {
+          width: 90%;
           font-weight: bold;
           display: flex;
           align-items: center;
           height: 25px;
-          padding: 0 5px 0 30px;
+          padding: 0 0 0 30px;
           background: @light-blue-bg;
           border-radius: 15px;
           color: @main-color;
@@ -52,6 +53,7 @@
           }
           .nick-name {
             min-width: 25px;
+            min-height: 10px;
           }
           .am-icon-md {
             width: 18px;
@@ -115,7 +117,7 @@
           opacity: 1;
         }
         to {
-          top: 0;
+          top: -100px;
           opacity: 0;
         }
       }
@@ -194,6 +196,13 @@
         .am-icon-right {
           color: @light-text-color;
         }
+      }
+      .loading {
+        height: 50px;
+        background: @white-text-color;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     }
   }

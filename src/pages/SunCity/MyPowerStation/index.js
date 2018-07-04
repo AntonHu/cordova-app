@@ -7,6 +7,9 @@ import { Icon, Popover } from 'antd-mobile';
 import F2 from '@antv/f2';
 import './style.less';
 
+import { getSessionStorage } from '../../../utils/storage';
+import { POWER_TYPE } from '../../../utils/variable';
+
 const Item = Popover.Item;
 
 /**
@@ -21,10 +24,33 @@ class Comp extends React.PureComponent {
       month: false,
       year: false,
       all: false
-    }
+    },
+    equipmentListObj: {},
+    dayStationData: [],
+    monthStationData: [],
+    yearStationData: [],
+    allStationData: []
   };
   componentDidMount() {
-    this.barChart = this.renderBarChart([]);
+    const equipmentListObj =
+      JSON.parse(getSessionStorage('equipmentListObj')) || {}; // 获取本地储存的设备列表
+    const dayStationData =
+      JSON.parse(getSessionStorage('dayStationData')) || []; // 获取本地储存每天发电数据
+    const monthStationData =
+      JSON.parse(getSessionStorage('monthStationData')) || []; // 获取本地储存每月发电数据
+    const yearStationData =
+      JSON.parse(getSessionStorage('yearStationData')) || []; // 获取本地储存每年发电数据
+    const allStationData =
+      JSON.parse(getSessionStorage('allStationData')) || []; // 获取本地储存所有发电数据
+
+    this.setState({
+      equipmentListObj,
+      dayStationData,
+      monthStationData,
+      yearStationData,
+      allStationData
+    });
+    this.barChart = this.renderBarChart(dayStationData);
   }
 
   componentWillUnmount() {
@@ -86,6 +112,21 @@ class Comp extends React.PureComponent {
   // 筛选条件更改
   screenChange = e => {
     const type = e.target.dataset.class;
+    let barData = [];
+    switch (POWER_TYPE[type]) {
+      case 2:
+        barData = this.state.monthStationData;
+        break;
+      case 3:
+        barData = this.state.yearStationData;
+        break;
+      case 4:
+        barData = this.state.allStationData;
+        break;
+      default:
+        barData = this.state.dayStationData;
+    }
+    this.barChart = this.renderBarChart(barData);
     const selected = Object.assign({}, this.state.selected);
     Object.keys(selected).forEach(item => {
       selected[item] = false;
@@ -97,9 +138,14 @@ class Comp extends React.PureComponent {
   // 添加逆变器
   addInverter = () => {};
   render() {
-    const equipmentList = toJS(this.props.sunCityStore.equipmentList);
+    const dayStationElectric = getSessionStorage('dayStationElectric') || []; // 获取本地储存今日发电量
+    const currentStationPower = getSessionStorage('currentStationPower') || []; // 获取本地储存当前电站功率
+    const totalStationElectric =
+      getSessionStorage('totalStationElectric') || []; // 获取本地储存电站总发电量
+
+    const { equipmentListObj } = this.state;
     const equipmentNameList =
-      (equipmentList && Object.keys(equipmentList)) || [];
+      (equipmentListObj && Object.keys(equipmentListObj)) || [];
     return (
       <div className={'page-powerStation-info'}>
         <PageWithHeader
@@ -158,24 +204,28 @@ class Comp extends React.PureComponent {
             <canvas id="pie-bar-chart" />
           </BlueBox>
           <div className="type">
-            <div className="type-item">功率</div>
-            <div className="type-item">发电量</div>
+            <div className="type-item power">
+              功率<i className="iconfont">&#xe643;</i>
+            </div>
+            <div className="type-item elec">
+              发电量<i className="iconfont">&#xe677;</i>
+            </div>
           </div>
           <div className="detail">
             <div className="detail-item">
-              <div className="number">15.0kw</div>
+              <div className="number">{`${currentStationPower}kw`}</div>
               <div className="detail-type">当前</div>
             </div>
             <div className="detail-item">
-              <div className="number">{`000kw`}</div>
+              <div className="number">{`${dayStationElectric}kw`}</div>
               <div className="detail-type">今日</div>
             </div>
             <div className="detail-item">
-              <div className="number">18.0kw</div>
+              <div className="number">---kw</div>
               <div className="detail-type">逆变器容量</div>
             </div>
             <div className="detail-item">
-              <div className="number">{`000kw`}</div>
+              <div className="number">{`${totalStationElectric}kw`}</div>
               <div className="detail-type">累计</div>
             </div>
           </div>
@@ -189,21 +239,27 @@ class Comp extends React.PureComponent {
                   onClick={() =>
                     this.props.history.push(
                       `/sunCity/equipmentInfo/${
-                        equipmentList[equipment].deviceNo
+                        equipmentListObj[equipment].deviceNo
                       }?source=${
-                        equipmentList[equipment].source
+                        equipmentListObj[equipment].source
                       }&name=${equipment}`
                     )
                   }
                 >
                   <div className="item-pic">
-                    <i className="iconfont icon-shebeiliebiao" />
+                    <i className="iconfont">&#xea35;</i>
                   </div>
                   <div className="item-detail">
                     <div className="item-name">{equipment}</div>
                     <div className="item-info">
-                      <span>功率：312312w</span>
-                      <span>日电量：321312kw/h</span>
+                      <span>
+                        {`功率：${equipmentListObj[equipment].currentPower}w`}{' '}
+                      </span>
+                      <span>
+                        {`日电量：${
+                          equipmentListObj[equipment].dayElectric
+                        }kw/h`}
+                      </span>
                     </div>
                   </div>
                   <Icon type="right" />

@@ -1,12 +1,21 @@
 import { observable, action, runInAction, computed } from 'mobx';
-import { getTokenRecords, getAllRanking, getNearbyWalletTopRank, getTokenBalanceRanking, getDigTimes } from './request';
+import {
+  getTokenRecords,
+  getAllRanking,
+  getNearbyWalletTopRank,
+  getTokenBalance,
+  getTokenBalanceRanking,
+  getDigTimes
+} from './request';
 
 class MiningStore {
   @observable tokenRecords = [];
   @observable allRanking = [];
   @observable nearbyRank = [];
+  @observable balance = 0;
   @observable balanceRanking = 0;
-  @observable digTimes = {
+  @observable
+  digTimes = {
     countAllTimes: 0,
     countAllTimesToday: 0
   };
@@ -18,9 +27,9 @@ class MiningStore {
    * @returns {Promise.<void>}
    */
   @action
-  fetchTokenRecords = async ({publicKey, page}) => {
+  fetchTokenRecords = async ({ publicKey, page }) => {
     try {
-      const res = await getTokenRecords({publicKey, page});
+      const res = await getTokenRecords({ publicKey, page });
       if (res.status === 200) {
         runInAction(() => {
           this.tokenRecords = res.data.data;
@@ -56,9 +65,9 @@ class MiningStore {
    * @returns {Promise.<void>}
    */
   @action
-  fetchNearbyRanking = async ({publicKey}) => {
+  fetchNearbyRanking = async ({ publicKey }) => {
     try {
-      const res = await getNearbyWalletTopRank({publicKey});
+      const res = await getNearbyWalletTopRank({ publicKey });
       if (res.data.code === 200) {
         runInAction(() => {
           this.nearbyRank = res.data.data;
@@ -75,14 +84,33 @@ class MiningStore {
    * @returns {Promise.<void>}
    */
   @action
-  fetchBalanceRanking = async ({publicKey}) => {
+  fetchBalance = async ({ publicKey }) => {
     try {
-      const res = await getTokenBalanceRanking({publicKey});
+      const res = await getTokenBalance({ publicKey });
       if (res.data && res.data.code === 200) {
         runInAction(() => {
           const data = res.data.data || {};
-          this.balanceRanking = data.Ranking || 0
-        })
+          this.balance = data.amount || 0;
+        });
+      }
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  /**
+   * 获取"当前积分排行"
+   * @returns {Promise.<void>}
+   */
+  @action
+  fetchBalanceRanking = async ({ publicKey }) => {
+    try {
+      const res = await getTokenBalanceRanking({ publicKey });
+      if (res.data && res.data.code === 200) {
+        runInAction(() => {
+          const data = res.data.data || {};
+          this.balanceRanking = data.Ranking || 0;
+        });
       }
     } catch (err) {
       throw err;
@@ -106,15 +134,12 @@ class MiningStore {
           if (data.countAllTimesToday) {
             this.digTimes.countAllTimesToday = data.countAllTimesToday;
           }
-        })
+        });
       }
     } catch (err) {
       throw err;
     }
-  }
-
-
-
+  };
 }
 
 const miningStore = new MiningStore();

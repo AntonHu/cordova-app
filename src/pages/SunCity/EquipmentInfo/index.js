@@ -42,6 +42,9 @@ class Comp extends React.PureComponent {
     const sortData = await this.getPowerData(sourceData, deviceNo, 1);
     if (sortData.length >= 1) {
       this.curveChart = this.renderCurve(sortData);
+    } else {
+      // 默认显示数据
+      this.curveChart = this.renderCurve([{ time: '00', number: 0 }]);
     }
     const currentPower =
       sortData &&
@@ -254,6 +257,12 @@ class Comp extends React.PureComponent {
   // 筛选条件更改
   async screenChange(e) {
     const type = e.target.dataset.class;
+    const selected = Object.assign({}, this.state.selected);
+    Object.keys(selected).forEach(item => {
+      selected[item] = false;
+    });
+    selected[type] = true;
+    this.setState({ selected });
     const sortData = await this.getPowerData(
       this.state.sourceData,
       this.state.deviceNo,
@@ -261,13 +270,10 @@ class Comp extends React.PureComponent {
     );
     if (sortData.length >= 1) {
       this.curveChart = this.renderCurve(sortData);
+    } else {
+      // 默认显示数据
+      this.curveChart = this.renderCurve([{ time: '00', number: 0 }]);
     }
-    const selected = Object.assign({}, this.state.selected);
-    Object.keys(selected).forEach(item => {
-      selected[item] = false;
-    });
-    selected[type] = true;
-    this.setState({ selected });
   }
   render() {
     return (
