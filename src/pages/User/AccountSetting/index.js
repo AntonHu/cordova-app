@@ -1,8 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { PageWithHeader, PlainButton } from '../../../components';
-import { List } from 'antd-mobile';
+import {Link} from 'react-router-dom';
+import {PageWithHeader, PlainButton} from '../../../components';
+import {List} from 'antd-mobile';
 import User from '../../../utils/user';
+import {maskIfPhone} from '../../../utils/methods';
+import {observer, inject} from 'mobx-react';
 import './style.less';
 
 const Item = List.Item;
@@ -27,6 +29,8 @@ const ListData = [
 /**
  * 账号设置
  */
+@inject('userStore')
+@observer
 class Comp extends React.PureComponent {
   onLogout = (e) => {
     e.preventDefault();
@@ -35,16 +39,41 @@ class Comp extends React.PureComponent {
     this.props.history.replace('/');
   };
 
+  getNameFromUserInfo = (userInfo) => {
+    let name = '无';
+    if (userInfo.nickName) {
+      name = userInfo.nickName
+    }
+    if (userInfo.cellPhone) {
+      name = maskIfPhone(userInfo.cellPhone)
+    }
+    if (userInfo.username) {
+      name = maskIfPhone(userInfo.username);
+    }
+    return name;
+  };
+
   render() {
     return (
       <div className={'page-account-setting'}>
         <PageWithHeader title={'账号设置'}>
           <List>
-            {ListData.map((v, i) => (
-              <Link key={i} to={`/user/${v.path}`}>
-                <Item arrow={v.horizontal && 'horizontal'}>{v.text}</Item>
-              </Link>
-            ))}
+            {
+              ListData.map((v, i) => {
+                if (v.text === '当前账号') {
+                  return <Item
+                    arrow={v.horizontal && 'horizontal'}
+                    extra={this.getNameFromUserInfo(this.props.userStore.userInfo)}>
+                    {v.text}
+                  </Item>
+                }
+                return (
+                  <Link key={i} to={`/user/${v.path}`}>
+                    <Item arrow={v.horizontal && 'horizontal'}>{v.text}</Item>
+                  </Link>
+                )
+              })
+            }
           </List>
 
           <PlainButton onClick={this.onLogout}>退出登录</PlainButton>

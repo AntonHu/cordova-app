@@ -167,6 +167,7 @@ class Comp extends React.PureComponent {
    * 3、把需要的参数传给发送方法，发送请求
    */
   onSubmit = async () => {
+    const self = this;
     if (this.validateBeforeSend()) {
 
       const idPositive = await this.getImageBlobFromURI(this.state.idPositive);
@@ -187,7 +188,7 @@ class Comp extends React.PureComponent {
           if (data.code === 200) {
             alert('成功', '您已成功验证', [{
               text: '确定', onPress: function () {
-                this.props.history.goBack();
+                self.props.history.goBack();
               }
             }])
           }

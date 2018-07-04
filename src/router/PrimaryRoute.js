@@ -13,7 +13,8 @@ import {
   ResetTradePW,
   ResetLoginPW,
   User,
-  VerifyID
+  VerifyID,
+  MsgDetail
 } from '../pages/User';
 import MyPowerStation from '../pages/SunCity/MyPowerStation';
 import EquipmentInfo from '../pages/SunCity/EquipmentInfo';
@@ -44,6 +45,7 @@ class PrimaryRoute extends React.PureComponent {
           component={AccountSetting}
         />
         <Route exact path={'/user/msgCenter'} component={MsgCenter}/>
+        <Route exact path={'/user/msgDetail/:messageId'} component={MsgDetail}/>
         <Route exact path={'/user/myData'} component={MyData}/>
         <Route exact path={'/user/myStation'} component={MyStation}/>
         <Route exact path={'/user/personalInfo'} component={PersonalInfo}/>
