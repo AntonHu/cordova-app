@@ -2,6 +2,8 @@ import React from 'react';
 import {PageWithHeader} from '../../../components';
 import {List} from 'antd-mobile';
 import {getMessages} from '../../../stores/user/request';
+import { Link } from 'react-router-dom';
+import {observer, inject} from 'mobx-react';
 import './style.less';
 
 const Item = List.Item;
@@ -21,37 +23,26 @@ const ListData = [
 /**
  * 消息中心
  */
-class Comp extends React.PureComponent {
+@inject('userStore') // 如果注入多个store，用数组表示
+@observer
+class Comp extends React.Component {
   state = {
     list: [],
     page: 0
   };
 
   componentDidMount() {
-    getMessages({page: this.state.page})
-      .then(res => {
-        const data = res.data;
-        if (data.code === 200) {
-          this.setState({
-            list: data.data
-          })
-        }
-      })
-      .catch(() => {
-        this.setState({
-          list: [
-            {
-              text: '消息1'
-            },
-            {
-              text: '消息2'
-            },
-            {
-              text: '消息3'
-            }
-          ]
-        })
-      })
+    this.props.userStore.fetchMessages({page: this.state.page})
+    // .then(res => {
+    //   const data = res.data;
+    //   if (data.code === 200) {
+    //     this.setState({
+    //       list: data.data
+    //     })
+    //   }
+    // })
+    // .catch(() => {
+    // })
   }
 
   render() {
@@ -60,11 +51,15 @@ class Comp extends React.PureComponent {
       <div className={'page-msg-center'}>
         <PageWithHeader title={'消息中心'}>
           <List>
-            {this.state.list.map((v, i) => (
-              <Item key={i} arrow={'horizontal'}>
-                {v.title}
-              </Item>
-            ))}
+            {
+              this.props.userStore.msgList.map((v, i) => (
+                <Link key={i} to={`/user/msgDetail/${v.messageId}`}>
+                <Item arrow={'horizontal'}>
+                  {v.title}
+                </Item>
+                </Link>
+              ))
+            }
           </List>
         </PageWithHeader>
       </div>
