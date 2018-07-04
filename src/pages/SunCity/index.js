@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { toJS } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { Title } from '../../components';
-import { NoticeBar, Icon } from 'antd-mobile';
+import { NoticeBar, Icon, ActivityIndicator } from 'antd-mobile';
 import { TEST_PUBLIC_KEY, TEST_PRIVATE_KEY } from '../../utils/variable';
 import { setSessionStorage, getSessionStorage } from '../../utils/storage';
 import './style.less';
@@ -462,7 +462,9 @@ class Comp extends React.Component {
                 );
               })
             ) : (
-              <div className="loading">加载中......</div>
+              <div className="loading">
+                <ActivityIndicator text="Loading..." />
+              </div>
             )}
           </div>
         </div>
