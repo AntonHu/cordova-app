@@ -15,22 +15,6 @@ const tabs2 = [
 @inject('miningStore')
 @observer
 class Comp extends React.PureComponent {
-  state = {
-    equipmentList: [
-      {
-        title: '测试1',
-        number: '12345'
-      },
-      {
-        title: '测试2',
-        number: '12345'
-      },
-      {
-        title: '测试3',
-        number: '12345'
-      }
-    ]
-  };
 
   componentDidMount() {
     this.makeRequest();
@@ -44,7 +28,7 @@ class Comp extends React.PureComponent {
   };
 
   render() {
-    const { balanceRanking, digTimes } = this.props.miningStore;
+    const { balanceRanking, digTimes, allRanking, nearbyRank } = this.props.miningStore;
     return (
       <div className={'page-mining'}>
         <PageWithHeader leftComponent={null} title={'挖宝池'}>
@@ -119,27 +103,27 @@ class Comp extends React.PureComponent {
               renderTab={tab => <span>{tab.title}</span>}
             >
               <div className="ranking-list">
-                {this.props.miningStore.allRanking.map((item, index) => {
+                {allRanking && allRanking.map((item, index) => {
                   return (
                     <div key={index} className="ranking-item">
                       <div className="ranking-title">
                         <span>{index + 1} </span>
-                        {item.id}
+                        {item.nickName}
                       </div>
-                      <span>{item.totalSolarIntegral}</span>
+                      <span>{item.value}</span>
                     </div>
                   );
                 })}
               </div>
               <div className="ranking-list">
-                {this.props.miningStore.nearbyRank && this.props.miningStore.nearbyRank.map((item, index) => {
+                {nearbyRank && nearbyRank.map((item, index) => {
                   return (
                     <div key={index} className="ranking-item">
                       <div className="ranking-title">
                         <span>{index + 1} </span>
-                        {item.id}
+                        {item.nickName}
                       </div>
-                      <span>{item.totalSolarIntegral}</span>
+                      <span>{item.value}</span>
                     </div>
                   );
                 })}

@@ -12,6 +12,7 @@ import ResetTradePW from './ResetPW/ResetTradePW';
 import ResetLoginPW from './ResetPW/ResetLoginPW';
 import User from './User';
 import VerifyID from './VerifyID';
+import MsgDetail from './MsgCenter/Detail';
 
 export {
   About,
@@ -27,5 +28,6 @@ export {
   ResetTradePW,
   ResetLoginPW,
   User,
-  VerifyID
+  VerifyID,
+  MsgDetail
 };

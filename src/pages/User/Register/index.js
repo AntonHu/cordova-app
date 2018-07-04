@@ -80,7 +80,14 @@ class Comp extends React.PureComponent {
   };
 
   registerFail = (msg) => {
-    showError(msg || '注册失败')
+    let errorMsg = msg;
+    if (msg === 'username exist') {
+      errorMsg = '用户名已存在';
+    }
+    if (msg === 'verification code not exist') {
+      errorMsg = '错误的验证码';
+    }
+    showError(errorMsg || '注册失败')
   };
 
   /**
@@ -178,12 +185,14 @@ class Comp extends React.PureComponent {
             <InputItem
               placeholder="6-16位密码"
               clear
+              type="password"
               value={password}
               onChange={this.changeState('password')}
             />
             <InputItem
               placeholder="确认密码"
               clear
+              type="password"
               value={confirmPassword}
               onChange={this.changeState('confirmPassword')}
             />
