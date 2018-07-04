@@ -18,10 +18,10 @@ const BigInteger = JSRsasign.BigInteger;
  */
 const sunDistanceX = 50; // 小太阳x轴之间的距离
 const sunDistanceY = 70; // 小太阳y轴之间的距离
-const initialCoordinates = { left: 40, top: 40 };
+const initialCoordinates = { left: 15, top: 20 };
 // 将小太阳区域划分为24份,放入数组
 const sunIntegralCoordinatesArr = [];
-for (let i = 0; i < 6; i++) {
+for (let i = 0; i < 7; i++) {
   for (let j = 0; j < 4; j++) {
     sunIntegralCoordinatesArr.push({
       left: initialCoordinates.left + sunDistanceX * i,
@@ -60,6 +60,17 @@ class Comp extends React.Component {
     await this.props.sunCityStore.fetchSCSunIntegral({
       publicKey: TEST_PUBLIC_KEY
     });
+    // 分割积分数组
+    this.spliceArr(
+      toJS(this.props.sunCityStore.sunIntegral),
+      this.sunIntegralArr
+    );
+    // 获取坐标数组
+    this.sunIntegralArr.length > 0 &&
+      this.setState({
+        sunCoordinateArr: this.getSunCoordinateArr(this.sunIntegralArr[0])
+      });
+
     let equipmentListObj = {};
     // 储存设备列表整理后的数据
     if (!getSessionStorage('equipmentListObj')) {
@@ -77,26 +88,7 @@ class Comp extends React.Component {
       });
     }
 
-    // 分割积分数组
-    this.spliceArr(
-      toJS(this.props.sunCityStore.sunIntegral),
-      this.sunIntegralArr
-    );
-    // 获取坐标数组
-    this.sunIntegralArr.length > 0 &&
-      this.setState({
-        sunCoordinateArr: this.getSunCoordinateArr(this.sunIntegralArr[0])
-      });
-
-    // 储存电站数据
-    if (!getSessionStorage('dayStationData')) {
-      const dayStationData = await this.equipmentDataIntegrate(
-        equipmentListObj,
-        1
-      );
-      setSessionStorage('dayStationData', JSON.stringify(dayStationData)); // 本地储存电站每天发电数据
-    }
-
+    // 储存电站数据,2-月，3-年，4-全部
     if (!getSessionStorage('monthStationData')) {
       const monthStationData = await this.equipmentDataIntegrate(
         equipmentListObj,
@@ -108,7 +100,7 @@ class Comp extends React.Component {
     if (!getSessionStorage('yearStationData')) {
       const yearStationData = await this.equipmentDataIntegrate(
         equipmentListObj,
-        2
+        3
       );
       setSessionStorage('yearStationData', JSON.stringify(yearStationData)); // 本地储存电站每年发电数据
     }
@@ -125,6 +117,8 @@ class Comp extends React.Component {
 
   // 为每个添加设备的功率和日电量
   async addEquipmentPower(equipmentListObj, dateType) {
+    let equipmentDataArr = []; // 设备数据
+    let dayStationElectric = 0; // 电站今日发电量
     let currentStationPower = 0; // 当前电站功率
     let totalStationElectric = 0; // 电站累计发电量
     // 遍历每个设备，并添加功率和日电量
@@ -139,16 +133,24 @@ class Comp extends React.Component {
         deviceNo,
         dateType
       );
+      // 合并每天的设备数据为电站每天数据
+      equipmentDataArr = equipmentDataArr.concat(sortData);
+      const dayStationData = this.mergeEquipmentData(equipmentDataArr);
+      setSessionStorage('dayStationData', JSON.stringify(dayStationData)); // 本地储存电站每天发电数据
+      // 设备功率
       const currentPower =
         (sortData &&
           sortData[sortData.length - 1] &&
           sortData[sortData.length - 1].power.toFixed(2)) ||
         0;
-
+      // 设备日电量
       let dayElectric = 0;
       sortData.forEach(item => {
         dayElectric += item.number;
       });
+      // 电站日电量
+      dayStationElectric += dayElectric;
+      // 当前电站发电量
       const maxValue =
         (sortData[sortData.length - 1] &&
           sortData[sortData.length - 1].maxValue) ||
@@ -158,13 +160,14 @@ class Comp extends React.Component {
       currentStationPower += Number(currentPower); // 当前电站功率
       totalStationElectric += Number(maxValue); // 当前电站发电量
     }
+    setSessionStorage('dayStationElectric', dayStationElectric.toFixed(2)); // 本地储存当前电站今日发电量
     setSessionStorage('currentStationPower', currentStationPower); // 本地储存当前电站功率
     setSessionStorage('totalStationElectric', totalStationElectric); // 本地储存电站总发电量
     setSessionStorage('equipmentListObj', JSON.stringify(equipmentListObj)); // 本地储存所有设备状态
     this.setState({ equipmentListObj });
   }
 
-  // 合并多个设备的数据
+  // 合并多个设备的数据并排序,成为电站数据
   mergeEquipmentData = equipmentDataArr => {
     const mergeEquipmentDataArr = [];
     const timeList = equipmentDataArr.map(item => item.time);
@@ -182,13 +185,20 @@ class Comp extends React.Component {
         .forEach(item => (sum += item.number));
       mergeEquipmentDataArr.push({
         time,
-        number: sum ? sum.toFixed(2) : 0
+        number: sum ? Number(sum.toFixed(2)) : 0
       });
     });
-    return mergeEquipmentDataArr;
+    const sortEquipmentDataArr = mergeEquipmentDataArr.sort((pre, cur) => {
+      if (pre.time.indexOf('-') > 0 && cur.time.indexOf('-') > 0) {
+        return Date.parse(pre.time) - Date.parse(cur.time);
+      } else {
+        return pre.time - cur.time;
+      }
+    });
+    return sortEquipmentDataArr;
   };
 
-  // 整合天，月，年数据
+  // 整合月，年数据
   async equipmentDataIntegrate(equipmentListObj, type) {
     const equipmentDataArr = await this.getAllEquipmentData(
       equipmentListObj,
@@ -211,7 +221,6 @@ class Comp extends React.Component {
   // 请求所有设备数据
   async getAllEquipmentData(equipmentListObj, dateType) {
     let equipmentDataArr = [];
-    let dayStationElectric = 0;
     // 遍历每个设备，并累计总电量
     for (let i = 0; i < Object.keys(equipmentListObj).length; ++i) {
       const name = Object.keys(equipmentListObj)[i];
@@ -224,12 +233,8 @@ class Comp extends React.Component {
         deviceNo,
         dateType
       );
-      sortData.forEach(item => {
-        dayStationElectric += item.number;
-      });
       equipmentDataArr = equipmentDataArr.concat(sortData);
     }
-    setSessionStorage('dayStationElectric', dayStationElectric.toFixed(2)); // 本地储存当前电站今日发电量
     return equipmentDataArr;
   }
 
@@ -242,13 +247,13 @@ class Comp extends React.Component {
       dateType
     });
     const receiveData = toJS(this.props.sunCityStore.equipmentPower);
-    const sortData = this.handleData(receiveData);
-    return sortData;
+    const decryptData = this.handleDecryptData(receiveData);
+    return decryptData;
   }
 
   // 处理获取的解密数据
-  handleData = receiveData => {
-    const data = [];
+  handleDecryptData = receiveData => {
+    const decryptData = [];
     Object.keys(receiveData).forEach(item => {
       let powerInfo;
       try {
@@ -260,7 +265,7 @@ class Comp extends React.Component {
       }
       if (powerInfo) {
         const value = +(powerInfo.maxEnergy - powerInfo.minEnergy).toFixed(2);
-        data.push({
+        decryptData.push({
           time: item,
           number: value,
           maxValue: powerInfo.maxEnergy && +powerInfo.maxEnergy,
@@ -268,14 +273,7 @@ class Comp extends React.Component {
         });
       }
     });
-    const sortData = data.sort((pre, cur) => {
-      if (pre.time.indexOf('-') > 0 && cur.time.indexOf('-') > 0) {
-        return Date.parse(pre.time) - Date.parse(cur.time);
-      } else {
-        return pre.time - cur.time;
-      }
-    });
-    return sortData;
+    return decryptData;
   };
 
   // 数据解密
@@ -304,11 +302,12 @@ class Comp extends React.Component {
     // 从坐标中选取任意 sunIntegralArr.length 个位置
     const sunCoordinateArr = [];
     const group = sunIntegralArr.length;
-    let count = sunIntegralCoordinatesArr.length;
+    const copySunIntegralCoordinatesArr = sunIntegralCoordinatesArr.concat();
+    let count = copySunIntegralCoordinatesArr.length;
     for (let i = 0; i < group; i++) {
       const index = ~~(Math.random() * count) + i;
-      sunCoordinateArr[i] = sunIntegralCoordinatesArr[index];
-      sunIntegralCoordinatesArr[index] = sunIntegralCoordinatesArr[i];
+      sunCoordinateArr[i] = copySunIntegralCoordinatesArr[index];
+      copySunIntegralCoordinatesArr[index] = copySunIntegralCoordinatesArr[i];
       count--;
     }
 
