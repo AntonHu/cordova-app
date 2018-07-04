@@ -5,7 +5,7 @@ import { observer, inject } from 'mobx-react';
 import { Title } from '../../components';
 import { NoticeBar, Icon } from 'antd-mobile';
 import { TEST_PUBLIC_KEY, TEST_PRIVATE_KEY } from '../../utils/variable';
-import { setSessionStorage } from '../../utils/storage';
+import { setSessionStorage, getSessionStorage } from '../../utils/storage';
 import './style.less';
 
 import { JSRsasign } from '../../jssign';
@@ -30,7 +30,7 @@ for (let i = 0; i < 6; i++) {
   }
 }
 const pickNumber = 0;
-@inject('sunCityStore', 'userStore') // 如果注入多个store，用数组表示
+@inject('sunCityStore', 'userStore', 'miningStore') // 如果注入多个store，用数组表示
 @observer
 class Comp extends React.Component {
   state = {
@@ -50,42 +50,32 @@ class Comp extends React.Component {
       page: 0,
       pageSize: 10
     });
-
+    // 获取我的太阳积分
+    this.props.miningStore.fetchBalance({ publicKey: TEST_PUBLIC_KEY });
+    // 获取排行
+    this.props.miningStore.fetchBalanceRanking({ publicKey: TEST_PUBLIC_KEY });
     // 获取用户信息
     this.props.userStore.fetchUserInfo();
     // 获取积分列表
     await this.props.sunCityStore.fetchSCSunIntegral({
       publicKey: TEST_PUBLIC_KEY
     });
-    // 获取设备列表
-    await this.props.sunCityStore.fetchSCEquipmentList({
-      userPubKey: TEST_PUBLIC_KEY
-    });
-    const equipmentList = toJS(this.props.sunCityStore.equipmentList) || {};
-    // 添加各个设备的功率和日电量
-    this.addEquipmentPower(equipmentList, 1);
-    // 暂时隐藏
-    // const dayEquipmentDataObj = await this.getAllEquipmentData(
-    //   equipmentList,
-    //   1
-    // );
-    // const monthEquipmentDataObj = await this.getAllEquipmentData(
-    //   equipmentList,
-    //   2
-    // );
-    // const yearEquipmentDataObj = await this.getAllEquipmentData(
-    //   equipmentList,
-    //   3
-    // );
-    // const allEquipmentDataObj = await this.getAllEquipmentData(
-    //   equipmentList,
-    //   4
-    // );
-    // console.log(dayEquipmentDataObj);
-    // const dayStationData = this.mergeEquipmentData(
-    //   dayEquipmentDataObj.equipmentDataArr
-    // );
-    // setSessionStorage('dayStationData', dayStationData); // 本地储存电站发电数据
+    let equipmentList = {};
+    // 储存设备列表整理后的数据
+    if (!getSessionStorage('equipmentList')) {
+      // 获取设备列表
+      await this.props.sunCityStore.fetchSCEquipmentList({
+        userPubKey: TEST_PUBLIC_KEY
+      });
+      equipmentList = toJS(this.props.sunCityStore.equipmentList) || {};
+      // 添加各个设备的功率和日电量
+      this.addEquipmentPower(equipmentList, 1);
+    } else {
+      equipmentList = JSON.parse(getSessionStorage('equipmentList'));
+      this.setState({
+        equipmentList
+      });
+    }
 
     // 分割积分数组
     this.spliceArr(
@@ -97,6 +87,37 @@ class Comp extends React.Component {
       this.setState({
         sunCoordinateArr: this.getSunCoordinateArr(this.sunIntegralArr[0])
       });
+
+    // 储存电站数据
+    if (!getSessionStorage('dayStationData')) {
+      const dayStationData = await this.equipmentDataIntegrate(
+        equipmentList,
+        1
+      );
+      setSessionStorage('dayStationData', JSON.stringify(dayStationData)); // 本地储存电站每天发电数据
+    }
+
+    if (!getSessionStorage('monthStationData')) {
+      const monthStationData = await this.equipmentDataIntegrate(
+        equipmentList,
+        2
+      );
+      setSessionStorage('monthStationData', JSON.stringify(monthStationData)); // 本地储存电站每月发电数据
+    }
+
+    if (!getSessionStorage('yearStationData')) {
+      const yearStationData = await this.equipmentDataIntegrate(
+        equipmentList,
+        2
+      );
+      setSessionStorage('yearStationData', JSON.stringify(yearStationData)); // 本地储存电站每年发电数据
+    }
+
+    if (!getSessionStorage('allStationData')) {
+      const equipmentDataArr = await this.getAllEquipmentData(equipmentList, 4);
+      const allStationData = this.allEquipmentDataIntegrate(equipmentDataArr);
+      setSessionStorage('allStationData', JSON.stringify(allStationData)); // 本地储存电站所有发电数据
+    }
   }
 
   // 为每个添加设备的功率和日电量
@@ -116,25 +137,27 @@ class Comp extends React.Component {
         dateType
       );
       const currentPower =
-        sortData &&
-        sortData[sortData.length - 1] &&
-        sortData[sortData.length - 1].power.toFixed(2);
+        (sortData &&
+          sortData[sortData.length - 1] &&
+          sortData[sortData.length - 1].power.toFixed(2)) ||
+        0;
 
-      let maxValue = 0;
       let dayElectric = 0;
       sortData.forEach(item => {
         dayElectric += item.number;
-        if (item.maxValue > maxValue) {
-          maxValue = item.maxValue;
-        }
       });
+      const maxValue =
+        (sortData[sortData.length - 1] &&
+          sortData[sortData.length - 1].maxValue) ||
+        0;
       equipmentList[name].currentPower = currentPower || 0; // 设备功率
-      equipmentList[name].dayElectric = dayElectric || 0; // 设备日电量
-      currentStationPower += currentPower; // 当前电站功率
-      totalStationElectric += maxValue; // 当前电站发电量
+      equipmentList[name].dayElectric = dayElectric.toFixed(2) || 0; // 设备日电量
+      currentStationPower += Number(currentPower); // 当前电站功率
+      totalStationElectric += Number(maxValue); // 当前电站发电量
     }
     setSessionStorage('currentStationPower', currentStationPower); // 本地储存当前电站功率
     setSessionStorage('totalStationElectric', totalStationElectric); // 本地储存电站总发电量
+    setSessionStorage('equipmentList', JSON.stringify(equipmentList)); // 本地储存所有设备状态
     this.setState({ equipmentList });
   }
 
@@ -156,10 +179,30 @@ class Comp extends React.Component {
         .forEach(item => (sum += item.number));
       mergeEquipmentDataArr.push({
         time,
-        number: sum
+        number: sum && sum.toFixed(2)
       });
     });
     return mergeEquipmentDataArr;
+  };
+
+  // 整合天，月，年数据
+  async equipmentDataIntegrate(equipmentList, type) {
+    const equipmentDataArr = await this.getAllEquipmentData(
+      equipmentList,
+      type
+    );
+    const stationData = this.mergeEquipmentData(equipmentDataArr);
+    return stationData;
+  }
+
+  // 整合电站所有的数据
+  allEquipmentDataIntegrate = allEquipmentData => {
+    allEquipmentData.map(item => {
+      item.time = item.time.substring(0, 4);
+      return item;
+    });
+    const dataIntegrate = this.mergeEquipmentData(allEquipmentData);
+    return dataIntegrate;
   };
 
   // 请求所有设备数据
@@ -183,10 +226,8 @@ class Comp extends React.Component {
       });
       equipmentDataArr = equipmentDataArr.concat(sortData);
     }
-    return {
-      equipmentDataArr,
-      dayStationElectric
-    };
+    setSessionStorage('dayStationElectric', dayStationElectric.toFixed(2)); // 本地储存当前电站今日发电量
+    return equipmentDataArr;
   }
 
   // 获取并处理每个设备数据
@@ -309,6 +350,7 @@ class Comp extends React.Component {
   render() {
     const userInfo = toJS(this.props.userStore.userInfo);
     const { avatar, nickName } = userInfo;
+    const { balance, balanceRanking } = this.props.miningStore;
     const { equipmentList } = this.state;
     const lastNews = toJS(this.props.sunCityStore.lastNews);
     const equipmentNameList =
@@ -337,10 +379,12 @@ class Comp extends React.Component {
                 <Icon type="right" />
               </div>
               <div>
-                <span>当前排行：</span>222
+                <span>当前排行：</span>
+                {balanceRanking}
               </div>
               <div>
-                <span>太阳积分：</span>333
+                <span>太阳积分：</span>
+                {balance.toFixed(2)}
               </div>
             </div>
             <div
@@ -383,39 +427,43 @@ class Comp extends React.Component {
           </div>
           <div className="equipment">
             <Title title="太阳城蓄力装备" />
-            {equipmentNameList.map((equipment, index) => {
-              return (
-                <div
-                  key={index}
-                  className="item"
-                  onClick={() =>
-                    this.props.history.push(
-                      `/sunCity/equipmentInfo/${
-                        equipmentList[equipment].deviceNo
-                      }?source=${
-                        equipmentList[equipment].source
-                      }&name=${equipment}`
-                    )
-                  }
-                >
-                  <div className="item-pic">
-                    <i className="iconfont icon-shebeiliebiao" />
-                  </div>
-                  <div className="item-detail">
-                    <div className="item-name">{equipment}</div>
-                    <div className="item-info">
-                      <span>
-                        {`功率：${equipmentList[equipment].currentPower}w`}{' '}
-                      </span>
-                      <span>{`日电量：${
-                        equipmentList[equipment].dayElectric
-                      }kw/h`}</span>
+            {equipmentNameList.length > 0 ? (
+              equipmentNameList.map((equipment, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="item"
+                    onClick={() =>
+                      this.props.history.push(
+                        `/sunCity/equipmentInfo/${
+                          equipmentList[equipment].deviceNo
+                        }?source=${
+                          equipmentList[equipment].source
+                        }&name=${equipment}`
+                      )
+                    }
+                  >
+                    <div className="item-pic">
+                      <i className="iconfont">&#xea35;</i>
                     </div>
+                    <div className="item-detail">
+                      <div className="item-name">{equipment}</div>
+                      <div className="item-info">
+                        <span>
+                          {`功率：${equipmentList[equipment].currentPower}w`}{' '}
+                        </span>
+                        <span>{`日电量：${
+                          equipmentList[equipment].dayElectric
+                        }kw/h`}</span>
+                      </div>
+                    </div>
+                    <Icon type="right" />
                   </div>
-                  <Icon type="right" />
-                </div>
-              );
-            })}
+                );
+              })
+            ) : (
+              <div className="loading">加载中......</div>
+            )}
           </div>
         </div>
       </div>

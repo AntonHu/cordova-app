@@ -1,6 +1,9 @@
-import {get, post} from '../../utils/fetch';
-import {backendServer, PAGE_SIZE, TEST_PUBLIC_KEY} from '../../utils/variable';
-
+import { get, post } from '../../utils/fetch';
+import {
+  backendServer,
+  PAGE_SIZE,
+  TEST_PUBLIC_KEY
+} from '../../utils/variable';
 
 /**
  * 获取挖宝总排行榜
@@ -10,7 +13,7 @@ import {backendServer, PAGE_SIZE, TEST_PUBLIC_KEY} from '../../utils/variable';
 export const getAllRanking = async params => {
   try {
     const response = await get(`${backendServer}/wallet/getAllRanking`, params);
-    return response
+    return response;
   } catch (err) {
     return err.response;
   }
@@ -21,10 +24,13 @@ export const getAllRanking = async params => {
  * @param params
  * @returns {Promise.<void>}
  */
-export const getNearbyWalletTopRank = async ({publicKey}) => {
+export const getNearbyWalletTopRank = async ({ publicKey }) => {
   try {
-    const response = await get(`${backendServer}/wallet/getNearbyWalletTopRank`, {publicKey: TEST_PUBLIC_KEY});
-    return response
+    const response = await get(
+      `${backendServer}/wallet/getNearbyWalletTopRank`,
+      { publicKey: TEST_PUBLIC_KEY }
+    );
+    return response;
   } catch (err) {
     return err.response;
   }
@@ -35,10 +41,30 @@ export const getNearbyWalletTopRank = async ({publicKey}) => {
  * @param params
  * @returns {Promise.<void>}
  */
-export const getTokenRecords = async ({publicKey, page}) => {
+export const getTokenRecords = async ({ publicKey, page }) => {
   try {
-    const response = await get(`${backendServer}/wallet/getTokenRecords`, {publicKey: TEST_PUBLIC_KEY, page, pageSize: PAGE_SIZE});
-    return response
+    const response = await get(`${backendServer}/wallet/getTokenRecords`, {
+      publicKey: TEST_PUBLIC_KEY,
+      page,
+      pageSize: PAGE_SIZE
+    });
+    return response;
+  } catch (err) {
+    return err.response;
+  }
+};
+
+/**
+ * 用户的"当前积分"
+ * @param publicKey
+ * @returns {Promise.<*>}
+ */
+export const getTokenBalance = async ({ publicKey }) => {
+  try {
+    const response = await get(`${backendServer}/wallet/tokenBalance`, {
+      publicKey: TEST_PUBLIC_KEY
+    });
+    return response;
   } catch (err) {
     return err.response;
   }
@@ -49,10 +75,12 @@ export const getTokenRecords = async ({publicKey, page}) => {
  * @param publicKey
  * @returns {Promise.<*>}
  */
-export const getTokenBalanceRanking = async ({publicKey}) => {
+export const getTokenBalanceRanking = async ({ publicKey }) => {
   try {
-    const response = await get(`${backendServer}/wallet/tokenBalanceRanking`, {publicKey: TEST_PUBLIC_KEY});
-    return response
+    const response = await get(`${backendServer}/wallet/tokenBalanceRanking`, {
+      publicKey: TEST_PUBLIC_KEY
+    });
+    return response;
   } catch (err) {
     return err.response;
   }
@@ -65,9 +93,8 @@ export const getTokenBalanceRanking = async ({publicKey}) => {
 export const getDigTimes = async () => {
   try {
     const response = await get(`${backendServer}/wallet/digTimes`);
-    return response
+    return response;
   } catch (err) {
     return err.response;
   }
 };
-
