@@ -463,7 +463,7 @@ class Comp extends React.Component {
               })
             ) : (
               <div className="loading">
-                <ActivityIndicator text="Loading..." />
+                <ActivityIndicator text="加载中..." />
               </div>
             )}
           </div>
