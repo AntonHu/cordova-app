@@ -19,7 +19,7 @@ function onUploadFail() {
   Toast.show('上传头像失败');
 }
 
-function onFail (message) {
+function onFail(message) {
 };
 
 /**
@@ -32,7 +32,7 @@ function onFail (message) {
  * 调用reqUpdateUser更新昵称、头像oss地址
  * @param imageURI
  */
-async function onPhotoDataSuccess (imageURI) {
+async function onPhotoDataSuccess(imageURI) {
   const nickName = this.props.userStore.userInfo.nickName || '';
   const fileEntry = await FileMethods.getFileEntryFromURL(imageURI);
   const file = await FileMethods.getFileFromFileEntry(fileEntry);
@@ -54,7 +54,7 @@ async function onPhotoDataSuccess (imageURI) {
  * 调用reqUpdateUser更新昵称、头像oss地址
  * @param imageURI
  */
-async function onPhotoURISuccess (imageURI) {
+async function onPhotoURISuccess(imageURI) {
   const nickName = this.props.userStore.userInfo.nickName || '';
   const fileEntry = await FileMethods.getFileEntryFromURL(imageURI);
   const file = await FileMethods.getFileFromFileEntry(fileEntry);
@@ -82,7 +82,7 @@ const updateAvatar = (imgBlob, nickName) => {
           header: data.data.imgUrl,
           nickName
         }).then(updateRes => {
-          if (updateRes.data && updateRes.data.code ===  20000) {
+          if (updateRes.data && updateRes.data.code === 20000) {
             Toast.show('更新头像成功');
           } else {
             Toast.show('更新头像失败');
@@ -97,7 +97,7 @@ const updateAvatar = (imgBlob, nickName) => {
     });
 };
 
-function capturePhoto () {
+function capturePhoto() {
   const destinationType = navigator.camera.DestinationType;
   onPhotoDataSuccess = onPhotoDataSuccess.bind(this);
   onFail = onFail.bind(this);
@@ -108,7 +108,7 @@ function capturePhoto () {
   });
 };
 
-function getPhoto(source)  {
+function getPhoto(source) {
   // Retrieve image file location from specified source
   onPhotoURISuccess = onPhotoURISuccess.bind(this);
   onFail = onFail.bind(this);
@@ -154,6 +154,14 @@ class Comp extends React.Component {
   state = {
     sexArr: ['男'],
   };
+
+  componentDidMount() {
+    this.makeRequest();
+  }
+
+  makeRequest = () => {
+    this.props.userStore.fetchIsInChain({publicKey: ''});
+  };
   // 头像更改
   picChange = () => {
 
@@ -175,30 +183,34 @@ class Comp extends React.Component {
   };
 
   render() {
-    const {userInfo} = this.props.userStore;
+    const {userInfo, isInChain} = this.props.userStore;
     const {avatar, nickName} = userInfo;
     return (
       <div className={'page-personal-info'}>
         <PageWithHeader title={'个人信息'}>
-          <BlueBox>
+          <BlueBox type="pic" picType={isInChain ? 'blue' : 'grey'}>
             <div className="personal-info">
-              <Picture size={120} src={avatar} />
-              <div className="personal-prompt">您已实名认证成功!</div>
+              <Picture size={120} src={avatar}/>
+              <div className="personal-prompt">
+                {isInChain ? '您已实名认证成功!' : '未实名认证'}
+              </div>
             </div>
             <div className="personal-name">{nickName || '未知'}</div>
             {/*<div className="personal-id">31232245678</div>*/}
-            <div
-              className="go-authentication"
-              onClick={() => this.props.history.push(`/user/verifyID/${1}`)}
-            >
-              去认证<Icon type="right"/>
-            </div>
+            {
+              !isInChain && <div
+                className="go-authentication"
+                onClick={() => this.props.history.push(`/user/verifyID/${1}`)}
+              >
+                去认证<Icon type="right"/>
+              </div>
+            }
           </BlueBox>
 
           <div className="personal-list">
             <div className="personal-item" onClick={this.picChange}>
               <div className="item-title">头像</div>
-              <Picture size={60} src={avatar} alt='' showEmptyElement={false} />
+              <Picture size={60} src={avatar} alt='' showEmptyElement={false}/>
             </div>
             <div
               className="personal-item"

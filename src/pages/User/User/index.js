@@ -42,7 +42,7 @@ const ListData = [
 class Comp extends React.PureComponent {
 
   componentDidMount() {
-    this.props.userStore.fetchUserInfo()
+    this.props.userStore.fetchUserInfo();
   }
 
   render() {

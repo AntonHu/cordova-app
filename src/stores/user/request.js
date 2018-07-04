@@ -21,7 +21,7 @@ export const reqLogin = async ({username, password}) => {
       });
     return response
   } catch (err) {
-    return err.response;
+    throw err.response;
   }
 
 };
@@ -44,7 +44,7 @@ export const reqRegister = async ({mobile, password, verificationCode}) => {
       });
     return response
   } catch (err) {
-    return err.response;
+    throw err.response;
   }
 
 };
@@ -60,7 +60,7 @@ export const reqSendCode = async ({mobile, type = '0'}) => {
     const response = await post(`${userServer}/authz/sms/send`, {mobile, type});
     return response;
   } catch (err) {
-    return err.response;
+    throw err.response;
   }
 };
 
@@ -73,7 +73,7 @@ export const getOwnerInfo = async () => {
     const response = await get(`${userServer}/resource/rs/checkToken`);
     return response;
   } catch (err) {
-    return err.response;
+    throw err.response;
   }
 };
 
@@ -86,7 +86,7 @@ export const getMessages = async ({page}) => {
     const response = await get(`${backendServer}/info/latestNews`, {page, pageSize: PAGE_SIZE});
     return response;
   } catch (err) {
-    return err.response;
+    throw err.response;
   }
 };
 
@@ -99,7 +99,7 @@ export const modifyLoginPassword = async ({newPassword, oldPassword}) => {
     const response = await post(`${userServer}/resource/user/updatePassword`, {newPassword, oldPassword});
     return response;
   } catch (err) {
-    return err.response;
+    throw err.response;
   }
 };
 
@@ -119,7 +119,7 @@ export const reqUpdateUser = async ({header, nickName}) => {
     console.log(JSON.stringify(response))
     return response
   } catch (err) {
-    return err.response;
+    throw err.response;
   }
 };
 
@@ -134,7 +134,7 @@ export const reqUpdateGeolocation = async ({publicKey, rectangle}) => {
     const response = await post(`${backendServer}/info/rectangle`, {publicKey: TEST_PUBLIC_KEY, rectangle});
     return response;
   } catch (err) {
-    return err.response;
+    throw err.response;
   }
 };
 
@@ -222,40 +222,22 @@ export const reqResetTradePassword = async (
       verificationCode});
     return response;
   } catch (err) {
-    return err.response;
+    throw err.response;
   }
 };
 
-// TODO:上面的身份认证调通了，就把下面这个删掉
 /**
- * 身份认证
+ * 用户是否身份认证了
  * @param publicKey
- * @param username
- * @param idPositive 身份证正面图片文件
- * @param idNegative 身份证反面图片文件
- * @param idHandheld 身份证手持图片文件
  * @returns {Promise.<*>}
  */
-export const reqVerifyId = async (
-  {
-    publicKey,
-    username,
-    idPositive,
-    idNegative,
-    idHandheld
-  }
-  ) => {
+export const getIsInChain = async ({publicKey}) => {
   try {
-    const response = await post2(`${backendServer}/user/verifiedUser`, {
-      publicKey: TEST_PUBLIC_KEY,
-      username,
-      idPositive,
-      idNegative,
-      idHandheld
+    const response = await get(`${backendServer}/user/isInChain`, {
+      publicKey
     });
     return response;
   } catch (err) {
-    return err.response;
+    throw err.response;
   }
 };
-

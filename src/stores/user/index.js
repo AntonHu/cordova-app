@@ -1,11 +1,13 @@
 import { observable, action, runInAction, computed, toJS } from 'mobx';
-import { getOwnerInfo, getMessages } from './request';
+import { getOwnerInfo, getMessages, getIsInChain } from './request';
 
 class UserStore {
   //用户信息
   @observable userInfo = {};
   //消息列表
   @observable msgList = [];
+  //用户是否身份认证了
+  @observable isInChain = false;
 
   /**
    * 获取用户信息
@@ -44,6 +46,25 @@ class UserStore {
           }
         })
       }
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  /**
+   * 用户是否身份认证
+   * @param publicKey
+   * @returns {Promise.<void>}
+   */
+  @action
+  fetchIsInChain = async ({publicKey}) => {
+    try {
+      const res = await getIsInChain({publicKey});
+      runInAction(() => {
+        if (res.data) {
+          this.isInChain = res.data.success || false;
+        }
+      });
     } catch (err) {
       throw err;
     }
