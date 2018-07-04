@@ -161,7 +161,7 @@ class Comp extends React.Component {
     setSessionStorage('currentStationPower', currentStationPower); // 本地储存当前电站功率
     setSessionStorage('totalStationElectric', totalStationElectric); // 本地储存电站总发电量
     setSessionStorage('equipmentListObj', JSON.stringify(equipmentListObj)); // 本地储存所有设备状态
-    this.setState({ equipmentListObj: Object.assign({}, equipmentListObj) });
+    this.setState({ equipmentListObj });
   }
 
   // 合并多个设备的数据
