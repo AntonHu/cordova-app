@@ -15,20 +15,27 @@ const tabs2 = [
 @inject('miningStore')
 @observer
 class Comp extends React.PureComponent {
-
   componentDidMount() {
     this.makeRequest();
   }
 
   makeRequest = () => {
     this.props.miningStore.fetchAllRanking();
-    this.props.miningStore.fetchNearbyRanking({publicKey: ''});
+    // 获取我的太阳积分
+    this.props.miningStore.fetchBalance({ publicKey: '' });
+    this.props.miningStore.fetchNearbyRanking({ publicKey: '' });
     this.props.miningStore.fetchDigTimes();
-    this.props.miningStore.fetchBalanceRanking({publicKey: ''});
+    this.props.miningStore.fetchBalanceRanking({ publicKey: '' });
   };
 
   render() {
-    const { balanceRanking, digTimes, allRanking, nearbyRank } = this.props.miningStore;
+    const {
+      balanceRanking,
+      digTimes,
+      allRanking,
+      nearbyRank,
+      balance
+    } = this.props.miningStore;
     return (
       <div className={'page-mining'}>
         <PageWithHeader leftComponent={null} title={'挖宝池'}>
@@ -41,7 +48,7 @@ class Comp extends React.PureComponent {
               />
               <div>
                 <div className="sun-type">我的太阳积分</div>
-                <div className="rank">552</div>
+                <div className="rank">{balance.toFixed(2)}</div>
               </div>
               <div>
                 <div className="sun-type">当前排行</div>
@@ -103,30 +110,32 @@ class Comp extends React.PureComponent {
               renderTab={tab => <span>{tab.title}</span>}
             >
               <div className="ranking-list">
-                {allRanking && allRanking.map((item, index) => {
-                  return (
-                    <div key={index} className="ranking-item">
-                      <div className="ranking-title">
-                        <span>{index + 1} </span>
-                        {item.nickName}
+                {allRanking &&
+                  allRanking.map((item, index) => {
+                    return (
+                      <div key={index} className="ranking-item">
+                        <div className="ranking-title">
+                          <span>{index + 1} </span>
+                          {item.nickName}
+                        </div>
+                        <span>{item.value}</span>
                       </div>
-                      <span>{item.value}</span>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
               </div>
               <div className="ranking-list">
-                {nearbyRank && nearbyRank.map((item, index) => {
-                  return (
-                    <div key={index} className="ranking-item">
-                      <div className="ranking-title">
-                        <span>{index + 1} </span>
-                        {item.nickName}
+                {nearbyRank &&
+                  nearbyRank.map((item, index) => {
+                    return (
+                      <div key={index} className="ranking-item">
+                        <div className="ranking-title">
+                          <span>{index + 1} </span>
+                          {item.nickName}
+                        </div>
+                        <span>{item.value}</span>
                       </div>
-                      <span>{item.value}</span>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
               </div>
             </Tabs>
             <WhiteSpace />

@@ -75,7 +75,6 @@ class Comp extends React.PureComponent {
       id: 'pie-bar-chart',
       pixelRatio: window.devicePixelRatio
     });
-
     chart.source(data);
     chart.tooltip({
       showItemMarker: false,
@@ -103,7 +102,6 @@ class Comp extends React.PureComponent {
     });
     chart
       .interval()
-      .size(18)
       .position('time*number')
       .color(grd);
     chart.render();
