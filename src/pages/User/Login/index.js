@@ -47,7 +47,6 @@ class Comp extends React.PureComponent {
         }
       })
       .catch(err => {
-        console.log(err)
         const data = err.data;
         let msg = '登录失败';
         if (data.error_description) {

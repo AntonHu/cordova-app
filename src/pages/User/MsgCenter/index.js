@@ -32,17 +32,7 @@ class Comp extends React.Component {
   };
 
   componentDidMount() {
-    this.props.userStore.fetchMessages({page: this.state.page})
-    // .then(res => {
-    //   const data = res.data;
-    //   if (data.code === 200) {
-    //     this.setState({
-    //       list: data.data
-    //     })
-    //   }
-    // })
-    // .catch(() => {
-    // })
+    this.props.userStore.fetchMessages({page: this.state.page});
   }
 
   render() {

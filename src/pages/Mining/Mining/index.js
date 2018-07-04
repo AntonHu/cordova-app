@@ -1,7 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
-import { toJS } from 'mobx';
 import { Title, PageWithHeader } from '../../../components';
 import { Icon, Tabs, WhiteSpace } from 'antd-mobile';
 import './style.less';
