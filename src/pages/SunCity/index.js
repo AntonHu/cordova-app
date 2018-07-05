@@ -396,7 +396,6 @@ class Comp extends React.Component {
     const lastNews = toJS(this.props.sunCityStore.lastNews);
     const equipmentNameList =
       (equipmentListObj && Object.keys(equipmentListObj)) || [];
-    console.log(equipmentListObj);
     return (
       <div className={'page-sunCity-info'}>
         <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
