@@ -94,7 +94,8 @@ class Comp extends React.Component {
     } else {
       equipmentListObj = JSON.parse(getLocalStorage('equipmentListObj'));
       this.setState({
-        equipmentListObj
+        equipmentListObj,
+        loading: false
       });
     }
 
