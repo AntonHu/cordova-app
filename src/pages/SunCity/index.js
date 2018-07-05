@@ -29,8 +29,8 @@ for (let i = 0; i < 7; i++) {
     });
   }
 }
-const pickNumber = 0;
-@inject('sunCityStore', 'userStore', 'miningStore') // 如果注入多个store，用数组表示
+let pickNumber = 0;
+@inject('sunCityStore', 'userStore', 'miningStore', 'keyPair') // 如果注入多个store，用数组表示
 @observer
 class Comp extends React.Component {
   state = {
@@ -45,21 +45,27 @@ class Comp extends React.Component {
   timeoutID = null;
   sunArea = null; // 大图形
   async componentDidMount() {
+    const {keyPair} = this.props;
     // 获取最新公告,条件固定
     this.props.sunCityStore.fetchSCNews({
       page: 0,
       pageSize: 10
     });
-    // 获取我的太阳积分
-    this.props.miningStore.fetchBalance({ publicKey: TEST_PUBLIC_KEY });
-    // 获取排行
-    this.props.miningStore.fetchBalanceRanking({ publicKey: TEST_PUBLIC_KEY });
+
     // 获取用户信息
     this.props.userStore.fetchUserInfo();
-    // 获取积分列表
-    await this.props.sunCityStore.fetchSCSunIntegral({
-      publicKey: TEST_PUBLIC_KEY
-    });
+
+    if (keyPair.hasKey) {
+      // 获取我的太阳积分
+      this.props.miningStore.fetchBalance({ publicKey: keyPair.publicKey });
+      // 获取排行
+      this.props.miningStore.fetchBalanceRanking({ publicKey: keyPair.publicKey });
+      // 获取积分列表
+      await this.props.sunCityStore.fetchSCSunIntegral({
+        publicKey: keyPair.publicKey
+      });
+    }
+
     // 分割积分数组
     this.spliceArr(
       toJS(this.props.sunCityStore.sunIntegral),
@@ -74,13 +80,16 @@ class Comp extends React.Component {
     let equipmentListObj = {};
     // 储存设备列表整理后的数据
     if (!getLocalStorage('equipmentListObj')) {
-      // 获取设备列表
-      await this.props.sunCityStore.fetchSCEquipmentList({
-        userPubKey: TEST_PUBLIC_KEY
-      });
-      equipmentListObj = toJS(this.props.sunCityStore.equipmentList) || {};
-      // 添加各个设备的功率和日电量
-      this.addEquipmentPower(equipmentListObj, 1);
+      if (keyPair.hasKey) {
+        // 获取设备列表
+        await this.props.sunCityStore.fetchSCEquipmentList({
+          userPubKey: keyPair.publicKey
+        });
+        equipmentListObj = toJS(this.props.sunCityStore.equipmentList) || {};
+        // 添加各个设备的功率和日电量
+        this.addEquipmentPower(equipmentListObj, 1);
+      }
+
     } else {
       equipmentListObj = JSON.parse(getLocalStorage('equipmentListObj'));
       this.setState({
@@ -240,6 +249,7 @@ class Comp extends React.Component {
 
   // 获取并处理每个设备数据
   async handleEquipmentData(name, sourceData, deviceNo, dateType) {
+
     await this.props.sunCityStore.fetchSCEquipmentPower({
       sourceData,
       deviceNo,
@@ -322,32 +332,35 @@ class Comp extends React.Component {
   };
   // 收取太阳积分
   selectSunIntegral = (e, sunIntegralInfo) => {
-    this.selectSunNode = e.target.parentNode;
-    this.props.sunCityStore
-      .fetchSCGetSunIntegral({
-        tokenId: sunIntegralInfo.id,
-        value: sunIntegralInfo.amount,
-        publicKey: TEST_PUBLIC_KEY
-      })
-      .then(result => {
-        if (result.code === 200) {
-          pickNumber += 1;
-          this.selectSunNode.classList.add('remove');
-          // 每删除10个，重置一次，并进入下一个
-          if (pickNumber && pickNumber % 10 === 0) {
-            this.timeoutID = setTimeout(() => {
-              document
-                .querySelectorAll('.remove')
-                .forEach(item => item.classList.remove('remove'));
-              this.setState({
-                sunCoordinateArr: this.getSunCoordinateArr(
-                  this.sunIntegralArr[pickNumber / 10]
-                )
-              });
-            }, 1000);
+    const {keyPair} = this.props;
+    if (keyPair.showHasKey(this.props)) {
+      this.selectSunNode = e.target.parentNode;
+      this.props.sunCityStore
+        .fetchSCGetSunIntegral({
+          tokenId: sunIntegralInfo.id,
+          value: sunIntegralInfo.amount,
+          publicKey: keyPair.publicKey
+        })
+        .then(result => {
+          if (result.code === 200) {
+            pickNumber += 1;
+            this.selectSunNode.classList.add('remove');
+            // 每删除10个，重置一次，并进入下一个
+            if (pickNumber && pickNumber % 10 === 0) {
+              this.timeoutID = setTimeout(() => {
+                document
+                  .querySelectorAll('.remove')
+                  .forEach(item => item.classList.remove('remove'));
+                this.setState({
+                  sunCoordinateArr: this.getSunCoordinateArr(
+                    this.sunIntegralArr[pickNumber / 10]
+                  )
+                });
+              }, 1000);
+            }
           }
-        }
-      });
+        });
+    }
   };
   render() {
     const userInfo = toJS(this.props.userStore.userInfo);

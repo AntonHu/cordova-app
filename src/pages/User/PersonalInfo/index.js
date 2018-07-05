@@ -148,7 +148,7 @@ const avatarModalData = [
 /**
  * 个人信息
  */
-@inject('userStore') // 如果注入多个store，用数组表示
+@inject('userStore', 'keyPair') // 如果注入多个store，用数组表示
 @observer
 class Comp extends React.Component {
   state = {
@@ -156,11 +156,14 @@ class Comp extends React.Component {
   };
 
   componentDidMount() {
-    this.makeRequest();
+    this.makeRequest(this.props);
   }
 
-  makeRequest = () => {
-    this.props.userStore.fetchIsInChain({publicKey: ''});
+  makeRequest = (props) => {
+    const { keyPair } = props;
+    if (keyPair.hasKey) {
+      this.props.userStore.fetchIsInChain({publicKey: keyPair.publicKey});
+    }
   };
   // 头像更改
   picChange = () => {

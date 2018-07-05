@@ -3,6 +3,7 @@ import {BlueBox, GreenButton, PageWithHeader, Picture, VerifyIdEmptyElement} fro
 import {InputItem, Modal, Button, ActionSheet, Flex} from 'antd-mobile';
 import {reqVerifyId, reqUploadVerifyId} from '../../../stores/user/request';
 import {FileMethods} from '../../../utils/methods';
+import {observer, inject} from 'mobx-react';
 import './style.less';
 
 const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
@@ -103,6 +104,8 @@ const avatarModalData = [
 /**
  * 实名认证
  */
+@inject('keyPair') // 如果注入多个store，用数组表示
+@observer
 class Comp extends React.PureComponent {
   state = {
     username: '',
@@ -168,6 +171,10 @@ class Comp extends React.PureComponent {
    */
   onSubmit = async () => {
     const self = this;
+    const {keyPair} = this.props;
+    if (!keyPair.showHasKey(this.props)) {
+      return
+    }
     if (this.validateBeforeSend()) {
 
       const idPositive = await this.getImageBlobFromURI(this.state.idPositive);
@@ -175,7 +182,7 @@ class Comp extends React.PureComponent {
       const idHandheld = await this.getImageBlobFromURI(this.state.idHandheld);
 
       reqUploadVerifyId({
-        publicKey: '',
+        publicKey: keyPair.publicKey,
         username: this.state.username,
         idPositive,
         idNegative,

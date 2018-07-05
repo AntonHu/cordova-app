@@ -13,6 +13,19 @@ const POWER_TYPE = {
   all: 4
 };
 
+/**
+ * 存在localStorage里的名字
+ */
+const KEY_PAIR_LOCAL_STORAGE = {
+  PUBLIC_KEY: 'PUBLIC_KEY',
+  PRIVATE_KEY: 'PRIVATE_KEY'
+};
+
+/**
+ * 加密曲线名字
+ */
+const CURVE = 'sm2';
+
 const TEST_PRIVATE_KEY =
   'e469d6bcae3f9bef883828a629d12c89bd4e0ce67cab70a5557971f6dc7f4e29';
 const TEST_PUBLIC_KEY =
@@ -24,5 +37,7 @@ export {
   PAGE_SIZE,
   TEST_PUBLIC_KEY,
   POWER_TYPE,
-  TEST_PRIVATE_KEY
+  TEST_PRIVATE_KEY,
+  KEY_PAIR_LOCAL_STORAGE,
+  CURVE
 };

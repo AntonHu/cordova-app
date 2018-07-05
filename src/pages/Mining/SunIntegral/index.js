@@ -7,13 +7,20 @@ import './style.less';
 /**
  * 挖宝
  */
-@inject('miningStore')
+@inject('miningStore', 'keyPair')
 @observer
 class Comp extends React.PureComponent {
 
   componentDidMount() {
-    this.props.miningStore.fetchTokenRecords({page: 0, publicKey: ''})
+    this.makeRequest(this.props);
   }
+
+  makeRequest = (props) => {
+    const {keyPair} = props;
+    if (keyPair.hasKey) {
+      this.props.miningStore.fetchTokenRecords({page: 0, publicKey: keyPair.publicKey})
+    }
+  };
 
   render() {
     const {balance} = this.props.miningStore;
