@@ -19,8 +19,75 @@ import {
 import MyPowerStation from '../pages/SunCity/MyPowerStation';
 import EquipmentInfo from '../pages/SunCity/EquipmentInfo';
 import SunIntegral from '../pages/Mining/SunIntegral';
+import {Modal, Toast} from 'antd-mobile';
+import {observer, inject} from 'mobx-react';
+import {reqUpdateGeolocation} from '../stores/user/request';
 
-class PrimaryRoute extends React.PureComponent {
+const alert = Modal.alert;
+
+function onSuccess(publicKey) {
+  return function (position) {
+    Toast.show('获取坐标成功');
+    reqUpdateGeolocation({
+      rectangle: position.coords.latitude + ',' + position.coords.longitude,
+      publicKey
+    })
+      .then(res => {
+        console.log(res);
+        Toast.show('上传坐标成功');
+      })
+      .catch(err => {
+        console.log(err.response);
+        Toast.show('上传坐标失败');
+      })
+  };
+};
+
+function onError(error) {
+  Toast.show('获取坐标失败');
+}
+
+
+@inject('keyPair')
+@observer
+class PrimaryRoute extends React.Component {
+
+  constructor(props) {
+    super(props);
+    const hasKey = props.keyPair.checkKeyPairExist();
+    if (!hasKey) {
+      alert(
+        '该账号没有私钥',
+        '这将导致app大部分功能不可用。是否现在去生成？',
+        [
+          { text: '再等等'},
+          { text: '马上去', onPress: () => {
+            props.history.push('/user/myData')
+          }},
+        ]
+      )
+    }
+  }
+
+  componentDidMount() {
+    if (this.props.keyPair.hasKey) {
+      this.uploadUserLocation(this.props.keyPair.publicKey)
+    }
+  }
+
+  /**
+   * 每次app唤醒时，更新用户坐标
+   */
+  uploadUserLocation = (publicKey) => {
+    if (window.cordova) {
+      navigator.geolocation.getCurrentPosition(onSuccess(publicKey), onError, {
+        maximumAge: 300000,
+        timeout: 5000,
+        enableHighAccuracy: true
+      });
+    }
+  };
+
   render() {
     return (
       <Switch>

@@ -1,8 +1,7 @@
 import { get, post } from '../../utils/fetch';
 import {
   backendServer,
-  PAGE_SIZE,
-  TEST_PUBLIC_KEY
+  PAGE_SIZE
 } from '../../utils/variable';
 
 /**
@@ -28,7 +27,7 @@ export const getNearbyWalletTopRank = async ({ publicKey }) => {
   try {
     const response = await get(
       `${backendServer}/wallet/getNearbyWalletTopRank`,
-      { publicKey: TEST_PUBLIC_KEY }
+      { publicKey }
     );
     return response;
   } catch (err) {
@@ -44,7 +43,7 @@ export const getNearbyWalletTopRank = async ({ publicKey }) => {
 export const getTokenRecords = async ({ publicKey, page }) => {
   try {
     const response = await get(`${backendServer}/wallet/getTokenRecords`, {
-      publicKey: TEST_PUBLIC_KEY,
+      publicKey,
       page,
       pageSize: PAGE_SIZE
     });
@@ -62,7 +61,7 @@ export const getTokenRecords = async ({ publicKey, page }) => {
 export const getTokenBalance = async ({ publicKey }) => {
   try {
     const response = await get(`${backendServer}/wallet/tokenBalance`, {
-      publicKey: TEST_PUBLIC_KEY
+      publicKey
     });
     return response;
   } catch (err) {
@@ -78,7 +77,7 @@ export const getTokenBalance = async ({ publicKey }) => {
 export const getTokenBalanceRanking = async ({ publicKey }) => {
   try {
     const response = await get(`${backendServer}/wallet/tokenBalanceRanking`, {
-      publicKey: TEST_PUBLIC_KEY
+      publicKey
     });
     return response;
   } catch (err) {

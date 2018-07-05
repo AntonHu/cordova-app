@@ -12,20 +12,26 @@ const tabs2 = [
 /**
  * 挖宝
  */
-@inject('miningStore', 'userStore')
+@inject('miningStore', 'userStore', 'keyPair')
 @observer
-class Comp extends React.PureComponent {
+class Comp extends React.Component {
   componentDidMount() {
     this.makeRequest();
   }
 
   makeRequest = () => {
+    const {keyPair} = this.props;
+    if (keyPair.hasKey) {
+      // 获取我的太阳积分
+      this.props.miningStore.fetchBalance({ publicKey: keyPair.publicKey });
+      // 邻居榜
+      this.props.miningStore.fetchNearbyRanking({ publicKey: keyPair.publicKey });
+      // 获取"当前积分排行"
+      this.props.miningStore.fetchBalanceRanking({ publicKey: keyPair.publicKey });
+    }
     this.props.miningStore.fetchAllRanking();
-    // 获取我的太阳积分
-    this.props.miningStore.fetchBalance({ publicKey: '' });
-    this.props.miningStore.fetchNearbyRanking({ publicKey: '' });
     this.props.miningStore.fetchDigTimes();
-    this.props.miningStore.fetchBalanceRanking({ publicKey: '' });
+
   };
 
   render() {

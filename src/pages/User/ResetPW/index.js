@@ -20,7 +20,6 @@ const ListData = [
  */
 class Comp extends React.PureComponent {
   render() {
-    //TODO: 加上验证码插件
     return (
       <div className={'page-reset-pw'}>
         <PageWithHeader title={'密码设置'}>
