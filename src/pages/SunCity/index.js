@@ -34,6 +34,7 @@ let pickNumber = 0;
 class Comp extends React.Component {
   state = {
     equipmentListObj: null,
+    loading: true,
     sunCoordinateArr: null,
     power: 0, // 功率
     dayPower: 0, // 日发电量
@@ -173,14 +174,13 @@ class Comp extends React.Component {
     setLocalStorage('currentStationPower', currentStationPower); // 本地储存当前电站功率
     setLocalStorage('totalStationElectric', totalStationElectric); // 本地储存电站总发电量
     setLocalStorage('equipmentListObj', JSON.stringify(equipmentListObj)); // 本地储存所有设备状态
-    this.setState({ equipmentListObj });
+    this.setState({ equipmentListObj, loading: false });
   }
 
   // 合并多个设备的数据并排序,成为电站数据
   mergeEquipmentData = equipmentDataArr => {
     const mergeEquipmentDataArr = [];
     const timeList = equipmentDataArr.map(item => item.time);
-    console.log(equipmentDataArr);
     var uniqueTimeArr = [];
     for (var i = 0, len = timeList.length; i < len; i++) {
       var current = timeList[i];
@@ -248,8 +248,6 @@ class Comp extends React.Component {
       const maxEnergy =
         decryptData.length > 0 &&
         Math.max.apply(Math, decryptData.map(item => item.maxValue));
-      console.log('decryptData');
-      console.log(decryptData);
       stationEnergy += maxEnergy;
       equipmentDataArr = equipmentDataArr.concat(decryptData);
     }
@@ -504,7 +502,11 @@ class Comp extends React.Component {
               })
             ) : (
               <div className="loading">
-                <ActivityIndicator text="加载中..." />
+                {this.state.loading ? (
+                  <ActivityIndicator text="加载中..." />
+                ) : (
+                  '暂无数据'
+                )}
               </div>
             )}
           </div>

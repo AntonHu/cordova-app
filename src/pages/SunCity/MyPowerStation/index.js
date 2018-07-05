@@ -8,7 +8,7 @@ import F2 from '@antv/f2';
 import './style.less';
 
 import { getLocalStorage } from '../../../utils/storage';
-import { POWER_TYPE, TEST_PUBLIC_KEY } from '../../../utils/variable';
+import { POWER_TYPE } from '../../../utils/variable';
 
 const Item = Popover.Item;
 
