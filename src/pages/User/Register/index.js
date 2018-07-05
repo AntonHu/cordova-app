@@ -105,7 +105,7 @@ class Comp extends React.PureComponent {
       return false;
     }
     if (!testPassword(password)) {
-      showError('请输入密码！');
+      showError('请输入6-16位密码！(只包含大小写字母、数字、下划线)');
       return false;
     }
     if (password !== confirmPassword) {
