@@ -16,13 +16,14 @@ class Comp extends React.PureComponent {
   }
 
   render() {
+    const {balance} = this.props.miningStore;
     return (
       <div className={'page-sun-integral'}>
         <PageWithHeader title={'太阳积分'}>
           <div className="integral">
             <div className="integral-survey">
               <div>我的太阳积分</div>
-              <div className="number">555</div>
+              <div className="number">{balance.toFixed(2)}</div>
             </div>
             <div className="integral-list">
               <div>积分记录</div>

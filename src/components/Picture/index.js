@@ -14,7 +14,7 @@ class Comp extends React.PureComponent {
     // 尺寸
     size: PropTypes.number,
     // img的src
-    src: PropTypes.string,
+    src: PropTypes.string.isRequired,
     // 当src为空串的时候，显示的元素
     emptyElement: PropTypes.oneOfType([
       PropTypes.element,
@@ -36,7 +36,7 @@ class Comp extends React.PureComponent {
       </i>
     ),
     showEmptyElement: true,
-    alt: '图片不可显示'
+    alt: '无图'
   };
 
   calculateStyle = () => {
