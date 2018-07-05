@@ -9,7 +9,7 @@ import './style.less';
  */
 @inject('miningStore', 'keyPair')
 @observer
-class Comp extends React.PureComponent {
+class Comp extends React.Component {
 
   componentDidMount() {
     this.makeRequest(this.props);

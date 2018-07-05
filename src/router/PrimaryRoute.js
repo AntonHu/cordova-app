@@ -50,7 +50,7 @@ function onError(error) {
 
 @inject('keyPair')
 @observer
-class PrimaryRoute extends React.PureComponent {
+class PrimaryRoute extends React.Component {
 
   constructor(props) {
     super(props);

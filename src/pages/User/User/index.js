@@ -39,7 +39,7 @@ const ListData = [
  */
 @inject('userStore') // 如果注入多个store，用数组表示
 @observer
-class Comp extends React.PureComponent {
+class Comp extends React.Component {
 
   componentDidMount() {
     this.props.userStore.fetchUserInfo();

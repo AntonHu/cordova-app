@@ -33,7 +33,7 @@ const ListData = [
  */
 @inject('userStore', 'keyPair')
 @observer
-class Comp extends React.PureComponent {
+class Comp extends React.Component {
 
   /**
    * 删除token

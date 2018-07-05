@@ -14,7 +14,7 @@ const tabs2 = [
  */
 @inject('miningStore', 'userStore', 'keyPair')
 @observer
-class Comp extends React.PureComponent {
+class Comp extends React.Component {
   componentDidMount() {
     this.makeRequest();
   }

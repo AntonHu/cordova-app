@@ -106,7 +106,7 @@ const avatarModalData = [
  */
 @inject('keyPair') // 如果注入多个store，用数组表示
 @observer
-class Comp extends React.PureComponent {
+class Comp extends React.Component {
   state = {
     username: '',
     idPositive: '',
