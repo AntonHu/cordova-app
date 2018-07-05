@@ -1,6 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
-import { getSessionStorage } from './storage';
+import { getLocalStorage } from './storage';
 
 const TIME_OUT = 6000;
 /*
@@ -54,7 +54,7 @@ const errHandler = err => {
   get请求，参数：params
 */
 export const get = (url, params) => {
-  const token = getSessionStorage('token');
+  const token = getLocalStorage('token');
   let urlStr = url;
   if (params && Object.keys(params).length > 0) {
     urlStr += `?access_token=${token}&`;
@@ -69,7 +69,7 @@ export const get = (url, params) => {
   post请求
 */
 export const post = (url, params) => {
-  const token = getSessionStorage('token');
+  const token = getLocalStorage('token');
   const urlStr = `${url}?access_token=${token}`;
   return postInstance.post(urlStr, qs.stringify(params)).catch(errHandler);
 };

@@ -7,7 +7,7 @@ import { Icon, Popover } from 'antd-mobile';
 import F2 from '@antv/f2';
 import './style.less';
 
-import { getSessionStorage } from '../../../utils/storage';
+import { getLocalStorage } from '../../../utils/storage';
 import { POWER_TYPE } from '../../../utils/variable';
 
 const Item = Popover.Item;
@@ -33,15 +33,15 @@ class Comp extends React.PureComponent {
   };
   componentDidMount() {
     const equipmentListObj =
-      JSON.parse(getSessionStorage('equipmentListObj')) || {}; // 获取本地储存的设备列表
+      JSON.parse(getLocalStorage('equipmentListObj')) || {}; // 获取本地储存的设备列表
     const dayStationData =
-      JSON.parse(getSessionStorage('dayStationData')) || []; // 获取本地储存每天发电数据
+      JSON.parse(getLocalStorage('dayStationData')) || []; // 获取本地储存每天发电数据
     const monthStationData =
-      JSON.parse(getSessionStorage('monthStationData')) || []; // 获取本地储存每月发电数据
+      JSON.parse(getLocalStorage('monthStationData')) || []; // 获取本地储存每月发电数据
     const yearStationData =
-      JSON.parse(getSessionStorage('yearStationData')) || []; // 获取本地储存每年发电数据
+      JSON.parse(getLocalStorage('yearStationData')) || []; // 获取本地储存每年发电数据
     const allStationData =
-      JSON.parse(getSessionStorage('allStationData')) || []; // 获取本地储存所有发电数据
+      JSON.parse(getLocalStorage('allStationData')) || []; // 获取本地储存所有发电数据
 
     this.setState({
       equipmentListObj,
@@ -136,10 +136,10 @@ class Comp extends React.PureComponent {
   // 添加逆变器
   addInverter = () => {};
   render() {
-    const dayStationElectric = getSessionStorage('dayStationElectric') || []; // 获取本地储存今日发电量
-    const currentStationPower = getSessionStorage('currentStationPower') || []; // 获取本地储存当前电站功率
+    const dayStationElectric = getLocalStorage('dayStationElectric') || []; // 获取本地储存今日发电量
+    const currentStationPower = getLocalStorage('currentStationPower') || []; // 获取本地储存当前电站功率
     const totalStationElectric =
-      getSessionStorage('totalStationElectric') || []; // 获取本地储存电站总发电量
+      getLocalStorage('totalStationElectric') || []; // 获取本地储存电站总发电量
 
     const { equipmentListObj } = this.state;
     const equipmentNameList =
