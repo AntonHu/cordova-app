@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
-import { Title, PageWithHeader } from '../../../components';
+import { Title, PageWithHeader, Picture } from '../../../components';
 import { Icon, Tabs, WhiteSpace } from 'antd-mobile';
 import './style.less';
 
@@ -12,7 +12,7 @@ const tabs2 = [
 /**
  * 挖宝
  */
-@inject('miningStore')
+@inject('miningStore', 'userStore')
 @observer
 class Comp extends React.PureComponent {
   componentDidMount() {
@@ -36,16 +36,14 @@ class Comp extends React.PureComponent {
       nearbyRank,
       balance
     } = this.props.miningStore;
+    const userInfo = this.props.userStore.userInfo;
+    const { avatar } = userInfo;
     return (
       <div className={'page-mining'}>
         <PageWithHeader leftComponent={null} title={'挖宝池'}>
           <div className="sun-info">
             <div className="my-sun">
-              <img
-                className="my-pic"
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR72yqdE9opUl3aiimoZ-MilU5QdxFkK8AaAN6zUY1yrC2SuDWq"
-                alt=""
-              />
+              <Picture src={avatar} size={120}/>
               <div>
                 <div className="sun-type">我的太阳积分</div>
                 <div className="rank">{balance.toFixed(2)}</div>
