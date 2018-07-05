@@ -32,3 +32,5 @@ plugins/*
 local.properties
 /platforms/android/app/build
 /platforms/android/CordovaLib/build
+/platforms/android/release-signing.properties
+/platforms/android/assets/cdvasset.manifest
