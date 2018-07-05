@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		0067BC113B604B02AAC8C48B /* JPushPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E9301C973489B98A95E9F /* JPushPlugin.m */; };
 		01674A0019BE4A9E846C051F /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0423F3C52CD7477BB76C9023 /* CoreFoundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -93,6 +92,9 @@
 		F78A9CC8878342D5AD80CD2F /* hmac.c in Sources */ = {isa = PBXBuildFile; fileRef = 804452A29B3D4C7B87BB4712 /* hmac.c */; };
 		FD319086FF7041809B5F1ECD /* CDVDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C0B84689484353AE122766 /* CDVDevice.m */; };
 		FDE3ECA62884433AB94F8D9F /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 6B0497786B0A4A139E24EACA /* mztools.c */; };
+		FBBA86F345964334A544DC65 /* CDVBarcodeScanner.mm in Resources */ = {isa = PBXBuildFile; fileRef = 69B7D1499127404D9A207682 /* CDVBarcodeScanner.mm */; };
+		F4C08186DD014B16AC0003D0 /* scannerOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23466087D86640F3928AD68B /* scannerOverlay.xib */; };
+		80EFA9B3B42341A599447102 /* CDVBarcodeScanner.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E1EA6CCFFA9E4031A101CD57 /* CDVBarcodeScanner.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -292,6 +294,9 @@
 		FDA400AF73D04EBCA02CC71A /* SystemConfiguration.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		FE7DC540ACE243228F8F82A6 /* CDVNotification.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVNotification.m; path = "cordova-plugin-dialogs/CDVNotification.m"; sourceTree = "<group>"; };
 		FEF69D446D0B43C1936C14EA /* aescrypt.c */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = aescrypt.c; path = "cordova-plugin-zip/Plugins/aes/aescrypt.c"; sourceTree = "<group>"; };
+		69B7D1499127404D9A207682 /* CDVBarcodeScanner.mm */ = {isa = PBXFileReference; name = "CDVBarcodeScanner.mm"; path = "phonegap-plugin-barcodescanner/CDVBarcodeScanner.mm"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		23466087D86640F3928AD68B /* scannerOverlay.xib */ = {isa = PBXFileReference; name = "scannerOverlay.xib"; path = "scannerOverlay.xib"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = file.xib; explicitFileType = undefined; includeInIndex = 0; };
+		E1EA6CCFFA9E4031A101CD57 /* CDVBarcodeScanner.bundle */ = {isa = PBXFileReference; name = "CDVBarcodeScanner.bundle"; path = "CDVBarcodeScanner.bundle"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.plug-in; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -383,6 +388,8 @@
 				6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */,
 				452EADEE182E4E0A979FFE32 /* CDVNotification.bundle */,
 				CEF5D9C050B5405CA1BDC143 /* JPushConfig.plist */,
+				23466087D86640F3928AD68B /* scannerOverlay.xib */,
+				E1EA6CCFFA9E4031A101CD57 /* CDVBarcodeScanner.bundle */,
 			);
 			name = Resources;
 			path = blockChainMobile/Resources;
@@ -567,6 +574,7 @@
 				0399FF5ABFE74676AA099D82 /* CDVExif.h */,
 				DC60CC74EFA24260A684B4E9 /* CDVLocation.m */,
 				171F2F81BA2142D9ADC4930D /* CDVLocation.h */,
+				69B7D1499127404D9A207682 /* CDVBarcodeScanner.mm */,
 			);
 			name = Plugins;
 			path = blockChainMobile/Plugins;
@@ -665,6 +673,8 @@
 				6AFF5BF91D6E424B00AB3073 /* CDVLaunchScreen.storyboard in Resources */,
 				96611306F34443EDB49AC0AA /* CDVNotification.bundle in Resources */,
 				C97AF3A043B641109BCE74D4 /* JPushConfig.plist in Resources */,
+				F4C08186DD014B16AC0003D0 /* scannerOverlay.xib in Resources */,
+				80EFA9B3B42341A599447102 /* CDVBarcodeScanner.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -754,6 +764,7 @@
 				527FCAD47EDD4198BC46E884 /* CDVCamera.m in Sources */,
 				7D214B56F0EA409DB9B42809 /* CDVJpegHeaderWriter.m in Sources */,
 				39616CD872AF4AE88A0E0D83 /* CDVLocation.m in Sources */,
+				FBBA86F345964334A544DC65 /* CDVBarcodeScanner.mm in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

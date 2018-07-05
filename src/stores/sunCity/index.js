@@ -6,7 +6,8 @@ import {
   fetchPowerstationData,
   fetchEquipmentList,
   fetchEquipmentInfo,
-  fetchEquipmentPower
+  fetchEquipmentPower,
+  fetchAddInverter
 } from './request';
 
 class SunCityStore {
@@ -126,6 +127,19 @@ class SunCityStore {
           this.equipmentPower = result.data;
         }
       });
+    } catch (err) {
+      console.log(err);
+    }
+    return result;
+  };
+
+  // 添加逆变器
+  @action
+  fetchSCAddInverter = async params => {
+    let result = {};
+    try {
+      result = await fetchAddInverter(params);
+      runInAction(() => {});
     } catch (err) {
       console.log(err);
     }

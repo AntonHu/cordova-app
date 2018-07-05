@@ -4,13 +4,10 @@ import { PageWithHeader } from '../../../components';
 // import { List, InputItem, Flex, Button, WhiteSpace } from 'antd-mobile';
 import F2 from '@antv/f2';
 import { px } from '../../../utils/getDevice';
-import {
-  POWER_TYPE,
-  TEST_PUBLIC_KEY,
-  TEST_PRIVATE_KEY
-} from '../../../utils/variable';
+import { POWER_TYPE } from '../../../utils/variable';
 import { JSRsasign } from '../../../jssign';
 import SM2Cipher from '../../../jssign/SM2Cipher';
+import { getLocalStorage } from '../../../utils/storage';
 import './style.less';
 
 import { toJS } from 'mobx';
@@ -19,7 +16,7 @@ const BigInteger = JSRsasign.BigInteger;
 /**
  * 电站设备信息
  */
-@inject('sunCityStore') // 如果注入多个store，用数组表示
+@inject('sunCityStore', 'keyPair') // 如果注入多个store，用数组表示
 @observer
 class Comp extends React.Component {
   state = {
@@ -31,8 +28,7 @@ class Comp extends React.Component {
     },
     sourceData: '', // 数据来源
     deviceNo: '', //设备编码
-    count: 0, // 日电量
-    maxValue: 0 // 总电量
+    count: 0 // 日电量
   };
   async componentDidMount() {
     const deviceNo = this.props.match.params.id;
@@ -52,19 +48,10 @@ class Comp extends React.Component {
       sortData[sortData.length - 1].power;
     // 日电量
     let count = 0;
-    // 总电量
-    let maxValue = 0;
-    sortData.forEach(item => {
-      count += item.number;
-      if (item.maxValue > maxValue) {
-        maxValue = item.maxValue;
-      }
-    });
     this.setState({
       deviceNo,
       sourceData,
-      count,
-      maxValue
+      count
     });
     this.pieBarChart = this.renderPieBar(currentPower);
   }
@@ -80,12 +67,15 @@ class Comp extends React.Component {
 
   // 按照类型请求电量数据
   async getPowerData(sourceData, deviceNo, dateType) {
-    await this.props.sunCityStore.fetchSCEquipmentPower({
-      sourceData,
-      deviceNo,
-      userPubKey: TEST_PUBLIC_KEY,
-      dateType
-    });
+    if (this.props.keyPair.hasKey) {
+      await this.props.sunCityStore.fetchSCEquipmentPower({
+        sourceData,
+        deviceNo,
+        userPubKey: this.props.keyPair.publicKey,
+        dateType
+      });
+    }
+
     const receiveData = toJS(this.props.sunCityStore.equipmentPower);
     const sortData = (receiveData && this.handleData(receiveData)) || [];
     return sortData;
@@ -109,7 +99,6 @@ class Comp extends React.Component {
         data.push({
           time: item,
           number: value,
-          maxValue: powerInfo.maxEnergy && +powerInfo.maxEnergy,
           power: powerInfo.power || ''
         });
       }
@@ -126,7 +115,10 @@ class Comp extends React.Component {
 
   // 数据解密
   doDecrypt = data => {
-    const privBI = new BigInteger(TEST_PRIVATE_KEY, 16);
+    let privBI = '';
+    if (this.props.keyPair.hasKey) {
+      privBI = new BigInteger(this.props.keyPair.privateKey, 16);
+    }
     let cipherMode = '1'; // C1C3C2
     const cipher = new SM2Cipher(cipherMode);
 
@@ -144,9 +136,9 @@ class Comp extends React.Component {
 
     const chart = new F2.Chart({
       id: 'pie-bar-chart',
-      width: px(360),
-      height: px(360),
-      padding: 10,
+      width: px(320),
+      height: px(320),
+      padding: 5,
       pixelRatio: window.devicePixelRatio
     });
     const data = [
@@ -276,6 +268,11 @@ class Comp extends React.Component {
     }
   }
   render() {
+    const totalStationElectric =
+      Number(getLocalStorage('totalStationElectric')) ||
+      Number(getLocalStorage('monthTotalStationElectric')) ||
+      Number(getLocalStorage('yearTotalStationElectric')) ||
+      Number(getLocalStorage('allTotalStationElectric')); // 获取本地储存电站总发电量
     return (
       <div className={'page-equipment-info'}>
         <PageWithHeader
@@ -295,9 +292,7 @@ class Comp extends React.Component {
             </div>
             <canvas id="pie-bar-chart" />
             <div className="survey-item">
-              <div className="survey-item-number">{`${
-                this.state.maxValue
-              }kw/h`}</div>
+              <div className="survey-item-number">{`${totalStationElectric}kw/h`}</div>
               <div className="survey-item-type">总电量</div>
             </div>
           </div>

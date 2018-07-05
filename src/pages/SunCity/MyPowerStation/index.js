@@ -3,19 +3,19 @@ import { withRouter } from 'react-router-dom';
 import { toJS } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { BlueBox, Title, PageWithHeader } from '../../../components';
-import { Icon, Popover } from 'antd-mobile';
+import { Icon, Popover, Toast } from 'antd-mobile';
 import F2 from '@antv/f2';
 import './style.less';
 
 import { getLocalStorage } from '../../../utils/storage';
-import { POWER_TYPE } from '../../../utils/variable';
+import { POWER_TYPE, TEST_PUBLIC_KEY } from '../../../utils/variable';
 
 const Item = Popover.Item;
 
 /**
  * 我的电站信息
  */
-@inject('sunCityStore') // 如果注入多个store，用数组表示
+@inject('sunCityStore', 'keyPair') // 如果注入多个store，用数组表示
 @observer
 class Comp extends React.Component {
   state = {
@@ -25,6 +25,7 @@ class Comp extends React.Component {
       year: false,
       all: false
     },
+    barcodeVisible: false,
     equipmentListObj: {},
     dayStationData: [],
     monthStationData: [],
@@ -34,14 +35,12 @@ class Comp extends React.Component {
   componentDidMount() {
     const equipmentListObj =
       JSON.parse(getLocalStorage('equipmentListObj')) || {}; // 获取本地储存的设备列表
-    const dayStationData =
-      JSON.parse(getLocalStorage('dayStationData')) || []; // 获取本地储存每天发电数据
+    const dayStationData = JSON.parse(getLocalStorage('dayStationData')) || []; // 获取本地储存每天发电数据
     const monthStationData =
       JSON.parse(getLocalStorage('monthStationData')) || []; // 获取本地储存每月发电数据
     const yearStationData =
       JSON.parse(getLocalStorage('yearStationData')) || []; // 获取本地储存每年发电数据
-    const allStationData =
-      JSON.parse(getLocalStorage('allStationData')) || []; // 获取本地储存所有发电数据
+    const allStationData = JSON.parse(getLocalStorage('allStationData')) || []; // 获取本地储存所有发电数据
 
     this.setState({
       equipmentListObj,
@@ -134,13 +133,65 @@ class Comp extends React.Component {
   };
 
   // 添加逆变器
-  addInverter = () => {};
-  render() {
-    const dayStationElectric = getLocalStorage('dayStationElectric') || []; // 获取本地储存今日发电量
-    const currentStationPower = getLocalStorage('currentStationPower') || []; // 获取本地储存当前电站功率
-    const totalStationElectric =
-      getLocalStorage('totalStationElectric') || []; // 获取本地储存电站总发电量
+  addInverter = () => {
+    if (window.cordova) {
+      window.cordova.plugins.barcodeScanner.scan(
+        result => {
+          // 暂时保存
+          if (this.props.keyPair.hasKey) {
+            // this.props.sunCityStore
+            //   .fetchSCAddInverter({
+            //     userPubKey: this.props.keyPair.publicKey,
+            //     sourceData: sourceData,
+            //     deviceNo: deviceNo
+            //   })
+            //   .then(result => {
+            //     if (result.code === 200) {
+            //       Toast.show('添加逆变器成功');
+            //     }
+            //   });
+          }
 
+          // 测试代码，接口和参数还没定
+          alert(
+            '收到一个二维码\n' +
+              '扫码文字结果: ' +
+              result.text +
+              '\n' +
+              '格式: ' +
+              result.format +
+              '\n' +
+              '是否在扫码页面取消扫码: ' +
+              result.cancelled
+          );
+        },
+        error => {
+          //扫码失败
+          Toast.show(`扫码失败${error}`);
+        },
+        {
+          preferFrontCamera: false, // iOS and Android 设置前置摄像头
+          showFlipCameraButton: true, // iOS and Android 显示旋转摄像头按钮
+          showTorchButton: true, // iOS and Android 显示打开闪光灯按钮
+          torchOn: false, // Android, launch with the torch switched on (if available)打开手电筒
+          prompt: '在扫描区域内放置二维码', // Android提示语
+          resultDisplayDuration: 500, // Android, display scanned text for X ms设置扫码时间的参数default 1500.
+          formats: 'CODE_128', // 二维码格式可设置多种类型,QR_CODE：二维码，CODE_128：条形码
+          orientation: 'portrait', // Android only (portrait|landscape),default unset so it rotates with the device在安卓上 landscape 是横屏状态
+          disableAnimations: true, // iOS     是否禁止动画
+          disableSuccessBeep: false // iOS      禁止成功后提示声音 “滴”
+        }
+      );
+    }
+  };
+  render() {
+    const dayStationElectric = getLocalStorage('dayStationElectric') || 0; // 获取本地储存今日发电量
+    const currentStationPower = getLocalStorage('currentStationPower') || 0; // 获取本地储存当前电站功率
+    const totalStationElectric =
+      Number(getLocalStorage('totalStationElectric')) ||
+      Number(getLocalStorage('monthTotalStationElectric')) ||
+      Number(getLocalStorage('yearTotalStationElectric')) ||
+      Number(getLocalStorage('allTotalStationElectric')); // 获取本地储存电站总发电量
     const { equipmentListObj } = this.state;
     const equipmentNameList =
       (equipmentListObj && Object.keys(equipmentListObj)) || [];
@@ -151,7 +202,7 @@ class Comp extends React.Component {
           rightComponent={
             <Popover
               overlayClassName="fortest"
-              visible={this.state.visible}
+              visible={this.state.barcodeVisible}
               overlay={[
                 <Item key="1">
                   <img

@@ -55,6 +55,7 @@
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.3",
     "object-assign": "4.1.1",
+    "phonegap-plugin-barcodescanner": "^8.0.0",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.8",
     "promise": "8.0.1",
@@ -141,7 +142,10 @@
         "APP_KEY": "fd96956cb315ba658d256156"
       },
       "cordova-plugin-camera": {},
-      "cordova-plugin-geolocation": {}
+      "cordova-plugin-geolocation": {},
+      "phonegap-plugin-barcodescanner": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      }
     },
     "platforms": [
       "ios",

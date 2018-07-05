@@ -91,3 +91,16 @@ export const fetchEquipmentPower = async params => {
   }
   return response.data || [];
 };
+
+/**
+ * 添加逆变器
+ */
+export const fetchAddInverter = async params => {
+  let response = {};
+  try {
+    response = await get(`${backendServer}/inverterBarCode`, params);
+  } catch (err) {
+    console.log(err);
+  }
+  return response.data || [];
+};
