@@ -360,19 +360,19 @@ module.exports = [
     ]
   },
   {
-    "id": "jpush-phonegap-plugin.JPushPlugin",
-    "file": "plugins/jpush-phonegap-plugin/www/JPushPlugin.js",
-    "pluginId": "jpush-phonegap-plugin",
-    "clobbers": [
-      "JPush"
-    ]
-  },
-  {
     "id": "phonegap-plugin-barcodescanner.BarcodeScanner",
     "file": "plugins/phonegap-plugin-barcodescanner/www/barcodescanner.js",
     "pluginId": "phonegap-plugin-barcodescanner",
     "clobbers": [
       "cordova.plugins.barcodeScanner"
+    ]
+  },
+  {
+    "id": "jpush-phonegap-plugin.JPushPlugin",
+    "file": "plugins/jpush-phonegap-plugin/www/JPushPlugin.js",
+    "pluginId": "jpush-phonegap-plugin",
+    "clobbers": [
+      "JPush"
     ]
   }
 ];
@@ -391,8 +391,8 @@ module.exports.metadata =
   "cordova-plugin-janalytics": "1.1.3",
   "cordova-plugin-whitelist": "1.3.3",
   "cordova-plugin-zip": "3.1.0",
-  "jpush-phonegap-plugin": "3.4.1",
-  "phonegap-plugin-barcodescanner": "8.0.0"
+  "phonegap-plugin-barcodescanner": "8.0.0",
+  "jpush-phonegap-plugin": "3.3.2"
 };
 // BOTTOM OF METADATA
 });
