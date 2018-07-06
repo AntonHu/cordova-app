@@ -15,7 +15,7 @@ if (isIPhone) {
 }
 
 const alert = Modal.alert;
-const PICTURE_SIZE = 160;
+const PICTURE_SIZE = 320;
 
 const showError = (text) => {
   alert('错误', text, [
@@ -50,7 +50,8 @@ function capturePhoto(stateName) {
   // Take picture using device camera and retrieve image as base64-encoded string
   navigator.camera.getPicture(setStateOnPhotoData(_setState), onFail, {
     quality: 1,
-    destinationType: destinationType.FILE_URI
+    destinationType: destinationType.FILE_URI,
+    correctOrientation: true
   });
 };
 
@@ -249,7 +250,7 @@ class Comp extends React.Component {
                     circle={false}
                     src={idPositive}
                     size={PICTURE_SIZE}
-                    emptyElement={(props) => <VerifyIdEmptyElement size={PICTURE_SIZE} text={'身份证正面上传'}/>}
+                    emptyElement={(props) => <VerifyIdEmptyElement style={{...props.style, display: 'flex'}} text={'身份证正面上传'}/>}
                   />
                 </div>
               </Flex.Item>
@@ -259,7 +260,7 @@ class Comp extends React.Component {
                     circle={false}
                     src={idNegative}
                     size={PICTURE_SIZE}
-                    emptyElement={(props) => <VerifyIdEmptyElement size={PICTURE_SIZE} text={'身份证背面上传'}/>}
+                    emptyElement={(props) => <VerifyIdEmptyElement style={{...props.style, display: 'flex'}} text={'身份证背面上传'}/>}
                   />
                 </div>
               </Flex.Item>
@@ -271,7 +272,7 @@ class Comp extends React.Component {
                     circle={false}
                     src={idHandheld}
                     size={PICTURE_SIZE}
-                    emptyElement={(props) => <VerifyIdEmptyElement size={PICTURE_SIZE} text={'本人手持身份证'}/>}
+                    emptyElement={(props) => <VerifyIdEmptyElement style={{...props.style, display: 'flex'}} text={'本人手持身份证'}/>}
                   />
                 </div>
               </Flex.Item>

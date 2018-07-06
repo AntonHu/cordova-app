@@ -104,7 +104,8 @@ function capturePhoto() {
   // Take picture using device camera and retrieve image as base64-encoded string
   navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
     quality: 25,
-    destinationType: destinationType.FILE_URI
+    destinationType: destinationType.FILE_URI,
+    correctOrientation: true
   });
 };
 

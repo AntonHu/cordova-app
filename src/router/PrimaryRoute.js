@@ -37,7 +37,8 @@ function onSuccess(publicKey) {
         Toast.show('上传坐标成功');
       })
       .catch(err => {
-        console.log(err.response);
+        console.log('上传坐标失败');
+        console.log(JSON.stringify(err.response));
         Toast.show('上传坐标失败');
       })
   };
