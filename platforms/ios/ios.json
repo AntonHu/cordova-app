@@ -33,10 +33,6 @@
               "count": 1
             },
             {
-              "xml": "<feature name=\"JPushPlugin\"><param name=\"ios-package\" value=\"JPushPlugin\" /></feature>",
-              "count": 1
-            },
-            {
               "xml": "<feature name=\"Camera\"><param name=\"ios-package\" value=\"CDVCamera\" /></feature>",
               "count": 1
             },
@@ -50,6 +46,10 @@
             },
             {
               "xml": "<feature name=\"BarcodeScanner\"><param name=\"ios-package\" value=\"CDVBarcodeScanner\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"JPushPlugin\"><param name=\"ios-package\" value=\"JPushPlugin\" /></feature>",
               "count": 1
             }
           ],
@@ -118,10 +118,6 @@
       "APP_KEY": "fd96956cb315ba658d256156",
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
-    "jpush-phonegap-plugin": {
-      "APP_KEY": "fd96956cb315ba658d256156",
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
     "cordova-plugin-camera": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
@@ -129,6 +125,10 @@
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
     "phonegap-plugin-barcodescanner": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "jpush-phonegap-plugin": {
+      "APP_KEY": "fd96956cb315ba658d256156",
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     }
   },
@@ -440,14 +440,6 @@
       ]
     },
     {
-      "id": "jpush-phonegap-plugin.JPushPlugin",
-      "file": "plugins/jpush-phonegap-plugin/www/JPushPlugin.js",
-      "pluginId": "jpush-phonegap-plugin",
-      "clobbers": [
-        "JPush"
-      ]
-    },
-    {
       "id": "cordova-plugin-camera.Camera",
       "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
       "pluginId": "cordova-plugin-camera",
@@ -518,6 +510,14 @@
       "clobbers": [
         "cordova.plugins.barcodeScanner"
       ]
+    },
+    {
+      "id": "jpush-phonegap-plugin.JPushPlugin",
+      "file": "plugins/jpush-phonegap-plugin/www/JPushPlugin.js",
+      "pluginId": "jpush-phonegap-plugin",
+      "clobbers": [
+        "JPush"
+      ]
     }
   ],
   "plugin_metadata": {
@@ -532,9 +532,9 @@
     "cordova-plugin-zip": "3.1.0",
     "cordova-plugin-jcore": "1.1.12",
     "cordova-plugin-janalytics": "1.1.3",
-    "jpush-phonegap-plugin": "3.3.2",
     "cordova-plugin-camera": "4.0.3",
     "cordova-plugin-geolocation": "4.0.1",
-    "phonegap-plugin-barcodescanner": "8.0.0"
+    "phonegap-plugin-barcodescanner": "8.0.0",
+    "jpush-phonegap-plugin": "3.3.2"
   }
 }

@@ -16,11 +16,14 @@
       .apply-item {
         padding: 10px;
         width: 33.3%;
-
-        .apply-pic {
-          height: 50px;
-          border-radius: 25px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .picture {
           margin-bottom: 10px;
+        }
+        .picture-empty-element {
+          background: @shadow-color;
         }
       }
     }
@@ -35,12 +38,10 @@
         padding: 5px;
         width: 33.3%;
 
-        .recommend-pic {
-          margin-bottom: 10px;
-          border-radius: 5px;
-          height: 100px;
-          background: #ccc;
+        .picture-empty-element {
+          background: @shadow-color;
         }
+
         .recommend-price {
           text-align: left;
           margin-left: 5px;
@@ -51,6 +52,9 @@
     }
   }
   .admission {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     height: 150px;
     background: #ccc;
   }

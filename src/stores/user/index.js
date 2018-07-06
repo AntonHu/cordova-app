@@ -1,5 +1,5 @@
 import { observable, action, runInAction, computed, toJS } from 'mobx';
-import { getOwnerInfo, getMessages, getIsInChain } from './request';
+import { getOwnerInfo, getMessages, getIsInChain, getIsKycInChain, putUserIntoChain } from './request';
 
 class UserStore {
   //用户信息
@@ -7,7 +7,7 @@ class UserStore {
   //消息列表
   @observable msgList = [];
   //用户是否身份认证了
-  @observable isInChain = false;
+  @observable isKycInChain = false;
 
   /**
    * 获取用户信息
@@ -57,12 +57,12 @@ class UserStore {
    * @returns {Promise.<void>}
    */
   @action
-  fetchIsInChain = async ({publicKey}) => {
+  fetchIsKycInChain = async ({publicKey}) => {
     try {
-      const res = await getIsInChain({publicKey});
+      const res = await getIsKycInChain({publicKey});
       runInAction(() => {
         if (res.data) {
-          this.isInChain = res.data.success || false;
+          this.isKycInChain = res.data.success || false;
         }
       });
     } catch (err) {

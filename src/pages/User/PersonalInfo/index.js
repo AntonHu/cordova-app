@@ -104,7 +104,8 @@ function capturePhoto() {
   // Take picture using device camera and retrieve image as base64-encoded string
   navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
     quality: 25,
-    destinationType: destinationType.FILE_URI
+    destinationType: destinationType.FILE_URI,
+    correctOrientation: true
   });
 };
 
@@ -162,7 +163,7 @@ class Comp extends React.Component {
   makeRequest = (props) => {
     const { keyPair } = props;
     if (keyPair.hasKey) {
-      this.props.userStore.fetchIsInChain({publicKey: keyPair.publicKey});
+      this.props.userStore.fetchIsKycInChain({publicKey: keyPair.publicKey});
     }
   };
   // 头像更改
@@ -186,22 +187,22 @@ class Comp extends React.Component {
   };
 
   render() {
-    const {userInfo, isInChain} = this.props.userStore;
+    const {userInfo, isKycInChain} = this.props.userStore;
     const {avatar, nickName} = userInfo;
     return (
       <div className={'page-personal-info'}>
         <PageWithHeader title={'个人信息'}>
-          <BlueBox type="pic" picType={isInChain ? 'blue' : 'grey'}>
+          <BlueBox type="pic" picType={isKycInChain ? 'blue' : 'grey'}>
             <div className="personal-info">
               <Picture size={120} src={avatar}/>
               <div className="personal-prompt">
-                {isInChain ? '您已实名认证成功!' : '未实名认证'}
+                {isKycInChain ? '您已实名认证成功!' : '未实名认证'}
               </div>
             </div>
             <div className="personal-name">{nickName || '未知'}</div>
             {/*<div className="personal-id">31232245678</div>*/}
             {
-              !isInChain && <div
+              !isKycInChain && <div
                 className="go-authentication"
                 onClick={() => this.props.history.push(`/user/verifyID/${1}`)}
               >

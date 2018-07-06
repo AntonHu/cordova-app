@@ -1,14 +1,13 @@
 import React from 'react';
 import { BlueBox, GreenButton, PageWithHeader } from '../../../components';
-import { List, WhiteSpace, Modal, Button, InputItem } from 'antd-mobile';
+import { List, WhiteSpace, Modal, Button, InputItem, ActivityIndicator } from 'antd-mobile';
+import {getIsInChain, putUserIntoChain} from '../../../stores/user/request';
 import './style.less';
 import {observer, inject} from 'mobx-react';
 
 const alert = Modal.alert;
 
 const Item = List.Item;
-// const LocalFileSystem = window.LocalFileSystem;
-// const readFile = window.readFile;
 
 const ListData = [
   {
@@ -59,10 +58,16 @@ class Comp extends React.Component {
     super(props);
     this.state = {
       privateKey: '',
-      modalVisible: ''
+      modalVisible: '',
+      showLoading: false,
+      loadingText: 'Loading...'
     };
 
     this.clickAble = !props.keyPair.hasKey;
+  }
+
+  componentDidMount() {
+    // this.checkAfterGetPub(this.props.keyPair.publicKey)
   }
 
   /**
@@ -73,7 +78,8 @@ class Comp extends React.Component {
       return;
     }
     this.clickAble = false;
-    this.props.keyPair.generageNewKeyPair();
+    const keyPair = this.props.keyPair.generageNewKeyPair();
+    this.checkAfterGetPub(keyPair.publicKey);
     this.hideModal();
   };
 
@@ -89,8 +95,55 @@ class Comp extends React.Component {
       return;
     }
     this.clickAble = false;
-    this.props.keyPair.getPubFromPriv(this.state.privateKey);
+    const publicKey = this.props.keyPair.getPubFromPriv(this.state.privateKey);
+    this.checkAfterGetPub(publicKey);
     this.hideModal();
+  };
+
+  /**
+   * 检查publicKey是否上链
+   * 如果没上，那么弄上去
+   * @param publicKey
+   * @returns {Promise.<void>}
+   */
+  checkAfterGetPub = async (publicKey) => {
+    this.setState({
+      showLoading: true,
+      loadingText: '正在查询是否上链...'
+    });
+    // 发请求
+    const isInChainRes = await getIsInChain({publicKey});
+    // 用户没有上链
+    if (isInChainRes.data && !isInChainRes.data.success) {
+      this.setState({
+        loadingText: '正在连接上链...'
+      });
+      putUserIntoChain({publicKey})
+        .then(res => {
+          if (res.data && res.data.code === 200) {
+            alert('成功', '您已成功连接上链', [{text: '好的'}])
+          } else {
+            alert('失败', '连接上链失败', [{text: '好的'}]);
+          }
+          this.resetLoading();
+        })
+        .catch(err => {
+          alert('失败', '连接上链失败', [{text: '好的'}]);
+          this.resetLoading();
+        })
+    } else {
+      this.resetLoading();
+    }
+  };
+
+  /**
+   * 重置loading状态
+   */
+  resetLoading = () => {
+    this.setState({
+      showLoading: false,
+      loadingText: ''
+    })
   };
 
   /**
@@ -185,6 +238,11 @@ class Comp extends React.Component {
           <Button onClick={this.onImport} disabled={!this.clickAble}>导入</Button>
 
         </Modal>
+        <ActivityIndicator
+          toast
+          text={this.state.loadingText}
+          animating={this.state.showLoading}
+        />
       </div>
     );
   }

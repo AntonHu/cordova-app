@@ -8,7 +8,8 @@ import './style.less';
 class Comp extends React.PureComponent {
   static propTypes = {
     size: PropTypes.number,
-    text: PropTypes.string
+    text: PropTypes.string,
+    style: PropTypes.object
   };
 
   static defaultProps = {
@@ -17,9 +18,9 @@ class Comp extends React.PureComponent {
   };
 
   render() {
-    const {text, size} = this.props;
+    const {text, size, style} = this.props;
     return (
-      <div className={'verify-id-empty-element'} style={{width: `${size}px`, height: `${size}px`}}>
+      <div className={'verify-id-empty-element'} style={style}>
         <i className="iconfont">&#xe872;</i>
         <div className={'text'}>{text}</div>
       </div>

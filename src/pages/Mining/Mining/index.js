@@ -76,7 +76,7 @@ class Comp extends React.Component {
           </div>
           <div className="expect">
             <div className="expect-item">
-              <i className="iconfont icon-shangcheng11" />
+              <i className="iconfont">&#xe67b;</i>
               <div className="expect-title">
                 <div>挖宝商城</div>
                 <div>敬请期待</div>
@@ -84,9 +84,9 @@ class Comp extends React.Component {
               <Icon type="right" />
             </div>
             <div className="expect-item">
-              <i className="iconfont icon-ai250" />
+              <i className="iconfont">&#xe6ee;</i>
               <div className="expect-title">
-                <div>挖宝商城</div>
+                <div>提升算力</div>
                 <div>敬请期待</div>
               </div>
               <Icon type="right" />

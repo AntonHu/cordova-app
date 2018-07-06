@@ -39,6 +39,21 @@ class Comp extends React.PureComponent {
     alt: '无图'
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      src: props.src
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.src !== this.props.src) {
+      this.setState({
+        src: nextProps.src
+      })
+    }
+  }
+
   calculateStyle = () => {
     const { circle, size} = this.props;
     const style = {};
@@ -63,19 +78,28 @@ class Comp extends React.PureComponent {
     )
   };
 
+  /**
+   * 图片错误的时候，设置src为空，这样会显示emptyElement
+   */
+  onError = () => {
+    this.setState({
+      src: ''
+    })
+  };
+
   renderImg = () => {
-    const { src, alt} = this.props;
+    const { alt } = this.props;
     const style = this.calculateStyle();
 
-    return <img src={src} alt={alt} className={'picture'} style={style}>
+    return <img src={this.state.src} alt={alt} className={'picture'} style={style} onError={this.onError}>
       {this.props.children}
     </img>
   };
 
   render() {
-    const { src, showEmptyElement } = this.props;
+    const { showEmptyElement } = this.props;
 
-    if (src === '' && showEmptyElement) {
+    if (this.state.src === '' && showEmptyElement) {
       return this.renderEmptyElement();
     }
     return this.renderImg();

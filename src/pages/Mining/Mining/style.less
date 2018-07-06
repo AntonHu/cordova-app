@@ -19,10 +19,12 @@
         border-radius: 40px;
       }
       .sun-type {
-        color: @light-text-color;
+        color: @white-text-color;
+        font-size: @h5;
+        font-weight: 100;
       }
       .rank {
-        font-size: 24px;
+        font-size: 50 * @px;
         margin-top: 5px;
       }
     }
@@ -35,7 +37,13 @@
       color: @white-text-color;
       .profit-title {
         margin-bottom: 5px;
-        color: @light-text-color;
+        color: @white-text-color;
+        font-weight: 100;
+        font-size: @h5;
+
+      }
+      .profit-number {
+        font-size: @h3;
       }
     }
   }
@@ -54,17 +62,18 @@
       background: @white-text-color;
 
       .iconfont {
-        font-size: 28px;
+        font-size: 40px;
         color: @main-color;
       }
       .expect-title {
         div {
           &:nth-child(1) {
-            font-weight: bold;
+            //font-weight: bold;
           }
           &:nth-child(2) {
             color: @light-text-color;
             margin-top: 3px;
+            font-size: @h5;
           }
         }
       }

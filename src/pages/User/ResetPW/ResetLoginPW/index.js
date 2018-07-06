@@ -33,6 +33,10 @@ class Comp extends React.PureComponent {
       showError('请输入新密码！');
       return false;
     }
+    if (oldPassword === newPassword) {
+      showError('新旧密码不能相同');
+      return false;
+    }
     if (newPassword !== confirmNewPassword) {
       showError('两次新密码不一致，请重新输入！');
       return false;

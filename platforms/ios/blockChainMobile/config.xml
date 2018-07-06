@@ -39,9 +39,6 @@
     <feature name="JAnalyticsPlugin">
         <param name="ios-package" value="JAnalyticsPlugin" />
     </feature>
-    <feature name="JPushPlugin">
-        <param name="ios-package" value="JPushPlugin" />
-    </feature>
     <feature name="Camera">
         <param name="ios-package" value="CDVCamera" />
     </feature>
@@ -50,6 +47,9 @@
     </feature>
     <feature name="BarcodeScanner">
         <param name="ios-package" value="CDVBarcodeScanner" />
+    </feature>
+    <feature name="JPushPlugin">
+        <param name="ios-package" value="JPushPlugin" />
     </feature>
     <feature name="Zip">
         <param name="ios-package" value="ZipPlugin" />

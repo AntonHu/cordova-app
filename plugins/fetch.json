@@ -89,16 +89,6 @@
     "is_top_level": false,
     "variables": {}
   },
-  "jpush-phonegap-plugin": {
-    "source": {
-      "type": "registry",
-      "id": "jpush-phonegap-plugin@3.3.2"
-    },
-    "is_top_level": true,
-    "variables": {
-      "APP_KEY": "fd96956cb315ba658d256156"
-    }
-  },
   "cordova-plugin-camera": {
     "source": {
       "type": "registry",
@@ -122,5 +112,15 @@
     },
     "is_top_level": true,
     "variables": {}
+  },
+  "jpush-phonegap-plugin": {
+    "source": {
+      "type": "registry",
+      "id": "jpush-phonegap-plugin@3.3.2"
+    },
+    "is_top_level": true,
+    "variables": {
+      "APP_KEY": "fd96956cb315ba658d256156"
+    }
   }
 }
