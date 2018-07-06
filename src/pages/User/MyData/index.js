@@ -170,7 +170,7 @@ class Comp extends React.Component {
           <div className="tips-box">* 该账号生成过密钥，并且我已备份了密钥</div>
           <InputItem
             clear
-            placeholder="导入已有密钥"
+            placeholder="导入已有私钥"
             value={this.state.privateKey}
             onChange={(privateKey) => this.setState({privateKey})}
           />
