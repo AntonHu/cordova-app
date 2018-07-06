@@ -227,13 +227,46 @@ export const reqResetTradePassword = async (
 };
 
 /**
- * 用户是否身份认证了
+ * 查看用户是否上链(publicKey是否关联上某个用户)
  * @param publicKey
  * @returns {Promise.<*>}
  */
 export const getIsInChain = async ({publicKey}) => {
   try {
     const response = await get(`${backendServer}/user/isInChain`, {
+      publicKey
+    });
+    return response;
+  } catch (err) {
+    console.log(err);
+    return err.response;
+  }
+};
+
+/**
+ * 用户上链(把publicKey关联上某个用户)
+ * @param publicKey
+ * @returns {Promise.<*>}
+ */
+export const putUserIntoChain = async ({publicKey}) => {
+  try {
+    const response = await get(`${backendServer}/user/userIntoChain`, {
+      publicKey
+    });
+    return response;
+  } catch (err) {
+    throw err.response;
+  }
+};
+
+/**
+ * 查看kyc用户是否上链
+ * @param publicKey
+ * @returns {Promise.<*>}
+ */
+export const getIsKycInChain = async ({publicKey}) => {
+  try {
+    const response = await get(`${backendServer}/user/isKycInChain`, {
       publicKey
     });
     return response;
