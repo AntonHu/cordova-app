@@ -108,6 +108,11 @@ class Comp extends React.Component {
     })
   };
 
+  showPubKey = () => {
+    const publicKey = this.props.keyPair.publicKey;
+    alert('公钥', <div style={{wordBreak: 'break-all'}}>{publicKey}</div>, [{text: '关闭'}])
+  };
+
   // 折叠列表
   listCollapse = index => {
     ListData[index].collapse = !ListData[index].collapse;
@@ -125,7 +130,10 @@ class Comp extends React.Component {
             <div className={'h3 white-text title-of-blue'}>我的数据私钥</div>
             {
               keyPair.hasKey ?
-                <div className="private-key">{keyPair.privateKey}</div>
+                <div>
+                  <div className="private-key">{keyPair.privateKey}</div>
+                  <Button onClick={this.showPubKey} size="small" inline>显示公钥</Button>
+                </div>
                 :
                 <GreenButton onClick={this.showModal}>一键生成</GreenButton>
             }
