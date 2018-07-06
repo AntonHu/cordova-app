@@ -26,10 +26,6 @@
       "APP_KEY": "fd96956cb315ba658d256156",
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
-    "jpush-phonegap-plugin": {
-      "APP_KEY": "fd96956cb315ba658d256156",
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
     "cordova-plugin-camera": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
@@ -37,6 +33,10 @@
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
     "phonegap-plugin-barcodescanner": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "jpush-phonegap-plugin": {
+      "APP_KEY": "fd96956cb315ba658d256156",
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     }
   },
