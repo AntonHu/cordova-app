@@ -1,8 +1,10 @@
 import React from 'react';
 import { BlueBox, GreenButton, PageWithHeader } from '../../../components';
-import { List, WhiteSpace } from 'antd-mobile';
-import jsrsasign from 'jsrsasign';
+import { List, WhiteSpace, Modal, Button, InputItem } from 'antd-mobile';
 import './style.less';
+import {observer, inject} from 'mobx-react';
+
+const alert = Modal.alert;
 
 const Item = List.Item;
 // const LocalFileSystem = window.LocalFileSystem;
@@ -47,153 +49,63 @@ const ListData = [
   }
 ];
 
-const onErrorLoadFs = err => {
-  console.log(err);
-};
-
-const onErrorCreateFile = err => {
-  console.log(err);
-};
-
-//读取文件
-function readFile(fileEntry) {
-  fileEntry.file(function(file) {
-    var reader = new FileReader();
-    reader.onloadend = function(e) {
-      alert(e.target.result);
-    };
-    reader.readAsText(file);
-  }, onErrorReadFile);
-}
-
-//读取文件失败响应
-function onErrorReadFile() {
-  console.log('文件读取失败!');
-}
-
-function writeFile(fileEntry, dataObj) {
-  // Create a FileWriter object for our FileEntry (log.txt).
-  fileEntry.createWriter(function(fileWriter) {
-    fileWriter.onwriteend = function() {
-      console.log('Successful file write...');
-      // readFile(fileEntry);
-    };
-
-    fileWriter.onerror = function(e) {
-      console.log('Failed file write: ' + e.toString());
-    };
-
-    // If data object is not passed in,
-    // create a new Blob instead.
-    if (!dataObj) {
-      dataObj = new Blob(['some file data'], { type: 'text/plain' });
-    }
-
-    if (typeof dataObj === 'string') {
-      dataObj = new Blob([dataObj], { type: 'text/plain' });
-    }
-
-    fileWriter.write(dataObj);
-  });
-}
-
 /**
  * 我的数据
  */
+@inject('keyPair')
+@observer
 class Comp extends React.Component {
-  state = {
-    publicKey: '',
-    privateKey: ''
-  };
-
-  generateKeyPair = () => {
-    const keyObj = jsrsasign.KEYUTIL.generateKeypair('RSA', 1024);
-    const privateKey = jsrsasign.KEYUTIL.getPEM(keyObj.prvKeyObj, 'PKCS1PRV');
-    const publicKey = jsrsasign.KEYUTIL.getPEM(keyObj.pubKeyObj, 'PKCS8PUB');
-    console.log(privateKey);
-
-    this.setState({
-      publicKey,
-      privateKey
-    });
-
-    return {
-      publicKey,
-      privateKey
+  constructor(props) {
+    super(props);
+    this.state = {
+      privateKey: '',
+      modalVisible: ''
     };
-  };
 
-  validateBeforeGenerate = () => {
-    return true;
-  };
+    this.clickAble = !props.keyPair.hasKey;
+  }
 
-  sendPublicPEMToServer = publicPEM => {};
-
-  readPrivatePEMFromLocal = () => {
-    if (window.cordova) {
-      try {
-        window.requestFileSystem(
-          window.LocalFileSystem.PERSISTENT,
-          0,
-          function(fs) {
-            fs.root.getFile(
-              'my_private.pem',
-              { create: false, exclusive: false },
-              function(fileEntry) {
-                readFile(fileEntry);
-              }
-            );
-          },
-          onErrorReadFile
-        );
-      } catch (err) {
-        alert(err);
-      }
+  /**
+   * 生成新的公私钥
+   */
+  onGenerate = () => {
+    if (!this.clickAble) {
+      return;
     }
-  };
-
-  savePrivatePEMToLocal = privatePEM => {
-    if (window.cordova) {
-      try {
-        console.log(window.LocalFileSystem.PERSISTENT);
-
-        window.requestFileSystem(
-          window.LocalFileSystem.PERSISTENT,
-          0,
-          function(fs) {
-            console.log('file system open: ' + fs.name);
-            fs.root.getFile(
-              'my_private.pem',
-              { create: true, exclusive: false },
-              function(fileEntry) {
-                console.log('fileEntry is file?' + fileEntry.isFile.toString());
-                // fileEntry.name == 'someFile.txt'
-                // fileEntry.fullPath == '/someFile.txt'
-                writeFile(fileEntry, privatePEM);
-              },
-              onErrorCreateFile
-            );
-          },
-          onErrorLoadFs
-        );
-      } catch (err) {
-        alert(err);
-      }
-    }
+    this.clickAble = false;
+    this.props.keyPair.generageNewKeyPair();
+    this.hideModal();
   };
 
   /**
-   * 1.检查生成条件
-   * 2.生成keyPair
-   * 3.把public传到服务器
-   * 4.把private存到本地
+   * 导入已有私钥
    */
-  onPress = () => {
-    if (this.validateBeforeGenerate()) {
-      const keyPair = this.generateKeyPair();
-      this.sendPublicPEMToServer(keyPair.publicKey);
-      this.savePrivatePEMToLocal(keyPair.privateKey);
+  onImport = () => {
+    if (!this.clickAble) {
+      return;
     }
+    if (!this.state.privateKey) {
+      alert('错误', '您没有导入密钥！', [{text: '好的'}]);
+      return;
+    }
+    this.clickAble = false;
+    this.props.keyPair.getPubFromPriv(this.state.privateKey);
+    this.hideModal();
+  };
+
+  /**
+   * 弹出浮层
+   */
+  showModal = () => {
+    this.setState({
+      modalVisible: true
+    })
+  };
+
+  hideModal = () => {
+    this.setState({
+      modalVisible: false
+    })
   };
 
   // 折叠列表
@@ -203,6 +115,7 @@ class Comp extends React.Component {
   };
   render() {
     console.log(this.props);
+    const {keyPair} = this.props;
     return (
       <div className={'page-my-data'}>
         <PageWithHeader title={'我的数据'}>
@@ -210,10 +123,12 @@ class Comp extends React.Component {
 
           <BlueBox>
             <div className={'h3 white-text title-of-blue'}>我的数据私钥</div>
-            <GreenButton onClick={this.onPress}>一键生成</GreenButton>
-            <GreenButton onClick={this.readPrivatePEMFromLocal}>
-              读取密钥
-            </GreenButton>
+            {
+              keyPair.hasKey ?
+                <div className="private-key">{keyPair.privateKey}</div>
+                :
+                <GreenButton onClick={this.showModal}>一键生成</GreenButton>
+            }
           </BlueBox>
 
           <WhiteSpace />
@@ -240,6 +155,28 @@ class Comp extends React.Component {
             ))}
           </List>
         </PageWithHeader>
+        <Modal
+          visible={this.state.modalVisible}
+          className="my-data-modal"
+          maskClosable={true}
+          onClose={this.hideModal}
+          transparent
+        >
+          <div className="tips-box">* 该账号从未生成过密钥</div>
+          <Button onClick={this.onGenerate} disabled={!this.clickAble}>生成全新密钥</Button>
+
+          <div className="modal-divider" />
+
+          <div className="tips-box">* 该账号生成过密钥，并且我已备份了密钥</div>
+          <InputItem
+            clear
+            placeholder="导入已有私钥"
+            value={this.state.privateKey}
+            onChange={(privateKey) => this.setState({privateKey})}
+          />
+          <Button onClick={this.onImport} disabled={!this.clickAble}>导入</Button>
+
+        </Modal>
       </div>
     );
   }

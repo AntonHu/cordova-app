@@ -9,6 +9,38 @@ module.exports = [
     ]
   },
   {
+    "id": "cordova-plugin-camera.Camera",
+    "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
+    "pluginId": "cordova-plugin-camera",
+    "clobbers": [
+      "Camera"
+    ]
+  },
+  {
+    "id": "cordova-plugin-camera.CameraPopoverOptions",
+    "file": "plugins/cordova-plugin-camera/www/CameraPopoverOptions.js",
+    "pluginId": "cordova-plugin-camera",
+    "clobbers": [
+      "CameraPopoverOptions"
+    ]
+  },
+  {
+    "id": "cordova-plugin-camera.camera",
+    "file": "plugins/cordova-plugin-camera/www/Camera.js",
+    "pluginId": "cordova-plugin-camera",
+    "clobbers": [
+      "navigator.camera"
+    ]
+  },
+  {
+    "id": "cordova-plugin-camera.CameraPopoverHandle",
+    "file": "plugins/cordova-plugin-camera/www/CameraPopoverHandle.js",
+    "pluginId": "cordova-plugin-camera",
+    "clobbers": [
+      "CameraPopoverHandle"
+    ]
+  },
+  {
     "id": "cordova-plugin-dialogs.notification",
     "file": "plugins/cordova-plugin-dialogs/www/notification.js",
     "pluginId": "cordova-plugin-dialogs",
@@ -298,62 +330,6 @@ module.exports = [
     ]
   },
   {
-    "id": "cordova-plugin-zip.Zip",
-    "file": "plugins/cordova-plugin-zip/zip.js",
-    "pluginId": "cordova-plugin-zip",
-    "clobbers": [
-      "zip"
-    ]
-  },
-  {
-    "id": "cordova-plugin-janalytics.JAnalytics",
-    "file": "plugins/cordova-plugin-janalytics/www/JAnalytics.js",
-    "pluginId": "cordova-plugin-janalytics",
-    "clobbers": [
-      "JAnalytics"
-    ]
-  },
-  {
-    "id": "jpush-phonegap-plugin.JPushPlugin",
-    "file": "plugins/jpush-phonegap-plugin/www/JPushPlugin.js",
-    "pluginId": "jpush-phonegap-plugin",
-    "clobbers": [
-      "JPush"
-    ]
-  },
-  {
-    "id": "cordova-plugin-camera.Camera",
-    "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
-    "pluginId": "cordova-plugin-camera",
-    "clobbers": [
-      "Camera"
-    ]
-  },
-  {
-    "id": "cordova-plugin-camera.CameraPopoverOptions",
-    "file": "plugins/cordova-plugin-camera/www/CameraPopoverOptions.js",
-    "pluginId": "cordova-plugin-camera",
-    "clobbers": [
-      "CameraPopoverOptions"
-    ]
-  },
-  {
-    "id": "cordova-plugin-camera.camera",
-    "file": "plugins/cordova-plugin-camera/www/Camera.js",
-    "pluginId": "cordova-plugin-camera",
-    "clobbers": [
-      "navigator.camera"
-    ]
-  },
-  {
-    "id": "cordova-plugin-camera.CameraPopoverHandle",
-    "file": "plugins/cordova-plugin-camera/www/CameraPopoverHandle.js",
-    "pluginId": "cordova-plugin-camera",
-    "clobbers": [
-      "CameraPopoverHandle"
-    ]
-  },
-  {
     "id": "cordova-plugin-geolocation.geolocation",
     "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
     "pluginId": "cordova-plugin-geolocation",
@@ -366,24 +342,48 @@ module.exports = [
     "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
     "pluginId": "cordova-plugin-geolocation",
     "runs": true
+  },
+  {
+    "id": "cordova-plugin-janalytics.JAnalytics",
+    "file": "plugins/cordova-plugin-janalytics/www/JAnalytics.js",
+    "pluginId": "cordova-plugin-janalytics",
+    "clobbers": [
+      "JAnalytics"
+    ]
+  },
+  {
+    "id": "cordova-plugin-zip.Zip",
+    "file": "plugins/cordova-plugin-zip/zip.js",
+    "pluginId": "cordova-plugin-zip",
+    "clobbers": [
+      "zip"
+    ]
+  },
+  {
+    "id": "jpush-phonegap-plugin.JPushPlugin",
+    "file": "plugins/jpush-phonegap-plugin/www/JPushPlugin.js",
+    "pluginId": "jpush-phonegap-plugin",
+    "clobbers": [
+      "JPush"
+    ]
   }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
   "code-push": "2.0.4",
+  "cordova-plugin-camera": "4.0.3",
   "cordova-plugin-dialogs": "2.0.1",
   "cordova-plugin-device": "2.0.2",
   "cordova-plugin-code-push": "1.11.11",
   "cordova-plugin-file": "4.3.3",
   "cordova-plugin-file-transfer": "1.6.3",
-  "cordova-plugin-whitelist": "1.3.3",
-  "cordova-plugin-zip": "3.1.0",
+  "cordova-plugin-geolocation": "4.0.1",
   "cordova-plugin-jcore": "1.1.12",
   "cordova-plugin-janalytics": "1.1.3",
-  "jpush-phonegap-plugin": "3.3.2",
-  "cordova-plugin-camera": "4.0.3",
-  "cordova-plugin-geolocation": "4.0.1"
+  "cordova-plugin-whitelist": "1.3.3",
+  "cordova-plugin-zip": "3.1.0",
+  "jpush-phonegap-plugin": "3.4.1"
 };
 // BOTTOM OF METADATA
 });

@@ -5,7 +5,7 @@ import { observer, inject } from 'mobx-react';
 import { Title } from '../../components';
 import { NoticeBar, Icon, ActivityIndicator } from 'antd-mobile';
 import { TEST_PUBLIC_KEY, TEST_PRIVATE_KEY } from '../../utils/variable';
-import { setSessionStorage, getSessionStorage } from '../../utils/storage';
+import { setLocalStorage, getLocalStorage } from '../../utils/storage';
 import './style.less';
 
 import { JSRsasign } from '../../jssign';
@@ -29,8 +29,8 @@ for (let i = 0; i < 7; i++) {
     });
   }
 }
-const pickNumber = 0;
-@inject('sunCityStore', 'userStore', 'miningStore') // 如果注入多个store，用数组表示
+let pickNumber = 0;
+@inject('sunCityStore', 'userStore', 'miningStore', 'keyPair') // 如果注入多个store，用数组表示
 @observer
 class Comp extends React.Component {
   state = {
@@ -45,21 +45,27 @@ class Comp extends React.Component {
   timeoutID = null;
   sunArea = null; // 大图形
   async componentDidMount() {
+    const {keyPair} = this.props;
     // 获取最新公告,条件固定
     this.props.sunCityStore.fetchSCNews({
       page: 0,
       pageSize: 10
     });
-    // 获取我的太阳积分
-    this.props.miningStore.fetchBalance({ publicKey: TEST_PUBLIC_KEY });
-    // 获取排行
-    this.props.miningStore.fetchBalanceRanking({ publicKey: TEST_PUBLIC_KEY });
+
     // 获取用户信息
     this.props.userStore.fetchUserInfo();
-    // 获取积分列表
-    await this.props.sunCityStore.fetchSCSunIntegral({
-      publicKey: TEST_PUBLIC_KEY
-    });
+
+    if (keyPair.hasKey) {
+      // 获取我的太阳积分
+      this.props.miningStore.fetchBalance({ publicKey: keyPair.publicKey });
+      // 获取排行
+      this.props.miningStore.fetchBalanceRanking({ publicKey: keyPair.publicKey });
+      // 获取积分列表
+      await this.props.sunCityStore.fetchSCSunIntegral({
+        publicKey: keyPair.publicKey
+      });
+    }
+
     // 分割积分数组
     this.spliceArr(
       toJS(this.props.sunCityStore.sunIntegral),
@@ -73,45 +79,48 @@ class Comp extends React.Component {
 
     let equipmentListObj = {};
     // 储存设备列表整理后的数据
-    if (!getSessionStorage('equipmentListObj')) {
-      // 获取设备列表
-      await this.props.sunCityStore.fetchSCEquipmentList({
-        userPubKey: TEST_PUBLIC_KEY
-      });
-      equipmentListObj = toJS(this.props.sunCityStore.equipmentList) || {};
-      // 添加各个设备的功率和日电量
-      this.addEquipmentPower(equipmentListObj, 1);
+    if (!getLocalStorage('equipmentListObj')) {
+      if (keyPair.hasKey) {
+        // 获取设备列表
+        await this.props.sunCityStore.fetchSCEquipmentList({
+          userPubKey: keyPair.publicKey
+        });
+        equipmentListObj = toJS(this.props.sunCityStore.equipmentList) || {};
+        // 添加各个设备的功率和日电量
+        this.addEquipmentPower(equipmentListObj, 1);
+      }
+
     } else {
-      equipmentListObj = JSON.parse(getSessionStorage('equipmentListObj'));
+      equipmentListObj = JSON.parse(getLocalStorage('equipmentListObj'));
       this.setState({
         equipmentListObj
       });
     }
 
     // 储存电站数据,2-月，3-年，4-全部
-    if (!getSessionStorage('monthStationData')) {
+    if (!getLocalStorage('monthStationData')) {
       const monthStationData = await this.equipmentDataIntegrate(
         equipmentListObj,
         2
       );
-      setSessionStorage('monthStationData', JSON.stringify(monthStationData)); // 本地储存电站每月发电数据
+      setLocalStorage('monthStationData', JSON.stringify(monthStationData)); // 本地储存电站每月发电数据
     }
 
-    if (!getSessionStorage('yearStationData')) {
+    if (!getLocalStorage('yearStationData')) {
       const yearStationData = await this.equipmentDataIntegrate(
         equipmentListObj,
         3
       );
-      setSessionStorage('yearStationData', JSON.stringify(yearStationData)); // 本地储存电站每年发电数据
+      setLocalStorage('yearStationData', JSON.stringify(yearStationData)); // 本地储存电站每年发电数据
     }
 
-    if (!getSessionStorage('allStationData')) {
+    if (!getLocalStorage('allStationData')) {
       const equipmentDataArr = await this.getAllEquipmentData(
         equipmentListObj,
         4
       );
       const allStationData = this.allEquipmentDataIntegrate(equipmentDataArr);
-      setSessionStorage('allStationData', JSON.stringify(allStationData)); // 本地储存电站所有发电数据
+      setLocalStorage('allStationData', JSON.stringify(allStationData)); // 本地储存电站所有发电数据
     }
   }
 
@@ -136,7 +145,7 @@ class Comp extends React.Component {
       // 合并每天的设备数据为电站每天数据
       equipmentDataArr = equipmentDataArr.concat(sortData);
       const dayStationData = this.mergeEquipmentData(equipmentDataArr);
-      setSessionStorage('dayStationData', JSON.stringify(dayStationData)); // 本地储存电站每天发电数据
+      setLocalStorage('dayStationData', JSON.stringify(dayStationData)); // 本地储存电站每天发电数据
       // 设备功率
       const currentPower =
         (sortData &&
@@ -160,10 +169,10 @@ class Comp extends React.Component {
       currentStationPower += Number(currentPower); // 当前电站功率
       totalStationElectric += Number(maxValue); // 当前电站发电量
     }
-    setSessionStorage('dayStationElectric', dayStationElectric.toFixed(2)); // 本地储存当前电站今日发电量
-    setSessionStorage('currentStationPower', currentStationPower); // 本地储存当前电站功率
-    setSessionStorage('totalStationElectric', totalStationElectric); // 本地储存电站总发电量
-    setSessionStorage('equipmentListObj', JSON.stringify(equipmentListObj)); // 本地储存所有设备状态
+    setLocalStorage('dayStationElectric', dayStationElectric.toFixed(2)); // 本地储存当前电站今日发电量
+    setLocalStorage('currentStationPower', currentStationPower); // 本地储存当前电站功率
+    setLocalStorage('totalStationElectric', totalStationElectric); // 本地储存电站总发电量
+    setLocalStorage('equipmentListObj', JSON.stringify(equipmentListObj)); // 本地储存所有设备状态
     this.setState({ equipmentListObj });
   }
 
@@ -240,6 +249,7 @@ class Comp extends React.Component {
 
   // 获取并处理每个设备数据
   async handleEquipmentData(name, sourceData, deviceNo, dateType) {
+
     await this.props.sunCityStore.fetchSCEquipmentPower({
       sourceData,
       deviceNo,
@@ -322,32 +332,35 @@ class Comp extends React.Component {
   };
   // 收取太阳积分
   selectSunIntegral = (e, sunIntegralInfo) => {
-    this.selectSunNode = e.target.parentNode;
-    this.props.sunCityStore
-      .fetchSCGetSunIntegral({
-        tokenId: sunIntegralInfo.id,
-        value: sunIntegralInfo.amount,
-        publicKey: TEST_PUBLIC_KEY
-      })
-      .then(result => {
-        if (result.code === 200) {
-          pickNumber += 1;
-          this.selectSunNode.classList.add('remove');
-          // 每删除10个，重置一次，并进入下一个
-          if (pickNumber && pickNumber % 10 === 0) {
-            this.timeoutID = setTimeout(() => {
-              document
-                .querySelectorAll('.remove')
-                .forEach(item => item.classList.remove('remove'));
-              this.setState({
-                sunCoordinateArr: this.getSunCoordinateArr(
-                  this.sunIntegralArr[pickNumber / 10]
-                )
-              });
-            }, 1000);
+    const {keyPair} = this.props;
+    if (keyPair.showHasKey(this.props)) {
+      this.selectSunNode = e.target.parentNode;
+      this.props.sunCityStore
+        .fetchSCGetSunIntegral({
+          tokenId: sunIntegralInfo.id,
+          value: sunIntegralInfo.amount,
+          publicKey: keyPair.publicKey
+        })
+        .then(result => {
+          if (result.code === 200) {
+            pickNumber += 1;
+            this.selectSunNode.classList.add('remove');
+            // 每删除10个，重置一次，并进入下一个
+            if (pickNumber && pickNumber % 10 === 0) {
+              this.timeoutID = setTimeout(() => {
+                document
+                  .querySelectorAll('.remove')
+                  .forEach(item => item.classList.remove('remove'));
+                this.setState({
+                  sunCoordinateArr: this.getSunCoordinateArr(
+                    this.sunIntegralArr[pickNumber / 10]
+                  )
+                });
+              }, 1000);
+            }
           }
-        }
-      });
+        });
+    }
   };
   render() {
     const userInfo = toJS(this.props.userStore.userInfo);

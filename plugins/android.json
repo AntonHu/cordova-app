@@ -7,6 +7,9 @@
     "files": {}
   },
   "installed_plugins": {
+    "cordova-plugin-camera": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
     "cordova-plugin-code-push": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
@@ -16,24 +19,21 @@
     "cordova-plugin-file-transfer": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-zip": {
+    "cordova-plugin-geolocation": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
     "cordova-plugin-janalytics": {
       "APP_KEY": "fd96956cb315ba658d256156",
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-zip": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
     "jpush-phonegap-plugin": {
       "APP_KEY": "fd96956cb315ba658d256156",
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-camera": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-geolocation": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     }
   },

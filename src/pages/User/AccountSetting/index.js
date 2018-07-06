@@ -4,6 +4,8 @@ import {PageWithHeader, PlainButton} from '../../../components';
 import {List} from 'antd-mobile';
 import User from '../../../utils/user';
 import {maskIfPhone} from '../../../utils/methods';
+import {KEY_PAIR_LOCAL_STORAGE} from '../../../utils/variable';
+import {deleteLocalStorage} from '../../../utils/storage';
 import {observer, inject} from 'mobx-react';
 import './style.less';
 
@@ -29,13 +31,20 @@ const ListData = [
 /**
  * 账号设置
  */
-@inject('userStore')
+@inject('userStore', 'keyPair')
 @observer
-class Comp extends React.PureComponent {
+class Comp extends React.Component {
+
+  /**
+   * 删除token
+   * 删除公私钥对
+   * @param e
+   */
   onLogout = (e) => {
     e.preventDefault();
     const user = new User();
     user.logout();
+    this.props.keyPair.clearKeyPair();
     this.props.history.replace('/');
   };
 

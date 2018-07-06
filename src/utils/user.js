@@ -1,4 +1,4 @@
-import { getSessionStorage, setSessionStorage, deleteSessionStorage} from './storage';
+import { getLocalStorage, setLocalStorage, deleteLocalStorage} from './storage';
 /**
  * 保存和操作用户登录信息
  *
@@ -19,7 +19,7 @@ class User {
    * @memberof User
    */
   login(accessToken) {
-    setSessionStorage('token', accessToken);
+    setLocalStorage('token', accessToken);
   }
 
   /**
@@ -28,7 +28,7 @@ class User {
    * @memberof User
    */
   isLogin() {
-    const accessToken = getSessionStorage('token');
+    const accessToken = getLocalStorage('token');
     return !!accessToken;
     // return true; // 测试，默认返回 true
   }
@@ -61,7 +61,7 @@ class User {
    * @memberof User
    */
   logout() {
-    deleteSessionStorage('token')
+    deleteLocalStorage('token')
   }
 }
 
