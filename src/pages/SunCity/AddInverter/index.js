@@ -75,6 +75,8 @@ class Comp extends React.PureComponent {
         .then(result => {
           if (result.code === 200) {
             Toast.show('添加逆变器成功');
+          } else {
+            Toast.show('添加逆变器失败');
           }
         });
     }
