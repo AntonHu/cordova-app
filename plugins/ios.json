@@ -35,6 +35,9 @@
     },
     "cordova-plugin-geolocation": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "phonegap-plugin-barcodescanner": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     }
   },
   "dependent_plugins": {

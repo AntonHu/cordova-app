@@ -4,7 +4,6 @@ import { toJS } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { Title } from '../../components';
 import { NoticeBar, Icon, ActivityIndicator } from 'antd-mobile';
-import { TEST_PUBLIC_KEY, TEST_PRIVATE_KEY } from '../../utils/variable';
 import { setLocalStorage, getLocalStorage } from '../../utils/storage';
 import './style.less';
 
@@ -35,6 +34,7 @@ let pickNumber = 0;
 class Comp extends React.Component {
   state = {
     equipmentListObj: null,
+    loading: true,
     sunCoordinateArr: null,
     power: 0, // 功率
     dayPower: 0, // 日发电量
@@ -45,7 +45,7 @@ class Comp extends React.Component {
   timeoutID = null;
   sunArea = null; // 大图形
   async componentDidMount() {
-    const {keyPair} = this.props;
+    const { keyPair } = this.props;
     // 获取最新公告,条件固定
     this.props.sunCityStore.fetchSCNews({
       page: 0,
@@ -59,7 +59,9 @@ class Comp extends React.Component {
       // 获取我的太阳积分
       this.props.miningStore.fetchBalance({ publicKey: keyPair.publicKey });
       // 获取排行
-      this.props.miningStore.fetchBalanceRanking({ publicKey: keyPair.publicKey });
+      this.props.miningStore.fetchBalanceRanking({
+        publicKey: keyPair.publicKey
+      });
       // 获取积分列表
       await this.props.sunCityStore.fetchSCSunIntegral({
         publicKey: keyPair.publicKey
@@ -89,11 +91,11 @@ class Comp extends React.Component {
         // 添加各个设备的功率和日电量
         this.addEquipmentPower(equipmentListObj, 1);
       }
-
     } else {
       equipmentListObj = JSON.parse(getLocalStorage('equipmentListObj'));
       this.setState({
-        equipmentListObj
+        equipmentListObj,
+        loading: false
       });
     }
 
@@ -173,7 +175,7 @@ class Comp extends React.Component {
     setLocalStorage('currentStationPower', currentStationPower); // 本地储存当前电站功率
     setLocalStorage('totalStationElectric', totalStationElectric); // 本地储存电站总发电量
     setLocalStorage('equipmentListObj', JSON.stringify(equipmentListObj)); // 本地储存所有设备状态
-    this.setState({ equipmentListObj });
+    this.setState({ equipmentListObj, loading: false });
   }
 
   // 合并多个设备的数据并排序,成为电站数据
@@ -230,32 +232,52 @@ class Comp extends React.Component {
   // 请求所有设备数据
   async getAllEquipmentData(equipmentListObj, dateType) {
     let equipmentDataArr = [];
+    let stationEnergy = 0;
     // 遍历每个设备，并累计总电量
     for (let i = 0; i < Object.keys(equipmentListObj).length; ++i) {
       const name = Object.keys(equipmentListObj)[i];
       const info = equipmentListObj[name];
       const sourceData = info.source;
       const deviceNo = info.deviceNo;
-      const sortData = await this.handleEquipmentData(
+      const decryptData = await this.handleEquipmentData(
         name,
         sourceData,
         deviceNo,
         dateType
       );
-      equipmentDataArr = equipmentDataArr.concat(sortData);
+      // 获取电站发电量
+      const maxEnergy =
+        decryptData.length > 0 &&
+        Math.max.apply(Math, decryptData.map(item => item.maxValue));
+      stationEnergy += maxEnergy;
+      equipmentDataArr = equipmentDataArr.concat(decryptData);
+    }
+    switch (dateType) {
+      case 2:
+        setLocalStorage('monthTotalStationElectric', stationEnergy); // 本地储存电站总发电量--月
+        break;
+      case 3:
+        setLocalStorage('yearTotalStationElectric', stationEnergy); // 本地储存电站总发电量--年
+        break;
+      case 4:
+        setLocalStorage('allTotalStationElectric', stationEnergy); // 本地储存电站总发电量--所有
+        break;
+      default:
+        break;
     }
     return equipmentDataArr;
   }
 
   // 获取并处理每个设备数据
   async handleEquipmentData(name, sourceData, deviceNo, dateType) {
-
-    await this.props.sunCityStore.fetchSCEquipmentPower({
-      sourceData,
-      deviceNo,
-      userPubKey: TEST_PUBLIC_KEY,
-      dateType
-    });
+    if (this.props.keyPair.hasKey) {
+      await this.props.sunCityStore.fetchSCEquipmentPower({
+        sourceData,
+        deviceNo,
+        userPubKey: this.props.keyPair.publicKey,
+        dateType
+      });
+    }
     const receiveData = toJS(this.props.sunCityStore.equipmentPower);
     const decryptData = this.handleDecryptData(receiveData);
     return decryptData;
@@ -288,7 +310,10 @@ class Comp extends React.Component {
 
   // 数据解密
   doDecrypt = data => {
-    const privBI = new BigInteger(TEST_PRIVATE_KEY, 16);
+    let privBI = '';
+    if (this.props.keyPair.hasKey) {
+      privBI = new BigInteger(this.props.keyPair.privateKey, 16);
+    }
     let cipherMode = '1'; // C1C3C2
     const cipher = new SM2Cipher(cipherMode);
 
@@ -332,7 +357,7 @@ class Comp extends React.Component {
   };
   // 收取太阳积分
   selectSunIntegral = (e, sunIntegralInfo) => {
-    const {keyPair} = this.props;
+    const { keyPair } = this.props;
     if (keyPair.showHasKey(this.props)) {
       this.selectSunNode = e.target.parentNode;
       this.props.sunCityStore
@@ -478,7 +503,11 @@ class Comp extends React.Component {
               })
             ) : (
               <div className="loading">
-                <ActivityIndicator text="加载中..." />
+                {this.state.loading ? (
+                  <ActivityIndicator text="加载中..." />
+                ) : (
+                  '暂无数据'
+                )}
               </div>
             )}
           </div>
