@@ -93,12 +93,25 @@ export const fetchEquipmentPower = async params => {
 };
 
 /**
+ * 请求所有逆变器类型
+ */
+export const fetchInverters = async params => {
+  let response = {};
+  try {
+    response = await get(`${backendServer}/equipment/sourceType`, params);
+  } catch (err) {
+    console.log(err);
+  }
+  return response.data || [];
+};
+
+/**
  * 添加逆变器
  */
 export const fetchAddInverter = async params => {
   let response = {};
   try {
-    response = await get(`${backendServer}/inverterBarCode`, params);
+    response = await get(`${backendServer}/equipment/inverterBarCode`, params);
   } catch (err) {
     console.log(err);
   }

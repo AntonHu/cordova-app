@@ -170,10 +170,10 @@ class Comp extends React.Component {
       }
     });
     chart.guide().html({
-      position: ['110%', '60%'],
+      position: ['120%', '65%'],
       html: `<div style="width: 250px;height: 40px;text-align: center;"><div style="font-size: 14px">${(currentPower &&
         currentPower.toFixed(2)) ||
-        ''}w</div><div style="font-size: 14px">当前功率</div></div>`
+        0}w</div><div style="font-size: 14px">当前功率</div></div>`
     });
     chart
       .interval()

@@ -7,6 +7,7 @@ import {
   fetchEquipmentList,
   fetchEquipmentInfo,
   fetchEquipmentPower,
+  fetchInverters,
   fetchAddInverter
 } from './request';
 
@@ -17,6 +18,7 @@ class SunCityStore {
   @observable equipmentList;
   @observable equipmentInfo;
   @observable equipmentPower;
+  @observable inverterList;
 
   // 获取最新公告
   @action
@@ -132,7 +134,20 @@ class SunCityStore {
     }
     return result;
   };
-
+  // 请求所有逆变器类型
+  @action
+  fetchSCInverters = async params => {
+    let result = {};
+    try {
+      result = await fetchInverters(params);
+      runInAction(() => {
+        this.inverterList = result.data;
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    return result;
+  };
   // 添加逆变器
   @action
   fetchSCAddInverter = async params => {
