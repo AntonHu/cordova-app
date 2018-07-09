@@ -81,7 +81,7 @@ class Comp extends React.Component {
 
     let equipmentListObj = {};
     // 储存设备列表整理后的数据
-    if (!getLocalStorage('equipmentListObj')) {
+    if (this.isExpire() || !getLocalStorage('equipmentListObj')) {
       if (keyPair.hasKey) {
         // 获取设备列表
         await this.props.sunCityStore.fetchSCEquipmentList({
@@ -100,7 +100,7 @@ class Comp extends React.Component {
     }
 
     // 储存电站数据,2-月，3-年，4-全部
-    if (!getLocalStorage('monthStationData')) {
+    if (this.isExpire() || !getLocalStorage('monthStationData')) {
       const monthStationData = await this.equipmentDataIntegrate(
         equipmentListObj,
         2
@@ -108,7 +108,7 @@ class Comp extends React.Component {
       setLocalStorage('monthStationData', JSON.stringify(monthStationData)); // 本地储存电站每月发电数据
     }
 
-    if (!getLocalStorage('yearStationData')) {
+    if (this.isExpire() || !getLocalStorage('yearStationData')) {
       const yearStationData = await this.equipmentDataIntegrate(
         equipmentListObj,
         3
@@ -116,15 +116,24 @@ class Comp extends React.Component {
       setLocalStorage('yearStationData', JSON.stringify(yearStationData)); // 本地储存电站每年发电数据
     }
 
-    if (!getLocalStorage('allStationData')) {
+    if (this.isExpire() || !getLocalStorage('allStationData')) {
       const equipmentDataArr = await this.getAllEquipmentData(
         equipmentListObj,
         4
       );
       const allStationData = this.allEquipmentDataIntegrate(equipmentDataArr);
       setLocalStorage('allStationData', JSON.stringify(allStationData)); // 本地储存电站所有发电数据
+      setLocalStorage('expireTime', new Date().getTime()); // 本地储存电站数据过期时间
     }
   }
+
+  // 检测数据是否过期
+  isExpire = () => {
+    return (
+      new Date().getTime() - Number(getLocalStorage('expireTime')) >
+      3 * 60 * 60 * 1000
+    ); // 设置三个小时的过期时间
+  };
 
   // 为每个添加设备的功率和日电量
   async addEquipmentPower(equipmentListObj, dateType) {
@@ -138,39 +147,39 @@ class Comp extends React.Component {
       const info = equipmentListObj[name];
       const sourceData = info.source;
       const deviceNo = info.deviceNo;
-      const sortData = await this.handleEquipmentData(
+      const decryptData = await this.handleEquipmentData(
         name,
         sourceData,
         deviceNo,
         dateType
       );
       // 合并每天的设备数据为电站每天数据
-      equipmentDataArr = equipmentDataArr.concat(sortData);
-      const dayStationData = this.mergeEquipmentData(equipmentDataArr);
-      setLocalStorage('dayStationData', JSON.stringify(dayStationData)); // 本地储存电站每天发电数据
+      equipmentDataArr = equipmentDataArr.concat(decryptData);
       // 设备功率
       const currentPower =
-        (sortData &&
-          sortData[sortData.length - 1] &&
-          sortData[sortData.length - 1].power.toFixed(2)) ||
+        (decryptData &&
+          decryptData[decryptData.length - 1] &&
+          decryptData[decryptData.length - 1].power.toFixed(2)) ||
         0;
       // 设备日电量
       let dayElectric = 0;
-      sortData.forEach(item => {
+      decryptData.forEach(item => {
         dayElectric += item.number;
       });
       // 电站日电量
       dayStationElectric += dayElectric;
       // 当前电站发电量
       const maxValue =
-        (sortData[sortData.length - 1] &&
-          sortData[sortData.length - 1].maxValue) ||
+        (decryptData[decryptData.length - 1] &&
+          decryptData[decryptData.length - 1].maxValue) ||
         0;
       equipmentListObj[name].currentPower = currentPower || 0; // 设备功率
       equipmentListObj[name].dayElectric = dayElectric.toFixed(2) || 0; // 设备日电量
       currentStationPower += Number(currentPower); // 当前电站功率
       totalStationElectric += Number(maxValue); // 当前电站发电量
     }
+    const dayStationData = this.mergeEquipmentData(equipmentDataArr);
+    setLocalStorage('dayStationData', JSON.stringify(dayStationData)); // 本地储存电站每天发电数据
     setLocalStorage('dayStationElectric', dayStationElectric.toFixed(2)); // 本地储存当前电站今日发电量
     setLocalStorage('currentStationPower', currentStationPower); // 本地储存当前电站功率
     setLocalStorage('totalStationElectric', totalStationElectric); // 本地储存电站总发电量
