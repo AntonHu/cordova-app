@@ -33,13 +33,15 @@ class Comp extends React.Component {
       barcodeValue: value
     });
   };
+
   // 扫描条形码
   barcodeScanner = () => {
     if (window.cordova) {
       window.cordova.plugins.barcodeScanner.scan(
         result => {
-          this.inverterIdEle.state.value = result.text;
-          this.setState({});
+          this.setState({
+            barcodeValue: result.text
+          });
         },
         error => {
           //扫码失败
@@ -63,7 +65,7 @@ class Comp extends React.Component {
 
   // 添加逆变器
   addInverter = () => {
-    const deviceNo = this.inverterIdEle.state.value;
+    const deviceNo = this.state.barcodeValue;
     const sourceData = this.state.inverterType;
     if (this.props.keyPair.hasKey) {
       if (!deviceNo) {
@@ -89,7 +91,6 @@ class Comp extends React.Component {
     }
   };
   render() {
-    console.log('render');
     const inverterList = toJS(this.props.sunCityStore.inverterList);
     inverterList &&
       inverterList.map(item => {
@@ -111,11 +112,7 @@ class Comp extends React.Component {
             >
               <List.Item arrow="horizontal">逆变器品牌</List.Item>
             </Picker>
-            <InputItem
-              placeholder="请输入条码"
-              ref={ele => (this.inverterIdEle = ele)}
-              onChange={this.barcodeChange}
-            >
+            <InputItem placeholder="请输入条码" onChange={this.barcodeChange}>
               <i className="iconfont">&#xe654;</i>
             </InputItem>
             <div className="scan" onClick={this.barcodeScanner}>
