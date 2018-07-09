@@ -10,9 +10,10 @@ import './style.less';
  */
 @inject('sunCityStore', 'keyPair') // 如果注入多个store，用数组表示
 @observer
-class Comp extends React.PureComponent {
+class Comp extends React.Component {
   state = {
-    inverterType: ''
+    inverterType: '',
+    barcodeValue: ''
   };
   componentDidMount() {
     // 请求所有逆变器类型
@@ -26,6 +27,12 @@ class Comp extends React.PureComponent {
     });
   };
 
+  // 条形码输入
+  barcodeChange = value => {
+    this.setState({
+      barcodeValue: value
+    });
+  };
   // 扫描条形码
   barcodeScanner = () => {
     if (window.cordova) {
@@ -82,6 +89,7 @@ class Comp extends React.PureComponent {
     }
   };
   render() {
+    console.log('render');
     const inverterList = toJS(this.props.sunCityStore.inverterList);
     inverterList &&
       inverterList.map(item => {
@@ -106,6 +114,7 @@ class Comp extends React.PureComponent {
             <InputItem
               placeholder="请输入条码"
               ref={ele => (this.inverterIdEle = ele)}
+              onChange={this.barcodeChange}
             >
               <i className="iconfont">&#xe654;</i>
             </InputItem>
