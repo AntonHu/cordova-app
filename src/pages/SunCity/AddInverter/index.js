@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 import { PageWithHeader, GreenButton } from '../../../components';
 import { Picker, List, WhiteSpace, InputItem, Toast } from 'antd-mobile';
 import { toJS } from 'mobx';
+import { deleteLocalStorage } from '../../../utils/storage';
 import './style.less';
 
 /**
@@ -84,8 +85,10 @@ class Comp extends React.Component {
         .then(result => {
           if (result.code === 200) {
             Toast.show('添加逆变器成功');
+            // 删除过期时间，重新请求所有数据
+            deleteLocalStorage('expireTime');
           } else {
-            Toast.show('添加逆变器失败');
+            Toast.show(`添加逆变器失败,${result.msg}`);
           }
         });
     }

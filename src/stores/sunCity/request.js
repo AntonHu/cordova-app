@@ -111,7 +111,7 @@ export const fetchInverters = async params => {
 export const fetchAddInverter = async params => {
   let response = {};
   try {
-    response = await get(`${backendServer}/equipment/inverterBarCode`, params);
+    response = await post(`${backendServer}/equipment/inverterBarCode`, params);
   } catch (err) {
     console.log(err);
   }
