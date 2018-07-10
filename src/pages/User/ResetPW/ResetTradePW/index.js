@@ -1,11 +1,14 @@
 import React from 'react';
 import { PageWithHeader, GreenButton, Countdown } from '../../../../components';
 import {testCode, testPhoneNumber, clearSpace, testPassword} from '../../../../utils/methods';
-import {reqSendCode, reqResetTradePassword} from '../../../../stores/user/request';
+import {reqSendCode, reqResetTradePassword, putUserIntoChain} from '../../../../stores/user/request';
 import { InputItem, Modal } from 'antd-mobile';
+import {observer, inject} from 'mobx-react';
+import {JSRsasign} from '../../../../jssign';
 import './style.less';
 
 const alert = Modal.alert;
+const CryptoJS = JSRsasign.CryptoJS;
 
 const showError = (text) => {
   alert('错误', text, [
@@ -14,9 +17,11 @@ const showError = (text) => {
 };
 
 /**
- * 重置交易密码
+ * 设置交易密码
  */
-class Comp extends React.PureComponent {
+@inject('keyPair')
+@observer
+class Comp extends React.Component {
   state = {
     firstStep: true,
     secondStep: false,
@@ -25,6 +30,14 @@ class Comp extends React.PureComponent {
     tradePassword: '',
     confirmTradePassword: ''
   };
+
+  setSuccess = false;
+
+  componentWillUnmount() {
+    if (!this.setSuccess) {
+      this.props.keyPair.clearKeyPair();
+    }
+  }
 
   changeState = (stateName) => {
     function _setState(value) {
@@ -37,6 +50,10 @@ class Comp extends React.PureComponent {
     return _setState;
   };
 
+  /**
+   * 点击下一步
+   * @returns {boolean}
+   */
   nextStep = () => {
     const {phone, code} = this.state;
     if (!testPhoneNumber(clearSpace(phone))) {
@@ -53,6 +70,9 @@ class Comp extends React.PureComponent {
     });
   };
 
+  /**
+   * 发送请求，获取验证码
+   */
   sendCode = () => {
     if (this.validateBeforeSendCode()) {
       const {phone} = this.state;
@@ -64,6 +84,10 @@ class Comp extends React.PureComponent {
     }
   };
 
+  /**
+   * 获取验证码前校验
+   * @returns {boolean}
+   */
   validateBeforeSendCode = () => {
     const {phone} = this.state;
     if (!testPhoneNumber(clearSpace(phone))) {
@@ -73,26 +97,60 @@ class Comp extends React.PureComponent {
     return true;
   };
 
-  onSubmit = () => {
+  /**
+   * 提交，设置交易密码
+   * 设置交易密码成功后，用交易密码加密私钥，并且向服务器上传公钥和加密私钥
+   * 如果没有设置交易密码，在退出本页面时，清除localStorage里的公私钥
+   */
+  onSubmit = async () => {
     const self = this;
     if (this.validateBeforeSubmit()) {
       const {tradePassword, phone, code} = this.state;
-      reqResetTradePassword({
+      const setTradeRes = await reqResetTradePassword({
         phoneNumber: clearSpace(phone),
         newPassword: tradePassword,
         verificationCode: code
-      })
-        .then(res => {
-          const data = res.data;
-          if (data.code === 200) {
-            alert('成功', '您重置交易密码成功', [{
-              text: '确定', onPress: function () {
-                self.props.history.goBack()
-              }
-            }])
+      });
+      const data = setTradeRes.data || {};
+      if (data.code === 200) {
+        alert('成功', '设置交易密码成功。请一定备份您的交易密码，如果忘记，将导致账户资金无法取出', [{
+          text: '确定', onPress: function () {
+            self.encryptAndUpload({
+              publicKey: self.props.keyPair.publicKey,
+              privateKey: self.props.keyPair.privateKey,
+              password: tradePassword
+            })
           }
-        })
+        }])
+      }
     }
+  };
+
+  /**
+   * 用交易密码加密私钥
+   * 并且上传加密过的私钥和公钥
+   * @param privateKey
+   * @param password
+   * @param publicKey
+   */
+  encryptAndUpload = ({privateKey, password, publicKey}) => {
+    const self = this;
+    const encryptPrivateKey = CryptoJS.AES.encrypt(privateKey, password).toString();
+    putUserIntoChain({publicKey, encryptPrivateKey})
+      .then(res => {
+        const data = res.data || {};
+        if (data.code === 200) {
+          this.setSuccess = true;
+          alert('成功', '上传公钥成功', [{text: '好的', onPress: () => {
+            self.props.history.goBack();
+          }}]);
+        } else {
+          alert('失败', '上传公钥失败', [{text: '好的', onPress: () => {}}]);
+        }
+      })
+      .catch(err => {
+        alert('失败', '上传公钥失败', [{text: '好的', onPress: () => {}}]);
+      })
   };
 
   validateBeforeSubmit = () => {
@@ -117,7 +175,7 @@ class Comp extends React.PureComponent {
     } = this.state;
     return (
       <div className={'page-reset-trade-pw'}>
-        <PageWithHeader title={'重置交易密码'}>
+        <PageWithHeader title={'设置交易密码'}>
           <div className="progress-prompt">
             <div
               className={

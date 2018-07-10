@@ -135,9 +135,10 @@ class Comp extends React.Component {
       // 后端数据可能有问题，加一层处理
       let powerInfo;
       try {
+        const decryptedItem = this.doDecrypt(receiveData[item]);
         powerInfo =
-          this.doDecrypt(receiveData[item]) &&
-          JSON.parse(this.doDecrypt(receiveData[item]));
+          decryptedItem &&
+          JSON.parse(decryptedItem);
       } catch (err) {
         console.log(err);
       }

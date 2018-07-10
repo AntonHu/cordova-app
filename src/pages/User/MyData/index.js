@@ -4,10 +4,12 @@ import { List, WhiteSpace, Modal, Button, InputItem, ActivityIndicator } from 'a
 import {getIsInChain, putUserIntoChain} from '../../../stores/user/request';
 import './style.less';
 import {observer, inject} from 'mobx-react';
+import {JSRsasign} from '../../../jssign';
+
 
 const alert = Modal.alert;
-
 const Item = List.Item;
+const CryptoJS = JSRsasign.CryptoJS;
 
 const ListData = [
   {
@@ -57,13 +59,15 @@ class Comp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      privateKey: '',
       modalVisible: '',
       showLoading: false,
-      loadingText: 'Loading...'
+      loadingText: 'Loading...',
+      tradePassword: ''
     };
 
     this.clickAble = !props.keyPair.hasKey;
+    this.publicKey = '';
+    this.encryptPrivateKey = '';
   }
 
   componentDidMount() {
@@ -71,68 +75,83 @@ class Comp extends React.Component {
   }
 
   /**
-   * 生成新的公私钥
+   * 发请求，获取用户的公钥和加密私钥。
+   *
+   * 如果有，让用户输入交易密码，解密出私钥
+   * 然后放到localStorage
+   *
+   * 如果没有，生成公钥和私钥，存到localStorage
+   * 然后去到交易密码页面，要求用户设置交易密码
+   * 设置交易密码成功后，用交易密码加密私钥，并且向服务器上传公钥和加密私钥
+   * 如果没有设置交易密码，在退出交易密码页面时，清除localStorage里的公私钥
    */
-  onGenerate = () => {
-    if (!this.clickAble) {
-      return;
-    }
-    this.clickAble = false;
-    const keyPair = this.props.keyPair.generageNewKeyPair();
-    this.checkAfterGetPub(keyPair.publicKey);
-    this.hideModal();
-  };
-
-  /**
-   * 导入已有私钥
-   */
-  onImport = () => {
-    if (!this.clickAble) {
-      return;
-    }
-    if (!this.state.privateKey) {
-      alert('错误', '您没有导入密钥！', [{text: '好的'}]);
-      return;
-    }
-    this.clickAble = false;
-    const publicKey = this.props.keyPair.getPubFromPriv(this.state.privateKey);
-    this.checkAfterGetPub(publicKey);
-    this.hideModal();
-  };
-
-  /**
-   * 检查publicKey是否上链
-   * 如果没上，那么弄上去
-   * @param publicKey
-   * @returns {Promise.<void>}
-   */
-  checkAfterGetPub = async (publicKey) => {
+  onClick = async() => {
     this.setState({
       showLoading: true,
-      loadingText: '正在查询是否上链...'
+      loadingText: '正在查询是否有密钥...'
     });
     // 发请求
-    const isInChainRes = await getIsInChain({publicKey});
-    // 用户没有上链
-    if (isInChainRes.data && !isInChainRes.data.success) {
-      this.setState({
-        loadingText: '正在连接上链...'
+    const isInChainRes = await getIsInChain();
+    this.resetLoading();
+    const data = isInChainRes.data || {};
+    if (data.success) {
+      this.doIfHasKey({
+        publicKey: data.publicKey,
+        encryptPrivateKey: data.encryptPrivateKey
       });
-      putUserIntoChain({publicKey})
-        .then(res => {
-          if (res.data && res.data.code === 200) {
-            alert('成功', '您已成功连接上链', [{text: '好的'}])
-          } else {
-            alert('失败', '连接上链失败', [{text: '好的'}]);
-          }
-          this.resetLoading();
-        })
-        .catch(err => {
-          alert('失败', '连接上链失败', [{text: '好的'}]);
-          this.resetLoading();
-        })
     } else {
-      this.resetLoading();
+      this.doIfHasNoKey();
+    }
+  };
+
+  /**
+   * 如果后端存有公私钥
+   */
+  doIfHasKey = ({publicKey, encryptPrivateKey}) => {
+    this.publicKey = publicKey;
+    this.encryptPrivateKey = encryptPrivateKey;
+    this.showModal();
+  };
+
+  /**
+   * 如果后端没有公私钥
+   */
+  doIfHasNoKey = () => {
+    const self = this;
+    this.props.keyPair.generageNewKeyPair();
+    alert('您没有密钥', '设置密钥前，请先设置您的交易密码', [{text: '去设置', onPress: () => {
+      self.props.history.push('/user/resetTradePW');
+    }}]);
+  };
+
+  /**
+   * AES算法，用交易密码解密出私钥
+   * 如果私钥返回''，说明交易密码错误。
+   * @param encryptPrivateKey
+   * @param tradePassword
+   * @returns {string}
+   */
+  decryptWithAES = (encryptPrivateKey, tradePassword) => {
+    const privateKeyBytes = CryptoJS.AES.decrypt(encryptPrivateKey, tradePassword);
+    return privateKeyBytes.toString(CryptoJS.enc.Utf8);
+  };
+
+  /**
+   * 点击"解密"
+   * @param encryptPrivateKey
+   * @param publicKey
+   */
+  onDecrypt = ({encryptPrivateKey, publicKey}) => {
+    if (this.state.tradePassword) {
+      const privateKey = this.decryptWithAES(encryptPrivateKey);
+      if (privateKey) {
+        this.props.keyPair.savePubAndPriv({publicKey, privateKey});
+        alert('成功', '解密成功，您可以正常使用APP', [{text: '好的', onPress: () => {}}]);
+      } else {
+        alert('错误', '您输入的交易密码错误', [{text: '好的', onPress: () => {}}]);
+      }
+    } else {
+      alert('错误', '请输入交易密码', [{text: '好的', onPress: () => {}}]);
     }
   };
 
@@ -155,12 +174,18 @@ class Comp extends React.Component {
     })
   };
 
+  /**
+   * 隐藏浮层
+   */
   hideModal = () => {
     this.setState({
       modalVisible: false
     })
   };
 
+  /**
+   * 展示公钥
+   */
   showPubKey = () => {
     const publicKey = this.props.keyPair.publicKey;
     alert('公钥', <div style={{wordBreak: 'break-all'}}>{publicKey}</div>, [{text: '关闭'}])
@@ -223,20 +248,19 @@ class Comp extends React.Component {
           onClose={this.hideModal}
           transparent
         >
-          <div className="tips-box">* 该账号从未生成过密钥</div>
-          <Button onClick={this.onGenerate} disabled={!this.clickAble}>生成全新密钥</Button>
-
-          <div className="modal-divider" />
-
-          <div className="tips-box">* 该账号生成过密钥，并且我已备份了密钥</div>
+          <div className="tips-box">* 输入交易密码，解锁您的密钥</div>
           <InputItem
             clear
-            placeholder="导入已有私钥"
-            value={this.state.privateKey}
-            onChange={(privateKey) => this.setState({privateKey})}
+            placeholder="请输入您的交易密码"
+            value={this.state.tradePassword}
+            onChange={(tradePassword) => this.setState({tradePassword})}
           />
-          <Button onClick={this.onImport} disabled={!this.clickAble}>导入</Button>
-
+          <Button
+            onClick={() => this.onDecrypt({publicKey: this.publicKey, encryptPrivateKey: this.encryptPrivateKey})}
+            disabled={!this.clickAble}
+          >
+            解密
+          </Button>
         </Modal>
         <ActivityIndicator
           toast

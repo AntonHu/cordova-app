@@ -6,10 +6,10 @@ import './style.less';
 
 const Item = List.Item;
 const ListData = [
-  {
-    text: '重置交易密码',
-    path: 'resetTradePW'
-  },
+  // {
+  //   text: '重置交易密码',
+  //   path: 'resetTradePW'
+  // },
   {
     text: '重置登录密码',
     path: 'resetLoginPW'
