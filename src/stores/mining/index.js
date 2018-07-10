@@ -5,7 +5,8 @@ import {
   getNearbyWalletTopRank,
   getTokenBalance,
   getTokenBalanceRanking,
-  getDigTimes
+  getDigTimes,
+  getTodayIntegral
 } from './request';
 
 class MiningStore {
@@ -19,6 +20,7 @@ class MiningStore {
     countAllTimes: 0,
     countAllTimesToday: 0
   };
+  @observable todayIntegral = 0; // 今日太阳积分
 
   /**
    * 太阳积分
@@ -134,6 +136,25 @@ class MiningStore {
           if (data.countAllTimesToday) {
             this.digTimes.countAllTimesToday = data.countAllTimesToday;
           }
+        });
+      }
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  /**
+   * 获取"今日太阳积分"
+   * @returns {Promise.<void>}
+   */
+  @action
+  fetchTodayIntegral = async ({ publicKey }) => {
+    try {
+      const res = await getTodayIntegral({ publicKey });
+      if (res.data && res.data.code === 200) {
+        runInAction(() => {
+          const data = res.data.data || {};
+          this.todayIntegral = data.totalSolar || 0;
         });
       }
     } catch (err) {

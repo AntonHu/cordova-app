@@ -85,8 +85,8 @@ class Comp extends React.Component {
         .then(result => {
           if (result.code === 200) {
             Toast.show('添加逆变器成功');
-            // 删除过期时间，重新请求所有数据
-            deleteLocalStorage('expireTime');
+            // 添加成功后，删除缓存设备数据，重新请求所有设备数据
+            deleteLocalStorage('equipmentListObj');
           } else {
             Toast.show(`添加逆变器失败,${result.msg}`);
           }
