@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import { Title, PageWithHeader, Picture } from '../../../components';
 import { Icon, Tabs, WhiteSpace } from 'antd-mobile';
+import { getLocalStorage } from '../../../utils/storage';
 import './style.less';
 
 const tabs2 = [
@@ -20,27 +21,36 @@ class Comp extends React.Component {
   }
 
   makeRequest = () => {
-    const {keyPair} = this.props;
+    const { keyPair } = this.props;
     if (keyPair.hasKey) {
       // 获取我的太阳积分
       this.props.miningStore.fetchBalance({ publicKey: keyPair.publicKey });
       // 邻居榜
-      this.props.miningStore.fetchNearbyRanking({ publicKey: keyPair.publicKey });
+      this.props.miningStore.fetchNearbyRanking({
+        publicKey: keyPair.publicKey
+      });
       // 获取"当前积分排行"
-      this.props.miningStore.fetchBalanceRanking({ publicKey: keyPair.publicKey });
+      this.props.miningStore.fetchBalanceRanking({
+        publicKey: keyPair.publicKey
+      });
+      // 获取"今日太阳积分"
+      this.props.miningStore.fetchTodayIntegral({
+        publicKey: keyPair.publicKey
+      });
     }
     this.props.miningStore.fetchAllRanking();
     this.props.miningStore.fetchDigTimes();
-
   };
 
   render() {
+    const dayStationElectric = getLocalStorage('dayStationElectric') || 0; // 获取本地储存今日发电量
     const {
       balanceRanking,
       digTimes,
       allRanking,
       nearbyRank,
-      balance
+      balance,
+      todayIntegral
     } = this.props.miningStore;
     const userInfo = this.props.userStore.userInfo;
     const { avatar } = userInfo;
@@ -49,7 +59,7 @@ class Comp extends React.Component {
         <PageWithHeader leftComponent={null} title={'挖宝池'}>
           <div className="sun-info">
             <div className="my-sun">
-              <Picture src={avatar} size={120}/>
+              <Picture src={avatar} size={120} />
               <div>
                 <div className="sun-type">我的太阳积分</div>
                 <div className="rank">{balance.toFixed(2)}</div>
@@ -66,11 +76,11 @@ class Comp extends React.Component {
             <div className="my-profit">
               <div className="profit-item">
                 <div className="profit-title">今日发电</div>
-                <div className="profit-number">899kw/h</div>
+                <div className="profit-number">{`${dayStationElectric}kw/h`}</div>
               </div>
               <div className="profit-item">
                 <div className="profit-title">今日太阳积分</div>
-                <div className="profit-number">18</div>
+                <div className="profit-number">{todayIntegral}</div>
               </div>
             </div>
           </div>

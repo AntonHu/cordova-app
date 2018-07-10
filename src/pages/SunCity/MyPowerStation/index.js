@@ -3,14 +3,16 @@ import { withRouter } from 'react-router-dom';
 import { toJS } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { BlueBox, Title, PageWithHeader } from '../../../components';
-import { Icon, Popover, Toast } from 'antd-mobile';
+import { Icon, ActivityIndicator } from 'antd-mobile';
+import { JSRsasign } from '../../../jssign';
+import SM2Cipher from '../../../jssign/SM2Cipher';
 import F2 from '@antv/f2';
 import './style.less';
 
-import { getLocalStorage } from '../../../utils/storage';
+import { setLocalStorage, getLocalStorage } from '../../../utils/storage';
 import { POWER_TYPE } from '../../../utils/variable';
 
-const Item = Popover.Item;
+const BigInteger = JSRsasign.BigInteger;
 
 /**
  * 我的电站信息
@@ -30,11 +32,34 @@ class Comp extends React.Component {
     dayStationData: [],
     monthStationData: [],
     yearStationData: [],
-    allStationData: []
+    allStationData: [],
+    loading: true
   };
-  componentDidMount() {
-    const equipmentListObj =
-      JSON.parse(getLocalStorage('equipmentListObj')) || {}; // 获取本地储存的设备列表
+  async componentDidMount() {
+    const { keyPair } = this.props;
+    let equipmentListObj = {};
+    // 获取本地储存的设备列表
+    if (getLocalStorage('equipmentListObj')) {
+      equipmentListObj = JSON.parse(getLocalStorage('equipmentListObj'));
+      this.setState({
+        loading: false
+      });
+    } else {
+      if (keyPair.hasKey) {
+        // 获取设备列表
+        await this.props.sunCityStore.fetchSCEquipmentList({
+          userPubKey: keyPair.publicKey
+        });
+        equipmentListObj = toJS(this.props.sunCityStore.equipmentList);
+        if (!equipmentListObj) {
+          this.setState({
+            loading: false
+          });
+        }
+        // 添加各个设备的功率和日电量
+        equipmentListObj && this.addEquipmentPower(equipmentListObj, 1);
+      }
+    }
     const dayStationData = JSON.parse(getLocalStorage('dayStationData')) || []; // 获取本地储存每天发电数据
     const monthStationData =
       JSON.parse(getLocalStorage('monthStationData')) || []; // 获取本地储存每月发电数据
@@ -51,7 +76,94 @@ class Comp extends React.Component {
     });
     this.barChart = this.renderBarChart(dayStationData);
   }
+  // 为每个添加设备的功率和日电量
+  async addEquipmentPower(equipmentListObj, dateType) {
+    // 遍历每个设备，并添加功率和日电量
+    for (let i = 0; i < Object.keys(equipmentListObj).length; ++i) {
+      const name = Object.keys(equipmentListObj)[i];
+      const info = equipmentListObj[name];
+      const sourceData = info.source;
+      const deviceNo = info.deviceNo;
+      const decryptData = await this.handleEquipmentData(
+        name,
+        sourceData,
+        deviceNo,
+        dateType
+      );
+      // 设备功率
+      const currentPower =
+        (decryptData &&
+          decryptData[decryptData.length - 1] &&
+          decryptData[decryptData.length - 1].power.toFixed(2)) ||
+        0;
+      // 设备日电量
+      let dayElectric = 0;
+      decryptData.forEach(item => {
+        dayElectric += item.number;
+      });
+      equipmentListObj[name].currentPower = currentPower || 0; // 设备功率
+      equipmentListObj[name].dayElectric = dayElectric.toFixed(2) || 0; // 设备日电量
+    }
+    setLocalStorage('equipmentListObj', JSON.stringify(equipmentListObj)); // 本地储存所有设备状态
+    this.setState({ equipmentListObj, loading: false });
+  }
 
+  // 获取并处理每个设备数据
+  async handleEquipmentData(name, sourceData, deviceNo, dateType) {
+    if (this.props.keyPair.hasKey) {
+      await this.props.sunCityStore.fetchSCEquipmentPower({
+        sourceData,
+        deviceNo,
+        userPubKey: this.props.keyPair.publicKey,
+        dateType
+      });
+    }
+    const receiveData = toJS(this.props.sunCityStore.equipmentPower);
+    const decryptData = this.handleDecryptData(receiveData);
+    return decryptData;
+  }
+
+  // 处理获取的解密数据
+  handleDecryptData = receiveData => {
+    const decryptData = [];
+    Object.keys(receiveData).forEach(item => {
+      let powerInfo;
+      try {
+        powerInfo =
+          this.doDecrypt(receiveData[item]) &&
+          JSON.parse(this.doDecrypt(receiveData[item]));
+      } catch (err) {
+        console.log(err);
+      }
+      if (powerInfo) {
+        const value = +(powerInfo.maxEnergy - powerInfo.minEnergy).toFixed(2);
+        decryptData.push({
+          time: item,
+          number: value,
+          maxValue: powerInfo.maxEnergy && +powerInfo.maxEnergy,
+          power: powerInfo.power || ''
+        });
+      }
+    });
+    return decryptData;
+  };
+
+  // 数据解密
+  doDecrypt = data => {
+    let privBI = '';
+    if (this.props.keyPair.hasKey) {
+      privBI = new BigInteger(this.props.keyPair.privateKey, 16);
+    }
+    let cipherMode = '1'; // C1C3C2
+    const cipher = new SM2Cipher(cipherMode);
+
+    const decryptedMsg = cipher.Decrypt(privBI, data);
+    return decryptedMsg;
+  };
+
+  componentWillUnmount() {
+    this.timeoutID = null;
+  }
   componentWillUnmount() {
     if (this.barChart) {
       this.barChart = undefined;
@@ -132,58 +244,6 @@ class Comp extends React.Component {
     this.setState({ selected });
   };
 
-  // 添加逆变器
-  addInverter = () => {
-    if (window.cordova) {
-      window.cordova.plugins.barcodeScanner.scan(
-        result => {
-          // 暂时保存
-          if (this.props.keyPair.hasKey) {
-            // this.props.sunCityStore
-            //   .fetchSCAddInverter({
-            //     userPubKey: this.props.keyPair.publicKey,
-            //     sourceData: sourceData,
-            //     deviceNo: deviceNo
-            //   })
-            //   .then(result => {
-            //     if (result.code === 200) {
-            //       Toast.show('添加逆变器成功');
-            //     }
-            //   });
-          }
-
-          // 测试代码，接口和参数还没定
-          alert(
-            '收到一个二维码\n' +
-              '扫码文字结果: ' +
-              result.text +
-              '\n' +
-              '格式: ' +
-              result.format +
-              '\n' +
-              '是否在扫码页面取消扫码: ' +
-              result.cancelled
-          );
-        },
-        error => {
-          //扫码失败
-          Toast.show(`扫码失败${error}`);
-        },
-        {
-          preferFrontCamera: false, // iOS and Android 设置前置摄像头
-          showFlipCameraButton: true, // iOS and Android 显示旋转摄像头按钮
-          showTorchButton: true, // iOS and Android 显示打开闪光灯按钮
-          torchOn: false, // Android, launch with the torch switched on (if available)打开手电筒
-          prompt: '在扫描区域内放置二维码', // Android提示语
-          resultDisplayDuration: 500, // Android, display scanned text for X ms设置扫码时间的参数default 1500.
-          formats: 'CODE_128', // 二维码格式可设置多种类型,QR_CODE：二维码，CODE_128：条形码
-          orientation: 'portrait', // Android only (portrait|landscape),default unset so it rotates with the device在安卓上 landscape 是横屏状态
-          disableAnimations: true, // iOS     是否禁止动画
-          disableSuccessBeep: false // iOS      禁止成功后提示声音 “滴”
-        }
-      );
-    }
-  };
   render() {
     const dayStationElectric = getLocalStorage('dayStationElectric') || 0; // 获取本地储存今日发电量
     const currentStationPower = getLocalStorage('currentStationPower') || 0; // 获取本地储存当前电站功率
@@ -200,22 +260,12 @@ class Comp extends React.Component {
         <PageWithHeader
           title={'我的电站'}
           rightComponent={
-            <Popover
-              overlayClassName="fortest"
-              visible={this.state.barcodeVisible}
-              overlay={[
-                <Item key="1">
-                  <img
-                    src="https://gw.alipayobjects.com/zos/rmsportal/tOtXhkIWzwotgGSeptou.svg"
-                    className="am-icon"
-                    alt=""
-                  />添加逆变器
-                </Item>
-              ]}
-              onSelect={this.addInverter}
+            <i
+              className="iconfont"
+              onClick={() => this.props.history.push('/sunCity/addInverter')}
             >
-              <i className="iconfont">&#xe650;</i>
-            </Popover>
+              &#xe650;
+            </i>
           }
         >
           <BlueBox type={'pure'}>
@@ -280,41 +330,49 @@ class Comp extends React.Component {
           </div>
           <div className="equipment">
             <Title title="太阳城蓄力装备" />
-            {equipmentNameList.map((equipment, index) => {
-              return (
-                <div
-                  key={index}
-                  className="item"
-                  onClick={() =>
-                    this.props.history.push(
-                      `/sunCity/equipmentInfo/${
-                        equipmentListObj[equipment].deviceNo
-                      }?source=${
-                        equipmentListObj[equipment].source
-                      }&name=${equipment}`
-                    )
-                  }
-                >
-                  <div className="item-pic">
-                    <i className="iconfont">&#xea35;</i>
-                  </div>
-                  <div className="item-detail">
-                    <div className="item-name">{equipment}</div>
-                    <div className="item-info">
-                      <span>
-                        {`功率：${equipmentListObj[equipment].currentPower}w`}{' '}
-                      </span>
-                      <span>
-                        {`日电量：${
-                          equipmentListObj[equipment].dayElectric
-                        }kw/h`}
-                      </span>
+            {equipmentNameList.length > 0 ? (
+              equipmentNameList.map((equipment, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="item"
+                    onClick={() =>
+                      this.props.history.push(
+                        `/sunCity/equipmentInfo/${
+                          equipmentListObj[equipment].deviceNo
+                        }?source=${
+                          equipmentListObj[equipment].source
+                        }&name=${equipment}`
+                      )
+                    }
+                  >
+                    <div className="item-pic">
+                      <i className="iconfont">&#xea35;</i>
                     </div>
+                    <div className="item-detail">
+                      <div className="item-name">{equipment}</div>
+                      <div className="item-info">
+                        <span>
+                          {`功率：${equipmentListObj[equipment].currentPower}w`}{' '}
+                        </span>
+                        <span>{`日电量：${
+                          equipmentListObj[equipment].dayElectric
+                        }kw/h`}</span>
+                      </div>
+                    </div>
+                    <Icon type="right" />
                   </div>
-                  <Icon type="right" />
-                </div>
-              );
-            })}
+                );
+              })
+            ) : (
+              <div className="loading">
+                {this.state.loading ? (
+                  <ActivityIndicator text="加载中..." />
+                ) : (
+                  '暂无数据'
+                )}
+              </div>
+            )}
           </div>
         </PageWithHeader>
       </div>

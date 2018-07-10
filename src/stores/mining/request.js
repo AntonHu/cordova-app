@@ -1,8 +1,5 @@
 import { get, post } from '../../utils/fetch';
-import {
-  backendServer,
-  PAGE_SIZE
-} from '../../utils/variable';
+import { backendServer, PAGE_SIZE } from '../../utils/variable';
 
 /**
  * 获取挖宝总排行榜
@@ -92,6 +89,22 @@ export const getTokenBalanceRanking = async ({ publicKey }) => {
 export const getDigTimes = async () => {
   try {
     const response = await get(`${backendServer}/wallet/digTimes`);
+    return response;
+  } catch (err) {
+    return err.response;
+  }
+};
+
+/**
+ * 用户的"今日太阳积分"
+ * @param publicKey
+ * @returns {Promise.<*>}
+ */
+export const getTodayIntegral = async ({ publicKey }) => {
+  try {
+    const response = await get(`${backendServer}/wallet/tokenTotalToday`, {
+      publicKey
+    });
     return response;
   } catch (err) {
     return err.response;
