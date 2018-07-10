@@ -7,7 +7,7 @@ import { px } from '../../../utils/getDevice';
 import { POWER_TYPE } from '../../../utils/variable';
 import { JSRsasign } from '../../../jssign';
 import SM2Cipher from '../../../jssign/SM2Cipher';
-import { getLocalStorage } from '../../../utils/storage';
+import { setLocalStorage, getLocalStorage } from '../../../utils/storage';
 import './style.less';
 
 import { toJS } from 'mobx';
@@ -35,26 +35,72 @@ class Comp extends React.Component {
     const params = this.props.location.search.substring(1);
     const sourceData = params.split('&')[0].split('=')[1];
 
-    const sortData = await this.getPowerData(sourceData, deviceNo, 1);
-    if (sortData.length >= 1) {
-      this.curveChart = this.renderCurve(sortData);
+    let dayEquipmentData = [];
+    if (this.isExpire() || !getLocalStorage('dayEquipmentData')) {
+      dayEquipmentData = await this.getPowerData(sourceData, deviceNo, 1);
+      setLocalStorage('dayEquipmentData', JSON.stringify(dayEquipmentData)); // 本地储存天设备发电数据
+    } else {
+      dayEquipmentData = JSON.parse(getLocalStorage('dayEquipmentData'));
+    }
+    if (dayEquipmentData.length >= 1) {
+      this.curveChart = this.renderCurve(dayEquipmentData);
     } else {
       // 默认显示数据
       this.curveChart = this.renderCurve([{ time: '00', number: 0 }]);
     }
+
+    // 设备当前功率
     const currentPower =
-      sortData &&
-      sortData[sortData.length - 1] &&
-      sortData[sortData.length - 1].power;
-    // 日电量
-    let count = 0;
+      dayEquipmentData &&
+      dayEquipmentData[dayEquipmentData.length - 1] &&
+      dayEquipmentData[dayEquipmentData.length - 1].power;
+    // 设备日电量
+    let dayElectric = 0;
+    dayEquipmentData.forEach(item => {
+      dayElectric += item.number;
+    });
     this.setState({
       deviceNo,
       sourceData,
-      count
+      dayElectric
     });
     this.pieBarChart = this.renderPieBar(currentPower);
+
+    // 本地储存设备月发电数据
+    if (this.isExpire() || !getLocalStorage('monthEquipmentData')) {
+      const monthEquipmentData = await this.getPowerData(
+        sourceData,
+        deviceNo,
+        2
+      );
+      setLocalStorage('monthEquipmentData', JSON.stringify(monthEquipmentData));
+    }
+
+    // 本地储存设备年发电数据
+    if (this.isExpire() || !getLocalStorage('yearEquipmentData')) {
+      const yearEquipmentData = await this.getPowerData(
+        sourceData,
+        deviceNo,
+        3
+      );
+      setLocalStorage('yearEquipmentData', JSON.stringify(yearEquipmentData));
+    }
+
+    // 本地储存设备所有发电数据
+    if (this.isExpire() || !getLocalStorage('allEquipmentData')) {
+      const allEquipmentData = await this.getPowerData(sourceData, deviceNo, 4);
+      setLocalStorage('allEquipmentData', JSON.stringify(allEquipmentData));
+      setLocalStorage('equipmentExpireTime', new Date().getTime()); // 本地储存设备数据过期时间
+    }
   }
+
+  // 检测设备数据是否过期
+  isExpire = () => {
+    return (
+      new Date().getTime() - Number(getLocalStorage('equipmentExpireTime')) >
+      3 * 60 * 60 * 1000
+    ); // 设置三个小时的过期时间
+  };
 
   componentWillUnmount() {
     if (this.pieBarChart) {
@@ -77,12 +123,13 @@ class Comp extends React.Component {
     }
 
     const receiveData = toJS(this.props.sunCityStore.equipmentPower);
-    const sortData = (receiveData && this.handleData(receiveData)) || [];
-    return sortData;
+    const decryptData =
+      (receiveData && this.handleDecryptData(receiveData)) || [];
+    return decryptData;
   }
 
   // 处理获取的解密数据
-  handleData = receiveData => {
+  handleDecryptData = receiveData => {
     const data = [];
     Object.keys(receiveData).forEach(item => {
       // 后端数据可能有问题，加一层处理
@@ -121,7 +168,6 @@ class Comp extends React.Component {
     }
     let cipherMode = '1'; // C1C3C2
     const cipher = new SM2Cipher(cipherMode);
-
     const decryptedMsg = cipher.Decrypt(privBI, data);
     return decryptedMsg;
   };
@@ -255,13 +301,23 @@ class Comp extends React.Component {
     });
     selected[type] = true;
     this.setState({ selected });
-    const sortData = await this.getPowerData(
-      this.state.sourceData,
-      this.state.deviceNo,
-      POWER_TYPE[type]
-    );
-    if (sortData.length >= 1) {
-      this.curveChart = this.renderCurve(sortData);
+
+    let equipmentData = [];
+    switch (type) {
+      case 'month':
+        equipmentData = JSON.parse(getLocalStorage('monthEquipmentData')); // 获取本地储存设备发电--月
+        break;
+      case 'year':
+        equipmentData = JSON.parse(getLocalStorage('yearEquipmentData')); // 获取本地储存设备发电--年
+        break;
+      case 'all':
+        equipmentData = JSON.parse(getLocalStorage('allEquipmentData')); // 获取本地储存设备发电--所有
+        break;
+      default:
+        break;
+    }
+    if (equipmentData.length >= 1) {
+      this.curveChart = this.renderCurve(equipmentData);
     } else {
       // 默认显示数据
       this.curveChart = this.renderCurve([{ time: '00', number: 0 }]);
@@ -286,7 +342,7 @@ class Comp extends React.Component {
           <div className="survey">
             <div className="survey-item">
               <div className="survey-item-number">{`${
-                this.state.count
+                this.state.dayElectric
               }kw/h`}</div>
               <div className="survey-item-type">日电量</div>
             </div>

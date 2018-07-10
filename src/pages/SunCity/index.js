@@ -87,9 +87,14 @@ class Comp extends React.Component {
         await this.props.sunCityStore.fetchSCEquipmentList({
           userPubKey: keyPair.publicKey
         });
-        equipmentListObj = toJS(this.props.sunCityStore.equipmentList) || {};
+        equipmentListObj = toJS(this.props.sunCityStore.equipmentList);
+        if (!equipmentListObj) {
+          this.setState({
+            loading: false
+          });
+        }
         // 添加各个设备的功率和日电量
-        this.addEquipmentPower(equipmentListObj, 1);
+        equipmentListObj && this.addEquipmentPower(equipmentListObj, 1);
       }
     } else {
       equipmentListObj = JSON.parse(getLocalStorage('equipmentListObj'));
@@ -100,7 +105,10 @@ class Comp extends React.Component {
     }
 
     // 储存电站数据,2-月，3-年，4-全部
-    if (this.isExpire() || !getLocalStorage('monthStationData')) {
+    if (
+      (this.isExpire() || !getLocalStorage('monthStationData')) &&
+      equipmentListObj
+    ) {
       const monthStationData = await this.equipmentDataIntegrate(
         equipmentListObj,
         2
@@ -108,7 +116,10 @@ class Comp extends React.Component {
       setLocalStorage('monthStationData', JSON.stringify(monthStationData)); // 本地储存电站每月发电数据
     }
 
-    if (this.isExpire() || !getLocalStorage('yearStationData')) {
+    if (
+      (this.isExpire() || !getLocalStorage('yearStationData')) &&
+      equipmentListObj
+    ) {
       const yearStationData = await this.equipmentDataIntegrate(
         equipmentListObj,
         3
@@ -116,21 +127,24 @@ class Comp extends React.Component {
       setLocalStorage('yearStationData', JSON.stringify(yearStationData)); // 本地储存电站每年发电数据
     }
 
-    if (this.isExpire() || !getLocalStorage('allStationData')) {
+    if (
+      (this.isExpire() || !getLocalStorage('allStationData')) &&
+      equipmentListObj
+    ) {
       const equipmentDataArr = await this.getAllEquipmentData(
         equipmentListObj,
         4
       );
       const allStationData = this.allEquipmentDataIntegrate(equipmentDataArr);
       setLocalStorage('allStationData', JSON.stringify(allStationData)); // 本地储存电站所有发电数据
-      setLocalStorage('expireTime', new Date().getTime()); // 本地储存电站数据过期时间
+      setLocalStorage('stationExpireTime', new Date().getTime()); // 本地储存电站数据过期时间
     }
   }
 
   // 检测数据是否过期
   isExpire = () => {
     return (
-      new Date().getTime() - Number(getLocalStorage('expireTime')) >
+      new Date().getTime() - Number(getLocalStorage('stationExpireTime')) >
       3 * 60 * 60 * 1000
     ); // 设置三个小时的过期时间
   };
@@ -377,6 +391,16 @@ class Comp extends React.Component {
         })
         .then(result => {
           if (result.code === 200) {
+            if (keyPair.hasKey) {
+              // 获取我的太阳积分
+              this.props.miningStore.fetchBalance({
+                publicKey: keyPair.publicKey
+              });
+              // 获取排行
+              this.props.miningStore.fetchBalanceRanking({
+                publicKey: keyPair.publicKey
+              });
+            }
             pickNumber += 1;
             this.selectSunNode.classList.add('remove');
             // 每删除10个，重置一次，并进入下一个
@@ -407,7 +431,7 @@ class Comp extends React.Component {
     return (
       <div className={'page-sunCity-info'}>
         <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
-          {`${lastNews && lastNews.title}：${lastNews && lastNews.content}`}
+          {lastNews ? `${lastNews.title}:${lastNews.content}` : ''}
         </NoticeBar>
         <div className="sun-content">
           <div className="info">
