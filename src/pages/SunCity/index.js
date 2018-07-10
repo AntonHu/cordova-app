@@ -289,9 +289,10 @@ class Comp extends React.Component {
     Object.keys(receiveData).forEach(item => {
       let powerInfo;
       try {
+        const decryptedItem = this.doDecrypt(receiveData[item]);
         powerInfo =
-          this.doDecrypt(receiveData[item]) &&
-          JSON.parse(this.doDecrypt(receiveData[item]));
+          decryptedItem &&
+          JSON.parse(decryptedItem);
       } catch (err) {
         console.log(err);
       }

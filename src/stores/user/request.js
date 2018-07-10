@@ -222,7 +222,7 @@ export const reqResetTradePassword = async (
       verificationCode});
     return response;
   } catch (err) {
-    throw err.response;
+    return err.response;
   }
 };
 
@@ -231,11 +231,9 @@ export const reqResetTradePassword = async (
  * @param publicKey
  * @returns {Promise.<*>}
  */
-export const getIsInChain = async ({publicKey}) => {
+export const getIsInChain = async () => {
   try {
-    const response = await get(`${backendServer}/user/isInChain`, {
-      publicKey
-    });
+    const response = await get(`${backendServer}/user/isInChain`);
     return response;
   } catch (err) {
     console.log(err);
@@ -246,12 +244,14 @@ export const getIsInChain = async ({publicKey}) => {
 /**
  * 用户上链(把publicKey关联上某个用户)
  * @param publicKey
+ * @param encryptPrivateKey
  * @returns {Promise.<*>}
  */
-export const putUserIntoChain = async ({publicKey}) => {
+export const putUserIntoChain = async ({publicKey, encryptPrivateKey}) => {
   try {
     const response = await get(`${backendServer}/user/userIntoChain`, {
-      publicKey
+      publicKey,
+      encryptPrivateKey
     });
     return response;
   } catch (err) {

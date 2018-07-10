@@ -77,6 +77,17 @@ class KeyPair {
   };
 
   /**
+   * 储存公钥和私钥
+   * @param publicKey
+   * @param privateKey
+   */
+  savePubAndPriv = ({publicKey, privateKey}) => {
+    this.savePublicKey(publicKey);
+    this.savePrivateKey(privateKey);
+    this.checkKeyPairExist();
+  };
+
+  /**
    * 生成公私钥，并储存
    * @returns {{publicKey, privateKey}}
    */
