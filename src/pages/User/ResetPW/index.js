@@ -24,15 +24,13 @@ class Comp extends React.PureComponent {
     return (
       <div className={'page-reset-pw'}>
         <PageWithHeader title={'密码设置'}>
-          <div className="list-box">
-            <List>
-              {ListData.map((v, i) => (
-                <Link key={i} to={`/user/${v.path}`}>
-                  <Item arrow={'horizontal'}>{v.text}</Item>
-                </Link>
-              ))}
-            </List>
-          </div>
+          <List>
+            {ListData.map((v, i) => (
+              <Link key={i} to={`/user/${v.path}`}>
+                <Item arrow={'horizontal'}>{v.text}</Item>
+              </Link>
+            ))}
+          </List>
         </PageWithHeader>
       </div>
     );
