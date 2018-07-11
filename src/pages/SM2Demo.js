@@ -29,8 +29,9 @@ class SM2Demo extends React.PureComponent {
 
     console.log('encode pub: ', encodeURIComponent(pub64))
     console.log('encode priv: ', encodeURIComponent(pri64))
-
+    const startTime   = new Date().getTime();
     // this.test();
+    console.log(new Date().getTime() - startTime)
   }
 
   getPublicKeyFromPriv = () => {
@@ -129,7 +130,11 @@ class SM2Demo extends React.PureComponent {
       const cipher = new SM2Cipher(cipherMode);
 
       const decryptedMsg = cipher.Decrypt(privBI, cMsg);
-      // console.log(decryptedMsg !== msg)
+
+      // if (window.$sm2) {
+      //   const decryptedMsg = window.$sm2.Decrypt(privateKey, cMsg);
+      //   console.log(decryptedMsg)
+      // }
 
       return decryptedMsg;
     }
@@ -138,14 +143,14 @@ class SM2Demo extends React.PureComponent {
     let cMsgTestObj = JSON.parse(cMsgTest);
     const decryptArray = Object.keys(cMsgTestObj).map(i => {
       console.log(cMsgTestObj[i].length)
-      return [_doDecrypt(this.state.privateKey, cMsgTestObj[i], msg), cMsgTestObj[i]]
+      // return [_doDecrypt(this.state.privateKey, cMsgTestObj[i], msg), cMsgTestObj[i]]
+      return _doDecrypt(this.state.privateKey, cMsgTestObj[i], msg)
     });
+    console.log(JSON.stringify(decryptArray))
     //
-    const notDecrypted = decryptArray.filter(v => v[0] === '');
-    //
-    //
-    console.log(notDecrypted.length);
-    console.log(JSON.stringify(notDecrypted.map(v => v[1])))
+    // const notDecrypted = decryptArray.filter(v => v[0] === '');
+    // console.log(notDecrypted.length);
+    // console.log(JSON.stringify(notDecrypted.map(v => v[1])))
 
 
     // var array100 = [];
