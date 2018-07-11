@@ -1,18 +1,31 @@
 @import '../../../../styles/common';
 
 .page-reset-login-pw {
+  min-height: 100vh;
+  .page-with-header {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
   .login-title {
-    padding: 5px 10px;
+    margin-top: 10px;
+    text-align: left;
+    font-size: @h5;
+    height: 74 * @px;
+    line-height: 74 * @px;
+    padding: 0 20px;
     background: @main-color;
     color: @white-text-color;
   }
   .reset-login-pw {
-    padding: 0 15px;
+    flex-grow: 1;
+    padding: 15px;
+    background: @white-text-color;
     .am-input-item {
       border-bottom: 1px solid @light-text-color;
     }
     .green-button {
-      margin-top: 10px;
+      margin-top: 204 * @px;
     }
   }
 }

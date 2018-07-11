@@ -89,7 +89,7 @@ class Comp extends React.PureComponent {
     return (
       <div className={'page-reset-login-pw'}>
         <PageWithHeader title={'重置登录密码'}>
-          <div className="login-title">您已登录，可直接重置登陆密码</div>
+          <div className="login-title">您已登录能信宝，可直接重置登录密码</div>
           <div className="reset-login-pw">
             <InputItem
               clear
@@ -112,7 +112,7 @@ class Comp extends React.PureComponent {
               onChange={this.onChange('confirmNewPassword')}
               value={confirmNewPassword}
             />
-            <GreenButton onClick={this.onClick}>确认</GreenButton>
+            <GreenButton onClick={this.onClick} size="big">确认</GreenButton>
           </div>
         </PageWithHeader>
       </div>

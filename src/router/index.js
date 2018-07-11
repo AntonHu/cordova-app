@@ -8,6 +8,7 @@ import {
 } from '../pages/User';
 import AuthorizedRoute from './AuthorizedRoute';
 import PrimaryRoute from './PrimaryRoute';
+import './index.less'
 
 const RouteFallback = props => {
   return (

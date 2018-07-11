@@ -72,7 +72,8 @@ class Comp extends React.Component {
                 if (v.text === '当前账号') {
                   return <Item
                     arrow={v.horizontal && 'horizontal'}
-                    extra={this.getNameFromUserInfo(this.props.userStore.userInfo)}>
+                    extra={this.getNameFromUserInfo(this.props.userStore.userInfo)}
+                    key={i}>
                     {v.text}
                   </Item>
                 }

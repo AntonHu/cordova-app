@@ -82,8 +82,9 @@ class Comp extends React.PureComponent {
               type="text"
               onChange={this.changeState('phone')}
               value={this.state.phone}
+              labelNumber={3}
             >
-              +86
+              <span className='h3'>+86</span>
             </InputItem>
             <InputItem
               placeholder="请输入密码"

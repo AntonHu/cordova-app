@@ -9,11 +9,12 @@ import './style.less';
  */
 class Comp extends React.PureComponent {
   static propTypes = {
-    title: PropTypes.string,
-    subTitle: PropTypes.string,
-    onPress: PropTypes.func,
-    buttonText: PropTypes.string,
-    visible: PropTypes.bool
+    title: PropTypes.string.isRequired,
+    subTitle: PropTypes.string.isRequired,
+    onPress: PropTypes.func.isRequired,
+    buttonText: PropTypes.string.isRequired,
+    visible: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -29,12 +30,15 @@ class Comp extends React.PureComponent {
       subTitle,
       onPress,
       buttonText,
-      visible
+      visible,
+      onClose
     } = this.props;
 
     return (
-      <Modal visible={visible} transparent className={'msg-popup'}>
-        <div className={'icon'}></div>
+      <Modal visible={visible} transparent className={'msg-popup'} maskClosable onClose={onClose}>
+        <div className={'icon'}>
+          <i className="iconfont">&#xe67d;</i>
+        </div>
         <div className={'title'}>{title}</div>
         <div className={'subtitle'}>{subTitle}</div>
         <div className={'button'}>
