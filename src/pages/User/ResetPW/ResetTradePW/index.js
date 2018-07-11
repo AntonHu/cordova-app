@@ -2,7 +2,7 @@ import React from 'react';
 import { PageWithHeader, GreenButton, Countdown } from '../../../../components';
 import {testCode, testPhoneNumber, clearSpace, testPassword} from '../../../../utils/methods';
 import {reqSendCode, reqResetTradePassword, putUserIntoChain} from '../../../../stores/user/request';
-import { InputItem, Modal } from 'antd-mobile';
+import { InputItem, Modal, ActivityIndicator } from 'antd-mobile';
 import {observer, inject} from 'mobx-react';
 import CryptoJS from 'crypto-js'
 import './style.less';
@@ -27,7 +27,8 @@ class Comp extends React.Component {
     phone: '',
     code: '',
     tradePassword: '',
-    confirmTradePassword: ''
+    confirmTradePassword: '',
+    showLoading: false
   };
 
   setSuccess = false;
@@ -139,6 +140,9 @@ class Comp extends React.Component {
   encryptAndUpload = ({privateKey, password, publicKey}) => {
     const self = this;
     const encryptPrivateKey = CryptoJS.AES.encrypt(privateKey, password);
+    this.setState({
+      showLoading: true
+    });
     putUserIntoChain({publicKey, encryptPrivateKey: encryptPrivateKey.toString()})
       .then(res => {
         const data = res.data || {};
@@ -150,9 +154,15 @@ class Comp extends React.Component {
         } else {
           alert('失败', '上传公钥失败', [{text: '好的', onPress: () => {}}]);
         }
+        this.setState({
+          showLoading: false
+        });
       })
       .catch(err => {
         alert('失败', '上传公钥失败', [{text: '好的', onPress: () => {}}]);
+        this.setState({
+          showLoading: false
+        });
       })
   };
 
@@ -244,6 +254,11 @@ class Comp extends React.Component {
             <GreenButton size={'big'} onClick={this.onSubmit}>确认</GreenButton>
           </div>
         </PageWithHeader>
+        <ActivityIndicator
+          toast
+          text={'正在备份您的密钥...'}
+          animating={this.state.showLoading}
+        />
       </div>
     );
   }
