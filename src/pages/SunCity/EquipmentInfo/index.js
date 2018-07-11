@@ -1,11 +1,10 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { PageWithHeader } from '../../../components';
-// import { List, InputItem, Flex, Button, WhiteSpace } from 'antd-mobile';
 import F2 from '@antv/f2';
 import { px } from '../../../utils/getDevice';
 import { setLocalStorage, getLocalStorage } from '../../../utils/storage';
-import {decrypt} from '../../../utils/methods';
+import { decrypt } from '../../../utils/methods';
 import './style.less';
 
 import { toJS } from 'mobx';
@@ -133,10 +132,11 @@ class Comp extends React.Component {
         // 后端数据可能有问题，加一层处理
         let powerInfo;
         try {
-          const decryptedItem = decrypt(this.props.keyPair.privateKey, receiveData[item]);
-          powerInfo =
-            decryptedItem &&
-            JSON.parse(decryptedItem);
+          const decryptedItem = decrypt(
+            this.props.keyPair.privateKey,
+            receiveData[item]
+          );
+          powerInfo = decryptedItem && JSON.parse(decryptedItem);
         } catch (err) {
           console.log(err);
         }
@@ -150,7 +150,6 @@ class Comp extends React.Component {
         }
       });
     }
-
     const sortData = data.sort((pre, cur) => {
       if (pre.time.indexOf('-') > 0 && cur.time.indexOf('-') > 0) {
         return Date.parse(pre.time) - Date.parse(cur.time);
@@ -172,9 +171,9 @@ class Comp extends React.Component {
 
     const chart = new F2.Chart({
       id: 'pie-bar-chart',
-      width: px(320),
-      height: px(320),
-      padding: 5,
+      width: px(340),
+      height: px(340),
+      padding: 0,
       pixelRatio: window.devicePixelRatio
     });
     const data = [
@@ -206,10 +205,10 @@ class Comp extends React.Component {
       }
     });
     chart.guide().html({
-      position: ['120%', '65%'],
-      html: `<div style="width: 250px;height: 40px;text-align: center;"><div style="font-size: 14px">${(currentPower &&
+      position: ['110%', '55%'],
+      html: `<div style="width: 250px;height: 40px;text-align: center;"><div style="font-size: 20px">${(currentPower &&
         currentPower.toFixed(2)) ||
-        0}w</div><div style="font-size: 14px">当前功率</div></div>`
+        0}w</div><div style="font-size: 14px;margin-top: 5px">当前功率</div></div>`
     });
     chart
       .interval()

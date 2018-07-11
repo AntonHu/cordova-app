@@ -5,6 +5,7 @@ import { observer, inject } from 'mobx-react';
 import { BlueBox, Title, PageWithHeader } from '../../../components';
 import { Icon, ActivityIndicator } from 'antd-mobile';
 import { decrypt } from '../../../utils/methods';
+
 import F2 from '@antv/f2';
 import './style.less';
 
@@ -32,6 +33,7 @@ class Comp extends React.Component {
     allStationData: [],
     loading: true
   };
+
   async componentDidMount() {
     const { keyPair } = this.props;
     let equipmentListObj = {};
@@ -127,10 +129,11 @@ class Comp extends React.Component {
       Object.keys(receiveData).forEach(item => {
         let powerInfo;
         try {
-          const decryptItem = decrypt(this.props.keyPair.privateKey, receiveData[item]);
-            powerInfo =
-              decryptItem &&
-              JSON.parse(decryptItem);
+          const decryptItem = decrypt(
+            this.props.keyPair.privateKey,
+            receiveData[item]
+          );
+          powerInfo = decryptItem && JSON.parse(decryptItem);
         } catch (err) {
           console.log(err);
         }
@@ -148,15 +151,6 @@ class Comp extends React.Component {
 
     return decryptData;
   };
-
-  componentWillUnmount() {
-    this.timeoutID = null;
-  }
-  componentWillUnmount() {
-    if (this.barChart) {
-      this.barChart = undefined;
-    }
-  }
 
   // 初始化柱形图
   renderBarChart = data => {
@@ -233,6 +227,7 @@ class Comp extends React.Component {
   };
 
   render() {
+    console.log(global.weather);
     const dayStationElectric = getLocalStorage('dayStationElectric') || 0; // 获取本地储存今日发电量
     const currentStationPower = getLocalStorage('currentStationPower') || 0; // 获取本地储存当前电站功率
     const totalStationElectric =
@@ -259,7 +254,12 @@ class Comp extends React.Component {
           <BlueBox type={'pure'}>
             <div className="title">
               <div className="weather">
-                <i className="iconfont">&#xe636;</i>晴
+                <img
+                  className="weather-pic"
+                  src={global.weather && global.weather.dayPictureUrl}
+                  alt=""
+                />
+                {global.weather && global.weather.weather}
               </div>
               <div className="screen" onClick={this.screenChange}>
                 <div
