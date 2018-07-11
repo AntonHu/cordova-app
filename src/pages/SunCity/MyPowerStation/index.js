@@ -4,15 +4,12 @@ import { toJS } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { BlueBox, Title, PageWithHeader } from '../../../components';
 import { Icon, ActivityIndicator } from 'antd-mobile';
-import { JSRsasign } from '../../../jssign';
-import SM2Cipher from '../../../jssign/SM2Cipher';
+import { decrypt } from '../../../utils/methods';
 import F2 from '@antv/f2';
 import './style.less';
 
 import { setLocalStorage, getLocalStorage } from '../../../utils/storage';
 import { POWER_TYPE } from '../../../utils/variable';
-
-const BigInteger = JSRsasign.BigInteger;
 
 /**
  * 我的电站信息
@@ -126,39 +123,30 @@ class Comp extends React.Component {
   // 处理获取的解密数据
   handleDecryptData = receiveData => {
     const decryptData = [];
-    Object.keys(receiveData).forEach(item => {
-      let powerInfo;
-      try {
-        powerInfo =
-          this.doDecrypt(receiveData[item]) &&
-          JSON.parse(this.doDecrypt(receiveData[item]));
-      } catch (err) {
-        console.log(err);
-      }
-      if (powerInfo) {
-        const value = +(powerInfo.maxEnergy - powerInfo.minEnergy).toFixed(2);
-        decryptData.push({
-          time: item,
-          number: value,
-          maxValue: powerInfo.maxEnergy && +powerInfo.maxEnergy,
-          power: powerInfo.power || ''
-        });
-      }
-    });
-    return decryptData;
-  };
-
-  // 数据解密
-  doDecrypt = data => {
-    let privBI = '';
     if (this.props.keyPair.hasKey) {
-      privBI = new BigInteger(this.props.keyPair.privateKey, 16);
+      Object.keys(receiveData).forEach(item => {
+        let powerInfo;
+        try {
+          const decryptItem = decrypt(this.props.keyPair.privateKey, receiveData[item]);
+            powerInfo =
+              decryptItem &&
+              JSON.parse(decryptItem);
+        } catch (err) {
+          console.log(err);
+        }
+        if (powerInfo) {
+          const value = +(powerInfo.maxEnergy - powerInfo.minEnergy).toFixed(2);
+          decryptData.push({
+            time: item,
+            number: value,
+            maxValue: powerInfo.maxEnergy && +powerInfo.maxEnergy,
+            power: powerInfo.power || ''
+          });
+        }
+      });
     }
-    let cipherMode = '1'; // C1C3C2
-    const cipher = new SM2Cipher(cipherMode);
 
-    const decryptedMsg = cipher.Decrypt(privBI, data);
-    return decryptedMsg;
+    return decryptData;
   };
 
   componentWillUnmount() {

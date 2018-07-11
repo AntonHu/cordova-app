@@ -96,11 +96,24 @@ class KeyPair {
     const keyPair = ec.generateKeyPairHex();
     this.savePrivateKey(keyPair.ecprvhex);
     this.savePublicKey(keyPair.ecpubhex);
-    this.checkKeyPairExist();
     return {
       publicKey: keyPair.ecpubhex,
       privateKey: keyPair.ecprvhex
     }
+  };
+
+  /**
+   * 从localStorage取公钥
+   */
+  getPubFromLocalStorage = () => {
+    return  getLocalStorage(KEY_PAIR_LOCAL_STORAGE.PUBLIC_KEY);
+  };
+
+  /**
+   * 从localStorage取私钥
+   */
+  getPrivFromLocalStorage = () => {
+    return getLocalStorage(KEY_PAIR_LOCAL_STORAGE.PRIVATE_KEY);
   };
 
   /**

@@ -4,11 +4,10 @@ import {testCode, testPhoneNumber, clearSpace, testPassword} from '../../../../u
 import {reqSendCode, reqResetTradePassword, putUserIntoChain} from '../../../../stores/user/request';
 import { InputItem, Modal } from 'antd-mobile';
 import {observer, inject} from 'mobx-react';
-import {JSRsasign} from '../../../../jssign';
+import CryptoJS from 'crypto-js'
 import './style.less';
 
 const alert = Modal.alert;
-const CryptoJS = JSRsasign.CryptoJS;
 
 const showError = (text) => {
   alert('错误', text, [
@@ -77,7 +76,7 @@ class Comp extends React.Component {
     if (this.validateBeforeSendCode()) {
       const {phone} = this.state;
       this.countdown.startCounting();
-      reqSendCode({mobile: clearSpace(phone)})
+      reqSendCode({mobile: clearSpace(phone), type: '1'})
         .then(res => {
           console.log(res)
         })
@@ -116,11 +115,15 @@ class Comp extends React.Component {
         alert('成功', '设置交易密码成功。请一定备份您的交易密码，如果忘记，将导致账户资金无法取出', [{
           text: '确定', onPress: function () {
             self.encryptAndUpload({
-              publicKey: self.props.keyPair.publicKey,
-              privateKey: self.props.keyPair.privateKey,
+              publicKey: self.props.keyPair.getPubFromLocalStorage(),
+              privateKey: self.props.keyPair.getPrivFromLocalStorage(),
               password: tradePassword
             })
           }
+        }])
+      } else {
+        alert('错误', '设置交易密码失败', [{
+          text: '确定'
         }])
       }
     }
@@ -135,8 +138,8 @@ class Comp extends React.Component {
    */
   encryptAndUpload = ({privateKey, password, publicKey}) => {
     const self = this;
-    const encryptPrivateKey = CryptoJS.AES.encrypt(privateKey, password).toString();
-    putUserIntoChain({publicKey, encryptPrivateKey})
+    const encryptPrivateKey = CryptoJS.AES.encrypt(privateKey, password);
+    putUserIntoChain({publicKey, encryptPrivateKey: encryptPrivateKey.toString()})
       .then(res => {
         const data = res.data || {};
         if (data.code === 200) {
@@ -192,7 +195,7 @@ class Comp extends React.Component {
               }
             >
               <div className="number">2</div>
-              <div>重置密码</div>
+              <div>设置交易密码</div>
             </div>
           </div>
           <div className={this.state.firstStep ? '' : 'step-hide'}>
@@ -226,6 +229,7 @@ class Comp extends React.Component {
           <div className={this.state.secondStep ? '' : 'step-hide'}>
             <InputItem
               clear
+              type="password"
               placeholder="请输入交易密码"
               value={tradePassword}
               onChange={this.changeState('tradePassword')}
@@ -233,6 +237,7 @@ class Comp extends React.Component {
             <InputItem
               clear
               placeholder="确认交易密码"
+              type="password"
               value={confirmTradePassword}
               onChange={this.changeState('confirmTradePassword')}
             />

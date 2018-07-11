@@ -1,3 +1,7 @@
+import { JSRsasign } from '../jssign';
+import SM2Cipher from '../jssign/SM2Cipher';
+const BigInteger = JSRsasign.BigInteger;
+
 /**
  * 去掉字符串里的空格
  * @param string
@@ -111,6 +115,26 @@ export const readFileAsBuffer = (file) => {
  */
 export const turnJpegIntoBlob = (result) => {
   return new Blob([result], {type: 'image/jpeg'});
+};
+
+
+let cipherMode = '1';// C1C3C2
+const cipher = new SM2Cipher(cipherMode);
+
+/**
+ * JS版的解密
+ * @param privateKey
+ * @param cipherMsg
+ * @returns {*}
+ */
+export const decrypt = (privateKey, cipherMsg) => {
+  if (privateKey === '') {
+    return ''
+  }
+  const privBI = new BigInteger(privateKey, 16);
+
+  const decryptedMsg = cipher.Decrypt(privBI, cipherMsg);
+  return decryptedMsg;
 };
 
 /**

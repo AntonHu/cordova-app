@@ -4,14 +4,11 @@ import { PageWithHeader } from '../../../components';
 // import { List, InputItem, Flex, Button, WhiteSpace } from 'antd-mobile';
 import F2 from '@antv/f2';
 import { px } from '../../../utils/getDevice';
-import { POWER_TYPE } from '../../../utils/variable';
-import { JSRsasign } from '../../../jssign';
-import SM2Cipher from '../../../jssign/SM2Cipher';
 import { setLocalStorage, getLocalStorage } from '../../../utils/storage';
+import {decrypt} from '../../../utils/methods';
 import './style.less';
 
 import { toJS } from 'mobx';
-const BigInteger = JSRsasign.BigInteger;
 
 /**
  * 电站设备信息
@@ -131,26 +128,29 @@ class Comp extends React.Component {
   // 处理获取的解密数据
   handleDecryptData = receiveData => {
     const data = [];
-    Object.keys(receiveData).forEach(item => {
-      // 后端数据可能有问题，加一层处理
-      let powerInfo;
-      try {
-        const decryptedItem = this.doDecrypt(receiveData[item]);
-        powerInfo =
-          decryptedItem &&
-          JSON.parse(decryptedItem);
-      } catch (err) {
-        console.log(err);
-      }
-      if (powerInfo) {
-        const value = +(powerInfo.maxEnergy - powerInfo.minEnergy).toFixed(2);
-        data.push({
-          time: item,
-          number: value,
-          power: powerInfo.power || ''
-        });
-      }
-    });
+    if (this.props.keyPair.hasKey) {
+      Object.keys(receiveData).forEach(item => {
+        // 后端数据可能有问题，加一层处理
+        let powerInfo;
+        try {
+          const decryptedItem = decrypt(this.props.keyPair.privateKey, receiveData[item]);
+          powerInfo =
+            decryptedItem &&
+            JSON.parse(decryptedItem);
+        } catch (err) {
+          console.log(err);
+        }
+        if (powerInfo) {
+          const value = +(powerInfo.maxEnergy - powerInfo.minEnergy).toFixed(2);
+          data.push({
+            time: item,
+            number: value,
+            power: powerInfo.power || ''
+          });
+        }
+      });
+    }
+
     const sortData = data.sort((pre, cur) => {
       if (pre.time.indexOf('-') > 0 && cur.time.indexOf('-') > 0) {
         return Date.parse(pre.time) - Date.parse(cur.time);
@@ -161,17 +161,6 @@ class Comp extends React.Component {
     return sortData;
   };
 
-  // 数据解密
-  doDecrypt = data => {
-    let privBI = '';
-    if (this.props.keyPair.hasKey) {
-      privBI = new BigInteger(this.props.keyPair.privateKey, 16);
-    }
-    let cipherMode = '1'; // C1C3C2
-    const cipher = new SM2Cipher(cipherMode);
-    const decryptedMsg = cipher.Decrypt(privBI, data);
-    return decryptedMsg;
-  };
   // 绘制发电环图
   renderPieBar = currentPower => {
     // 创建渐变对象

@@ -4,12 +4,10 @@ import { List, WhiteSpace, Modal, Button, InputItem, ActivityIndicator } from 'a
 import {getIsInChain, putUserIntoChain} from '../../../stores/user/request';
 import './style.less';
 import {observer, inject} from 'mobx-react';
-import {JSRsasign} from '../../../jssign';
-
+import CryptoJS from 'crypto-js'
 
 const alert = Modal.alert;
 const Item = List.Item;
-const CryptoJS = JSRsasign.CryptoJS;
 
 const ListData = [
   {
@@ -94,10 +92,15 @@ class Comp extends React.Component {
     const isInChainRes = await getIsInChain();
     this.resetLoading();
     const data = isInChainRes.data || {};
-    if (data.success) {
+    console.log(data);
+    if (data.code === 0) {
+      alert('错误', '查询密钥超时，请重试', [{text: '确定'}]);
+      return;
+    }
+    if (data.data && data.data.encryptPrivateKey && data.data.publicKey) {
       this.doIfHasKey({
-        publicKey: data.publicKey,
-        encryptPrivateKey: data.encryptPrivateKey
+        publicKey: data.data.publicKey,
+        encryptPrivateKey: data.data.encryptPrivateKey
       });
     } else {
       this.doIfHasNoKey();
@@ -119,9 +122,12 @@ class Comp extends React.Component {
   doIfHasNoKey = () => {
     const self = this;
     this.props.keyPair.generageNewKeyPair();
-    alert('您没有密钥', '设置密钥前，请先设置您的交易密码', [{text: '去设置', onPress: () => {
-      self.props.history.push('/user/resetTradePW');
-    }}]);
+    alert('您没有密钥', '设置密钥前，请先设置您的交易密码', [
+      {text: '再等等'},
+      {text: '去设置', onPress: () => {
+        self.props.history.push('/user/resetTradePW');
+      }}
+    ]);
   };
 
   /**
@@ -143,10 +149,11 @@ class Comp extends React.Component {
    */
   onDecrypt = ({encryptPrivateKey, publicKey}) => {
     if (this.state.tradePassword) {
-      const privateKey = this.decryptWithAES(encryptPrivateKey);
+      const privateKey = this.decryptWithAES(encryptPrivateKey, this.state.tradePassword);
       if (privateKey) {
         this.props.keyPair.savePubAndPriv({publicKey, privateKey});
         alert('成功', '解密成功，您可以正常使用APP', [{text: '好的', onPress: () => {}}]);
+        this.hideModal();
       } else {
         alert('错误', '您输入的交易密码错误', [{text: '好的', onPress: () => {}}]);
       }
@@ -213,7 +220,7 @@ class Comp extends React.Component {
                   <Button onClick={this.showPubKey} size="small" inline>显示公钥</Button>
                 </div>
                 :
-                <GreenButton onClick={this.showModal}>一键生成</GreenButton>
+                <GreenButton onClick={this.onClick}>一键生成</GreenButton>
             }
           </BlueBox>
 
@@ -253,6 +260,7 @@ class Comp extends React.Component {
             clear
             placeholder="请输入您的交易密码"
             value={this.state.tradePassword}
+            type="password"
             onChange={(tradePassword) => this.setState({tradePassword})}
           />
           <Button

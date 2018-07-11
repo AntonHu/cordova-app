@@ -46,8 +46,22 @@ export const reqRegister = async ({mobile, password, verificationCode}) => {
   } catch (err) {
     throw err.response;
   }
-
 };
+
+/**
+ * 注册CA
+ * @param password  默认的交易密码
+ * @returns {Promise.<*>}
+ */
+export const reqRegisterCA = async ({password}) => {
+  try {
+    const response = await get(`${backendServer}/user/registerUser`, {password});
+    return response;
+  } catch (err) {
+    throw err.response;
+  }
+};
+
 
 /**
  * 发送验证码

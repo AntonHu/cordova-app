@@ -1,8 +1,8 @@
 import React from 'react';
-import {BlueBox, PeakBox, GreenButton, Countdown} from '../../../components';
+import {BlueBox, PeakBox, GreenButton, Countdown, Picture} from '../../../components';
 import {InputItem, Flex, Button, Modal} from 'antd-mobile';
 import './style.less';
-import {reqLogin} from '../../../stores/user/request';
+import {reqLogin, reqRegisterCA} from '../../../stores/user/request';
 import User from '../../../utils/user';
 
 const alert = Modal.alert;
@@ -41,6 +41,7 @@ class Comp extends React.PureComponent {
           const data = res.data;
           const user = new User();
           user.login(data.access_token);
+          reqRegisterCA({password});
           this.props.history.replace('/');
         } else {
 
@@ -69,7 +70,9 @@ class Comp extends React.PureComponent {
     return (
       <div className={'page-login'}>
         <BlueBox>
-          <div className={'h1 bolder white-text title'}>EC新能源</div>
+          <div className={'title-box'}>
+            <img src={require('../../../images/login_title.png')} className="login-title" />
+          </div>
         </BlueBox>
         <PeakBox showPeak={true}>
           <div className="body">
