@@ -148,6 +148,7 @@ class Comp extends React.Component {
         const data = res.data || {};
         if (data.code === 200) {
           this.setSuccess = true;
+          this.props.keyPair.checkKeyPairExist();
           alert('成功', '上传公钥成功', [{text: '好的', onPress: () => {
             self.props.history.goBack();
           }}]);
