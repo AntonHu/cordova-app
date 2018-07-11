@@ -115,7 +115,11 @@ class Comp extends React.Component {
             >
               <List.Item arrow="horizontal">逆变器品牌</List.Item>
             </Picker>
-            <InputItem placeholder="请输入条码" onChange={this.barcodeChange}>
+            <InputItem
+              placeholder="请输入条码"
+              onChange={this.barcodeChange}
+              value={this.state.barcodeValue}
+            >
               <i className="iconfont">&#xe654;</i>
             </InputItem>
             <div className="scan" onClick={this.barcodeScanner}>
