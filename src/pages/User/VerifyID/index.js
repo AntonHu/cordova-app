@@ -1,7 +1,7 @@
 import React from 'react';
 import {BlueBox, GreenButton, PageWithHeader, Picture, VerifyIdEmptyElement} from '../../../components';
-import {InputItem, Modal, Button, ActionSheet, Flex} from 'antd-mobile';
-import {reqVerifyId, reqUploadVerifyId} from '../../../stores/user/request';
+import {InputItem, Modal, ActionSheet, Flex, ActivityIndicator} from 'antd-mobile';
+import {reqUploadVerifyId} from '../../../stores/user/request';
 import {FileMethods} from '../../../utils/methods';
 import {observer, inject} from 'mobx-react';
 import './style.less';
@@ -19,7 +19,7 @@ const PICTURE_SIZE = 320;
 
 const showError = (text) => {
   alert('错误', text, [
-    {text: '好的'}
+    {text: '确认'}
   ]);
 };
 
@@ -105,14 +105,15 @@ const avatarModalData = [
 /**
  * 实名认证
  */
-@inject('keyPair') // 如果注入多个store，用数组表示
+@inject('keyPair', 'userStore') // 如果注入多个store，用数组表示
 @observer
 class Comp extends React.Component {
   state = {
     username: '',
     idPositive: '',
     idNegative: '',
-    idHandheld: ''
+    idHandheld: '',
+    showLoading: false
   };
 
   validateBeforeSend = () => {
@@ -171,7 +172,7 @@ class Comp extends React.Component {
    * 3、把需要的参数传给发送方法，发送请求
    */
   onSubmit = async () => {
-    const self = this;
+
     const {keyPair} = this.props;
     if (!keyPair.showHasKey(this.props)) {
       return
@@ -182,31 +183,58 @@ class Comp extends React.Component {
       const idNegative = await this.getImageBlobFromURI(this.state.idNegative);
       const idHandheld = await this.getImageBlobFromURI(this.state.idHandheld);
 
-      reqUploadVerifyId({
+      this.uploadVerifyId({
         publicKey: keyPair.publicKey,
         username: this.state.username,
         idPositive,
         idNegative,
         idHandheld
-      })
-        .then(res => {
-          const data = res.data;
-          console.log('reqVerifyId success');
-          console.log(JSON.stringify(res));
-          if (data.code === 200) {
-            alert('成功', '您已成功验证', [{
-              text: '确定', onPress: function () {
-                self.props.history.goBack();
-              }
-            }])
-          }
-        })
-        .catch(err => {
-          console.log('reqVerifyId fali');
-          console.log(JSON.stringify(err));
-          showError('认证失败');
-        })
+      });
     }
+  };
+
+  uploadVerifyId = ({publicKey, username, idPositive, idNegative, idHandheld}) => {
+    const self = this;
+    this.setState({
+      showLoading: true
+    });
+    reqUploadVerifyId({
+      publicKey,
+      username,
+      idPositive,
+      idNegative,
+      idHandheld
+    })
+      .then(res => {
+        const data = res.data;
+        console.log('reqVerifyId success');
+        console.log(JSON.stringify(res));
+        if (data.code === 200) {
+          this.setState({
+            showLoading: false
+          });
+          this.props.userStore.updateIsKycInChain(true);
+          alert('成功', '您已成功验证', [{
+            text: '确定', onPress: function () {
+              self.props.history.goBack();
+            }
+          }])
+        } else {
+          showError('认证失败');
+        }
+      })
+      .catch(err => {
+        console.log('reqVerifyId fali');
+        console.log(JSON.stringify(err));
+        this.setState({
+          showLoading: false
+        });
+        if (err.data && err.data.code === 0) {
+          showError('认证请求超时');
+          return;
+        }
+        showError('认证失败');
+      })
   };
 
   onClick = (stateName) => {
@@ -283,6 +311,11 @@ class Comp extends React.Component {
 
           <GreenButton size={'big'} onClick={this.onSubmit}>提交认证</GreenButton>
         </PageWithHeader>
+        <ActivityIndicator
+          toast
+          text="正在提交认证，请稍候..."
+          animating={this.state.showLoading}
+        />
       </div>
     );
   }

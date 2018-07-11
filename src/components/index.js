@@ -9,6 +9,7 @@ import Title from './Title';
 import Countdown from './Countdown';
 import Picture from './Picture'
 import VerifyIdEmptyElement from './VerifyIdEmptyElement'
+import ToastNoMask from './Toast';
 
 export {
   BlueBox,
@@ -21,5 +22,6 @@ export {
   Title,
   Countdown,
   Picture,
-  VerifyIdEmptyElement
+  VerifyIdEmptyElement,
+  ToastNoMask
 };

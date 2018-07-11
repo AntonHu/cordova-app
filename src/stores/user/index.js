@@ -1,5 +1,9 @@
 import { observable, action, runInAction, computed, toJS } from 'mobx';
 import { getOwnerInfo, getMessages, getIsInChain, getIsKycInChain, putUserIntoChain } from './request';
+import {getLocalStorage, setLocalStorage, deleteLocalStorage} from '../../utils/storage';
+import {ToastNoMask} from '../../components';
+
+const IS_KYC_IN_CHAIN = 'IS_KYC_IN_CHAIN';
 
 class UserStore {
   //用户信息
@@ -62,17 +66,50 @@ class UserStore {
       const res = await getIsKycInChain({publicKey});
       runInAction(() => {
         if (res.data) {
-          this.isKycInChain = res.data.success || false;
+          const status =  !!res.data.msg || false;
+          this.isKycInChain = status;
+          setLocalStorage(IS_KYC_IN_CHAIN, status);
         }
       });
     } catch (err) {
-      throw err;
+      if (err.data && err.data.code === 0) {
+        ToastNoMask('检查实名认证超时')
+      }
     }
   };
 
+  /**
+   * 直接更新头像的src
+   * @param src
+   */
   @action
   updateAvatar = src => {
     this.userInfo.avatar = src;
+  };
+
+  /**
+   * 从缓存取出IsKycInChain
+   * 如果为null，发请求获取
+   * @param publicKey
+   */
+  @action
+  checkIsKycInChain = ({publicKey}) => {
+    const status = getLocalStorage(IS_KYC_IN_CHAIN);
+    if (status === null) {
+      this.fetchIsKycInChain({publicKey});
+    } else {
+      this.isKycInChain = (status === 'true');
+    }
+  };
+
+  /**
+   * 更新IsKycInChain，并且缓存在localStorage
+   * @param status
+   */
+  @action
+  updateIsKycInChain = status => {
+    this.isKycInChain = status;
+    setLocalStorage(IS_KYC_IN_CHAIN, status);
   };
 }
 
