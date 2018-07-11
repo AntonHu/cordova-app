@@ -97,7 +97,6 @@ class PrimaryRoute extends React.Component {
   }
 
   componentDidMount() {
-    getAddress(116, 40);
     if (this.props.keyPair.hasKey) {
       this.uploadUserLocation(this.props.keyPair.publicKey);
     }

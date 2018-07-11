@@ -227,7 +227,6 @@ class Comp extends React.Component {
   };
 
   render() {
-    console.log(global.weather);
     const dayStationElectric = getLocalStorage('dayStationElectric') || 0; // 获取本地储存今日发电量
     const currentStationPower = getLocalStorage('currentStationPower') || 0; // 获取本地储存当前电站功率
     const totalStationElectric =
