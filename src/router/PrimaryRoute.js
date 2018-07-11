@@ -23,6 +23,7 @@ import SunIntegral from '../pages/Mining/SunIntegral';
 import { Modal, Toast } from 'antd-mobile';
 import { observer, inject } from 'mobx-react';
 import { reqUpdateGeolocation } from '../stores/user/request';
+import { deleteLocalStorage } from '../utils/storage';
 
 const alert = Modal.alert;
 // 获取当前城市天气信息
@@ -66,8 +67,6 @@ function onSuccess(publicKey) {
         Toast.show('上传坐标成功');
       })
       .catch(err => {
-        console.log('上传坐标失败');
-        console.log(JSON.stringify(err.response));
         Toast.show('上传坐标失败');
       });
   };
@@ -84,6 +83,8 @@ class PrimaryRoute extends React.Component {
     super(props);
     const hasKey = props.keyPair.checkKeyPairExist();
     if (!hasKey) {
+      // 若是无私钥，清除过期时间，重新请求首页缓存数据
+      deleteLocalStorage('stationExpireTime');
       alert('该账号没有私钥', '这将导致app大部分功能不可用。是否现在去生成？', [
         { text: '再等等' },
         {
