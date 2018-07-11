@@ -25,10 +25,38 @@ import { observer, inject } from 'mobx-react';
 import { reqUpdateGeolocation } from '../stores/user/request';
 
 const alert = Modal.alert;
+// 获取当前城市天气信息
+global.getWeather = function(res) {
+  if (res.status === 'success') {
+    global.weather = res.results[0].weather_data[0];
+  }
+};
+
+// 动态创建script获取跨域天气数据
+function createScript(city) {
+  const script = document.createElement('script');
+  script.type = 'text/javascript';
+  const url = `http://api.map.baidu.com/telematics/v3/weather?access_token=8d5bc2ec001fb54d149674d68f3acab4&location=${city}&output=json&ak=IiFwStYYfy07Fu4L3wSI6qFLVzxulkNH&callback=getWeather`;
+  script.src = url;
+  document.body.appendChild(script);
+}
+
+// 获取城市地址
+function getAddress(longitude, latitude) {
+  let city;
+  var point = new window.BMap.Point(longitude, latitude);
+  var gc = new window.BMap.Geocoder();
+  gc.getLocation(point, rs => {
+    const addComp = rs.addressComponents;
+    city = addComp.city;
+    createScript(city);
+  });
+}
 
 function onSuccess(publicKey) {
   return function(position) {
     Toast.show('获取坐标成功');
+    getAddress(position.coords.longitude, position.coords.latitude);
     reqUpdateGeolocation({
       rectangle: position.coords.latitude + ',' + position.coords.longitude,
       publicKey
