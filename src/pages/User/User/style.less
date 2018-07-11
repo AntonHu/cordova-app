@@ -22,7 +22,7 @@
         border: 3px solid @white-text-color;
       }
       .user-name {
-        margin-top: 10 * @px;
+        margin-top: 27 * @px;
         color: @white-text-color;
       }
     }
@@ -41,13 +41,22 @@
   }
   .am-list {
     margin-top: -40px;
+    .am-list-item {
+      height: @list-item-height;
+      border-bottom: 1px solid @white-grey;
+      .am-list-line::after {
+        background-color: transparent !important;
+      }
+    }
     a {
       display: flex;
       align-items: center;
       color: @main-text-color;
+      font-size: @h3;
+
       .iconfont {
         margin-right: 5px;
-        font-size: 24px;
+        font-size: 30px;
         color: @icon-color;
       }
     }

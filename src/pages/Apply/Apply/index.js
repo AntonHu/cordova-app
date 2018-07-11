@@ -50,7 +50,7 @@ class Comp extends React.PureComponent {
                       emptyElement={props => <div style={props.style} className={props.className} />}
                       src="hahahha"
                     />
-                    <div>{item.text}</div>
+                    <div className="apply-item-text">{item.text}</div>
                   </div>
                 );
               })}

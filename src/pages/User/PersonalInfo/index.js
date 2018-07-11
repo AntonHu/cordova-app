@@ -214,7 +214,7 @@ class Comp extends React.Component {
           <div className="personal-list">
             <div className="personal-item" onClick={this.picChange}>
               <div className="item-title">头像</div>
-              <Picture size={60} src={avatar} alt='' showEmptyElement={false}/>
+              <Picture size={70} src={avatar} alt='' showEmptyElement={false}/>
             </div>
             <div
               className="personal-item"

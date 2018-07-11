@@ -266,7 +266,10 @@ class Comp extends React.Component {
               clear
               onChange={this.changeState('username')}
               value={username}
-            />
+              labelNumber={4}
+            >
+              <span className="h3 main-text">真实姓名</span>
+            </InputItem>
             <div className="tips-box">
               <div className="title">* 上传证件材料</div>
               您的照片仅用于审核，我们将为您严格保密，请注意证件上的信息无遮挡，清晰可识别

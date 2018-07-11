@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { PageWithHeader } from '../../../components';
-import { List } from 'antd-mobile';
+import {Link} from 'react-router-dom';
+import {PageWithHeader} from '../../../components';
+import {List} from 'antd-mobile';
 import './style.less';
 
 const Item = List.Item;
@@ -15,6 +15,7 @@ const ListData = [
     path: 'resetLoginPW'
   }
 ];
+
 /**
  * 重置密码
  */
@@ -23,13 +24,15 @@ class Comp extends React.PureComponent {
     return (
       <div className={'page-reset-pw'}>
         <PageWithHeader title={'密码设置'}>
-          <List>
-            {ListData.map((v, i) => (
-              <Link key={i} to={`/user/${v.path}`}>
-                <Item arrow={'horizontal'}>{v.text}</Item>
-              </Link>
-            ))}
-          </List>
+          <div className="list-box">
+            <List>
+              {ListData.map((v, i) => (
+                <Link key={i} to={`/user/${v.path}`}>
+                  <Item arrow={'horizontal'}>{v.text}</Item>
+                </Link>
+              ))}
+            </List>
+          </div>
         </PageWithHeader>
       </div>
     );
