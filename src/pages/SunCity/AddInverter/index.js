@@ -70,10 +70,10 @@ class Comp extends React.Component {
     const sourceData = this.state.inverterType;
     if (this.props.keyPair.hasKey) {
       if (!deviceNo) {
-        ToastNoMask('请选择逆变器品牌');
+        ToastNoMask.show('请输入逆变器条码');
         return;
       } else if (!sourceData) {
-        ToastNoMask('请输入逆变器条码');
+        ToastNoMask.show('请选择逆变器品牌');
         return;
       }
       this.props.sunCityStore
@@ -86,6 +86,7 @@ class Comp extends React.Component {
           if (result.code === 200) {
             ToastNoMask('添加逆变器成功');
             // 添加成功后，删除缓存设备数据，重新请求所有设备数据
+            deleteLocalStorage('stationExpireTime');
             deleteLocalStorage('equipmentListObj');
           } else {
             ToastNoMask(`添加逆变器失败,${result.msg}`);

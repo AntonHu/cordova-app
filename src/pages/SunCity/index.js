@@ -4,7 +4,12 @@ import { toJS } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { Title, Picture } from '../../components';
 import { NoticeBar, Icon, ActivityIndicator } from 'antd-mobile';
-import { setLocalStorage, getLocalStorage } from '../../utils/storage';
+import { EQUIPMENT_DATA_TYPE } from '../../utils/variable';
+import {
+  setLocalStorage,
+  getLocalStorage,
+  deleteLocalStorage
+} from '../../utils/storage';
 import { decrypt } from '../../utils/methods';
 import './style.less';
 
@@ -51,6 +56,7 @@ class Comp extends React.Component {
     // 获取用户信息
     this.props.userStore.fetchUserInfo();
 
+    // 如果有私钥
     if (keyPair.hasKey) {
       // 获取我的太阳积分
       this.props.miningStore.fetchBalance({ publicKey: keyPair.publicKey });
@@ -62,36 +68,47 @@ class Comp extends React.Component {
       await this.props.sunCityStore.fetchSCSunIntegral({
         publicKey: keyPair.publicKey
       });
-    }
-
-    // 分割积分数组
-    this.spliceArr(
-      toJS(this.props.sunCityStore.sunIntegral),
-      this.sunIntegralArr
-    );
-    // 获取坐标数组
-    this.sunIntegralArr.length > 0 &&
-      this.setState({
-        sunCoordinateArr: this.getSunCoordinateArr(this.sunIntegralArr[0])
-      });
-
-    let equipmentListObj = {};
-    // 储存设备列表整理后的数据
-    if (this.isExpire() || !getLocalStorage('equipmentListObj')) {
-      if (keyPair.hasKey) {
-        // 获取设备列表
-        await this.props.sunCityStore.fetchSCEquipmentList({
-          userPubKey: keyPair.publicKey
+      // 分割积分数组
+      this.spliceArr(
+        toJS(this.props.sunCityStore.sunIntegral),
+        this.sunIntegralArr
+      );
+      // 获取坐标数组
+      this.sunIntegralArr.length > 0 &&
+        this.setState({
+          sunCoordinateArr: this.getSunCoordinateArr(this.sunIntegralArr[0])
         });
-        equipmentListObj = toJS(this.props.sunCityStore.equipmentList);
-        if (!equipmentListObj) {
-          this.setState({
-            loading: false
-          });
-        }
-        // 添加各个设备的功率和日电量
-        equipmentListObj && this.addEquipmentPower(equipmentListObj, 1);
+
+      // 储存设备列表整理后的数据
+      let equipmentListObj = {};
+      this.getEquipmentList(equipmentListObj, keyPair);
+      // 获取设备，月，年，所有的数据，并缓存
+      this.cacheEquipmentData(equipmentListObj);
+    } else {
+      // 若是没有私钥，清空缓存
+      deleteLocalStorage('stationExpireTime');
+      deleteLocalStorage('equipmentListObj');
+      this.setState({
+        loading: false
+      });
+    }
+  }
+
+  // 获取设备列表并处理列表数据
+  async getEquipmentList(equipmentListObj, keyPair) {
+    if (this.isExpire() || !getLocalStorage('equipmentListObj')) {
+      // 获取设备列表
+      await this.props.sunCityStore.fetchSCEquipmentList({
+        userPubKey: keyPair.publicKey
+      });
+      equipmentListObj = toJS(this.props.sunCityStore.equipmentList);
+      if (!equipmentListObj) {
+        this.setState({
+          loading: false
+        });
       }
+      // 添加各个设备的功率和日电量
+      equipmentListObj && this.addEquipmentPower(equipmentListObj, 1);
     } else {
       equipmentListObj = JSON.parse(getLocalStorage('equipmentListObj'));
       this.setState({
@@ -99,15 +116,18 @@ class Comp extends React.Component {
         loading: false
       });
     }
+  }
 
-    // 储存电站数据,2-月，3-年，4-全部
+  // 获取设备，月，年，所有的数据，并缓存
+  async cacheEquipmentData(equipmentListObj) {
+    // 储存电站数据,EQUIPMENT_DATA_TYPE.MONTH-月，EQUIPMENT_DATA_TYPE.YEAR-年，EQUIPMENT_DATA_TYPE.ALL-全部
     if (
       (this.isExpire() || !getLocalStorage('monthStationData')) &&
       equipmentListObj
     ) {
       const monthStationData = await this.equipmentDataIntegrate(
         equipmentListObj,
-        2
+        EQUIPMENT_DATA_TYPE.MONTH
       );
       setLocalStorage('monthStationData', JSON.stringify(monthStationData)); // 本地储存电站每月发电数据
     }
@@ -118,7 +138,7 @@ class Comp extends React.Component {
     ) {
       const yearStationData = await this.equipmentDataIntegrate(
         equipmentListObj,
-        3
+        EQUIPMENT_DATA_TYPE.YEAR
       );
       setLocalStorage('yearStationData', JSON.stringify(yearStationData)); // 本地储存电站每年发电数据
     }
@@ -129,7 +149,7 @@ class Comp extends React.Component {
     ) {
       const equipmentDataArr = await this.getAllEquipmentData(
         equipmentListObj,
-        4
+        EQUIPMENT_DATA_TYPE.ALL
       );
       const allStationData = this.allEquipmentDataIntegrate(equipmentDataArr);
       setLocalStorage('allStationData', JSON.stringify(allStationData)); // 本地储存电站所有发电数据
@@ -519,7 +539,18 @@ class Comp extends React.Component {
                 {this.state.loading ? (
                   <ActivityIndicator text="加载中..." />
                 ) : (
-                  '暂无数据'
+                  <div
+                    className="pic-wrap"
+                    onClick={() =>
+                      this.props.history.push('/sunCity/addInverter')
+                    }
+                  >
+                    <Picture
+                      src={require('../../images/no_inverter.png')}
+                      size={200}
+                    />
+                    <span>还未添加逆变器，快去添加~</span>
+                  </div>
                 )}
               </div>
             )}

@@ -203,11 +203,20 @@
         }
       }
       .loading {
-        height: 50px;
+        height: 200px;
         background: @white-text-color;
         display: flex;
         justify-content: center;
         align-items: center;
+        .pic-wrap {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          span {
+            margin-top: 8px;
+            color: @help-text-color;
+          }
+        }
       }
     }
   }

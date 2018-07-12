@@ -117,3 +117,16 @@ export const fetchAddInverter = async params => {
   }
   return response.data || [];
 };
+
+/**
+ * 获取天气信息
+ */
+export const fetchGetWeather = async params => {
+  let response = {};
+  try {
+    response = await get(`${backendServer}/info/WeatherbyCityName`, params);
+  } catch (err) {
+    console.log(err);
+  }
+  return response.data || [];
+};

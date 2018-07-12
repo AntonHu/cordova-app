@@ -23,25 +23,10 @@ import SunIntegral from '../pages/Mining/SunIntegral';
 import { Modal } from 'antd-mobile';
 import { observer, inject } from 'mobx-react';
 import { reqUpdateGeolocation } from '../stores/user/request';
-import {ToastNoMask} from '../components'
-import { deleteLocalStorage } from '../utils/storage';
+import { ToastNoMask } from '../components';
+import { setLocalStorage } from '../utils/storage';
 
 const alert = Modal.alert;
-// 获取当前城市天气信息
-global.getWeather = function(res) {
-  if (res.status === 'success') {
-    global.weather = res.results[0].weather_data[0];
-  }
-};
-
-// 动态创建script获取跨域天气数据
-function createScript(city) {
-  const script = document.createElement('script');
-  script.type = 'text/javascript';
-  const url = `http://api.map.baidu.com/telematics/v3/weather?access_token=8d5bc2ec001fb54d149674d68f3acab4&location=${city}&output=json&ak=IiFwStYYfy07Fu4L3wSI6qFLVzxulkNH&callback=getWeather`;
-  script.src = url;
-  document.body.appendChild(script);
-}
 
 // 获取城市地址
 function getAddress(longitude, latitude) {
@@ -50,8 +35,9 @@ function getAddress(longitude, latitude) {
   var gc = new window.BMap.Geocoder();
   gc.getLocation(point, rs => {
     const addComp = rs.addressComponents;
-    city = addComp.city;
-    createScript(city);
+    city = addComp.city && addComp.city.replace('市', '');
+    // 保存当前城市
+    setLocalStorage('city', city);
   });
 }
 
@@ -86,10 +72,10 @@ class PrimaryRoute extends React.Component {
     super(props);
     const hasKey = props.keyPair.checkKeyPairExist();
     if (!hasKey) {
-      // 若是无私钥，清除过期时间，重新请求首页缓存数据
-      deleteLocalStorage('stationExpireTime');
       alert('该账号没有私钥', '这将导致app大部分功能不可用。是否现在去生成？', [
-        { text: '再等等' },
+        {
+          text: '再等等'
+        },
         {
           text: '马上去',
           onPress: () => {

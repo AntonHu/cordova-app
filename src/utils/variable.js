@@ -22,6 +22,15 @@ const KEY_PAIR_LOCAL_STORAGE = {
 };
 
 /**
+ * 请求设备数据的类型
+ */
+const EQUIPMENT_DATA_TYPE = {
+  MONTH: 2,
+  YEAR: 3,
+  ALL: 4
+};
+
+/**
  * 加密曲线名字
  */
 const CURVE = 'sm2';
@@ -39,5 +48,6 @@ export {
   POWER_TYPE,
   TEST_PRIVATE_KEY,
   KEY_PAIR_LOCAL_STORAGE,
-  CURVE
+  CURVE,
+  EQUIPMENT_DATA_TYPE
 };
