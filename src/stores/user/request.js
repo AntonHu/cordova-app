@@ -296,3 +296,20 @@ export const getIsKycInChain = async ({publicKey}) => {
     throw err.response;
   }
 };
+
+/**
+ * 更新昵称成功后调用
+ * 通知链端更新了昵称
+ * @param publicKey
+ * @returns {Promise.<*>}
+ */
+export const reqUpdateNickName = async ({publicKey}) => {
+  try {
+    const response = await get(`${backendServer}/user/updateNickName`, {
+      publicKey
+    });
+    return response;
+  } catch (err) {
+    throw err.response;
+  }
+};

@@ -2,7 +2,7 @@ import React from 'react';
 import { PageWithHeader } from '../../../../components';
 import { InputItem, Modal } from 'antd-mobile';
 import { observer, inject } from 'mobx-react';
-import { reqUpdateUser }from '../../../../stores/user/request';
+import { reqUpdateUser, reqUpdateNickName }from '../../../../stores/user/request';
 import './style.less';
 
 const alert = Modal.alert;
@@ -17,7 +17,7 @@ const showMsg = (text) => {
 /**
  * 修改昵称
  */
-@inject('userStore') // 如果注入多个store，用数组表示
+@inject('userStore', 'keyPair') // 如果注入多个store，用数组表示
 @observer
 class Comp extends React.Component {
   constructor(props) {
@@ -27,6 +27,9 @@ class Comp extends React.Component {
     }
   }
 
+  /**
+   * 发请求，更新昵称
+   */
   updateNickName = () => {
     const {nickName} = this.state;
     reqUpdateUser({
@@ -35,19 +38,34 @@ class Comp extends React.Component {
     })
       .then(res => {
         console.log(res);
-        alert('更新成功', '您的昵称已更新', [
-          {text: '确定', onPress: () => {
-            this.props.userStore.fetchUserInfo();
-            this.props.history.goBack()
-          }}
-        ]);
+        const data = res.data || {};
+        if (data.success) {
+          this.onUpdateSuccess();
+        } else {
+          this.onUpdateFail()
+        }
       })
       .catch(err => {
-        const data = err.response.data;
-        console.log(data);
-        let msg = '更新失败'
-        showMsg(msg)
+        console.log(err);
+        this.onUpdateFail()
       })
+  };
+
+  onUpdateSuccess = () => {
+    const self = this;
+    if (this.props.keyPair.hasKey) {
+      reqUpdateNickName({publicKey: this.props.keyPair.publicKey});
+    }
+    this.props.userStore.fetchUserInfo();
+    alert('更新成功', '您的昵称已更新', [
+      {text: '确定', onPress: () => {
+        self.props.history.goBack()
+      }}
+    ]);
+  };
+
+  onUpdateFail = () => {
+    showMsg('更新昵称失败');
   };
 
   render() {
