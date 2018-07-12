@@ -4,6 +4,7 @@ import { toJS } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { Title, Picture } from '../../components';
 import { NoticeBar, Icon, ActivityIndicator } from 'antd-mobile';
+import { EQUIPMENT_DATA_TYPE } from '../../utils/variable';
 import {
   setLocalStorage,
   getLocalStorage,
@@ -67,65 +68,22 @@ class Comp extends React.Component {
       await this.props.sunCityStore.fetchSCSunIntegral({
         publicKey: keyPair.publicKey
       });
-
-      let equipmentListObj = {};
-      // 储存设备列表整理后的数据
-      if (this.isExpire() || !getLocalStorage('equipmentListObj')) {
-        // 获取设备列表
-        await this.props.sunCityStore.fetchSCEquipmentList({
-          userPubKey: keyPair.publicKey
-        });
-        equipmentListObj = toJS(this.props.sunCityStore.equipmentList);
-        if (!equipmentListObj) {
-          this.setState({
-            loading: false
-          });
-        }
-        // 添加各个设备的功率和日电量
-        equipmentListObj && this.addEquipmentPower(equipmentListObj, 1);
-      } else {
-        equipmentListObj = JSON.parse(getLocalStorage('equipmentListObj'));
+      // 分割积分数组
+      this.spliceArr(
+        toJS(this.props.sunCityStore.sunIntegral),
+        this.sunIntegralArr
+      );
+      // 获取坐标数组
+      this.sunIntegralArr.length > 0 &&
         this.setState({
-          equipmentListObj,
-          loading: false
+          sunCoordinateArr: this.getSunCoordinateArr(this.sunIntegralArr[0])
         });
-      }
 
-      // 储存电站数据,2-月，3-年，4-全部
-      if (
-        (this.isExpire() || !getLocalStorage('monthStationData')) &&
-        equipmentListObj
-      ) {
-        const monthStationData = await this.equipmentDataIntegrate(
-          equipmentListObj,
-          2
-        );
-        setLocalStorage('monthStationData', JSON.stringify(monthStationData)); // 本地储存电站每月发电数据
-      }
-
-      if (
-        (this.isExpire() || !getLocalStorage('yearStationData')) &&
-        equipmentListObj
-      ) {
-        const yearStationData = await this.equipmentDataIntegrate(
-          equipmentListObj,
-          3
-        );
-        setLocalStorage('yearStationData', JSON.stringify(yearStationData)); // 本地储存电站每年发电数据
-      }
-
-      if (
-        (this.isExpire() || !getLocalStorage('allStationData')) &&
-        equipmentListObj
-      ) {
-        const equipmentDataArr = await this.getAllEquipmentData(
-          equipmentListObj,
-          4
-        );
-        const allStationData = this.allEquipmentDataIntegrate(equipmentDataArr);
-        setLocalStorage('allStationData', JSON.stringify(allStationData)); // 本地储存电站所有发电数据
-        setLocalStorage('stationExpireTime', new Date().getTime()); // 本地储存电站数据过期时间
-      }
+      // 储存设备列表整理后的数据
+      let equipmentListObj = {};
+      this.getEquipmentList(equipmentListObj, keyPair);
+      // 获取设备，月，年，所有的数据，并缓存
+      this.cacheEquipmentData(equipmentListObj);
     } else {
       // 若是没有私钥，清空缓存
       deleteLocalStorage('stationExpireTime');
@@ -134,17 +92,69 @@ class Comp extends React.Component {
         loading: false
       });
     }
+  }
 
-    // 分割积分数组
-    this.spliceArr(
-      toJS(this.props.sunCityStore.sunIntegral),
-      this.sunIntegralArr
-    );
-    // 获取坐标数组
-    this.sunIntegralArr.length > 0 &&
-      this.setState({
-        sunCoordinateArr: this.getSunCoordinateArr(this.sunIntegralArr[0])
+  // 获取设备列表并处理列表数据
+  async getEquipmentList(equipmentListObj, keyPair) {
+    if (this.isExpire() || !getLocalStorage('equipmentListObj')) {
+      // 获取设备列表
+      await this.props.sunCityStore.fetchSCEquipmentList({
+        userPubKey: keyPair.publicKey
       });
+      equipmentListObj = toJS(this.props.sunCityStore.equipmentList);
+      if (!equipmentListObj) {
+        this.setState({
+          loading: false
+        });
+      }
+      // 添加各个设备的功率和日电量
+      equipmentListObj && this.addEquipmentPower(equipmentListObj, 1);
+    } else {
+      equipmentListObj = JSON.parse(getLocalStorage('equipmentListObj'));
+      this.setState({
+        equipmentListObj,
+        loading: false
+      });
+    }
+  }
+
+  // 获取设备，月，年，所有的数据，并缓存
+  async cacheEquipmentData(equipmentListObj) {
+    // 储存电站数据,EQUIPMENT_DATA_TYPE.MONTH-月，EQUIPMENT_DATA_TYPE.YEAR-年，EQUIPMENT_DATA_TYPE.ALL-全部
+    if (
+      (this.isExpire() || !getLocalStorage('monthStationData')) &&
+      equipmentListObj
+    ) {
+      const monthStationData = await this.equipmentDataIntegrate(
+        equipmentListObj,
+        EQUIPMENT_DATA_TYPE.MONTH
+      );
+      setLocalStorage('monthStationData', JSON.stringify(monthStationData)); // 本地储存电站每月发电数据
+    }
+
+    if (
+      (this.isExpire() || !getLocalStorage('yearStationData')) &&
+      equipmentListObj
+    ) {
+      const yearStationData = await this.equipmentDataIntegrate(
+        equipmentListObj,
+        EQUIPMENT_DATA_TYPE.YEAR
+      );
+      setLocalStorage('yearStationData', JSON.stringify(yearStationData)); // 本地储存电站每年发电数据
+    }
+
+    if (
+      (this.isExpire() || !getLocalStorage('allStationData')) &&
+      equipmentListObj
+    ) {
+      const equipmentDataArr = await this.getAllEquipmentData(
+        equipmentListObj,
+        EQUIPMENT_DATA_TYPE.ALL
+      );
+      const allStationData = this.allEquipmentDataIntegrate(equipmentDataArr);
+      setLocalStorage('allStationData', JSON.stringify(allStationData)); // 本地储存电站所有发电数据
+      setLocalStorage('stationExpireTime', new Date().getTime()); // 本地储存电站数据过期时间
+    }
   }
 
   // 检测数据是否过期

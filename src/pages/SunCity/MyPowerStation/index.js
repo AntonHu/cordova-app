@@ -35,6 +35,7 @@ class Comp extends React.Component {
   };
 
   async componentDidMount() {
+    // 获取天气信息
     const city = getLocalStorage('city');
     this.props.sunCityStore.fetchSCGetWeather({
       cityName: city
@@ -78,7 +79,9 @@ class Comp extends React.Component {
         yearStationData,
         allStationData
       });
-      this.barChart = this.renderBarChart(dayStationData);
+      if (Object.keys(equipmentListObj).length > 0) {
+        this.barChart = this.renderBarChart(dayStationData);
+      }
     } else {
       this.setState({
         loading: false
@@ -302,9 +305,11 @@ class Comp extends React.Component {
                 </div>
               </div>
             </div>
-            {equipmentNameList.length > 0 ? (
-              <canvas id="pie-bar-chart" />
-            ) : (
+            <canvas
+              id="pie-bar-chart"
+              className={equipmentNameList.length < 1 ? 'pie-bar-hide' : ''}
+            />
+            {equipmentNameList.length < 1 ? (
               <div
                 className="pic-wrap special-one"
                 onClick={() => this.props.history.push('/sunCity/addInverter')}
@@ -315,7 +320,7 @@ class Comp extends React.Component {
                 />
                 <span>还未添加逆变器，快去添加~</span>
               </div>
-            )}
+            ) : null}
           </BlueBox>
           <div className="type">
             <div className="type-item power">
