@@ -55,7 +55,7 @@ const ListData = [
 /**
  * 我的数据
  */
-@inject('keyPair')
+@inject('keyPair', 'userStore')
 @observer
 class Comp extends React.Component {
   constructor(props) {
@@ -113,10 +113,13 @@ class Comp extends React.Component {
 
   /**
    * 如果后端存有公私钥
+   * 让用户输入交易密码，解密私钥
+   * 并且请求服务器，，查询实名认证状态
    */
   doIfHasKey = ({publicKey, encryptPrivateKey}) => {
     this.publicKey = publicKey;
     this.encryptPrivateKey = encryptPrivateKey;
+    this.props.userStore.checkIsKycInChain({publicKey});
     this.showModal();
   };
 

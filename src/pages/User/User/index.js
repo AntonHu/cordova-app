@@ -45,6 +45,14 @@ class Comp extends React.Component {
     this.props.userStore.fetchUserInfo();
   }
 
+  sliceLongName = (name) => {
+    const MAX_LENGTH = 20;
+    if (name.length > MAX_LENGTH) {
+      return name.slice(0, MAX_LENGTH) + '...'
+    }
+    return name;
+  };
+
   render() {
     const {userInfo} = this.props.userStore;
     const {username, avatar, nickName} = userInfo;
@@ -58,7 +66,7 @@ class Comp extends React.Component {
             <div className="user-info">
               <Picture size={120} src={avatar} />
 
-              <div className="user-name">{nickName || username || '未知'}</div>
+              <div className="user-name">{this.sliceLongName(nickName || username || '未知')}</div>
             </div>
             <div className="to-detial">
               <Link to="/user/personalInfo">

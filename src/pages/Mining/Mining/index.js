@@ -109,11 +109,11 @@ class Comp extends React.Component {
               <span>{balanceRanking}</span>
             </div>
             <div className="item">
-              <div>今日累计挖宝次数</div>
+              <div>今日全民累计挖宝次数</div>
               <span>{digTimes.countAllTimesToday}</span>
             </div>
             <div className="item">
-              <div>累计挖宝总数</div>
+              <div>累计全民累计挖宝总数</div>
               <span>{digTimes.countAllTimes}</span>
             </div>
           </div>

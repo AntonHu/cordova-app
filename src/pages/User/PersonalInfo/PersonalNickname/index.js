@@ -32,23 +32,35 @@ class Comp extends React.Component {
    */
   updateNickName = () => {
     const {nickName} = this.state;
-    reqUpdateUser({
-      header: this.props.userStore.userInfo.avatar || '',
-      nickName
-    })
-      .then(res => {
-        console.log(res);
-        const data = res.data || {};
-        if (data.success) {
-          this.onUpdateSuccess();
-        } else {
+    if (this.validateBeforeUpdate()) {
+      reqUpdateUser({
+        header: this.props.userStore.userInfo.avatar || '',
+        nickName
+      })
+        .then(res => {
+          console.log(res);
+          const data = res.data || {};
+          if (data.success) {
+            this.onUpdateSuccess();
+          } else {
+            this.onUpdateFail()
+          }
+        })
+        .catch(err => {
+          console.log(err);
           this.onUpdateFail()
-        }
-      })
-      .catch(err => {
-        console.log(err);
-        this.onUpdateFail()
-      })
+        })
+    }
+  };
+
+  validateBeforeUpdate = () => {
+    const {nickName} = this.state;
+    const MAX_LENGTH = 10;
+    if (nickName.length < 1 || nickName.length > MAX_LENGTH) {
+      alert('错误', `昵称长度在1-${MAX_LENGTH}个字符之间`, [{text: '确定'}]);
+      return false
+    }
+    return true;
   };
 
   onUpdateSuccess = () => {

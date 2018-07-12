@@ -49,7 +49,7 @@ function capturePhoto(stateName) {
   const _setState = this.changeState(stateName);
   // Take picture using device camera and retrieve image as base64-encoded string
   navigator.camera.getPicture(setStateOnPhotoData(_setState), onFail, {
-    quality: 1,
+    quality: 50,
     destinationType: destinationType.FILE_URI,
     correctOrientation: true
   });
@@ -67,7 +67,7 @@ function getPhoto(source, stateName) {
   const _setState = this.changeState(stateName);
   const destinationType = navigator.camera.DestinationType;
   navigator.camera.getPicture(setStateOnPhotoData(_setState), onFail, {
-    quality: 1,
+    quality: 50,
     destinationType: destinationType.FILE_URI,
     sourceType: source
   });

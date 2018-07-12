@@ -111,6 +111,13 @@ class UserStore {
     this.isKycInChain = status;
     setLocalStorage(IS_KYC_IN_CHAIN, status);
   };
+
+  /**
+   * 删除缓存的更新IsKycInChain
+   */
+  deleteIsKycInChain = () => {
+    deleteLocalStorage(IS_KYC_IN_CHAIN);
+  }
 }
 
 const userStore = new UserStore();

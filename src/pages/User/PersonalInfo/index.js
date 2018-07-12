@@ -186,6 +186,16 @@ class Comp extends React.Component {
     console.log(files, type, index);
   };
 
+  /**
+   * 去实名认证
+   * 前置条件是存在公钥。
+   */
+  goAuthentication = () => {
+    if (this.props.keyPair.showHasKey(this.props)) {
+      this.props.history.push(`/user/verifyID/${1}`)
+    }
+  };
+
   render() {
     const {userInfo, isKycInChain} = this.props.userStore;
     const {avatar, nickName} = userInfo;
@@ -204,7 +214,7 @@ class Comp extends React.Component {
             {
               !isKycInChain && <div
                 className="go-authentication"
-                onClick={() => this.props.history.push(`/user/verifyID/${1}`)}
+                onClick={this.goAuthentication}
               >
                 去认证<Icon type="right"/>
               </div>

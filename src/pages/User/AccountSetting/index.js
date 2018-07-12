@@ -45,6 +45,7 @@ class Comp extends React.Component {
     const user = new User();
     user.logout();
     this.props.keyPair.clearKeyPair();
+    this.props.userStore.deleteIsKycInChain();
     this.props.history.replace('/');
   };
 
