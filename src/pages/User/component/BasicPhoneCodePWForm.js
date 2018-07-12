@@ -1,5 +1,5 @@
 import React from 'react';
-import {BlueBox, PeakBox, GreenButton, Header, Countdown, Popup} from '../../../components';
+import {GreenButton, Countdown, Popup} from '../../../components';
 import {InputItem, Modal} from 'antd-mobile';
 import {clearSpace, testPhoneNumber, testCode, testPassword} from '../../../utils/methods';
 import PropTypes from 'prop-types';
@@ -114,21 +114,6 @@ class Comp extends React.PureComponent {
     this.setState({
       successModal: false
     })
-  };
-
-  registerSuccess = () => {
-    this.showModal();
-  };
-
-  registerFail = (msg) => {
-    let errorMsg = msg;
-    if (msg === 'username exist') {
-      errorMsg = '用户名已存在';
-    }
-    if (msg === 'verification code not exist') {
-      errorMsg = '错误的验证码';
-    }
-    showError(errorMsg || '注册失败')
   };
 
   /**
