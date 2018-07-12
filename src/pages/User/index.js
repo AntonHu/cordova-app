@@ -10,6 +10,7 @@ import Register from './Register';
 import ResetPW from './ResetPW';
 import ResetTradePW from './ResetPW/ResetTradePW';
 import ResetLoginPW from './ResetPW/ResetLoginPW';
+import ForgetLoginPW from './ResetPW/ForgetLoginPW';
 import User from './User';
 import VerifyID from './VerifyID';
 import MsgDetail from './MsgCenter/Detail';
@@ -29,5 +30,6 @@ export {
   ResetLoginPW,
   User,
   VerifyID,
-  MsgDetail
+  MsgDetail,
+  ForgetLoginPW
 };

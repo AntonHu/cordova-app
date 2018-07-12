@@ -12,6 +12,12 @@
     .am-list-item.am-input-item {
       height: 95 * @px;
     }
+    .am-list-item {
+      border-bottom: 1px solid @help-text-color;
+      .am-list-line::after {
+        background-color: transparent !important;
+      }
+    }
   }
 
   .login-title {
@@ -29,10 +35,16 @@
     margin-top: 150 * @px;
   }
 
-  .register-btn {
-    text-align: center;
+  .register-btn,
+  .forget-btn
+  {
+    text-align: right;
     color: @blue-text-color;
     line-height: @register-btn-height;
     height: @register-btn-height;
+  }
+  .forget-btn {
+    text-align: left;
+    color: @help-text-color;
   }
 }

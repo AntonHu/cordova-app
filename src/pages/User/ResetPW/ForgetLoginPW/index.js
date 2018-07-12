@@ -1,8 +1,8 @@
 import React from 'react';
-import {BlueBox, PeakBox, Header} from '../../../components';
+import {BlueBox, PeakBox, Header} from '../../../../components';
 import {Modal} from 'antd-mobile';
-import {reqSendCode, reqRegister} from '../../../stores/user/request';
-import BasicPhoneCodePWForm from '../component/BasicPhoneCodePWForm';
+import {reqSendCode, reqForgetLoginPW} from '../../../../stores/user/request';
+import BasicPhoneCodePWForm from '../../component/BasicPhoneCodePWForm';
 import './style.less';
 
 const alert = Modal.alert;
@@ -13,18 +13,16 @@ const showError = (text) => {
   ]);
 };
 
-
-
 /**
- * 注册
+ * 忘记密码
  */
 class Comp extends React.PureComponent {
 
   /**
-   * 注册方法
+   * 忘记密码
    */
-  onRegister = async ({mobile, password, verificationCode, showModal, hideModal}) => {
-    const res = await reqRegister({
+  onSubmit = async ({mobile, password, verificationCode, showModal, hideModal}) => {
+    const res = await reqForgetLoginPW({
       mobile,
       password,
       verificationCode
@@ -50,14 +48,14 @@ class Comp extends React.PureComponent {
     if (msg === 'verification code not exist') {
       errorMsg = '错误的验证码';
     }
-    showError(errorMsg || '注册失败')
+    showError(errorMsg || '重置登录密码失败')
   };
 
   /**
    * 发送验证码
    */
   sendCode = ({mobile}) => {
-    reqSendCode({mobile, type: reqSendCode.REGISTER_TYPE})
+    reqSendCode({mobile, type: reqSendCode.MODIFY_TYPE})
       .then(res => {
         console.log(res)
       })
@@ -65,17 +63,17 @@ class Comp extends React.PureComponent {
 
   render() {
     return (
-      <div className={'page-register'}>
+      <div className={'page-forget-login-pw'}>
         <BlueBox>
-          <Header title="注册" transparent/>
+          <Header title="忘记密码" transparent/>
         </BlueBox>
         <PeakBox showPeak={true} top={180}>
           <BasicPhoneCodePWForm
-            submitMethod={this.onRegister}
+            submitMethod={this.onSubmit}
             sendCodeMethod={this.sendCode}
             popupProps={{
-              title: '恭喜注册成功！',
-              subTitle: '完善个人信息可快速增加算力哦～',
+              title: '登录密码设置成功',
+              subTitle: '现在就去登录吧',
               buttonText: '去登录',
               onPress: () => this.props.history.replace('/login')
             }}

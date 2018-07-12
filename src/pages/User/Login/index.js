@@ -66,6 +66,10 @@ class Comp extends React.PureComponent {
     this.props.history.push('/register')
   };
 
+  toForgetLoginPW = () => {
+    this.props.history.push('/forgetLoginPW')
+  };
+
   render() {
     return (
       <div className={'page-login'}>
@@ -95,7 +99,7 @@ class Comp extends React.PureComponent {
             />
             <Flex direction="row">
               <Flex.Item>
-                {/*<Button>忘记密码？</Button>*/}
+                <div className="forget-btn" onClick={this.toForgetLoginPW}>忘记密码</div>
               </Flex.Item>
               <Flex.Item>
                 <div className="register-btn" onClick={this.toRegister}>注册账号</div>

@@ -77,7 +77,7 @@ class Comp extends React.Component {
     if (this.validateBeforeSendCode()) {
       const {phone} = this.state;
       this.countdown.startCounting();
-      reqSendCode({mobile: clearSpace(phone), type: '1'})
+      reqSendCode({mobile: clearSpace(phone), type: reqSendCode.MODIFY_TYPE})
         .then(res => {
           console.log(res)
         })

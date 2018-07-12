@@ -49,6 +49,24 @@ export const reqRegister = async ({mobile, password, verificationCode}) => {
 };
 
 /**
+ * 用户注册
+ * @returns {Promise.<{success, msg: string}>}
+ */
+export const reqForgetLoginPW = async ({mobile, password, verificationCode}) => {
+  try {
+    const response = await post(`${userServer}/authz/users/resetPassword`,
+      {
+        username: mobile,
+        newPassword: password,
+        verificationCode
+      });
+    return response
+  } catch (err) {
+    throw err.response;
+  }
+};
+
+/**
  * 注册CA
  * @param password  默认的交易密码
  * @returns {Promise.<*>}
@@ -77,6 +95,9 @@ export const reqSendCode = async ({mobile, type = '0'}) => {
     throw err.response;
   }
 };
+reqSendCode.REGISTER_TYPE = '0';
+reqSendCode.MODIFY_TYPE = '1';
+
 
 /**
  * 获取个人信息
