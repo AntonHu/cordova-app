@@ -1,4 +1,4 @@
-import {get, post, authPost, post2} from '../../utils/fetch';
+import {get, post, LONG_TIME_OUT} from '../../utils/fetch';
 import {backendServer, userServer, PAGE_SIZE} from '../../utils/variable';
 import axios from 'axios';
 
@@ -200,7 +200,9 @@ export const reqUploadVerifyId = ({publicKey, username, idPositive, idNegative, 
   formData.append('idHandheld', idHandheld);
 
   let config = {
-    headers:{'Content-Type':'multipart/form-data'}
+    headers:{'Content-Type':'multipart/form-data'},
+    ////先不加超时，感受一下
+    // timeout: LONG_TIME_OUT
   };
 
   return axios.post(`${backendServer}/user/verifiedUser`, formData, config)
@@ -210,8 +212,14 @@ export const reqUploadVerifyId = ({publicKey, username, idPositive, idNegative, 
       return res;
     })
     .catch(err => {
-      console.log('verifiedUser fail');
-      console.log(JSON.stringify(err.response));
+      if (err.message === `timeout of ${LONG_TIME_OUT}ms exceeded`) {
+        throw {
+          data: {
+            code: 0,
+            msg: '请求超时'
+          }
+        }
+      }
       throw err;
     })
 };
@@ -281,6 +289,23 @@ export const putUserIntoChain = async ({publicKey, encryptPrivateKey}) => {
 export const getIsKycInChain = async ({publicKey}) => {
   try {
     const response = await get(`${backendServer}/user/isKycInChain`, {
+      publicKey
+    });
+    return response;
+  } catch (err) {
+    throw err.response;
+  }
+};
+
+/**
+ * 更新昵称成功后调用
+ * 通知链端更新了昵称
+ * @param publicKey
+ * @returns {Promise.<*>}
+ */
+export const reqUpdateNickName = async ({publicKey}) => {
+  try {
+    const response = await get(`${backendServer}/user/updateNickName`, {
       publicKey
     });
     return response;

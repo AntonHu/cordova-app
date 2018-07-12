@@ -2,7 +2,7 @@
 
 .page-apply {
   .apply-survey {
-    height: 200px;
+    height: 340 * @px;
     margin: 15px;
     background: @main-color;
     border-radius: @border-radius;
@@ -19,8 +19,10 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        .picture {
-          margin-bottom: 10px;
+        .picture,
+        .picture-empty-element{
+          margin-bottom: 20 * @px;
+          margin-top: 40 * @px;
         }
         .picture-empty-element {
           background: @shadow-color;
@@ -40,6 +42,11 @@
 
         .picture-empty-element {
           background: @shadow-color;
+        }
+
+        .recommend-name {
+          margin-top: 24 * @px;
+          margin-bottom: 12 * @px;
         }
 
         .recommend-price {

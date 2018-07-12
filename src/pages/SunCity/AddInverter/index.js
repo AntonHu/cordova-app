@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { PageWithHeader, GreenButton } from '../../../components';
-import { Picker, List, WhiteSpace, InputItem, Toast } from 'antd-mobile';
+import { PageWithHeader, GreenButton, ToastNoMask } from '../../../components';
+import { Picker, List, WhiteSpace, InputItem } from 'antd-mobile';
 import { toJS } from 'mobx';
 import { deleteLocalStorage } from '../../../utils/storage';
 import './style.less';
@@ -46,7 +46,7 @@ class Comp extends React.Component {
         },
         error => {
           //扫码失败
-          Toast.show(`扫码失败${error}`);
+          ToastNoMask(`扫码失败${error}`);
         },
         {
           preferFrontCamera: false, // iOS and Android 设置前置摄像头
@@ -70,10 +70,10 @@ class Comp extends React.Component {
     const sourceData = this.state.inverterType;
     if (this.props.keyPair.hasKey) {
       if (!deviceNo) {
-        Toast.show('请选择逆变器品牌');
+        ToastNoMask('请选择逆变器品牌');
         return;
       } else if (!sourceData) {
-        Toast.show('请输入逆变器条码');
+        ToastNoMask('请输入逆变器条码');
         return;
       }
       this.props.sunCityStore
@@ -84,11 +84,11 @@ class Comp extends React.Component {
         })
         .then(result => {
           if (result.code === 200) {
-            Toast.show('添加逆变器成功');
+            ToastNoMask('添加逆变器成功');
             // 添加成功后，删除缓存设备数据，重新请求所有设备数据
             deleteLocalStorage('equipmentListObj');
           } else {
-            Toast.show(`添加逆变器失败,${result.msg}`);
+            ToastNoMask(`添加逆变器失败,${result.msg}`);
           }
         });
     }

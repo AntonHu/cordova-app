@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { PageWithHeader } from '../../../components';
-import { List } from 'antd-mobile';
+import {Link} from 'react-router-dom';
+import {PageWithHeader} from '../../../components';
+import {List} from 'antd-mobile';
 import './style.less';
 
 const Item = List.Item;
@@ -15,6 +15,7 @@ const ListData = [
     path: 'resetLoginPW'
   }
 ];
+
 /**
  * 重置密码
  */

@@ -206,18 +206,19 @@ class Comp extends React.Component {
               }
             >
               <div className="number">2</div>
-              <div>设置交易密码</div>
+              <div>交易密码</div>
             </div>
           </div>
-          <div className={this.state.firstStep ? '' : 'step-hide'}>
+          <div className={this.state.firstStep ? 'step-show' : 'step-hide'}>
             <InputItem
               type="phone"
               clear
               placeholder="请输入手机号"
               value={phone}
               onChange={this.changeState('phone')}
+              labelNumber={3}
             >
-              手机号码
+              <span className="h3">+86</span>
             </InputItem>
             <InputItem
               placeholder="验证码"
@@ -237,7 +238,7 @@ class Comp extends React.Component {
               确认
             </GreenButton>
           </div>
-          <div className={this.state.secondStep ? '' : 'step-hide'}>
+          <div className={this.state.secondStep ? 'step-show' : 'step-hide'}>
             <InputItem
               clear
               type="password"

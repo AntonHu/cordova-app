@@ -1,5 +1,5 @@
 import React from 'react';
-import {BlueBox, PeakBox, GreenButton, Header, Countdown} from '../../../components';
+import {BlueBox, PeakBox, GreenButton, Header, Countdown, Popup} from '../../../components';
 import {InputItem, Modal} from 'antd-mobile';
 import {clearSpace, testPhoneNumber, testCode, testPassword} from '../../../utils/methods';
 import {reqSendCode, reqRegister} from '../../../stores/user/request';
@@ -24,7 +24,8 @@ class Comp extends React.PureComponent {
     code: '',
     password: '',
     confirmPassword: '',
-    status: 'able'
+    status: 'able',
+    successModal: false
   };
 
   isRegistering = false;
@@ -72,11 +73,9 @@ class Comp extends React.PureComponent {
   };
 
   registerSuccess = () => {
-    alert('注册成功', '点击"确认"按钮去登录', [
-      {text: '确认', onPress: () => {
-        this.props.history.replace('/login');
-      }}
-    ]);
+    this.setState({
+      successModal: true
+    })
   };
 
   registerFail = (msg) => {
@@ -147,6 +146,13 @@ class Comp extends React.PureComponent {
     // showError(str)
   };
 
+  onModalPress = () => {
+    this.setState({
+      successModal: false
+    });
+    this.props.history.replace('/login');
+  };
+
 
   render() {
     const {phone, code, password, confirmPassword} = this.state;
@@ -155,7 +161,7 @@ class Comp extends React.PureComponent {
         <BlueBox>
           <Header title="注册" transparent/>
         </BlueBox>
-        <PeakBox showPeak={true} top={140}>
+        <PeakBox showPeak={true} top={180}>
           <div className="body">
             <InputItem
               placeholder="请输入手机号"
@@ -163,7 +169,10 @@ class Comp extends React.PureComponent {
               type="phone"
               value={phone}
               onChange={this.changeState('phone')}
-            />
+              labelNumber={3}
+            >
+              <span className="h3">+86</span>
+            </InputItem>
 
             <InputItem
               placeholder="验证码"
@@ -200,6 +209,14 @@ class Comp extends React.PureComponent {
             <GreenButton size={'big'} onClick={this.onRegister}>确认</GreenButton>
           </div>
         </PeakBox>
+        <Popup
+          title="恭喜注册成功！"
+          subTitle="完善个人信息可快速增加算力哦～"
+          buttonText="去登录"
+          visible={this.state.successModal}
+          onPress={this.onModalPress}
+          onClose={() => this.setState({successModal: false})}
+        />
       </div>
     );
   }

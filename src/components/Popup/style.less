@@ -15,19 +15,23 @@
 
   .icon {
     height: 240 * @px;
-    background: @light-blue-bg;
+    background: @white-blue-bg;
+    .iconfont {
+      color: @main-color;
+      font-size: 180 * @px;
+    }
   }
 
   .title {
-    font-size: @h1;
-    font-weight: bolder;
+    font-size: @h2;
+    font-weight: 400;
     color: @main-text-color;
     padding-top: 45 * @px;
   }
 
   .subtitle {
     color: @help-text-color;
-    font-size: @h3;
+    font-size: @h5;
     padding-top: 28 * @px;
   }
 
@@ -35,6 +39,14 @@
     display: inline-block;
     padding-top: 50 * @px;
     padding-bottom: 50 * @px;
+    .green-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      span {
+        font-size: @h5;
+      }
+    }
   }
 }
 

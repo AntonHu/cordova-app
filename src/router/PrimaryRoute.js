@@ -20,9 +20,10 @@ import MyPowerStation from '../pages/SunCity/MyPowerStation';
 import EquipmentInfo from '../pages/SunCity/EquipmentInfo';
 import AddInverter from '../pages/SunCity/AddInverter';
 import SunIntegral from '../pages/Mining/SunIntegral';
-import { Modal, Toast } from 'antd-mobile';
+import { Modal } from 'antd-mobile';
 import { observer, inject } from 'mobx-react';
 import { reqUpdateGeolocation } from '../stores/user/request';
+import {ToastNoMask} from '../components'
 import { deleteLocalStorage } from '../utils/storage';
 
 const alert = Modal.alert;
@@ -56,7 +57,7 @@ function getAddress(longitude, latitude) {
 
 function onSuccess(publicKey) {
   return function(position) {
-    Toast.show('获取坐标成功');
+    ToastNoMask('获取坐标成功');
     getAddress(position.coords.longitude, position.coords.latitude);
     reqUpdateGeolocation({
       rectangle: position.coords.latitude + ',' + position.coords.longitude,
@@ -64,16 +65,18 @@ function onSuccess(publicKey) {
     })
       .then(res => {
         console.log(res);
-        Toast.show('上传坐标成功');
+        ToastNoMask('上传坐标成功');
       })
       .catch(err => {
-        Toast.show('上传坐标失败');
+        console.log('上传坐标失败');
+        console.log(JSON.stringify(err.response));
+        ToastNoMask('上传坐标失败');
       });
   };
 }
 
 function onError(error) {
-  Toast.show('获取坐标失败');
+  ToastNoMask('获取坐标失败');
 }
 
 @inject('keyPair')

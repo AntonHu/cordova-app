@@ -1,6 +1,8 @@
 // JavaScript Document
 import React, { Component } from 'react';
-// import './App.css';
+import './style.less';
+
+const initCountDownTxt = '获取验证码';
 
 class Countdown extends Component {
   constructor(props) {
@@ -8,7 +10,7 @@ class Countdown extends Component {
     this.state = {
       nums:props.nums,												// 倒计时时间（s）
       tips:'',														// 提示信息
-      countdown:'发送验证码',											// 倒计时按钮值
+      countdown: initCountDownTxt,						// 倒计时按钮值
       status:props.status,											// 倒计时按钮状态(disable:不可发送,able:可发送,sending:倒计时中)
     }
   }
@@ -73,7 +75,7 @@ class Countdown extends Component {
   resetButton(){
     clearInterval(this.clock);	// 清除js定时器
     this.setState({
-      countdown:'发送验证码',
+      countdown: initCountDownTxt,
       status:'able',
       nums:this.props.nums,	// 重置时间
     });

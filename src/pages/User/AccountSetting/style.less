@@ -2,9 +2,32 @@
 
 .page-account-setting {
   .plain-button {
-    margin-top: 310 * @px;
+    margin-top: 230 * @px;
+    font-size: @h3;
   }
   a {
     color: @main-text-color;
   }
+  .am-list {
+    .am-list-item {
+      height: @list-item-height;
+      line-height: @list-item-height;
+    }
+    .am-list-content {
+      color: @main-text-color;
+      font-size: @h3;
+    }
+    .am-list-item:not(:last-child),
+    a {
+      border-bottom: 1px solid @white-grey;
+    }
+    a {
+      display: block;
+    }
+
+    .am-list-body .am-list-item .am-list-line::after {
+      background-color: transparent;
+    }
+  }
+
 }

@@ -38,7 +38,7 @@ class Comp extends React.Component {
                 return (
                   <div key={item.tokenId} className="integral-item">
                     <div>{item.solarIntegral}</div>
-                    <div>{item.gmtCreate.slice(0, 10)}</div>
+                    <div>{item.gmtCreate}</div>
                   </div>
                 );
               })}

@@ -1,7 +1,7 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
-import {BlueBox, PageWithHeader, Picture} from '../../../components';
-import {List, Picker, Icon, Modal, Button, ActionSheet, Toast} from 'antd-mobile';
+import {BlueBox, PageWithHeader, Picture, ToastNoMask} from '../../../components';
+import {List, Picker, Icon, Modal, Button, ActionSheet} from 'antd-mobile';
 import {observer, inject} from 'mobx-react';
 import {FileMethods} from '../../../utils/methods';
 import {reqUploadAvatar, reqUpdateUser} from '../../../stores/user/request';
@@ -16,7 +16,7 @@ if (isIPhone) {
 }
 
 function onUploadFail() {
-  Toast.show('上传头像失败');
+  ToastNoMask('上传头像失败');
 }
 
 function onFail(message) {
@@ -83,13 +83,13 @@ const updateAvatar = (imgBlob, nickName) => {
           nickName
         }).then(updateRes => {
           if (updateRes.data && updateRes.data.code === 20000) {
-            Toast.show('更新头像成功');
+            ToastNoMask('更新头像成功');
           } else {
-            Toast.show('更新头像失败');
+            ToastNoMask('更新头像失败');
           }
         })
       } else {
-        Toast.show('上传头像失败');
+        ToastNoMask('上传头像失败');
       }
     })
     .catch(err => {
@@ -163,7 +163,7 @@ class Comp extends React.Component {
   makeRequest = (props) => {
     const { keyPair } = props;
     if (keyPair.hasKey) {
-      this.props.userStore.fetchIsKycInChain({publicKey: keyPair.publicKey});
+      this.props.userStore.checkIsKycInChain({publicKey: keyPair.publicKey});
     }
   };
   // 头像更改
@@ -214,7 +214,7 @@ class Comp extends React.Component {
           <div className="personal-list">
             <div className="personal-item" onClick={this.picChange}>
               <div className="item-title">头像</div>
-              <Picture size={60} src={avatar} alt='' showEmptyElement={false}/>
+              <Picture size={70} src={avatar} alt='' showEmptyElement={false}/>
             </div>
             <div
               className="personal-item"
