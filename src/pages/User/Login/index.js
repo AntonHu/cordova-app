@@ -10,7 +10,7 @@ const alert = Modal.alert;
 /**
  * 登录
  */
-class Comp extends React.PureComponent {
+class Login extends React.PureComponent {
   state = {
     phone: '',
     password: ''
@@ -113,4 +113,4 @@ class Comp extends React.PureComponent {
   }
 }
 
-export default Comp;
+export default Login;

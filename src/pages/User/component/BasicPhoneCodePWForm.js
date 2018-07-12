@@ -29,7 +29,7 @@ const showError = (text) => {
  * 发送最终请求的方法
  * Popup的一些属性
  */
-class Comp extends React.PureComponent {
+class BasicPhoneCodePWForm extends React.PureComponent {
   static propTypes = {
     // 发送验证码的方法
     sendCodeMethod: PropTypes.func.isRequired,
@@ -242,4 +242,4 @@ class Comp extends React.PureComponent {
   }
 }
 
-export default Comp;
+export default BasicPhoneCodePWForm;

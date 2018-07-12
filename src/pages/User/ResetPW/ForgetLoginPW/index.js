@@ -16,7 +16,7 @@ const showError = (text) => {
 /**
  * 忘记密码
  */
-class Comp extends React.PureComponent {
+class ForgetLoginPW extends React.PureComponent {
 
   /**
    * 忘记密码
@@ -84,4 +84,4 @@ class Comp extends React.PureComponent {
   }
 }
 
-export default Comp;
+export default ForgetLoginPW;
