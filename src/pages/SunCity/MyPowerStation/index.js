@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { toJS } from 'mobx';
 import { observer, inject } from 'mobx-react';
-import { BlueBox, Title, PageWithHeader } from '../../../components';
+import { BlueBox, Title, PageWithHeader, Picture } from '../../../components';
 import { Icon, ActivityIndicator } from 'antd-mobile';
 import { decrypt } from '../../../utils/methods';
 
@@ -35,16 +35,20 @@ class Comp extends React.Component {
   };
 
   async componentDidMount() {
+    const city = getLocalStorage('city');
+    this.props.sunCityStore.fetchSCGetWeather({
+      cityName: city
+    });
     const { keyPair } = this.props;
     let equipmentListObj = {};
-    // 获取本地储存的设备列表
-    if (getLocalStorage('equipmentListObj')) {
-      equipmentListObj = JSON.parse(getLocalStorage('equipmentListObj'));
-      this.setState({
-        loading: false
-      });
-    } else {
-      if (keyPair.hasKey) {
+    if (keyPair.hasKey) {
+      // 获取本地储存的设备列表
+      if (getLocalStorage('equipmentListObj')) {
+        equipmentListObj = JSON.parse(getLocalStorage('equipmentListObj'));
+        this.setState({
+          loading: false
+        });
+      } else {
         // 获取设备列表
         await this.props.sunCityStore.fetchSCEquipmentList({
           userPubKey: keyPair.publicKey
@@ -58,22 +62,28 @@ class Comp extends React.Component {
         // 添加各个设备的功率和日电量
         equipmentListObj && this.addEquipmentPower(equipmentListObj, 1);
       }
-    }
-    const dayStationData = JSON.parse(getLocalStorage('dayStationData')) || []; // 获取本地储存每天发电数据
-    const monthStationData =
-      JSON.parse(getLocalStorage('monthStationData')) || []; // 获取本地储存每月发电数据
-    const yearStationData =
-      JSON.parse(getLocalStorage('yearStationData')) || []; // 获取本地储存每年发电数据
-    const allStationData = JSON.parse(getLocalStorage('allStationData')) || []; // 获取本地储存所有发电数据
+      const dayStationData =
+        JSON.parse(getLocalStorage('dayStationData')) || []; // 获取本地储存每天发电数据
+      const monthStationData =
+        JSON.parse(getLocalStorage('monthStationData')) || []; // 获取本地储存每月发电数据
+      const yearStationData =
+        JSON.parse(getLocalStorage('yearStationData')) || []; // 获取本地储存每年发电数据
+      const allStationData =
+        JSON.parse(getLocalStorage('allStationData')) || []; // 获取本地储存所有发电数据
 
-    this.setState({
-      equipmentListObj,
-      dayStationData,
-      monthStationData,
-      yearStationData,
-      allStationData
-    });
-    this.barChart = this.renderBarChart(dayStationData);
+      this.setState({
+        equipmentListObj,
+        dayStationData,
+        monthStationData,
+        yearStationData,
+        allStationData
+      });
+      this.barChart = this.renderBarChart(dayStationData);
+    } else {
+      this.setState({
+        loading: false
+      });
+    }
   }
   // 为每个添加设备的功率和日电量
   async addEquipmentPower(equipmentListObj, dateType) {
@@ -237,6 +247,15 @@ class Comp extends React.Component {
     const { equipmentListObj } = this.state;
     const equipmentNameList =
       (equipmentListObj && Object.keys(equipmentListObj)) || [];
+    const weatherInfo = this.props.sunCityStore.weatherInfo;
+    let weatherEle = <i className="iconfont">&#xe631;</i>;
+    if (weatherInfo) {
+      if (weatherInfo.weather.indexOf('雨') > 0) {
+        weatherEle = <i className="iconfont">&#xe622;</i>;
+      } else if (weatherInfo && weatherInfo.weather.indexOf('云') > 0) {
+        weatherEle = <i className="iconfont">&#xe61a;</i>;
+      }
+    }
     return (
       <div className={'page-powerStation-info'}>
         <PageWithHeader
@@ -253,12 +272,8 @@ class Comp extends React.Component {
           <BlueBox type={'pure'}>
             <div className="title">
               <div className="weather">
-                <img
-                  className="weather-pic"
-                  src={global.weather && global.weather.dayPictureUrl}
-                  alt=""
-                />
-                {global.weather && global.weather.weather}
+                {weatherEle}
+                {(weatherInfo && weatherInfo.weather) || '晴'}
               </div>
               <div className="screen" onClick={this.screenChange}>
                 <div
@@ -287,7 +302,20 @@ class Comp extends React.Component {
                 </div>
               </div>
             </div>
-            <canvas id="pie-bar-chart" />
+            {equipmentNameList.length > 0 ? (
+              <canvas id="pie-bar-chart" />
+            ) : (
+              <div
+                className="pic-wrap special-one"
+                onClick={() => this.props.history.push('/sunCity/addInverter')}
+              >
+                <Picture
+                  src={require('../../../images/no_inverter.png')}
+                  size={200}
+                />
+                <span>还未添加逆变器，快去添加~</span>
+              </div>
+            )}
           </BlueBox>
           <div className="type">
             <div className="type-item power">
@@ -356,7 +384,18 @@ class Comp extends React.Component {
                 {this.state.loading ? (
                   <ActivityIndicator text="加载中..." />
                 ) : (
-                  '暂无数据'
+                  <div
+                    className="pic-wrap"
+                    onClick={() =>
+                      this.props.history.push('/sunCity/addInverter')
+                    }
+                  >
+                    <Picture
+                      src={require('../../../images/no_inverter.png')}
+                      size={200}
+                    />
+                    <span>还未添加逆变器，快去添加~</span>
+                  </div>
                 )}
               </div>
             )}

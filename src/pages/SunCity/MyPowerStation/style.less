@@ -20,7 +20,8 @@
         margin-right: 5px;
       }
       .iconfont {
-        font-size: 34px;
+        font-size: 28px;
+        margin-right: 6px;
       }
     }
     .screen {
@@ -37,6 +38,21 @@
       .selected {
         background: @assist-color;
       }
+    }
+  }
+  .pic-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    span {
+      margin-top: 8px;
+      color: @help-text-color;
+    }
+  }
+  .special-one {
+    margin-top: 50px;
+    span {
+      color: @white-text-color;
     }
   }
   #pie-bar-chart {
@@ -145,11 +161,11 @@
       }
     }
     .loading {
-      height: 50px;
+      height: 200px;
+      background: @white-text-color;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: @white-text-color;
     }
   }
 }

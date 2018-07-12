@@ -8,7 +8,8 @@ import {
   fetchEquipmentInfo,
   fetchEquipmentPower,
   fetchInverters,
-  fetchAddInverter
+  fetchAddInverter,
+  fetchGetWeather
 } from './request';
 
 class SunCityStore {
@@ -19,6 +20,7 @@ class SunCityStore {
   @observable equipmentInfo;
   @observable equipmentPower;
   @observable inverterList;
+  @observable weatherInfo;
 
   // 获取最新公告
   @action
@@ -141,7 +143,9 @@ class SunCityStore {
     try {
       result = await fetchInverters(params);
       runInAction(() => {
-        this.inverterList = result.data;
+        if (result.code === 200) {
+          this.inverterList = result.data;
+        }
       });
     } catch (err) {
       console.log(err);
@@ -155,6 +159,22 @@ class SunCityStore {
     try {
       result = await fetchAddInverter(params);
       runInAction(() => {});
+    } catch (err) {
+      console.log(err);
+    }
+    return result;
+  };
+  // 获取天气信息
+  @action
+  fetchSCGetWeather = async params => {
+    let result = {};
+    try {
+      result = await fetchGetWeather(params);
+      runInAction(() => {
+        if (result.code === 200) {
+          this.weatherInfo = result.data && result.data.weatherinfo;
+        }
+      });
     } catch (err) {
       console.log(err);
     }
