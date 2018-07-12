@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { toJS } from 'mobx';
 import { observer, inject } from 'mobx-react';
-import { Title } from '../../components';
+import { Title, Picture } from '../../components';
 import { NoticeBar, Icon, ActivityIndicator } from 'antd-mobile';
 import { setLocalStorage, getLocalStorage } from '../../utils/storage';
 import { decrypt } from '../../utils/methods';
@@ -309,10 +309,11 @@ class Comp extends React.Component {
       Object.keys(receiveData).forEach(item => {
         let powerInfo;
         try {
-          const decryptedItem = decrypt(this.props.keyPair.privateKey, receiveData[item]);
-          powerInfo =
-            decryptedItem &&
-            JSON.parse(decryptedItem);
+          const decryptedItem = decrypt(
+            this.props.keyPair.privateKey,
+            receiveData[item]
+          );
+          powerInfo = decryptedItem && JSON.parse(decryptedItem);
         } catch (err) {
           console.log(err);
         }
@@ -426,14 +427,7 @@ class Comp extends React.Component {
                 className="person-info"
                 onClick={() => this.props.history.replace('/mining')}
               >
-                <img
-                  className="person-pic"
-                  src={
-                    avatar ||
-                    'http://ku.90sjimg.com/element_origin_min_pic/01/48/89/075744458690810.jpg'
-                  }
-                  alt=""
-                />
+                <Picture src={avatar} size={56} />
                 <span className="nick-name">{nickName}</span>
                 <Icon type="right" />
               </div>
