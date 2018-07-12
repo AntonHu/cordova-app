@@ -252,7 +252,7 @@ class Comp extends React.Component {
     if (weatherInfo) {
       if (weatherInfo.weather.indexOf('雨') > 0) {
         weatherEle = <i className="iconfont">&#xe622;</i>;
-      } else if (weatherInfo && weatherInfo.weather.indexOf('云') > 0) {
+      } else if (weatherInfo.weather.indexOf('云') > 0) {
         weatherEle = <i className="iconfont">&#xe61a;</i>;
       }
     }
