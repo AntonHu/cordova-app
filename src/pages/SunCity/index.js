@@ -123,38 +123,28 @@ class Comp extends React.Component {
   // 获取设备，月，年，所有的数据，并缓存
   async cacheEquipmentData(equipmentListObj) {
     // 储存电站数据,EQUIPMENT_DATA_TYPE.MONTH-月，EQUIPMENT_DATA_TYPE.YEAR-年，EQUIPMENT_DATA_TYPE.ALL-全部
-    if (
-      (this.isExpire() || !getLocalStorage('monthStationData')) &&
-      equipmentListObj
-    ) {
+    if (this.isExpire() && equipmentListObj) {
+      // 请求电站每月发电数据，本地储存
       const monthStationData = await this.equipmentDataIntegrate(
         equipmentListObj,
         EQUIPMENT_DATA_TYPE.MONTH
       );
-      setLocalStorage('monthStationData', JSON.stringify(monthStationData)); // 本地储存电站每月发电数据
-    }
+      setLocalStorage('monthStationData', JSON.stringify(monthStationData));
 
-    if (
-      (this.isExpire() || !getLocalStorage('yearStationData')) &&
-      equipmentListObj
-    ) {
+      // 请求电站每年发电数据，本地储存
       const yearStationData = await this.equipmentDataIntegrate(
         equipmentListObj,
         EQUIPMENT_DATA_TYPE.YEAR
       );
-      setLocalStorage('yearStationData', JSON.stringify(yearStationData)); // 本地储存电站每年发电数据
-    }
+      setLocalStorage('yearStationData', JSON.stringify(yearStationData));
 
-    if (
-      (this.isExpire() || !getLocalStorage('allStationData')) &&
-      equipmentListObj
-    ) {
+      // 请求电站所有发电数据，本地储存
       const equipmentDataArr = await this.getAllEquipmentData(
         equipmentListObj,
         EQUIPMENT_DATA_TYPE.ALL
       );
       const allStationData = this.allEquipmentDataIntegrate(equipmentDataArr);
-      setLocalStorage('allStationData', JSON.stringify(allStationData)); // 本地储存电站所有发电数据
+      setLocalStorage('allStationData', JSON.stringify(allStationData));
       setLocalStorage('stationExpireTime', new Date().getTime()); // 本地储存电站数据过期时间
     }
   }
