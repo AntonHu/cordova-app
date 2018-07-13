@@ -65,10 +65,11 @@ class Comp extends React.Component {
 
   onUpdateSuccess = () => {
     const self = this;
+    const { keyPair, userStore, history } = this.props;
     if (this.props.keyPair.hasKey) {
       reqUpdateNickName({publicKey: this.props.keyPair.publicKey});
     }
-    this.props.userStore.fetchUserInfo();
+    this.props.userStore.fetchUserInfo({ keyPair, userStore, history });
     alert('更新成功', '您的昵称已更新', [
       {text: '确定', onPress: () => {
         self.props.history.goBack()

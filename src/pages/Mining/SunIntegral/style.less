@@ -19,6 +19,15 @@
       text-align: left;
       color: @light-text-color;
 
+      .title {
+        margin-bottom: 40 * @px;
+      }
+
+      .am-list-body::after,
+      .am-list-body::before {
+        background-color: transparent!important;
+      }
+
       .integral-item {
         display: flex;
         justify-content: space-between;

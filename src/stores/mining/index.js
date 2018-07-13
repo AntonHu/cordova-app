@@ -34,10 +34,15 @@ class MiningStore {
       const res = await getTokenRecords({ publicKey, page });
       if (res.status === 200) {
         runInAction(() => {
-          this.tokenRecords = res.data.data;
+          if (page === 0) {
+            this.tokenRecords = res.data.data;
+          } else {
+            this.tokenRecords = this.tokenRecords.concat(res.data.data);
+          }
         });
+        return res.data.data
       }
-      return res;
+      return [];
     } catch (err) {
       throw err;
     }

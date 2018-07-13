@@ -46,7 +46,7 @@ class Comp extends React.Component {
   timeoutID = null;
   sunArea = null; // 大图形
   async componentDidMount() {
-    const { keyPair } = this.props;
+    const { keyPair, userStore, history } = this.props;
     // 获取最新公告,条件固定
     this.props.sunCityStore.fetchSCNews({
       page: 0,
@@ -54,7 +54,7 @@ class Comp extends React.Component {
     });
 
     // 获取用户信息
-    this.props.userStore.fetchUserInfo();
+    this.props.userStore.fetchUserInfo({ keyPair, userStore, history });
 
     // 如果有私钥
     if (keyPair.hasKey) {

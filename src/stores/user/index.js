@@ -2,7 +2,10 @@ import { observable, action, runInAction, computed, toJS } from 'mobx';
 import { getOwnerInfo, getMessages, getIsInChain, getIsKycInChain, putUserIntoChain } from './request';
 import {getLocalStorage, setLocalStorage, deleteLocalStorage} from '../../utils/storage';
 import {ToastNoMask} from '../../components';
+import {Modal} from 'antd-mobile';
+import User from '../../utils/user';
 
+const alert = Modal.alert;
 const IS_KYC_IN_CHAIN = 'IS_KYC_IN_CHAIN';
 
 class UserStore {
@@ -18,7 +21,7 @@ class UserStore {
    * @returns {Promise.<*>}
    */
   @action
-  fetchUserInfo = async () => {
+  fetchUserInfo = async ({keyPair, userStore, history}) => {
     try {
       const res = await getOwnerInfo();
       if (res.status === 200) {
@@ -28,7 +31,19 @@ class UserStore {
       }
       return res;
     } catch (err) {
-      throw err;
+      console.log(err);
+      if (err.data && err.data.error === 'invalid_token') {
+        alert('登录过期', '您的登录已过期，请重新登录。', [{text: '好的', onPress: function () {
+          const user = new User();
+          user.logout();
+          keyPair.clearKeyPair();
+          userStore.deleteIsKycInChain();
+          history.replace('/');
+        }}]);
+      } else {
+        throw err;
+      }
+
     }
   };
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { PageWithHeader } from '../../../components';
-import { toJS } from 'mobx';
+import { toJS, reaction } from 'mobx';
 import { observer, inject } from 'mobx-react';
-// import { List } from 'antd-mobile';
+import { ListView } from 'antd-mobile';
 import './style.less';
 /**
  * 挖宝
@@ -10,16 +10,66 @@ import './style.less';
 @inject('miningStore', 'keyPair')
 @observer
 class Comp extends React.Component {
+  constructor(props) {
+    super(props);
+    const dataSource = new ListView.DataSource({
+      rowHasChanged: (row1, row2) => row1 !== row2
+    });
 
-  componentDidMount() {
-    this.makeRequest(this.props);
+    this.state = {
+      dataSource,
+      isLoading: false,
+      page: 0
+    }
   }
 
-  makeRequest = (props) => {
+  hasMore = true;
+
+  componentDidMount() {
+    this.makeRequest(this.props, this.state.page);
+  }
+
+  makeRequest = (props, page) => {
     const {keyPair} = props;
     if (keyPair.hasKey) {
-      this.props.miningStore.fetchTokenRecords({page: 0, publicKey: keyPair.publicKey})
+      this.props.miningStore.fetchTokenRecords({page, publicKey: keyPair.publicKey})
+        .then(data => {
+          if (data.length < 1) {
+            this.hasMore = false;
+          }
+        })
     }
+  };
+
+  renderRow = (rowData, sectionID, rowID) => {
+    return (
+      <div key={rowData.tokenId} className="integral-item">
+        <div>{rowData.solarIntegral}</div>
+        <div>{rowData.gmtCreate}</div>
+      </div>
+    );
+  };
+
+  updateDataSource = reaction(
+    () => this.props.miningStore.tokenRecords,
+    tokenRecords => {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(toJS(tokenRecords)),
+        isLoading: false
+      })
+    }
+  );
+
+  onEndReached = () => {
+    if (this.state.isLoading || !this.hasMore) {
+      return;
+    }
+    this.setState({
+      isLoading: true,
+      page: this.state.page + 1
+    }, () => {
+      this.makeRequest(this.props, this.state.page)
+    });
   };
 
   render() {
@@ -33,15 +83,19 @@ class Comp extends React.Component {
               <div className="number">{balance.toFixed(2)}</div>
             </div>
             <div className="integral-list">
-              <div>积分记录</div>
-              {this.props.miningStore.tokenRecords.map((item, index) => {
-                return (
-                  <div key={item.tokenId} className="integral-item">
-                    <div>{item.solarIntegral}</div>
-                    <div>{item.gmtCreate}</div>
-                  </div>
-                );
-              })}
+              <div className="title">积分记录</div>
+              <ListView
+                renderFooter={() => (<div style={{ padding: '20px', textAlign: 'center' }}>
+                  {this.state.isLoading ? '加载中...' : '没有更多'}
+                </div>)}
+                dataSource={this.state.dataSource}
+                renderRow={this.renderRow}
+                className="integral-list-view"
+                useBodyScroll
+                scrollRenderAheadDistance={800}
+                onEndReached={this.onEndReached}
+                onEndReachedThreshold={10}
+              />
             </div>
           </div>
         </PageWithHeader>

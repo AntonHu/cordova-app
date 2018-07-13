@@ -37,12 +37,14 @@ const ListData = [
 /**
  * 我的
  */
-@inject('userStore') // 如果注入多个store，用数组表示
+@inject('userStore', 'keyPair') // 如果注入多个store，用数组表示
 @observer
 class Comp extends React.Component {
 
   componentDidMount() {
-    this.props.userStore.fetchUserInfo();
+    const {keyPair, userStore, history} = this.props;
+    console.log(history);
+    this.props.userStore.fetchUserInfo({keyPair, userStore, history});
   }
 
   sliceLongName = (name) => {

@@ -23,7 +23,7 @@ const ListData = [
   },
   {
     text: '客服电话',
-    extra: '402255652'
+    extra: '0571-26270118'
   }
 ];
 

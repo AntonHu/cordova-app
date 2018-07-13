@@ -12,28 +12,28 @@ const TabsData = [
     key: 'sunCity',
     unicode: '\ue604',
     selectedUnicode: '\ue600',
-    content: () => <SunCity />
+    content: (props) => <SunCity {...props} />
   },
   {
     title: '挖宝',
     key: 'mining',
     unicode: '\ue605',
     selectedUnicode: '\ue601',
-    content: () => <Mining />
+    content: (props) => <Mining {...props} />
   },
   {
     title: '应用',
     key: 'apply',
     unicode: '\ue606',
     selectedUnicode: '\ue603',
-    content: () => <Apply />
+    content: (props) => <Apply {...props} />
   },
   {
     title: '我的',
     key: 'user',
     unicode: '\ue607',
     selectedUnicode: '\ue602',
-    content: () => <User />
+    content: (props) => <User {...props} />
   }
 ];
 
@@ -61,10 +61,11 @@ class Comp extends React.PureComponent {
 
   render() {
     console.log(this.props);
+    const {history} = this.props;
     return (
       <div
         className="page-home"
-        style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }}
+        style={{ position: 'fixed', height: '100%', width: '100%', top: 0, overflowX: 'hidden' }}
       >
         <TabBar
           unselectedTintColor="#cdcdcd"
@@ -82,7 +83,7 @@ class Comp extends React.PureComponent {
               icon={<i className="iconfont">{tab.unicode}</i>}
               selectedIcon={<i className="iconfont">{tab.selectedUnicode}</i>}
             >
-              {tab.content()}
+              {tab.content({history})}
             </TabBar.Item>
           ))}
         </TabBar>
