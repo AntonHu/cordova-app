@@ -427,6 +427,15 @@ class Comp extends React.Component {
         });
     }
   };
+
+  sliceLongName = (name) => {
+    const LENGTH_LIMIT = 5;
+    if (name && name.length > LENGTH_LIMIT) {
+      return name.substr(0, LENGTH_LIMIT) + '...'
+    }
+    return name;
+  };
+
   render() {
     const userInfo = toJS(this.props.userStore.userInfo);
     const { avatar, nickName } = userInfo;
@@ -447,8 +456,8 @@ class Comp extends React.Component {
                 className="person-info"
                 onClick={() => this.props.history.replace('/mining')}
               >
-                <Picture src={avatar} size={56} />
-                <span className="nick-name">{nickName}</span>
+                <Picture src={avatar} size={60} />
+                <span className="nick-name">{this.sliceLongName(nickName)}</span>
                 <Icon type="right" />
               </div>
               <div>
