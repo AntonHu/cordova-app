@@ -5,6 +5,7 @@ import F2 from '@antv/f2';
 import { px } from '../../../utils/getDevice';
 import { setLocalStorage, getLocalStorage } from '../../../utils/storage';
 import { decrypt } from '../../../utils/methods';
+import { EQUIPMENT_DATA_TYPE } from '../../../utils/variable';
 import './style.less';
 
 import { toJS } from 'mobx';
@@ -32,8 +33,13 @@ class Comp extends React.Component {
     const sourceData = params.split('&')[0].split('=')[1];
 
     let dayEquipmentData = [];
-    if (this.isExpire() || !getLocalStorage('dayEquipmentData')) {
-      dayEquipmentData = await this.getPowerData(sourceData, deviceNo, 1);
+    // 当时间过期或者设备号更换，重新获取并缓存数据
+    if (this.isExpire() || getLocalStorage('equipmentNumber') !== deviceNo) {
+      dayEquipmentData = await this.getPowerData(
+        sourceData,
+        deviceNo,
+        EQUIPMENT_DATA_TYPE.DAY
+      );
       setLocalStorage('dayEquipmentData', JSON.stringify(dayEquipmentData)); // 本地储存天设备发电数据
     } else {
       dayEquipmentData = JSON.parse(getLocalStorage('dayEquipmentData'));
@@ -62,30 +68,38 @@ class Comp extends React.Component {
     });
     this.pieBarChart = this.renderPieBar(currentPower);
 
-    // 本地储存设备月发电数据
-    if (this.isExpire() || !getLocalStorage('monthEquipmentData')) {
+    // 本地储存设备月，年，所有数据
+    this.cacheEquipmentData(sourceData, deviceNo);
+  }
+
+  // 本地储存设备月，年，所有数据
+  async cacheEquipmentData(sourceData, deviceNo) {
+    // 当时间过期或者设备号更换，重新获取并缓存数据
+    if (this.isExpire() || getLocalStorage('equipmentNumber') !== deviceNo) {
+      // 本地储存设备月发电数据
       const monthEquipmentData = await this.getPowerData(
         sourceData,
         deviceNo,
-        2
+        EQUIPMENT_DATA_TYPE.MONTH
       );
       setLocalStorage('monthEquipmentData', JSON.stringify(monthEquipmentData));
-    }
 
-    // 本地储存设备年发电数据
-    if (this.isExpire() || !getLocalStorage('yearEquipmentData')) {
+      // 本地储存设备年发电数据
       const yearEquipmentData = await this.getPowerData(
         sourceData,
         deviceNo,
-        3
+        EQUIPMENT_DATA_TYPE.YEAR
       );
       setLocalStorage('yearEquipmentData', JSON.stringify(yearEquipmentData));
-    }
 
-    // 本地储存设备所有发电数据
-    if (this.isExpire() || !getLocalStorage('allEquipmentData')) {
-      const allEquipmentData = await this.getPowerData(sourceData, deviceNo, 4);
+      // 本地储存设备所有发电数据
+      const allEquipmentData = await this.getPowerData(
+        sourceData,
+        deviceNo,
+        EQUIPMENT_DATA_TYPE.ALL
+      );
       setLocalStorage('allEquipmentData', JSON.stringify(allEquipmentData));
+      setLocalStorage('equipmentNumber', deviceNo); // 本地储存设备号
       setLocalStorage('equipmentExpireTime', new Date().getTime()); // 本地储存设备数据过期时间
     }
   }

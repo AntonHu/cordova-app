@@ -108,7 +108,8 @@ class Comp extends React.Component {
         });
       }
       // 添加各个设备的功率和日电量
-      equipmentListObj && this.addEquipmentPower(equipmentListObj, 1);
+      equipmentListObj &&
+        this.addEquipmentPower(equipmentListObj, EQUIPMENT_DATA_TYPE.DAY);
     } else {
       equipmentListObj = JSON.parse(getLocalStorage('equipmentListObj'));
       this.setState({
@@ -303,13 +304,22 @@ class Comp extends React.Component {
     }
     switch (dateType) {
       case 2:
-        setLocalStorage('monthTotalStationElectric', stationEnergy); // 本地储存电站总发电量--月
+        setLocalStorage(
+          'monthTotalStationElectric',
+          stationEnergy && stationEnergy.toFixed(2)
+        ); // 本地储存电站总发电量--月
         break;
       case 3:
-        setLocalStorage('yearTotalStationElectric', stationEnergy); // 本地储存电站总发电量--年
+        setLocalStorage(
+          'yearTotalStationElectric',
+          stationEnergy && stationEnergy.toFixed(2)
+        ); // 本地储存电站总发电量--年
         break;
       case 4:
-        setLocalStorage('allTotalStationElectric', stationEnergy); // 本地储存电站总发电量--所有
+        setLocalStorage(
+          'allTotalStationElectric',
+          stationEnergy && stationEnergy.toFixed(2)
+        ); // 本地储存电站总发电量--所有
         break;
       default:
         break;
