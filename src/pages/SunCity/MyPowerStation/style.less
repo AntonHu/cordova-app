@@ -3,6 +3,7 @@
 .page-powerStation-info {
   .blue-box {
     height: 400px;
+    position: relative;
   }
   .title {
     display: flex;
@@ -50,18 +51,20 @@
     }
   }
   .special-one {
-    margin-top: 50px;
+    position: absolute;
+    top: 110px;
+    width: 50%;
+    margin-left: 25%;
     span {
       color: @white-text-color;
     }
   }
   #pie-bar-chart {
-    width: 94% !important;
-    margin: 0 auto;
+    width: 94%;
+    position: absolute;
+    top: 60px;
+    margin: 0 3%;
     height: 280px;
-  }
-  .pie-bar-hide {
-    display: none;
   }
   .type {
     display: flex;
@@ -74,6 +77,7 @@
     margin-top: -50px;
     border-radius: @border-radius;
     box-shadow: 0 5px 20px @shadow-color;
+    position: relative;
     .type-item {
       display: flex;
       align-items: center;
