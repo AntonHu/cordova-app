@@ -330,14 +330,12 @@ class Comp extends React.Component {
         >
           <div className="survey">
             <div className="survey-item">
-              <div className="survey-item-number">{`${
-                this.state.dayElectric
-              }kw/h`}</div>
+              <div className="survey-item-number">{this.state.dayElectric}</div>
               <div className="survey-item-type">日电量</div>
             </div>
             <canvas id="pie-bar-chart" />
             <div className="survey-item">
-              <div className="survey-item-number">{`${totalStationElectric}kw/h`}</div>
+              <div className="survey-item-number">{totalStationElectric}</div>
               <div className="survey-item-type">总电量</div>
             </div>
           </div>

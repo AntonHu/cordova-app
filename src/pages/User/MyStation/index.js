@@ -17,7 +17,6 @@ class Comp extends React.PureComponent {
     return (
       <div className={'page-my-station'}>
         <PageWithHeader title={'我的电站'}>
-          <WhiteSpace />
           <div className="station-list">
             {equipmentNameList.map((equipment, index) => {
               return (

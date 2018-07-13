@@ -66,7 +66,10 @@ class Comp extends React.Component {
       const dayStationData =
         JSON.parse(getLocalStorage('dayStationData')) || []; // 获取本地储存每天发电数据
       const monthStationData =
-        JSON.parse(getLocalStorage('monthStationData')) || []; // 获取本地储存每月发电数据
+        JSON.parse(getLocalStorage('monthStationData')).map(item => {
+          item.time = item.time.substring(item.time.length - 2);
+          return item;
+        }) || []; // 获取本地储存每月发电数据
       const yearStationData =
         JSON.parse(getLocalStorage('yearStationData')) || []; // 获取本地储存每年发电数据
       const allStationData =
@@ -307,7 +310,7 @@ class Comp extends React.Component {
             </div>
             <canvas
               id="pie-bar-chart"
-              className={equipmentNameList.length < 1 ? 'pie-bar-hide' : ''}
+              style={equipmentNameList.length < 1 ? { zIndex: -10 } : null}
             />
             {equipmentNameList.length < 1 ? (
               <div
@@ -315,7 +318,7 @@ class Comp extends React.Component {
                 onClick={() => this.props.history.push('/sunCity/addInverter')}
               >
                 <Picture
-                  src={require('../../../images/no_inverter.png')}
+                  src={require('../../../images/transparent_inverter.png')}
                   size={200}
                 />
                 <span>还未添加逆变器，快去添加~</span>

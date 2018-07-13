@@ -46,7 +46,11 @@
           color: @main-color;
           position: relative;
           .nick-name {
-            min-width: 60px;
+            width: 60px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-left: 5px;
             min-height: 10px;
             color: @main-color;
           }

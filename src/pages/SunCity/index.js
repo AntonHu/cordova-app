@@ -80,8 +80,9 @@ class Comp extends React.Component {
         });
 
       // 储存设备列表整理后的数据
-      let equipmentListObj = {};
-      this.getEquipmentList(equipmentListObj, keyPair);
+      const equipmentListObj = await this.getEquipmentList(keyPair);
+      console.log('equipmentListObj');
+      console.log(equipmentListObj);
       // 获取设备，月，年，所有的数据，并缓存
       this.cacheEquipmentData(equipmentListObj);
     } else {
@@ -95,7 +96,8 @@ class Comp extends React.Component {
   }
 
   // 获取设备列表并处理列表数据
-  async getEquipmentList(equipmentListObj, keyPair) {
+  async getEquipmentList(keyPair) {
+    let equipmentListObj = {};
     if (this.isExpire() || !getLocalStorage('equipmentListObj')) {
       // 获取设备列表
       await this.props.sunCityStore.fetchSCEquipmentList({
@@ -116,6 +118,7 @@ class Comp extends React.Component {
         loading: false
       });
     }
+    return equipmentListObj;
   }
 
   // 获取设备，月，年，所有的数据，并缓存
@@ -211,8 +214,8 @@ class Comp extends React.Component {
     const dayStationData = this.mergeEquipmentData(equipmentDataArr);
     setLocalStorage('dayStationData', JSON.stringify(dayStationData)); // 本地储存电站每天发电数据
     setLocalStorage('dayStationElectric', dayStationElectric.toFixed(2)); // 本地储存当前电站今日发电量
-    setLocalStorage('currentStationPower', currentStationPower); // 本地储存当前电站功率
-    setLocalStorage('totalStationElectric', totalStationElectric); // 本地储存电站总发电量
+    setLocalStorage('currentStationPower', currentStationPower.toFixed(2)); // 本地储存当前电站功率
+    setLocalStorage('totalStationElectric', totalStationElectric.toFixed(2)); // 本地储存电站总发电量
     setLocalStorage('equipmentListObj', JSON.stringify(equipmentListObj)); // 本地储存所有设备状态
     this.setState({ equipmentListObj, loading: false });
   }
