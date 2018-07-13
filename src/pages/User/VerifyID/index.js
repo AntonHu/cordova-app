@@ -2,8 +2,9 @@ import React from 'react';
 import {BlueBox, GreenButton, PageWithHeader, Picture, VerifyIdEmptyElement} from '../../../components';
 import {InputItem, Modal, ActionSheet, Flex, ActivityIndicator} from 'antd-mobile';
 import {reqUploadVerifyId} from '../../../stores/user/request';
-import {FileMethods} from '../../../utils/methods';
+import {FileMethods, testContractorCode} from '../../../utils/methods';
 import {observer, inject} from 'mobx-react';
+import IdCard from 'idcard';
 import './style.less';
 
 const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
@@ -110,6 +111,8 @@ const avatarModalData = [
 class Comp extends React.Component {
   state = {
     username: '',
+    id: '',
+    contractorCode: '',
     idPositive: '',
     idNegative: '',
     idHandheld: '',
@@ -117,9 +120,21 @@ class Comp extends React.Component {
   };
 
   validateBeforeSend = () => {
-    const {username, idPositive, idNegative, idHandheld} = this.state;
+    const {username, idPositive, idNegative, idHandheld, contractorCode, id} = this.state;
     if (username === '') {
       showError('请输入真实姓名');
+      return false;
+    }
+    if (username.length > 10) {
+      showError('姓名最多输入10个字符');
+      return false;
+    }
+    if (!IdCard.info(id).valid) {
+      showError('身份证号格式错误');
+      return false;
+    }
+    if (!testContractorCode(contractorCode)) {
+      showError('代理商编码0-20个字母或数字');
       return false;
     }
     if (idPositive === '') {
@@ -174,9 +189,9 @@ class Comp extends React.Component {
   onSubmit = async () => {
 
     const {keyPair} = this.props;
-    if (!keyPair.showHasKey(this.props)) {
-      return
-    }
+    // if (!keyPair.showHasKey(this.props)) {
+    //   return
+    // }
     if (this.validateBeforeSend()) {
 
       const idPositive = await this.getImageBlobFromURI(this.state.idPositive);
@@ -188,12 +203,14 @@ class Comp extends React.Component {
         username: this.state.username,
         idPositive,
         idNegative,
-        idHandheld
+        idHandheld,
+        id: this.state.id,
+        contractorCode: this.state.contractorCode
       });
     }
   };
 
-  uploadVerifyId = ({publicKey, username, idPositive, idNegative, idHandheld}) => {
+  uploadVerifyId = ({publicKey, username, idPositive, idNegative, idHandheld, id, contractorCode}) => {
     const self = this;
     this.setState({
       showLoading: true
@@ -203,7 +220,9 @@ class Comp extends React.Component {
       username,
       idPositive,
       idNegative,
-      idHandheld
+      idHandheld,
+      id,
+      contractorCode
     })
       .then(res => {
         const data = res.data;
@@ -253,7 +272,7 @@ class Comp extends React.Component {
 
 
   render() {
-    const {username, idPositive, idNegative, idHandheld} = this.state;
+    const {username, idPositive, idNegative, idHandheld, id, contractorCode} = this.state;
     return (
       <div className={'page-verifyID'}>
         <PageWithHeader title={'实名认证'}>
@@ -270,49 +289,64 @@ class Comp extends React.Component {
             >
               <span className="h3 main-text">真实姓名</span>
             </InputItem>
+            <InputItem
+              placeholder="请输入身份证号"
+              clear
+              onChange={this.changeState('id')}
+              value={id}
+              labelNumber={4}
+            >
+              <span className="h3 main-text">身份证号</span>
+            </InputItem>
+            <InputItem
+              placeholder="请输入代理商编码"
+              clear
+              onChange={this.changeState('contractorCode')}
+              value={contractorCode}
+              labelNumber={5}
+            >
+              <span className="h3 main-text">代理商编码</span>
+            </InputItem>
             <div className="tips-box">
               <div className="title">* 上传证件材料</div>
               您的照片仅用于审核，我们将为您严格保密，请注意证件上的信息无遮挡，清晰可识别
             </div>
-            <Flex justify="between">
-              <Flex.Item>
-                <div onClick={() => this.onClick('idPositive')} className="click-picture">
-                  <Picture
-                    circle={false}
-                    src={idPositive}
-                    size={PICTURE_SIZE}
-                    emptyElement={(props) => <VerifyIdEmptyElement style={{...props.style, display: 'flex'}} text={'身份证正面上传'}/>}
-                  />
-                </div>
-              </Flex.Item>
-              <Flex.Item>
-                <div onClick={() => this.onClick('idNegative')} className="click-picture">
-                  <Picture
-                    circle={false}
-                    src={idNegative}
-                    size={PICTURE_SIZE}
-                    emptyElement={(props) => <VerifyIdEmptyElement style={{...props.style, display: 'flex'}} text={'身份证背面上传'}/>}
-                  />
-                </div>
-              </Flex.Item>
+            <Flex justify="center">
+              <div onClick={() => this.onClick('idPositive')} className="click-picture first">
+                <Picture
+                  circle={false}
+                  src={idPositive}
+                  size={PICTURE_SIZE}
+                  emptyElement={(props) => <VerifyIdEmptyElement style={{...props.style, display: 'flex'}}
+                                                                 text={'身份证正面上传'}/>}
+                />
+              </div>
+              <div onClick={() => this.onClick('idNegative')} className="click-picture second">
+                <Picture
+                  circle={false}
+                  src={idNegative}
+                  size={PICTURE_SIZE}
+                  emptyElement={(props) => <VerifyIdEmptyElement style={{...props.style, display: 'flex'}}
+                                                                 text={'身份证背面上传'}/>}
+                />
+              </div>
             </Flex>
-            <Flex justify="between">
-              <Flex.Item>
-                <div onClick={() => this.onClick('idHandheld')} className="click-picture">
-                  <Picture
-                    circle={false}
-                    src={idHandheld}
-                    size={PICTURE_SIZE}
-                    emptyElement={(props) => <VerifyIdEmptyElement style={{...props.style, display: 'flex'}} text={'本人手持身份证'}/>}
-                  />
-                </div>
-              </Flex.Item>
-              <Flex.Item/>
+            <Flex justify="center">
+              <div onClick={() => this.onClick('idHandheld')} className="click-picture first">
+                <Picture
+                  circle={false}
+                  src={idHandheld}
+                  size={PICTURE_SIZE}
+                  emptyElement={(props) => <VerifyIdEmptyElement style={{...props.style, display: 'flex'}}
+                                                                 text={'本人手持身份证'}/>}
+                />
+              </div>
+              <div className="click-picture second"/>
             </Flex>
+
+            <GreenButton size={'big'} onClick={this.onSubmit}>提交认证</GreenButton>
           </div>
 
-
-          <GreenButton size={'big'} onClick={this.onSubmit}>提交认证</GreenButton>
         </PageWithHeader>
         <ActivityIndicator
           toast

@@ -42,6 +42,16 @@ export const testPassword = password => {
 };
 
 /**
+ * 检查是否合法代理商码
+ * @param code
+ * @returns {boolean}
+ */
+export const testContractorCode = code => {
+  const reg = /^[a-zA-Z0-9]{1,20}$/;
+  return reg.test(code);
+};
+
+/**
  * 如果是手机号，用星号代替中间四位
  * @param string
  * @returns {*}

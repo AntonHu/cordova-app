@@ -14,7 +14,6 @@ const showError = (text) => {
 };
 
 
-
 /**
  * 注册
  */
@@ -70,16 +69,18 @@ class Comp extends React.PureComponent {
           <Header title="注册" transparent/>
         </BlueBox>
         <PeakBox showPeak={true} top={180}>
-          <BasicPhoneCodePWForm
-            submitMethod={this.onRegister}
-            sendCodeMethod={this.sendCode}
-            popupProps={{
-              title: '恭喜注册成功！',
-              subTitle: '完善个人信息可快速增加算力哦～',
-              buttonText: '去登录',
-              onPress: () => this.props.history.replace('/login')
-            }}
-          />
+          <div className="body">
+            <BasicPhoneCodePWForm
+              submitMethod={this.onRegister}
+              sendCodeMethod={this.sendCode}
+              popupProps={{
+                title: '恭喜注册成功！',
+                subTitle: '完善个人信息可快速增加算力哦～',
+                buttonText: '去登录',
+                onPress: () => this.props.history.replace('/login')
+              }}
+            />
+          </div>
         </PeakBox>
       </div>
     );

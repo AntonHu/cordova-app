@@ -209,16 +209,20 @@ export const reqUploadAvatar = (fileBlob) => {
  * @param idPositive 身份证正面图片文件
  * @param idNegative 身份证反面图片文件
  * @param idHandheld 身份证手持图片文件
+ * @param id         身份证号
+ * @param contractorCode  代理商编号
  * @returns {Promise.<TResult>}
  */
-export const reqUploadVerifyId = ({publicKey, username, idPositive, idNegative, idHandheld}) => {
+export const reqUploadVerifyId = ({publicKey, username, idPositive, idNegative, idHandheld, id, contractorCode}) => {
   const formData = new FormData();
-  console.log(JSON.stringify({username, idPositive, idNegative, idHandheld}));
+
   formData.append('publicKey', publicKey);
   formData.append('username', username);
   formData.append('idPositive', idPositive);
   formData.append('idNegative', idNegative);
   formData.append('idHandheld', idHandheld);
+  formData.append('agentId', contractorCode);
+  formData.append('identityCardId', id);
 
   let config = {
     headers:{'Content-Type':'multipart/form-data'},

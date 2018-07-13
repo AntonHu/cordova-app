@@ -210,6 +210,22 @@
               "xml": "<meta-data android:name=\"JPUSH_CHANNEL\" android:value=\"developer-default\" />",
               "count": 1
             }
+          ],
+          "/manifest/application/activity[@android:name='MainActivity']": [
+            {
+              "xml": "<activity android:windowSoftInputMode=\"adjustResize\" />",
+              "count": 1,
+              "mode": "merge",
+              "id": "config.xml",
+              "oldAttrib": {
+                "android:configChanges": "orientation|keyboardHidden|keyboard|screenSize|locale",
+                "android:label": "@string/activity_name",
+                "android:launchMode": "singleTop",
+                "android:name": "MainActivity",
+                "android:theme": "@android:style/Theme.DeviceDefault.NoActionBar",
+                "android:windowSoftInputMode": "adjustResize"
+              }
+            }
           ]
         }
       },

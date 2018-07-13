@@ -204,7 +204,7 @@ class Comp extends React.Component {
         <PageWithHeader title={'个人信息'}>
           <BlueBox type="pic" picType={isKycInChain ? 'blue' : 'grey'}>
             <div className="personal-info">
-              <Picture size={120} src={avatar}/>
+              <Picture size={120} src={avatar} showBorder={true}/>
               <div className="personal-prompt">
                 {isKycInChain ? '您已实名认证成功!' : '未实名认证'}
               </div>
@@ -224,7 +224,7 @@ class Comp extends React.Component {
           <div className="personal-list">
             <div className="personal-item" onClick={this.picChange}>
               <div className="item-title">头像</div>
-              <Picture size={70} src={avatar} alt='' showEmptyElement={false}/>
+              <Picture size={70} src={avatar} showBorder={true} />
             </div>
             <div
               className="personal-item"
@@ -233,7 +233,12 @@ class Comp extends React.Component {
               }
             >
               <div className="item-title">昵称</div>
-              <div>{nickName || ''}</div>
+              {
+                !!nickName ?
+                  <div>{nickName}</div>
+                  :
+                  <div className="help-text">请输入昵称</div>
+              }
             </div>
           </div>
         </PageWithHeader>

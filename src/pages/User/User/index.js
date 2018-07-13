@@ -15,7 +15,7 @@ const ListData = [
     unicode: '\ue68d'
   },
   {
-    text: '我的电站',
+    text: '我的设备',
     extra: '华',
     path: 'myStation',
     unicode: '\ue609'
@@ -66,7 +66,7 @@ class Comp extends React.Component {
           </BlueBox> */}
           <div className="user-wrap">
             <div className="user-info">
-              <Picture size={120} src={avatar} />
+              <Picture size={120} src={avatar} showBorder={true} />
 
               <div className="user-name">{this.sliceLongName(nickName || username || '未知')}</div>
             </div>

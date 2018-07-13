@@ -68,16 +68,24 @@ class ForgetLoginPW extends React.PureComponent {
           <Header title="忘记密码" transparent/>
         </BlueBox>
         <PeakBox showPeak={true} top={180}>
-          <BasicPhoneCodePWForm
-            submitMethod={this.onSubmit}
-            sendCodeMethod={this.sendCode}
-            popupProps={{
-              title: '登录密码设置成功',
-              subTitle: '现在就去登录吧',
-              buttonText: '去登录',
-              onPress: () => this.props.history.replace('/login')
-            }}
-          />
+          <div className="body">
+            <BasicPhoneCodePWForm
+              submitMethod={this.onSubmit}
+              sendCodeMethod={this.sendCode}
+              popupProps={{
+                title: '重置登录密码成功',
+                subTitle: '现在就去登录吧',
+                buttonText: '去登录',
+                onPress: () => this.props.history.replace('/login')
+              }}
+              placeholder={{
+                phone: '请输入手机号',
+                code: '验证码',
+                password: '6-16位新密码',
+                confirmPassword: '确认新密码'
+              }}
+            />
+          </div>
         </PeakBox>
       </div>
     );

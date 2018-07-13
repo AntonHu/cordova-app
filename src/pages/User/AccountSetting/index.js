@@ -17,8 +17,8 @@ const ListData = [
     horizontal: false
   },
   {
-    text: '密码设置',
-    path: 'resetPW',
+    text: '重置登录密码',
+    path: 'resetLoginPW',
     horizontal: true
   },
   {

@@ -59,7 +59,7 @@ class Comp extends React.Component {
         <PageWithHeader leftComponent={null} title={'挖宝池'}>
           <div className="sun-info">
             <div className="my-sun">
-              <Picture src={avatar} size={120} />
+              <Picture src={avatar} size={120} showBorder={true} />
               <div>
                 <div className="sun-type">我的太阳积分</div>
                 <div className="rank">{balance.toFixed(2)}</div>

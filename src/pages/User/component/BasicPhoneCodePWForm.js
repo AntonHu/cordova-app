@@ -41,6 +41,13 @@ class BasicPhoneCodePWForm extends React.PureComponent {
       subTitle: PropTypes.string,
       buttonText: PropTypes.string,
       onPress: PropTypes.func
+    }),
+    // 四个placeholder的属性
+    placeholder: PropTypes.shape({
+      phone: PropTypes.string,
+      code: PropTypes.string,
+      password: PropTypes.string,
+      confirmPassword: PropTypes.string
     })
   };
 
@@ -49,6 +56,12 @@ class BasicPhoneCodePWForm extends React.PureComponent {
       title: 'title',
       subTitle: 'subTitle',
       buttonText: 'buttonText',
+    },
+    placeholder: {
+      phone: '请输入手机号',
+      code: '验证码',
+      password: '6-16位密码',
+      confirmPassword: '确认密码'
     }
   };
 
@@ -181,11 +194,11 @@ class BasicPhoneCodePWForm extends React.PureComponent {
 
   render() {
     const {phone, code, password, confirmPassword} = this.state;
-    const {popupProps} = this.props;
+    const {popupProps, placeholder} = this.props;
     return (
       <div className="basic-phone-code-pw-body">
         <InputItem
-          placeholder="请输入手机号"
+          placeholder={placeholder.phone}
           clear
           type="phone"
           value={phone}
@@ -196,7 +209,7 @@ class BasicPhoneCodePWForm extends React.PureComponent {
         </InputItem>
 
         <InputItem
-          placeholder="验证码"
+          placeholder={placeholder.code}
           clear
           value={code}
           onChange={this.changeState('code')}
@@ -213,14 +226,14 @@ class BasicPhoneCodePWForm extends React.PureComponent {
         />
 
         <InputItem
-          placeholder="6-16位密码"
+          placeholder={placeholder.password}
           clear
           type="password"
           value={password}
           onChange={this.changeState('password')}
         />
         <InputItem
-          placeholder="确认密码"
+          placeholder={placeholder.confirmPassword}
           clear
           type="password"
           value={confirmPassword}
