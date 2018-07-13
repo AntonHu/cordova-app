@@ -1,6 +1,11 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { PageWithHeader, GreenButton, ToastNoMask } from '../../../components';
+import {
+  PageWithHeader,
+  GreenButton,
+  ToastNoMask,
+  Popup
+} from '../../../components';
 import { Picker, List, WhiteSpace, InputItem } from 'antd-mobile';
 import { toJS } from 'mobx';
 import { deleteLocalStorage } from '../../../utils/storage';
@@ -14,7 +19,8 @@ import './style.less';
 class Comp extends React.Component {
   state = {
     inverterType: '',
-    barcodeValue: ''
+    barcodeValue: '',
+    successModal: false
   };
   componentDidMount() {
     // 请求所有逆变器类型
@@ -84,15 +90,24 @@ class Comp extends React.Component {
         })
         .then(result => {
           if (result.code === 200) {
-            ToastNoMask('添加逆变器成功');
             // 添加成功后，删除缓存设备数据，重新请求所有设备数据
             deleteLocalStorage('stationExpireTime');
             deleteLocalStorage('equipmentListObj');
+            this.setState({
+              successModal: true
+            });
           } else {
             ToastNoMask(`添加逆变器失败,${result.msg}`);
           }
         });
     }
+  };
+
+  onModalPress = () => {
+    this.setState({
+      successModal: false
+    });
+    this.props.history.goBack();
   };
   render() {
     const inverterList = toJS(this.props.sunCityStore.inverterList);
@@ -129,6 +144,14 @@ class Comp extends React.Component {
             <GreenButton size={'big'} onClick={this.addInverter}>
               确认
             </GreenButton>
+            <Popup
+              title="添加成功"
+              subTitle=""
+              buttonText="确定"
+              visible={this.state.successModal}
+              onPress={this.onModalPress}
+              onClose={null}
+            />
           </div>
         </PageWithHeader>
       </div>
