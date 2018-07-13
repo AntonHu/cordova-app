@@ -176,8 +176,8 @@ class Comp extends React.Component {
       equipmentDataArr = equipmentDataArr.concat(decryptData);
       // 设备功率
       const currentPower =
-        (decryptData &&
-          decryptData[decryptData.length - 1] &&
+        (decryptData.length > 0 &&
+          decryptData[decryptData.length - 1].power &&
           decryptData[decryptData.length - 1].power.toFixed(2)) ||
         0;
       // 设备日电量
