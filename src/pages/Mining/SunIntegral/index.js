@@ -13,7 +13,7 @@ class Comp extends React.Component {
   constructor(props) {
     super(props);
     const dataSource = new ListView.DataSource({
-      rowHasChanged: (row1, row2) => row1 !== row2
+      rowHasChanged: (row1, row2) => row1.id !== row2.id
     });
 
     this.state = {
