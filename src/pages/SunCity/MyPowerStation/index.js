@@ -43,44 +43,33 @@ class Comp extends React.Component {
     const { keyPair } = this.props;
     let equipmentListObj = {};
     if (keyPair.hasKey) {
-      // 获取本地储存的设备列表
+      // 获取设备列表
       if (getLocalStorage('equipmentListObj')) {
         equipmentListObj = JSON.parse(getLocalStorage('equipmentListObj'));
-        this.setState({
-          loading: false
-        });
       } else {
         // 获取设备列表
         await this.props.sunCityStore.fetchSCEquipmentList({
           userPubKey: keyPair.publicKey
         });
         equipmentListObj = toJS(this.props.sunCityStore.equipmentList);
-        if (!equipmentListObj) {
-          this.setState({
-            loading: false
-          });
-        }
-        // 添加各个设备的功率和日电量
-        equipmentListObj && this.addEquipmentPower(equipmentListObj, 1);
+        // 各个设备添加功率和日电量,本地储存
+        equipmentListObj =
+          equipmentListObj &&
+          (await this.addEquipmentPower(equipmentListObj, 1));
+        setLocalStorage('equipmentListObj', JSON.stringify(equipmentListObj)); // 本地储存所有设备状态
       }
-      const dayStationData =
-        JSON.parse(getLocalStorage('dayStationData')) || []; // 获取本地储存每天发电数据
-      const monthStationData =
-        JSON.parse(getLocalStorage('monthStationData')) || []; // 获取本地储存每月发电数据
-      const yearStationData =
-        JSON.parse(getLocalStorage('yearStationData')) || []; // 获取本地储存每年发电数据
-      const allStationData =
-        JSON.parse(getLocalStorage('allStationData')) || []; // 获取本地储存所有发电数据
-
       this.setState({
-        equipmentListObj,
-        dayStationData,
-        monthStationData,
-        yearStationData,
-        allStationData
+        equipmentListObj
+      });
+
+      // 获取本地储存的 （月，年，所有） 的数据
+      const cacheEquipmentData = this.getCacheEquipmentData();
+      this.setState({
+        ...cacheEquipmentData,
+        loading: false
       });
       if (Object.keys(equipmentListObj).length > 0) {
-        this.barChart = this.renderBarChart(dayStationData);
+        this.barChart = this.renderBarChart(cacheEquipmentData.dayStationData);
       }
     } else {
       this.setState({
@@ -88,6 +77,26 @@ class Comp extends React.Component {
       });
     }
   }
+
+  // 获取本地储存的 （月，年，所有） 的数据
+  getCacheEquipmentData = () => {
+    const dayStationData = JSON.parse(getLocalStorage('dayStationData')) || []; // 获取本地储存每天发电数据
+    const monthStationData =
+      JSON.parse(getLocalStorage('monthStationData')).map(item => {
+        item.time = item.time.substring(item.time.length - 2);
+        return item;
+      }) || []; // 获取本地储存每月发电数据
+    const yearStationData =
+      JSON.parse(getLocalStorage('yearStationData')) || []; // 获取本地储存每年发电数据
+    const allStationData = JSON.parse(getLocalStorage('allStationData')) || []; // 获取本地储存所有发电数据
+    return {
+      dayStationData,
+      monthStationData,
+      yearStationData,
+      allStationData
+    };
+  };
+
   // 为每个添加设备的功率和日电量
   async addEquipmentPower(equipmentListObj, dateType) {
     // 遍历每个设备，并添加功率和日电量
@@ -116,8 +125,7 @@ class Comp extends React.Component {
       equipmentListObj[name].currentPower = currentPower || 0; // 设备功率
       equipmentListObj[name].dayElectric = dayElectric.toFixed(2) || 0; // 设备日电量
     }
-    setLocalStorage('equipmentListObj', JSON.stringify(equipmentListObj)); // 本地储存所有设备状态
-    this.setState({ equipmentListObj, loading: false });
+    return equipmentListObj;
   }
 
   // 获取并处理每个设备数据
@@ -307,7 +315,7 @@ class Comp extends React.Component {
             </div>
             <canvas
               id="pie-bar-chart"
-              className={equipmentNameList.length < 1 ? 'pie-bar-hide' : ''}
+              style={equipmentNameList.length < 1 ? { zIndex: -10 } : null}
             />
             {equipmentNameList.length < 1 ? (
               <div
@@ -315,7 +323,7 @@ class Comp extends React.Component {
                 onClick={() => this.props.history.push('/sunCity/addInverter')}
               >
                 <Picture
-                  src={require('../../../images/no_inverter.png')}
+                  src={require('../../../images/transparent_inverter.png')}
                   size={200}
                 />
                 <span>还未添加逆变器，快去添加~</span>

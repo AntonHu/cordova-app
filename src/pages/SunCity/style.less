@@ -19,7 +19,7 @@
   .sun-content {
     height: 421px;
     background: url('../../images/sunBg.png');
-    background-size: 100%;
+    background-size: cover;
     .info {
       display: flex;
       height: 100px;
@@ -49,6 +49,10 @@
           position: relative;
           .nick-name {
             min-width: 50px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-left: 5px;
             min-height: 10px;
             padding: 0 5px;
             color: @main-color;

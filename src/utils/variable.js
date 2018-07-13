@@ -25,6 +25,7 @@ const KEY_PAIR_LOCAL_STORAGE = {
  * 请求设备数据的类型
  */
 const EQUIPMENT_DATA_TYPE = {
+  DAY: 1,
   MONTH: 2,
   YEAR: 3,
   ALL: 4
