@@ -64,6 +64,19 @@ export const maskIfPhone = string => {
 };
 
 /**
+ * 手机号中间加空格
+ * @param phone
+ * @returns '13811112222' => '138 1111 2222'
+ */
+export const formatPhoneWithSpace = phone => {
+  if (!phone || !phone.length) return '';
+  if (phone.length !== 11) {
+    return phone
+  }
+  return phone.slice(0, 3) + ' ' + phone.slice(3, 7) + ' ' + phone.slice(7)
+};
+
+/**
  * 相当于window.resolveLocalFileSystemURL(uri, onSuccess, onFail)
  * 返回fileEntry
  * @param fileURL

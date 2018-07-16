@@ -1,14 +1,32 @@
-import {testCode, clearSpace, testPassword, testPhoneNumber, maskIfPhone, testContractorCode} from './methods';
+import {
+  testCode,
+  clearSpace,
+  testPassword,
+  testPhoneNumber,
+  maskIfPhone,
+  testContractorCode,
+  formatPhoneWithSpace
+} from './methods';
 
 test('去掉字符串里的空格', () => {
   expect(clearSpace('   123 456 789  ')).toBe('123456789');
+  expect(clearSpace('123456789')).toBe('123456789');
   expect(clearSpace('')).toBe('');
 });
 
 test('检验是否合法手机号', () => {
+  expect(testPhoneNumber(undefined)).toBe(false);
   expect(testPhoneNumber('')).toBe(false);
   expect(testPhoneNumber('15201458525')).toBe(true);
   expect(testPhoneNumber('12345678912')).toBe(false);
+});
+
+test('手机号中间加空格', () => {
+  expect(formatPhoneWithSpace(undefined)).toBe('');
+  expect(formatPhoneWithSpace({})).toBe('');
+  expect(formatPhoneWithSpace('')).toBe('');
+  expect(formatPhoneWithSpace('15201458525')).toBe('152 0145 8525');
+  expect(formatPhoneWithSpace('152 0145 8525')).toBe('152 0145 8525');
 });
 
 test('检查是否合法短信验证码', () => {

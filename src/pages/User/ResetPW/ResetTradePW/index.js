@@ -18,18 +18,22 @@ const showError = (text) => {
 /**
  * 设置交易密码
  */
-@inject('keyPair')
+@inject('keyPair', 'userStore')
 @observer
 class Comp extends React.Component {
-  state = {
-    firstStep: true,
-    secondStep: false,
-    phone: '',
-    code: '',
-    tradePassword: '',
-    confirmTradePassword: '',
-    showLoading: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      firstStep: true,
+      secondStep: false,
+      phone: props.userStore.userPhoneWithSpace,
+      code: '',
+      tradePassword: '',
+      confirmTradePassword: '',
+      showLoading: false
+    };
+  }
+
 
   setSuccess = false;
 
@@ -58,6 +62,11 @@ class Comp extends React.Component {
     const {phone, code} = this.state;
     if (!testPhoneNumber(clearSpace(phone))) {
       showError('请输入正确的手机号');
+      return false;
+    }
+    const userPhone = clearSpace(this.props.userStore.userPhoneWithSpace);
+    if (userPhone && clearSpace(phone) !== userPhone) {
+      showError(`请输入您的注册手机号：${userPhone}`);
       return false;
     }
     if (!testCode(code)) {
@@ -92,6 +101,11 @@ class Comp extends React.Component {
     const {phone} = this.state;
     if (!testPhoneNumber(clearSpace(phone))) {
       showError('请输入正确的手机号');
+      return false;
+    }
+    const userPhone = clearSpace(this.props.userStore.userPhoneWithSpace);
+    if (userPhone && clearSpace(phone) !== userPhone) {
+      showError(`请输入您的注册手机号：${userPhone}`);
       return false;
     }
     return true;

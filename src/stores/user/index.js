@@ -1,6 +1,7 @@
 import { observable, action, runInAction, computed, toJS } from 'mobx';
 import { getOwnerInfo, getMessages, getIsInChain, getIsKycInChain, putUserIntoChain } from './request';
 import {getLocalStorage, setLocalStorage, deleteLocalStorage} from '../../utils/storage';
+import {testPhoneNumber, formatPhoneWithSpace} from '../../utils/methods';
 import {ToastNoMask} from '../../components';
 import {Modal} from 'antd-mobile';
 import User from '../../utils/user';
@@ -15,6 +16,20 @@ class UserStore {
   @observable msgList = [];
   //用户是否身份认证了
   @observable isKycInChain = false;
+
+  /**
+   * '138 0000 1111'
+   */
+  @computed
+  get userPhoneWithSpace () {
+    if (testPhoneNumber(this.userInfo.username)) {
+      return formatPhoneWithSpace(this.userInfo.username)
+    }
+    if (testPhoneNumber(this.userInfo.cellPhone)) {
+      return formatPhoneWithSpace(this.userInfo.cellPhone)
+    }
+    return ''
+  }
 
   /**
    * 获取用户信息
