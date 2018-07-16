@@ -196,7 +196,8 @@ class Comp extends React.Component {
       dayStationElectric += dayElectric;
       // 当前电站发电量
       const maxValue =
-        (decryptData[decryptData.length - 1] &&
+        (decryptData.length > 0 &&
+          decryptData[decryptData.length - 1] &&
           decryptData[decryptData.length - 1].maxValue) ||
         0;
       equipmentListObj[name].currentPower = currentPower || 0; // 设备功率

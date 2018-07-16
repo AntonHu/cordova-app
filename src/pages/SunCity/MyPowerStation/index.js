@@ -243,7 +243,7 @@ class Comp extends React.Component {
         number: 0,
         time: '00'
       });
-    this.barChart.clear();
+    this.barChart && this.barChart.clear();
     this.renderBarChart(barData);
 
     const selected = Object.assign({}, this.state.selected);

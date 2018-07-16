@@ -53,7 +53,7 @@ class Comp extends React.Component {
     } else {
       dayEquipmentData = JSON.parse(getLocalStorage('dayEquipmentData'));
     }
-    if (dayEquipmentData.length >= 1) {
+    if (dayEquipmentData.length > 0) {
       this.renderCurve(dayEquipmentData);
     } else {
       // 默认显示数据
@@ -62,7 +62,7 @@ class Comp extends React.Component {
 
     // 设备当前功率
     const currentPower =
-      dayEquipmentData &&
+      dayEquipmentData.length > 0 &&
       dayEquipmentData[dayEquipmentData.length - 1] &&
       dayEquipmentData[dayEquipmentData.length - 1].power;
     // 设备日电量
@@ -72,7 +72,8 @@ class Comp extends React.Component {
     });
     // 当前电站发电量
     const maxValue =
-      (dayEquipmentData[dayEquipmentData.length - 1] &&
+      (dayEquipmentData.length > 0 &&
+        dayEquipmentData[dayEquipmentData.length - 1] &&
         dayEquipmentData[dayEquipmentData.length - 1].maxValue) ||
       0;
     this.setState({
@@ -342,7 +343,7 @@ class Comp extends React.Component {
         number: 0,
         time: '00'
       });
-    this.curveChart.clear();
+    this.curveChart && this.curveChart.clear();
     this.renderCurve(equipmentData);
   }
   render() {
