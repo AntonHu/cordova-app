@@ -30,6 +30,13 @@ const startJPush = () => {
   }
 };
 
+const setStatusBar = () => {
+  if (window.StatusBar) {
+    window.StatusBar.overlaysWebView(false);
+    window.StatusBar.styleDefault();
+  }
+};
+
 /**
  * app环境
  */
@@ -37,6 +44,7 @@ const startApp = () => {
   ReactDOM.render(<App />, document.getElementById('root'));
   startJAnalytics();
   startJPush();
+  setStatusBar();
   // registerServiceWorker();
 };
 

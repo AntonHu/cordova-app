@@ -2,7 +2,7 @@ import axios from 'axios';
 import qs from 'qs';
 import { getLocalStorage } from './storage';
 
-export const TIME_OUT = 6000;
+export const TIME_OUT = 10000;
 export const LONG_TIME_OUT = 15000;
 /*
   请求头为application/json

@@ -1,7 +1,7 @@
 @import "../../styles/common";
 
 .block-chain-header{
-  height: 90 * @px;
+  height: @header-height;
   width: 100%;
   color: @main-text-color;
   display: flex;
@@ -18,6 +18,13 @@
   .right {
     width: 100 * @px
   }
+}
+
+.block-chain-header.fixed {
+  //top: 0;
+  position: fixed;
+  margin-top: -@header-height;
+  z-index: 100;
 }
 
 .block-chain-header.transparent {

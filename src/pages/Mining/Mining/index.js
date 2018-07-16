@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
-import { Title, PageWithHeader, Picture } from '../../../components';
+import { Title, PageWithHeader, Picture, Rank } from '../../../components';
 import { Icon, Tabs, WhiteSpace } from 'antd-mobile';
 import { getLocalStorage } from '../../../utils/storage';
 import './style.less';
@@ -129,7 +129,7 @@ class Comp extends React.Component {
                     return (
                       <div key={index} className="ranking-item">
                         <div className="ranking-title">
-                          <span>{index + 1} </span>
+                          <Rank num={index + 1} />
                           {item.nickName}
                         </div>
                         <span>{item.value}</span>
@@ -143,7 +143,7 @@ class Comp extends React.Component {
                     return (
                       <div key={index} className="ranking-item">
                         <div className="ranking-title">
-                          <span>{index + 1} </span>
+                          <Rank num={index + 1} />
                           {item.nickName}
                         </div>
                         <span>{item.value}</span>

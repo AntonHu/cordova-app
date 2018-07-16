@@ -50,6 +50,7 @@
     <preference name="iosPersistentFileLocation" value="Compatibility" />
     <preference name="iosExtraFilesystems" value="library,library-nosync,documents,documents-nosync,cache,bundle,root" />
     <preference name="AndroidExtraFilesystems" value="files,files-external,documents,sdcard,cache,cache-external,assets,root" />
+    <preference name="DisallowOverscroll" value="true" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <plugin name="cordova-plugin-code-push" spec="~1.11.11" />
     <plugin name="cordova-plugin-file" spec="^4.3.3" />
@@ -66,6 +67,7 @@
     <plugin name="jpush-phonegap-plugin" spec="3.3.2">
         <variable name="APP_KEY" value="fd96956cb315ba658d256156" />
     </plugin>
+    <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
     <engine name="ios" spec="^4.5.4" />
     <engine name="android" spec="^6.4.0" />
 </widget>

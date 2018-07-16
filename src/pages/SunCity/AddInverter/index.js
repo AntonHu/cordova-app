@@ -6,7 +6,7 @@ import {
   ToastNoMask,
   Popup
 } from '../../../components';
-import { Picker, List, WhiteSpace, InputItem } from 'antd-mobile';
+import { Picker, List, WhiteSpace, InputItem, ActivityIndicator } from 'antd-mobile';
 import { toJS } from 'mobx';
 import { deleteLocalStorage } from '../../../utils/storage';
 import './style.less';
@@ -20,7 +20,8 @@ class Comp extends React.Component {
   state = {
     inverterType: '',
     barcodeValue: '',
-    successModal: false
+    successModal: false,
+    showLoading: false
   };
   componentDidMount() {
     // 请求所有逆变器类型
@@ -82,6 +83,9 @@ class Comp extends React.Component {
         ToastNoMask.show('请选择逆变器品牌');
         return;
       }
+      this.setState({
+        showLoading: true
+      });
       this.props.sunCityStore
         .fetchSCAddInverter({
           userPubKey: this.props.keyPair.publicKey,
@@ -89,6 +93,9 @@ class Comp extends React.Component {
           deviceNo
         })
         .then(result => {
+          this.setState({
+            showLoading: false
+          });
           if (result.code === 200) {
             // 添加成功后，删除缓存设备数据，重新请求所有设备数据
             deleteLocalStorage('stationExpireTime');
@@ -97,8 +104,13 @@ class Comp extends React.Component {
               successModal: true
             });
           } else {
-            ToastNoMask(`添加逆变器失败,${result.msg}`);
+            ToastNoMask(`添加逆变器失败。${result.msg || '' }`);
           }
+        })
+        .catch(err => {
+          this.setState({
+            showLoading: false
+          });
         });
     } else {
       ToastNoMask('该账号没有私钥,请到个人中心添加！');
@@ -153,6 +165,11 @@ class Comp extends React.Component {
               visible={this.state.successModal}
               onPress={this.onModalPress}
               onClose={null}
+            />
+            <ActivityIndicator
+              toast
+              text="正在添加逆变器，请稍候..."
+              animating={this.state.showLoading}
             />
           </div>
         </PageWithHeader>

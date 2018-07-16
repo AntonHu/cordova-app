@@ -12,7 +12,8 @@ class Comp extends React.PureComponent {
     title: PropTypes.string.isRequired,
     leftComponent: PropTypes.element,
     rightComponent: PropTypes.element,
-    transparent: PropTypes.bool
+    transparent: PropTypes.bool,
+    fixed: PropTypes.bool
   };
 
   static defaultProps = {
@@ -23,13 +24,14 @@ class Comp extends React.PureComponent {
       </Button>
     ),
     rightComponent: null,
-    transparent: false
+    transparent: false,
+    fixed: true
   };
 
   render() {
-    const { title, leftComponent, rightComponent, transparent } = this.props;
+    const { title, leftComponent, rightComponent, transparent, fixed } = this.props;
     return (
-      <div className={`block-chain-header ${transparent && 'transparent'}`}>
+      <div className={`block-chain-header ${transparent ? 'transparent' : ''} ${fixed ? 'fixed' : ''}`}>
         <div onClick={() => this.props.history.goBack()} className={'left'}>
           {leftComponent}
         </div>
