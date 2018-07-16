@@ -64,9 +64,8 @@ class Comp extends React.Component {
       showError('请输入正确的手机号');
       return false;
     }
-    const userPhone = clearSpace(this.props.userStore.userPhoneWithSpace);
-    if (userPhone && clearSpace(phone) !== userPhone) {
-      showError(`请输入您的注册手机号：${userPhone}`);
+    if (!this.checkIfIsUserPhone(phone)) {
+      showError(<div>请输入您的注册手机号： <br /> {this.props.userStore.userPhoneWithSpace}</div>);
       return false;
     }
     if (!testCode(code)) {
@@ -94,6 +93,16 @@ class Comp extends React.Component {
   };
 
   /**
+   * 发短信的手机号，得是登录的手机号.
+   * @param phone
+   * @returns {boolean}
+   */
+  checkIfIsUserPhone = (phone) => {
+    const {userPhoneWithSpace} = this.props.userStore;
+    return !(userPhoneWithSpace && phone !== userPhoneWithSpace);
+  };
+
+  /**
    * 获取验证码前校验
    * @returns {boolean}
    */
@@ -103,9 +112,8 @@ class Comp extends React.Component {
       showError('请输入正确的手机号');
       return false;
     }
-    const userPhone = clearSpace(this.props.userStore.userPhoneWithSpace);
-    if (userPhone && clearSpace(phone) !== userPhone) {
-      showError(`请输入您的注册手机号：${userPhone}`);
+    if (!this.checkIfIsUserPhone(phone)) {
+      showError(<div>请输入您的注册手机号： <br /> {this.props.userStore.userPhoneWithSpace}</div>);
       return false;
     }
     return true;
