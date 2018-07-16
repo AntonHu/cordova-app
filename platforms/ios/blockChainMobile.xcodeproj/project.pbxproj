@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		01674A0019BE4A9E846C051F /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0423F3C52CD7477BB76C9023 /* CoreFoundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0207DA571B56EA530066E2B4 /* Images.xcassets */; };
@@ -96,6 +95,7 @@
 		FBBA86F345964334A544DC65 /* CDVBarcodeScanner.mm in Sources */ = {isa = PBXBuildFile; fileRef = 69B7D1499127404D9A207682 /* CDVBarcodeScanner.mm */; };
 		FD319086FF7041809B5F1ECD /* CDVDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C0B84689484353AE122766 /* CDVDevice.m */; };
 		FDE3ECA62884433AB94F8D9F /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 6B0497786B0A4A139E24EACA /* mztools.c */; };
+		8DC459EDA7E74EAC8D527E7C /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = C2DABDE7DB214AA2BC097AB1 /* CDVStatusBar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -298,6 +298,8 @@
 		FDA400AF73D04EBCA02CC71A /* SystemConfiguration.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		FE7DC540ACE243228F8F82A6 /* CDVNotification.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVNotification.m; path = "cordova-plugin-dialogs/CDVNotification.m"; sourceTree = "<group>"; };
 		FEF69D446D0B43C1936C14EA /* aescrypt.c */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = aescrypt.c; path = "cordova-plugin-zip/Plugins/aes/aescrypt.c"; sourceTree = "<group>"; };
+		C2DABDE7DB214AA2BC097AB1 /* CDVStatusBar.m */ = {isa = PBXFileReference; name = "CDVStatusBar.m"; path = "cordova-plugin-statusbar/CDVStatusBar.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		DEACD018EDD14E0B88E6145F /* CDVStatusBar.h */ = {isa = PBXFileReference; name = "CDVStatusBar.h"; path = "cordova-plugin-statusbar/CDVStatusBar.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -576,6 +578,8 @@
 				BF34878BE42A421DA5E847F6 /* JPushPlugin.h */,
 				848B6D10BD974DC4B999D002 /* AppDelegate+JPush.h */,
 				866111CA17C64D42810CB19D /* JPUSHService.h */,
+				C2DABDE7DB214AA2BC097AB1 /* CDVStatusBar.m */,
+				DEACD018EDD14E0B88E6145F /* CDVStatusBar.h */,
 			);
 			name = Plugins;
 			path = blockChainMobile/Plugins;
@@ -766,6 +770,7 @@
 				FBBA86F345964334A544DC65 /* CDVBarcodeScanner.mm in Sources */,
 				C42C3FA7B00A4ADAAD373D7C /* JPushPlugin.m in Sources */,
 				6CEC3A1EDA294A328D972557 /* AppDelegate+JPush.m in Sources */,
+				8DC459EDA7E74EAC8D527E7C /* CDVStatusBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

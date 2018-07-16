@@ -122,5 +122,13 @@
     "variables": {
       "APP_KEY": "fd96956cb315ba658d256156"
     }
+  },
+  "cordova-plugin-statusbar": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-statusbar@2.4.2"
+    },
+    "is_top_level": true,
+    "variables": {}
   }
 }

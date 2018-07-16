@@ -384,6 +384,14 @@ module.exports = [
     "clobbers": [
       "JPush"
     ]
+  },
+  {
+    "id": "cordova-plugin-statusbar.statusbar",
+    "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+    "pluginId": "cordova-plugin-statusbar",
+    "clobbers": [
+      "window.StatusBar"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -403,7 +411,8 @@ module.exports.metadata =
   "cordova-plugin-camera": "4.0.3",
   "cordova-plugin-geolocation": "4.0.1",
   "phonegap-plugin-barcodescanner": "8.0.0",
-  "jpush-phonegap-plugin": "3.3.2"
+  "jpush-phonegap-plugin": "3.3.2",
+  "cordova-plugin-statusbar": "2.4.2"
 };
 // BOTTOM OF METADATA
 });
