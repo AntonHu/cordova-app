@@ -1,16 +1,16 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
-import {toJS} from 'mobx';
-import {observer, inject} from 'mobx-react';
-import {Title, Picture} from '../../components';
-import {NoticeBar, Icon, ActivityIndicator} from 'antd-mobile';
-import {EQUIPMENT_DATA_TYPE} from '../../utils/variable';
+import { withRouter } from 'react-router-dom';
+import { toJS } from 'mobx';
+import { observer, inject } from 'mobx-react';
+import { Title, Picture } from '../../components';
+import { NoticeBar, Icon, ActivityIndicator } from 'antd-mobile';
+import { EQUIPMENT_DATA_TYPE } from '../../utils/variable';
 import {
   setLocalStorage,
   getLocalStorage,
   deleteLocalStorage
 } from '../../utils/storage';
-import {decrypt} from '../../utils/methods';
+import { decrypt } from '../../utils/methods';
 import './style.less';
 
 /**
@@ -18,7 +18,7 @@ import './style.less';
  */
 const sunDistanceX = 50; // 小太阳x轴之间的距离
 const sunDistanceY = 70; // 小太阳y轴之间的距离
-const initialCoordinates = {left: 15, top: 20};
+const initialCoordinates = { left: 15, top: 20 };
 // 将小太阳区域划分为24份,放入数组
 const sunIntegralCoordinatesArr = [];
 for (let i = 0; i < 7; i++) {
@@ -47,7 +47,7 @@ class Comp extends React.Component {
   timeoutID = null;
   sunArea = null; // 大图形
   async componentDidMount() {
-    const {keyPair, userStore, history} = this.props;
+    const { keyPair, userStore, history } = this.props;
     // 获取最新公告,条件固定
     this.props.sunCityStore.fetchSCNews({
       page: 0,
@@ -55,12 +55,12 @@ class Comp extends React.Component {
     });
 
     // 获取用户信息
-    this.props.userStore.fetchUserInfo({keyPair, userStore, history});
+    this.props.userStore.fetchUserInfo({ keyPair, userStore, history });
 
     // 如果有私钥
     if (keyPair.hasKey) {
       // 获取我的太阳积分
-      this.props.miningStore.fetchBalance({publicKey: keyPair.publicKey});
+      this.props.miningStore.fetchBalance({ publicKey: keyPair.publicKey });
       // 获取排行
       this.props.miningStore.fetchBalanceRanking({
         publicKey: keyPair.publicKey
@@ -76,13 +76,13 @@ class Comp extends React.Component {
       );
       // 获取坐标数组
       this.sunIntegralArr.length > 0 &&
-      this.setState({
-        sunCoordinateArr: this.getSunCoordinateArr(this.sunIntegralArr[0])
-      });
+        this.setState({
+          sunCoordinateArr: this.getSunCoordinateArr(this.sunIntegralArr[0])
+        });
 
       // 储存设备列表整理后的数据
       const equipmentListObj = await this.getEquipmentList(keyPair);
-      this.setState({equipmentListObj, loading: false});
+      this.setState({ equipmentListObj, loading: false });
       // 获取设备，月，年，所有的数据，并缓存
       this.cacheEquipmentData(equipmentListObj);
     } else {
@@ -400,7 +400,7 @@ class Comp extends React.Component {
   };
   // 收取太阳积分
   selectSunIntegral = (e, sunIntegralInfo) => {
-    const {keyPair} = this.props;
+    const { keyPair } = this.props;
     if (keyPair.showHasKey(this.props)) {
       this.selectSunNode = e.target.parentNode;
       this.props.sunCityStore
@@ -451,28 +451,30 @@ class Comp extends React.Component {
 
   render() {
     const userInfo = toJS(this.props.userStore.userInfo);
-    const {avatar, nickName} = userInfo;
-    const {balance, balanceRanking} = this.props.miningStore;
-    const {equipmentListObj} = this.state;
+    const { avatar, nickName } = userInfo;
+    const { balance, balanceRanking } = this.props.miningStore;
+    const { equipmentListObj } = this.state;
     const lastNews = toJS(this.props.sunCityStore.lastNews);
     const equipmentNameList =
       (equipmentListObj && Object.keys(equipmentListObj)) || [];
     return (
       <div className={'page-sunCity-info'}>
-        <NoticeBar marqueeProps={{loop: true, style: {padding: '0 7.5px'}}}>
+        <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
           {lastNews ? `${lastNews.title}:${lastNews.content}` : ''}
         </NoticeBar>
         <div className="sun-content">
           <div className="info">
             <div className="detail">
-              <div style={{display: 'inline-block'}}>
+              <div style={{ display: 'inline-block' }}>
                 <div
                   className="person-info"
                   onClick={() => this.props.history.replace('/mining')}
                 >
-                  <Picture src={avatar} size={60} showBorder={true}/>
-                  <span className="nick-name">{this.sliceLongName(nickName)}</span>
-                  <Icon type="right"/>
+                  <Picture src={avatar} size={60} showBorder={true} />
+                  <span className="nick-name">
+                    {this.sliceLongName(nickName)}
+                  </span>
+                  <Icon type="right" />
                 </div>
               </div>
               <div>
@@ -494,24 +496,24 @@ class Comp extends React.Component {
           </div>
           <div className="sun-items" ref={el => (this.sunArea = el)}>
             {this.state.sunCoordinateArr &&
-            this.state.sunCoordinateArr.map((item, index) => {
-              return (
-                <div
-                  className="sun"
-                  key={index}
-                  style={{
-                    left: `${item.left}px`,
-                    top: `${item.top}px`
-                  }}
-                  ref={ele => (this.currentEle = ele)}
-                  // onClick={() => this.selectSunIntegral(item.number)}
-                  onClick={e => this.selectSunIntegral(e, item.info)}
-                >
-                  <span className="sun-pic"/>
-                  <span className="sun-number">{item.info.amount}</span>
-                </div>
-              );
-            })}
+              this.state.sunCoordinateArr.map((item, index) => {
+                return (
+                  <div
+                    className="sun"
+                    key={index}
+                    style={{
+                      left: `${item.left}px`,
+                      top: `${item.top}px`
+                    }}
+                    ref={ele => (this.currentEle = ele)}
+                    // onClick={() => this.selectSunIntegral(item.number)}
+                    onClick={e => this.selectSunIntegral(e, item.info)}
+                  >
+                    <span className="sun-pic" />
+                    <span className="sun-number">{item.info.amount}</span>
+                  </div>
+                );
+              })}
           </div>
           <div className="news">
             <span>最新动态：</span>雷神刚刚挖宝10个太阳积分~
@@ -523,7 +525,7 @@ class Comp extends React.Component {
             </div>
           </div>
           <div className="equipment">
-            <Title title="太阳城蓄力装备"/>
+            <Title title="太阳城蓄力装备" />
             {equipmentNameList.length > 0 ? (
               equipmentNameList.map((equipment, index) => {
                 return (
@@ -534,9 +536,9 @@ class Comp extends React.Component {
                       this.props.history.push(
                         `/sunCity/equipmentInfo/${
                           equipmentListObj[equipment].deviceNo
-                          }?source=${
+                        }?source=${
                           equipmentListObj[equipment].source
-                          }&name=${equipment}`
+                        }&name=${equipment}`
                       )
                     }
                   >
@@ -551,17 +553,17 @@ class Comp extends React.Component {
                         </span>
                         <span>{`日电量：${
                           equipmentListObj[equipment].dayElectric
-                          }kw/h`}</span>
+                        }kwh`}</span>
                       </div>
                     </div>
-                    <Icon type="right"/>
+                    <Icon type="right" />
                   </div>
                 );
               })
             ) : (
               <div className="loading">
                 {this.state.loading ? (
-                  <ActivityIndicator text="加载中..."/>
+                  <ActivityIndicator text="加载中..." />
                 ) : (
                   <div
                     className="pic-wrap"

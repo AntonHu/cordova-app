@@ -33,7 +33,7 @@ class Comp extends React.Component {
     allStationData: [],
     loading: true
   };
-
+  barChart = null;
   async componentDidMount() {
     // 获取天气信息
     const city = getLocalStorage('city');
@@ -69,7 +69,7 @@ class Comp extends React.Component {
         loading: false
       });
       if (Object.keys(equipmentListObj).length > 0) {
-        this.barChart = this.renderBarChart(cacheEquipmentData.dayStationData);
+        this.renderBarChart(cacheEquipmentData.dayStationData);
       }
     } else {
       this.setState({
@@ -185,26 +185,26 @@ class Comp extends React.Component {
     F2.Global.setTheme({
       pixelRatio: 2
     }); // 设为双精度
-    var chart = new F2.Chart({
+    this.barChart = new F2.Chart({
       id: 'pie-bar-chart',
       pixelRatio: window.devicePixelRatio
     });
-    chart.source(data);
-    chart.tooltip({
+    this.barChart.source(data);
+    this.barChart.tooltip({
       showItemMarker: false,
       onShow: function onShow(ev) {
-        var items = ev.items;
+        const items = ev.items;
         items[0].name = null;
-        items[0].value = `${items[0].value}kw/h`;
+        items[0].value = `${items[0].value}kwh`;
       }
     });
-    chart.axis('time', {
+    this.barChart.axis('time', {
       label: {
         fill: '#fff',
         fontSize: 10
       }
     });
-    chart.axis('number', {
+    this.barChart.axis('number', {
       grid: {
         lineDash: [0]
       },
@@ -213,11 +213,11 @@ class Comp extends React.Component {
         fontSize: 10
       }
     });
-    chart
+    this.barChart
       .interval()
       .position('time*number')
       .color(grd);
-    chart.render();
+    this.barChart.render();
   };
 
   // 筛选条件更改
@@ -237,7 +237,15 @@ class Comp extends React.Component {
       default:
         barData = this.state.dayStationData;
     }
-    this.barChart = this.renderBarChart(barData);
+    // 显示默认数据
+    barData.length < 1 &&
+      barData.push({
+        number: 0,
+        time: '00'
+      });
+    this.barChart.clear();
+    this.renderBarChart(barData);
+
     const selected = Object.assign({}, this.state.selected);
     Object.keys(selected).forEach(item => {
       selected[item] = false;
@@ -343,7 +351,7 @@ class Comp extends React.Component {
               <div className="detail-type">当前</div>
             </div>
             <div className="detail-item">
-              <div className="number">{`${dayStationElectric}kw`}</div>
+              <div className="number">{`${dayStationElectric}kwh`}</div>
               <div className="detail-type">今日</div>
             </div>
             <div className="detail-item">
@@ -351,7 +359,7 @@ class Comp extends React.Component {
               <div className="detail-type">逆变器容量</div>
             </div>
             <div className="detail-item">
-              <div className="number">{`${totalStationElectric}kw`}</div>
+              <div className="number">{`${totalStationElectric}kwh`}</div>
               <div className="detail-type">累计</div>
             </div>
           </div>
@@ -384,7 +392,7 @@ class Comp extends React.Component {
                         </span>
                         <span>{`日电量：${
                           equipmentListObj[equipment].dayElectric
-                        }kw/h`}</span>
+                        }kwh`}</span>
                       </div>
                     </div>
                     <Icon type="right" />

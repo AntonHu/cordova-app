@@ -157,7 +157,7 @@ class Comp extends React.Component {
                         <span>
                           {`日电量：${
                             equipmentListObj[equipment].dayElectric
-                          }kw/h`}
+                          }kwh`}
                         </span>
                       </div>
                     </div>
