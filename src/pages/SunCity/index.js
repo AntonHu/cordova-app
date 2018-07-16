@@ -89,6 +89,12 @@ class Comp extends React.Component {
       // 若是没有私钥，清空缓存
       deleteLocalStorage('stationExpireTime');
       deleteLocalStorage('equipmentListObj');
+      deleteLocalStorage('currentStationPower');
+      deleteLocalStorage('dayStationElectric');
+      deleteLocalStorage('totalStationElectric');
+      deleteLocalStorage('monthTotalStationElectric');
+      deleteLocalStorage('yearTotalStationElectric');
+      deleteLocalStorage('allTotalStationElectric');
       this.setState({
         loading: false
       });
@@ -435,10 +441,10 @@ class Comp extends React.Component {
     }
   };
 
-  sliceLongName = (name) => {
+  sliceLongName = name => {
     const LENGTH_LIMIT = 5;
     if (name && name.length > LENGTH_LIMIT) {
-      return name.substr(0, LENGTH_LIMIT) + '...'
+      return name.substr(0, LENGTH_LIMIT) + '...';
     }
     return name;
   };

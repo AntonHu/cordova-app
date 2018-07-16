@@ -82,6 +82,11 @@ class Comp extends React.Component {
         deviceNo,
         EQUIPMENT_DATA_TYPE.MONTH
       );
+      monthEquipmentData.length > 0 &&
+        monthEquipmentData.map(item => {
+          item.time = item.time.substring(item.time.length - 5);
+          return item;
+        });
       setLocalStorage('monthEquipmentData', JSON.stringify(monthEquipmentData));
 
       // 请求设备年发电数据，本地储存

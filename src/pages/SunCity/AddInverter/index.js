@@ -100,6 +100,8 @@ class Comp extends React.Component {
             ToastNoMask(`添加逆变器失败,${result.msg}`);
           }
         });
+    } else {
+      ToastNoMask('该账号没有私钥,请到个人中心添加！');
     }
   };
 
