@@ -113,8 +113,8 @@ class Comp extends React.Component {
       );
       // 设备功率
       const currentPower =
-        (decryptData &&
-          decryptData[decryptData.length - 1] &&
+        (decryptData.length > 0 &&
+          decryptData[decryptData.length - 1].power &&
           decryptData[decryptData.length - 1].power.toFixed(2)) ||
         0;
       // 设备日电量
@@ -195,7 +195,6 @@ class Comp extends React.Component {
       onShow: function onShow(ev) {
         var items = ev.items;
         items[0].name = null;
-        items[0].name = items[0].title;
         items[0].value = `${items[0].value}kw/h`;
       }
     });
