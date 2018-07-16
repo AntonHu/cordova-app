@@ -6,12 +6,13 @@
   color: @main-text-color;
   margin-left: auto;
   margin-right: auto;
-
+  border: @main-text-color 1px solid !important;
 }
 
 .plain-button::before {
   border-radius: @border-radius;
-  border: @main-text-color 1px solid !important;
+  //border: @main-text-color 1px solid !important;
+  border: none!important;
 }
 
 .plain-button.big {
