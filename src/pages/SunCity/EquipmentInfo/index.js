@@ -23,9 +23,18 @@ class Comp extends React.Component {
       year: false,
       all: false
     },
+    chartTitle: '日功率走势图(w)',
     sourceData: '', // 数据来源
     deviceNo: '', //设备编码
     count: 0 // 日电量
+  };
+  pieChart = null;
+  curveChart = null;
+  chartTitleObj = {
+    day: '日功率走势图(w)',
+    month: '月发电量(w)',
+    year: '年发电量(w)',
+    all: '全部发电量(w)'
   };
   async componentDidMount() {
     const deviceNo = this.props.match.params.id;
@@ -44,16 +53,16 @@ class Comp extends React.Component {
     } else {
       dayEquipmentData = JSON.parse(getLocalStorage('dayEquipmentData'));
     }
-    if (dayEquipmentData.length >= 1) {
-      this.curveChart = this.renderCurve(dayEquipmentData);
+    if (dayEquipmentData.length > 0) {
+      this.renderCurve(dayEquipmentData);
     } else {
       // 默认显示数据
-      this.curveChart = this.renderCurve([{ time: '00', number: 0 }]);
+      this.renderCurve([{ time: '00', number: 0 }]);
     }
 
     // 设备当前功率
     const currentPower =
-      dayEquipmentData &&
+      dayEquipmentData.length > 0 &&
       dayEquipmentData[dayEquipmentData.length - 1] &&
       dayEquipmentData[dayEquipmentData.length - 1].power;
     // 设备日电量
@@ -61,12 +70,19 @@ class Comp extends React.Component {
     dayEquipmentData.forEach(item => {
       dayElectric += item.number;
     });
+    // 当前电站发电量
+    const maxValue =
+      (dayEquipmentData.length > 0 &&
+        dayEquipmentData[dayEquipmentData.length - 1] &&
+        dayEquipmentData[dayEquipmentData.length - 1].maxValue) ||
+      0;
     this.setState({
       deviceNo,
       sourceData,
-      dayElectric
+      dayElectric,
+      maxValue
     });
-    this.pieBarChart = this.renderPieBar(currentPower);
+    this.renderPieBar(currentPower);
 
     // 本地储存设备月，年，所有数据
     this.cacheEquipmentData(sourceData, deviceNo);
@@ -117,15 +133,6 @@ class Comp extends React.Component {
     ); // 设置三个小时的过期时间
   };
 
-  componentWillUnmount() {
-    if (this.pieBarChart) {
-      this.pieBarChart = undefined;
-    }
-    if (this.curveChart) {
-      this.curveChart = undefined;
-    }
-  }
-
   // 按照类型请求电量数据
   async getPowerData(sourceData, deviceNo, dateType) {
     if (this.props.keyPair.hasKey) {
@@ -160,10 +167,12 @@ class Comp extends React.Component {
           console.log(err);
         }
         if (powerInfo) {
+          console.log(powerInfo);
           const value = +(powerInfo.maxEnergy - powerInfo.minEnergy).toFixed(2);
           data.push({
             time: item,
             number: value,
+            maxValue: powerInfo.maxEnergy && +powerInfo.maxEnergy,
             power: powerInfo.power || ''
           });
         }
@@ -188,7 +197,7 @@ class Comp extends React.Component {
     grd.addColorStop(0, '#fa5a21');
     grd.addColorStop(1, '#5bd121');
 
-    const chart = new F2.Chart({
+    this.pieChart = new F2.Chart({
       id: 'pie-bar-chart',
       width: px(340),
       height: px(340),
@@ -201,20 +210,20 @@ class Comp extends React.Component {
         y: 85
       }
     ];
-    chart.source(data, {
+    this.pieChart.source(data, {
       y: {
         max: 100,
         min: 0
       }
     });
-    chart.axis(false);
-    chart.tooltip(false);
-    chart.coord('polar', {
+    this.pieChart.axis(false);
+    this.pieChart.tooltip(false);
+    this.pieChart.coord('polar', {
       transposed: true,
       innerRadius: 0.8,
       radius: 0.9
     });
-    chart.guide().arc({
+    this.pieChart.guide().arc({
       start: [0, 0],
       end: [1, 99.98],
       top: false,
@@ -223,13 +232,13 @@ class Comp extends React.Component {
         stroke: '#024dc8'
       }
     });
-    chart.guide().html({
+    this.pieChart.guide().html({
       position: ['110%', '55%'],
       html: `<div style="width: 250px;height: 40px;text-align: center;"><div style="font-size: 20px">${(currentPower &&
         currentPower.toFixed(2)) ||
         0}w</div><div style="font-size: 14px;margin-top: 5px">当前功率</div></div>`
     });
-    chart
+    this.pieChart
       .interval()
       .position('x*y')
       .color(grd)
@@ -240,14 +249,14 @@ class Comp extends React.Component {
           easing: 'cubicIn'
         }
       });
-    chart.render();
+    this.pieChart.render();
 
-    return chart;
+    return this.pieChart;
   };
 
   // 绘制发电曲线图
   renderCurve = data => {
-    const chart = new F2.Chart({
+    this.curveChart = new F2.Chart({
       id: 'curve-chart',
       pixelRatio: window.devicePixelRatio
     });
@@ -263,8 +272,8 @@ class Comp extends React.Component {
         alias: '功率'
       }
     };
-    chart.source(data, defs);
-    chart.axis('time', {
+    this.curveChart.source(data, defs);
+    this.curveChart.axis('time', {
       label: (text, index, total) => {
         const cfg = {
           textAlign: 'center'
@@ -278,18 +287,19 @@ class Comp extends React.Component {
         return cfg;
       }
     });
-    chart.tooltip({
+    this.curveChart.tooltip({
       showCrosshairs: true,
       onShow: function onShow(ev) {
         var items = ev.items;
-        items[0].name = items[0].title;
+        items[0].name = null;
+        items[0].value = `${items[0].value}w`;
       }
     });
-    chart
+    this.curveChart
       .line()
       .position('time*number')
       .shape('smooth');
-    chart
+    this.curveChart
       .point()
       .position('time*number')
       .shape('smooth')
@@ -297,7 +307,7 @@ class Comp extends React.Component {
         stroke: '#fff',
         lineWidth: 1
       });
-    chart.render();
+    this.curveChart.render();
   };
 
   // 筛选条件更改
@@ -308,10 +318,13 @@ class Comp extends React.Component {
       selected[item] = false;
     });
     selected[type] = true;
-    this.setState({ selected });
+    this.setState({ selected, chartTitle: this.chartTitleObj[type] });
 
     let equipmentData = [];
     switch (type) {
+      case 'day':
+        equipmentData = JSON.parse(getLocalStorage('dayEquipmentData')); // 获取本地储存设备发电--天
+        break;
       case 'month':
         equipmentData = JSON.parse(getLocalStorage('monthEquipmentData')); // 获取本地储存设备发电--月
         break;
@@ -324,19 +337,16 @@ class Comp extends React.Component {
       default:
         break;
     }
-    if (equipmentData.length >= 1) {
-      this.curveChart = this.renderCurve(equipmentData);
-    } else {
-      // 默认显示数据
-      this.curveChart = this.renderCurve([{ time: '00', number: 0 }]);
-    }
+    // 显示默认数据
+    equipmentData.length < 1 &&
+      equipmentData.push({
+        number: 0,
+        time: '00'
+      });
+    this.curveChart && this.curveChart.clear();
+    this.renderCurve(equipmentData);
   }
   render() {
-    const totalStationElectric =
-      Number(getLocalStorage('totalStationElectric')) ||
-      Number(getLocalStorage('monthTotalStationElectric')) ||
-      Number(getLocalStorage('yearTotalStationElectric')) ||
-      Number(getLocalStorage('allTotalStationElectric')); // 获取本地储存电站总发电量
     return (
       <div className={'page-equipment-info'}>
         <PageWithHeader
@@ -354,7 +364,7 @@ class Comp extends React.Component {
             </div>
             <canvas id="pie-bar-chart" />
             <div className="survey-item">
-              <div className="survey-item-number">{totalStationElectric}</div>
+              <div className="survey-item-number">{this.state.maxValue}</div>
               <div className="survey-item-type">总电量</div>
             </div>
           </div>
@@ -385,7 +395,7 @@ class Comp extends React.Component {
                 全部
               </div>
             </div>
-            <div className="curve-chart-title">日功率走势图</div>
+            <div className="curve-chart-title">{this.state.chartTitle}</div>
             <canvas id="curve-chart" />
           </div>
         </PageWithHeader>
