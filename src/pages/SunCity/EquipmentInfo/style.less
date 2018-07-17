@@ -12,6 +12,7 @@
     .survey-item {
       width: 25%;
       .survey-item-number {
+        font-weight: bold;
         font-size: 20px;
         margin-bottom: 5px;
       }
@@ -33,11 +34,13 @@
       div {
         height: 34px;
         width: 34px;
-        line-height: 34px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         margin-left: 10px;
         border-radius: 17px;
-        background: @light-text-color;
-        color: @main-text-color;
+        background: @default-bg;
+        color: @screen-text-color;
       }
       .selected {
         background: @blue-color-bg;
