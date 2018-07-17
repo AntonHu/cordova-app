@@ -7,10 +7,11 @@ import Popup from './Popup';
 import PlainButton from './PlainButton';
 import Title from './Title';
 import Countdown from './Countdown';
-import Picture from './Picture'
-import VerifyIdEmptyElement from './VerifyIdEmptyElement'
+import Picture from './Picture';
+import VerifyIdEmptyElement from './VerifyIdEmptyElement';
 import ToastNoMask from './Toast';
 import Rank from './Rank';
+import Loading from './Loading';
 
 export {
   BlueBox,
@@ -25,5 +26,6 @@ export {
   Picture,
   VerifyIdEmptyElement,
   ToastNoMask,
-  Rank
+  Rank,
+  Loading
 };

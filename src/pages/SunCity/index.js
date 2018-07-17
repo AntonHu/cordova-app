@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { toJS } from 'mobx';
 import { observer, inject } from 'mobx-react';
-import { Title, Picture } from '../../components';
+import { Title, Picture, Loading } from '../../components';
 import { NoticeBar, Icon, ActivityIndicator } from 'antd-mobile';
 import { EQUIPMENT_DATA_TYPE } from '../../utils/variable';
 import {
@@ -460,6 +460,7 @@ class Comp extends React.Component {
       (equipmentListObj && Object.keys(equipmentListObj)) || [];
     return (
       <div className={'page-sunCity-info'}>
+        {this.state.loading ? <Loading size={100} /> : null}
         <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
           {lastNews ? `${lastNews.title}:${lastNews.content}` : ''}
         </NoticeBar>
@@ -574,7 +575,8 @@ class Comp extends React.Component {
                   >
                     <Picture
                       src={require('../../images/no_inverter.png')}
-                      size={200}
+                      height={218}
+                      width={264}
                     />
                     <span>还未添加逆变器，快去添加~</span>
                   </div>

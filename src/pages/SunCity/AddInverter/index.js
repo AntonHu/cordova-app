@@ -11,6 +11,7 @@ import { toJS } from 'mobx';
 import { deleteLocalStorage } from '../../../utils/storage';
 import './style.less';
 
+let isScanning = false;
 /**
  * 添加逆变器
  */
@@ -23,11 +24,20 @@ class Comp extends React.Component {
     successModal: false,
     showLoading: false
   };
+  evtbackButton = () => {
+    if (!isScanning) {
+      this.props.history.goBack();
+    }
+    isScanning = false;
+  };
   componentDidMount() {
+    document.addEventListener('backbutton', this.evtbackButton, false);
     // 请求所有逆变器类型
     this.props.sunCityStore.fetchSCInverters();
   }
-
+  componentWillUnmount() {
+    document.removeEventListener('backbutton', this.evtbackButton, false);
+  }
   // 逆变器类型更改
   inverterTypeChange = value => {
     this.setState({
@@ -47,11 +57,16 @@ class Comp extends React.Component {
     if (window.cordova) {
       window.cordova.plugins.barcodeScanner.scan(
         result => {
+          isScanning = false;
+          if (result.cancelled) {
+            isScanning = true;
+          }
           this.setState({
             barcodeValue: result.text
           });
         },
         error => {
+          isScanning = false;
           //扫码失败
           ToastNoMask(`扫码失败${error}`);
         },
