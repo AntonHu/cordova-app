@@ -10,7 +10,8 @@ import {
   getLocalStorage,
   deleteLocalStorage
 } from '../../utils/storage';
-import { decrypt } from '../../utils/methods';
+import { decrypt, sliceLongString } from '../../utils/methods';
+import { getDeviceWidth } from '../../utils/getDevice';
 import './style.less';
 
 /**
@@ -117,7 +118,7 @@ class Comp extends React.Component {
           equipmentListObj,
           EQUIPMENT_DATA_TYPE.DAY
         ));
-      setLocalStorage('equipmentListObj', JSON.stringify(equipmentListObj)); // 本地储存所有设备列表
+      setLocalStorage('equipmentListObj', JSON.stringify(equipmentListObj || {})); // 本地储存所有设备列表
     } else {
       equipmentListObj = JSON.parse(getLocalStorage('equipmentListObj'));
     }
@@ -443,11 +444,11 @@ class Comp extends React.Component {
   };
 
   sliceLongName = name => {
-    const LENGTH_LIMIT = 5;
-    if (name && name.length > LENGTH_LIMIT) {
-      return name.substr(0, LENGTH_LIMIT) + '...';
+    const shortName = sliceLongString(name);
+    if (name === shortName) {
+      return shortName
     }
-    return name;
+    return shortName + '...'
   };
 
   render() {
@@ -461,7 +462,7 @@ class Comp extends React.Component {
     return (
       <div className={'page-sunCity-info'}>
         <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
-          {lastNews ? `${lastNews.title}:${lastNews.content}` : ''}
+          <span className="h4">{lastNews ? `${lastNews.title}:${lastNews.content}` : ''}</span>
         </NoticeBar>
         <div className="sun-content">
           <div className="info">
@@ -520,10 +521,7 @@ class Comp extends React.Component {
             <span>最新动态：</span>雷神刚刚挖宝10个太阳积分~
           </div>
           <div className="promote">
-            <div>区块链达人季</div>
-            <div>
-              答题赢<span>一亿WT糖果</span>
-            </div>
+            <img src={require('../../images/banner_1.png')} width="100%" />
           </div>
           <div className="equipment">
             <Title title="太阳城蓄力装备" />

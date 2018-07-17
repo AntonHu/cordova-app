@@ -42,6 +42,21 @@ class Comp extends React.Component {
     this.props.miningStore.fetchDigTimes();
   };
 
+  /**
+   * 给较短的list补齐空元素
+   * @param length
+   * @param maxLength
+   * @returns {Array}
+   */
+  completeList = (length, maxLength) => {
+    const emptyArray = new Array(maxLength - length).fill(1);
+    return emptyArray.map((v, i) => {
+      return (
+        <div className="ranking-item empty" key={i} />
+      )
+    })
+  };
+
   render() {
     const dayStationElectric = getLocalStorage('dayStationElectric') || 0; // 获取本地储存今日发电量
     const {
@@ -136,6 +151,9 @@ class Comp extends React.Component {
                       </div>
                     );
                   })}
+                {
+                  this.completeList(allRanking.length, Math.max(allRanking.length, nearbyRank.length))
+                }
               </div>
               <div className="ranking-list">
                 {nearbyRank &&
@@ -150,6 +168,9 @@ class Comp extends React.Component {
                       </div>
                     );
                   })}
+                {
+                  this.completeList(nearbyRank.length, Math.max(allRanking.length, nearbyRank.length))
+                }
               </div>
             </Tabs>
             <WhiteSpace />

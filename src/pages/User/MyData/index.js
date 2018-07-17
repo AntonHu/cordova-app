@@ -215,7 +215,6 @@ class Comp extends React.Component {
     this.setState({});
   };
   render() {
-    console.log(this.props);
     const {keyPair} = this.props;
     return (
       <div className={'page-my-data'}>
@@ -237,7 +236,9 @@ class Comp extends React.Component {
 
           <WhiteSpace />
 
-          <div className={'info'}>EBC新能源</div>
+          <div className={'info'}>
+            <img src={require('../../../images/banner_1.png')} width="100%" />
+          </div>
 
           <WhiteSpace />
 

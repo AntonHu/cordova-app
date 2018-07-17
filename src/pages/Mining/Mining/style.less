@@ -106,17 +106,22 @@
     margin-top: 15px;
     .ranking-list {
       background: @white-text-color;
+      .ranking-item.empty {
+        background: transparent;
+      }
       .ranking-item {
+        height: 46px;
+        box-sizing: border-box;
         background: @white-text-color;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 10px;
+        padding: 10px 20px 10px 10px;
         .ranking-title {
           display: flex;
           align-items: center;
           .rank-item {
-            margin-right: 10px;
+            margin: 5px 20px 5px 10px;
           }
         }
       }

@@ -77,6 +77,44 @@ export const formatPhoneWithSpace = phone => {
 };
 
 /**
+ * 截取超过长度的字符串
+ * @param str          字符串
+ * @param lengthLimit  长度限制
+ * @param fullAndHalf  区分全角半角。true 区分 false 不区分
+ * @returns {*}
+ */
+export const sliceLongString = (str, lengthLimit = 5, fullAndHalf = true) => {
+  let result = '';
+  if (typeof str !== 'string') {
+    return '';
+  }
+  if (str === '') {
+    return '';
+  }
+  if (fullAndHalf) {
+    let len = 0;
+    const strArray = str.split('');
+    while (len < lengthLimit) {
+      const char = strArray.shift();
+      if (char === undefined) {
+        break;
+      }
+      if (/[\u0000-\u00ff]/.test(char)) {
+        len += 1;
+      } else {
+        len += 2;
+      }
+      result += char;
+    }
+  } else {
+    if (str.length) {
+      result = str.substr(0, lengthLimit);
+    }
+  }
+  return result;
+};
+
+/**
  * 相当于window.resolveLocalFileSystemURL(uri, onSuccess, onFail)
  * 返回fileEntry
  * @param fileURL
@@ -140,6 +178,16 @@ export const turnJpegIntoBlob = (result) => {
   return new Blob([result], {type: 'image/jpeg'});
 };
 
+/**
+ * cordova文件操作相关
+ */
+export const FileMethods = {
+  getFileEntryFromURL,
+  getFileFromFileEntry,
+  readFileAsBuffer,
+  turnJpegIntoBlob
+};
+
 
 let cipherMode = '1';// C1C3C2
 const cipher = new SM2Cipher(cipherMode);
@@ -160,12 +208,4 @@ export const decrypt = (privateKey, cipherMsg) => {
   return decryptedMsg;
 };
 
-/**
- * cordova文件操作相关
- */
-export const FileMethods = {
-  getFileEntryFromURL,
-  getFileFromFileEntry,
-  readFileAsBuffer,
-  turnJpegIntoBlob
-};
+

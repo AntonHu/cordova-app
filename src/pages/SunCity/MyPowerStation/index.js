@@ -5,6 +5,7 @@ import { observer, inject } from 'mobx-react';
 import { BlueBox, Title, PageWithHeader, Picture } from '../../../components';
 import { Icon, ActivityIndicator } from 'antd-mobile';
 import { decrypt } from '../../../utils/methods';
+import { EQUIPMENT_DATA_TYPE } from '../../../utils/variable';
 
 import F2 from '@antv/f2';
 import './style.less';
@@ -55,8 +56,8 @@ class Comp extends React.Component {
         // 各个设备添加功率和日电量,本地储存
         equipmentListObj =
           equipmentListObj &&
-          (await this.addEquipmentPower(equipmentListObj, 1));
-        setLocalStorage('equipmentListObj', JSON.stringify(equipmentListObj)); // 本地储存所有设备状态
+          (await this.addEquipmentPower(equipmentListObj, EQUIPMENT_DATA_TYPE.DAY));
+        setLocalStorage('equipmentListObj', JSON.stringify(equipmentListObj || {})); // 本地储存所有设备状态
       }
       this.setState({
         equipmentListObj

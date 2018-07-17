@@ -42,9 +42,7 @@ class Comp extends React.PureComponent {
     return (
       <div className={'page-about'}>
         <PageWithHeader title={'关于我们'}>
-          <BlueBox>
-            <div className="h1 white-text">EBC新能源</div>
-          </BlueBox>
+          <img src={require('../../../images/banner_1.png')} width="100%" className="banner" />
 
           <List>
             {ListData.map((v, i) => (

@@ -38,7 +38,7 @@ class Comp extends React.Component {
         equipmentListObj =
           equipmentListObj &&
           (await this.addEquipmentPower(equipmentListObj, 1));
-        setLocalStorage('equipmentListObj', JSON.stringify(equipmentListObj));
+        setLocalStorage('equipmentListObj', JSON.stringify(equipmentListObj || {}));
       }
       this.setState({
         equipmentListObj

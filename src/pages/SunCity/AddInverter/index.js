@@ -8,7 +8,9 @@ import {
 } from '../../../components';
 import { Picker, List, WhiteSpace, InputItem, ActivityIndicator } from 'antd-mobile';
 import { toJS } from 'mobx';
-import { deleteLocalStorage } from '../../../utils/storage';
+import { deleteLocalStorage, getLocalStorage, setLocalStorage } from '../../../utils/storage';
+import { EQUIPMENT_DATA_TYPE } from '../../../utils/variable';
+import { decrypt } from '../../../utils/methods';
 import './style.less';
 
 /**
@@ -98,8 +100,9 @@ class Comp extends React.Component {
           });
           if (result.code === 200) {
             // 添加成功后，删除缓存设备数据，重新请求所有设备数据
-            deleteLocalStorage('stationExpireTime');
-            deleteLocalStorage('equipmentListObj');
+            // deleteLocalStorage('stationExpireTime');
+            // deleteLocalStorage('equipmentListObj');
+            this.addInverterDetail({sourceData, deviceNo, dateType: EQUIPMENT_DATA_TYPE.DAY});
             this.setState({
               successModal: true
             });
@@ -115,6 +118,81 @@ class Comp extends React.Component {
     } else {
       ToastNoMask('该账号没有私钥,请到个人中心添加！');
     }
+  };
+
+  /**
+   * 添加成功后，把新的逆变器加入到equipmentListObj中
+   * @param sourceData
+   * @param deviceNo
+   * @param dateType
+   * @returns {Promise.<void>}
+   */
+  addInverterDetail = async ({sourceData, deviceNo, dateType}) => {
+    if (this.props.keyPair.hasKey) {
+      await this.props.sunCityStore.fetchSCEquipmentPower({
+        sourceData,
+        deviceNo,
+        userPubKey: this.props.keyPair.publicKey,
+        dateType
+      });
+
+      const receiveData = toJS(this.props.sunCityStore.equipmentPower);
+      const decryptData = this.handleDecryptData(receiveData);
+      // 设备功率
+      const currentPower =
+        (decryptData.length > 0 &&
+          decryptData[decryptData.length - 1].power &&
+          decryptData[decryptData.length - 1].power.toFixed(2)) ||
+        0;
+      // 设备日电量
+      let dayElectric = 0;
+      decryptData.forEach(item => {
+        dayElectric += item.number;
+      });
+      let equipmentListObj = getLocalStorage('equipmentListObj');
+      if (equipmentListObj !== null) {
+        equipmentListObj = JSON.parse(equipmentListObj);
+      } else {
+        equipmentListObj = {}
+      }
+      const name = `${sourceData}_${deviceNo}`;
+      equipmentListObj[name] = {};
+      equipmentListObj[name].publicKey = this.props.keyPair.publicKey;
+      equipmentListObj[name].source = sourceData;
+      equipmentListObj[name].deviceNo = deviceNo;
+      equipmentListObj[name].currentPower = currentPower || 0;
+      equipmentListObj[name].dayElectric = dayElectric.toFixed(2) || 0;
+      setLocalStorage('equipmentListObj', JSON.stringify(equipmentListObj));
+    }
+  };
+
+  // 处理获取的解密数据
+  handleDecryptData = receiveData => {
+    const decryptData = [];
+    if (this.props.keyPair.hasKey) {
+      Object.keys(receiveData).forEach(item => {
+        let powerInfo;
+        try {
+          const decryptedItem = decrypt(
+            this.props.keyPair.privateKey,
+            receiveData[item]
+          );
+          powerInfo = decryptedItem && JSON.parse(decryptedItem);
+        } catch (err) {
+          console.log(err);
+        }
+        if (powerInfo) {
+          const value = +(powerInfo.maxEnergy - powerInfo.minEnergy).toFixed(2);
+          decryptData.push({
+            time: item,
+            number: value,
+            maxValue: powerInfo.maxEnergy && +powerInfo.maxEnergy,
+            power: powerInfo.power || ''
+          });
+        }
+      });
+    }
+    return decryptData;
   };
 
   onModalPress = () => {
@@ -147,6 +225,7 @@ class Comp extends React.Component {
             </Picker>
             <InputItem
               placeholder="请输入条码"
+              clear
               onChange={this.barcodeChange}
               value={this.state.barcodeValue}
             >

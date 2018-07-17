@@ -92,12 +92,9 @@ class BasicPhoneCodePWForm extends React.PureComponent {
     return _setState;
   };
 
-  /**
-   * 注册
-   */
   onRegister = async () => {
     if (this.isRegistering) {
-      showError('正在注册中，请稍候...');
+      alert('请耐心等待', '正在发送请求，请稍候...', [{text: '确定'}]);
       return;
     }
 

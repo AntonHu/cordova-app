@@ -5,11 +5,11 @@ import './style.less';
 
 const Apps = [
   {
-    text: '融资租赁',
+    text: 'AI运营',
     icon: '\ue6b8'
   },
   {
-    text: '运维监控',
+    text: '数据金融',
     icon: '\ue61b'
   }
 
@@ -23,7 +23,9 @@ class Comp extends React.PureComponent {
     return (
       <div className={'page-apply'}>
         <PageWithHeader leftComponent={null} title={'应用'}>
-          <div className="apply-survey" />
+          <div className="apply-survey">
+            <img src={require('../../../images/banner_2.png')} width="100%" />
+          </div>
           <div className="apply">
             <Title title="应用区" />
             <div className="apply-list">
@@ -73,7 +75,9 @@ class Comp extends React.PureComponent {
               {/*</div>*/}
             {/*</div>*/}
           </div>
-          <div className="admission">入驻申请</div>
+          <div className="admission">
+            <img src={require('../../../images/banner_3.png')} width="100%" />
+          </div>
         </PageWithHeader>
       </div>
     );
