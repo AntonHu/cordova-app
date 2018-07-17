@@ -1,5 +1,7 @@
 @import '../../../styles/common';
 
+@apply-list-icon-size: 100 * @px;
+
 .page-apply {
   .apply-survey {
     height: 340 * @px;
@@ -13,19 +15,24 @@
       flex-wrap: wrap;
       padding: 20px;
       background: @white-text-color;
+      .iconfont {
+        color: @main-color;
+        font-size: @apply-list-icon-size / 2;
+        background: @white-blue-bg;
+        height: @apply-list-icon-size;
+        width: @apply-list-icon-size;
+        border-radius: @apply-list-icon-size / 2;
+        line-height: @apply-list-icon-size;
+
+      }
       .apply-item {
         padding: 10px;
         width: 33.3%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        .picture,
-        .picture-empty-element{
-          margin-bottom: 20 * @px;
-          margin-top: 40 * @px;
-        }
-        .picture-empty-element {
-          background: @shadow-color;
+        .apply-item-text {
+          margin: 5px 0;
         }
       }
     }

@@ -5,29 +5,14 @@ import './style.less';
 
 const Apps = [
   {
-    text: '积分商城',
-    icon: 'avatar'
+    text: '融资租赁',
+    icon: '\ue6b8'
   },
   {
-    text: '积分商城',
-    icon: 'avatar'
-  },
-  {
-    text: '积分商城',
-    icon: 'avatar'
-  },
-  {
-    text: '积分商城',
-    icon: 'avatar'
-  },
-  {
-    text: '积分商城',
-    icon: 'avatar'
-  },
-  {
-    text: '积分商城',
-    icon: 'avatar'
+    text: '运维监控',
+    icon: '\ue61b'
   }
+
 ];
 
 /**
@@ -45,51 +30,48 @@ class Comp extends React.PureComponent {
               {Apps.map((item, index) => {
                 return (
                   <div key={index} className="apply-item">
-                    <Picture
-                      size={100}
-                      emptyElement={props => <div style={props.style} className={props.className} />}
-                      src="hahahha"
-                    />
+                    <i className="iconfont">{item.icon}</i>
                     <div className="apply-item-text">{item.text}</div>
+                    <div className="help-text h5">敬请期待</div>
                   </div>
                 );
               })}
             </div>
-            <div className="recommend">
-              <Title title="为你推荐" />
-              <div className="recommend-list">
-                <div className="recommend-item">
-                  <Picture
-                    circle={false}
-                    size={200}
-                    emptyElement={props => <div style={props.style} className={props.className} />}
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR72yqdE9opUl3aiimoZ-MilU5QdxFkK8AaAN6zUY1yrC2SuDWq"
-                  />
-                  <div className="recommend-name">得力双层保温盒</div>
-                  <div className="recommend-price">121积分</div>
-                </div>
-                <div className="recommend-item">
-                  <Picture
-                    circle={false}
-                    size={200}
-                    emptyElement={props => <div style={props.style} className={props.className} />}
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR72yqdE9opUl3aiimoZ-MilU5QdxFkK8AaAN6zUY1yrC2SuDWq"
-                  />
-                  <div className="recommend-name">得力双层保温盒</div>
-                  <div className="recommend-price">121积分</div>
-                </div>
-                <div className="recommend-item">
-                  <Picture
-                    circle={false}
-                    size={200}
-                    emptyElement={props => <div style={props.style} className={props.className} />}
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR72yqdE9opUl3aiimoZ-MilU5QdxFkK8AaAN6zUY1yrC2SuDWq"
-                  />
-                  <div className="recommend-name">得力双层保温盒</div>
-                  <div className="recommend-price">121积分</div>
-                </div>
-              </div>
-            </div>
+            {/*<div className="recommend">*/}
+              {/*<Title title="为你推荐" />*/}
+              {/*<div className="recommend-list">*/}
+                {/*<div className="recommend-item">*/}
+                  {/*<Picture*/}
+                    {/*circle={false}*/}
+                    {/*size={200}*/}
+                    {/*emptyElement={props => <div style={props.style} className={props.className} />}*/}
+                    {/*src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR72yqdE9opUl3aiimoZ-MilU5QdxFkK8AaAN6zUY1yrC2SuDWq"*/}
+                  {/*/>*/}
+                  {/*<div className="recommend-name">得力双层保温盒</div>*/}
+                  {/*<div className="recommend-price">121积分</div>*/}
+                {/*</div>*/}
+                {/*<div className="recommend-item">*/}
+                  {/*<Picture*/}
+                    {/*circle={false}*/}
+                    {/*size={200}*/}
+                    {/*emptyElement={props => <div style={props.style} className={props.className} />}*/}
+                    {/*src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR72yqdE9opUl3aiimoZ-MilU5QdxFkK8AaAN6zUY1yrC2SuDWq"*/}
+                  {/*/>*/}
+                  {/*<div className="recommend-name">得力双层保温盒</div>*/}
+                  {/*<div className="recommend-price">121积分</div>*/}
+                {/*</div>*/}
+                {/*<div className="recommend-item">*/}
+                  {/*<Picture*/}
+                    {/*circle={false}*/}
+                    {/*size={200}*/}
+                    {/*emptyElement={props => <div style={props.style} className={props.className} />}*/}
+                    {/*src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR72yqdE9opUl3aiimoZ-MilU5QdxFkK8AaAN6zUY1yrC2SuDWq"*/}
+                  {/*/>*/}
+                  {/*<div className="recommend-name">得力双层保温盒</div>*/}
+                  {/*<div className="recommend-price">121积分</div>*/}
+                {/*</div>*/}
+              {/*</div>*/}
+            {/*</div>*/}
           </div>
           <div className="admission">入驻申请</div>
         </PageWithHeader>
