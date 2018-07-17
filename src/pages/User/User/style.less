@@ -2,9 +2,10 @@
 
 .page-user {
   .user-wrap {
-    height: 200px;
+    height: 289 * @px;
     margin: 30 * @px;
-    border-radius: @border-radius;
+    border-top-left-radius: @border-radius;
+    border-top-right-radius: @border-radius;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -37,7 +38,7 @@
       align-items: center;
       position: absolute;
       right: -8px;
-      bottom: 50px;
+      bottom: 30px;
       background: @white-text-color;
       padding: 0 10px;
       border-radius: 10px;
@@ -45,7 +46,7 @@
     }
   }
   .am-list {
-    margin-top: -40px;
+    margin-top: -30 * @px;
     .am-list-item {
       height: @list-item-height;
       border-bottom: 1px solid @white-grey;

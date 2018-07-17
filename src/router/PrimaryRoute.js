@@ -14,7 +14,8 @@ import {
   ResetLoginPW,
   User,
   VerifyID,
-  MsgDetail
+  MsgDetail,
+  Introduction
 } from '../pages/User';
 import MyPowerStation from '../pages/SunCity/MyPowerStation';
 import EquipmentInfo from '../pages/SunCity/EquipmentInfo';
@@ -147,6 +148,7 @@ class PrimaryRoute extends React.Component {
         <Route exact path={'/user/resetTradePW'} component={ResetTradePW} />
         <Route exact path={'/user/resetLoginPW'} component={ResetLoginPW} />
         <Route exact path={'/user/verifyID/:id'} component={VerifyID} />
+        <Route exact path={'/user/introduction'} component={Introduction} />
       </Switch>
     );
   }

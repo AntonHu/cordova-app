@@ -1,6 +1,7 @@
 import React from 'react';
 import { BlueBox, PageWithHeader } from '../../../components';
 import { List, Modal } from 'antd-mobile';
+import {Link} from 'react-router-dom'
 import './style.less';
 
 const Item = List.Item;
@@ -42,7 +43,9 @@ class Comp extends React.PureComponent {
     return (
       <div className={'page-about'}>
         <PageWithHeader title={'关于我们'}>
-          <img src={require('../../../images/banner_1.png')} width="100%" className="banner" />
+          <Link to="/user/introduction">
+            <img src={require('../../../images/banner_1.png')} width="100%" className="banner" />
+          </Link>
 
           <List>
             {ListData.map((v, i) => (

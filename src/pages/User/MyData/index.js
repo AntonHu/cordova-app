@@ -4,6 +4,7 @@ import { List, WhiteSpace, Modal, Button, InputItem, ActivityIndicator } from 'a
 import {getIsInChain, putUserIntoChain} from '../../../stores/user/request';
 import './style.less';
 import {observer, inject} from 'mobx-react';
+import {Link} from 'react-router-dom';
 import CryptoJS from 'crypto-js'
 
 const alert = Modal.alert;
@@ -237,7 +238,9 @@ class Comp extends React.Component {
           <WhiteSpace />
 
           <div className={'info'}>
-            <img src={require('../../../images/banner_1.png')} width="100%" />
+            <Link to="/user/introduction">
+              <img src={require('../../../images/banner_1.png')} width="100%" />
+            </Link>
           </div>
 
           <WhiteSpace />

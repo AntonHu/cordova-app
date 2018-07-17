@@ -14,6 +14,7 @@ import ForgetLoginPW from './ResetPW/ForgetLoginPW';
 import User from './User';
 import VerifyID from './VerifyID';
 import MsgDetail from './MsgCenter/Detail';
+import Introduction from './Introduction';
 
 export {
   About,
@@ -31,5 +32,6 @@ export {
   User,
   VerifyID,
   MsgDetail,
-  ForgetLoginPW
+  ForgetLoginPW,
+  Introduction
 };

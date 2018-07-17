@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { toJS } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { Title, Picture } from '../../components';
@@ -521,7 +521,9 @@ class Comp extends React.Component {
             <span>最新动态：</span>雷神刚刚挖宝10个太阳积分~
           </div>
           <div className="promote">
-            <img src={require('../../images/banner_1.png')} width="100%" />
+            <Link to="/user/introduction">
+              <img src={require('../../images/banner_1.png')} width="100%" />
+            </Link>
           </div>
           <div className="equipment">
             <Title title="太阳城蓄力装备" />
