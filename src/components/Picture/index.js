@@ -14,6 +14,10 @@ class Comp extends React.PureComponent {
     circle: PropTypes.bool,
     // 尺寸
     size: PropTypes.number,
+    // 宽度
+    width: PropTypes.number,
+    // 高度
+    height: PropTypes.number,
     // img的src
     src: PropTypes.string.isRequired,
     // 当src为空串的时候，显示的元素

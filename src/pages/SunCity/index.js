@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { toJS } from 'mobx';
 import { observer, inject } from 'mobx-react';
-import { Title, Picture } from '../../components';
+import { Title, Picture, Loading } from '../../components';
 import { NoticeBar, Icon, ActivityIndicator } from 'antd-mobile';
 import { EQUIPMENT_DATA_TYPE } from '../../utils/variable';
 import {
@@ -460,16 +460,7 @@ class Comp extends React.Component {
       (equipmentListObj && Object.keys(equipmentListObj)) || [];
     return (
       <div className={'page-sunCity-info'}>
-        {this.state.loading ? (
-          <div className="loading-wrap">
-            <Picture
-              src={require('../../images/loading.gif')}
-              size={100}
-              showBorder={false}
-            />
-            <span>加载中……</span>
-          </div>
-        ) : null}
+        {this.state.loading ? <Loading size={100} /> : null}
         <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
           {lastNews ? `${lastNews.title}:${lastNews.content}` : ''}
         </NoticeBar>
