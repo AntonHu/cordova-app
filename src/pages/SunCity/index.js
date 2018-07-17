@@ -460,6 +460,16 @@ class Comp extends React.Component {
       (equipmentListObj && Object.keys(equipmentListObj)) || [];
     return (
       <div className={'page-sunCity-info'}>
+        {this.state.loading ? (
+          <div className="loading-wrap">
+            <Picture
+              src={require('../../images/loading.gif')}
+              size={100}
+              showBorder={false}
+            />
+            <span>加载中……</span>
+          </div>
+        ) : null}
         <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
           {lastNews ? `${lastNews.title}:${lastNews.content}` : ''}
         </NoticeBar>
@@ -574,7 +584,8 @@ class Comp extends React.Component {
                   >
                     <Picture
                       src={require('../../images/no_inverter.png')}
-                      size={200}
+                      height={218}
+                      width={264}
                     />
                     <span>还未添加逆变器，快去添加~</span>
                   </div>

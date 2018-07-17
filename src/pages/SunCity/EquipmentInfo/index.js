@@ -32,9 +32,9 @@ class Comp extends React.Component {
   curveChart = null;
   chartTitleObj = {
     day: '日功率走势图(w)',
-    month: '月发电量(w)',
-    year: '年发电量(w)',
-    all: '全部发电量(w)'
+    month: '月发电量(kwh)',
+    year: '年发电量(kwh)',
+    all: '全部发电量(kwh)'
   };
   async componentDidMount() {
     const deviceNo = this.props.match.params.id;
@@ -146,12 +146,12 @@ class Comp extends React.Component {
 
     const receiveData = toJS(this.props.sunCityStore.equipmentPower);
     const decryptData =
-      (receiveData && this.handleDecryptData(receiveData)) || [];
+      (receiveData && this.handleDecryptData(receiveData, dateType)) || [];
     return decryptData;
   }
 
   // 处理获取的解密数据
-  handleDecryptData = receiveData => {
+  handleDecryptData = (receiveData, dateType) => {
     const data = [];
     if (this.props.keyPair.hasKey) {
       Object.keys(receiveData).forEach(item => {
@@ -167,11 +167,13 @@ class Comp extends React.Component {
           console.log(err);
         }
         if (powerInfo) {
-          console.log(powerInfo);
           const value = +(powerInfo.maxEnergy - powerInfo.minEnergy).toFixed(2);
           data.push({
             time: item,
-            number: value,
+            number:
+              dateType === EQUIPMENT_DATA_TYPE.DAY
+                ? powerInfo.power || ''
+                : value,
             maxValue: powerInfo.maxEnergy && +powerInfo.maxEnergy,
             power: powerInfo.power || ''
           });
@@ -267,7 +269,7 @@ class Comp extends React.Component {
         range: [0, 1]
       },
       number: {
-        tickCount: 5,
+        tickCount: data.length === 1 ? 2 : 5,
         min: 0,
         alias: '功率'
       }
@@ -292,7 +294,7 @@ class Comp extends React.Component {
       onShow: function onShow(ev) {
         var items = ev.items;
         items[0].name = null;
-        items[0].value = `${items[0].value}w`;
+        items[0].value = items[0].value;
       }
     });
     this.curveChart
@@ -311,8 +313,11 @@ class Comp extends React.Component {
   };
 
   // 筛选条件更改
-  async screenChange(e) {
+  screenChange = e => {
     const type = e.target.dataset.class;
+    if (!type) {
+      return;
+    }
     const selected = Object.assign({}, this.state.selected);
     Object.keys(selected).forEach(item => {
       selected[item] = false;
@@ -345,7 +350,7 @@ class Comp extends React.Component {
       });
     this.curveChart && this.curveChart.clear();
     this.renderCurve(equipmentData);
-  }
+  };
   render() {
     return (
       <div className={'page-equipment-info'}>
@@ -369,7 +374,7 @@ class Comp extends React.Component {
             </div>
           </div>
           <div className="equipment-content">
-            <div className="screen" onClick={this.screenChange.bind(this)}>
+            <div className="screen" onClick={this.screenChange}>
               <div
                 data-class="day"
                 className={this.state.selected.day ? 'selected' : ''}

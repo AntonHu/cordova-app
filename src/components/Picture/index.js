@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {px} from '../../utils/getDevice';
-import {Icon} from 'antd-mobile';
-import './style.less'
+import { px } from '../../utils/getDevice';
+import { Icon } from 'antd-mobile';
+import './style.less';
 
 /**
  * 一个图片组件，主要用来做头像。
@@ -17,10 +17,7 @@ class Comp extends React.PureComponent {
     // img的src
     src: PropTypes.string.isRequired,
     // 当src为空串的时候，显示的元素
-    emptyElement: PropTypes.oneOfType([
-      PropTypes.element,
-      PropTypes.func
-    ]),
+    emptyElement: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     // 是否显示空元素
     showEmptyElement: PropTypes.bool,
     // img的alt
@@ -33,11 +30,13 @@ class Comp extends React.PureComponent {
     circle: true,
     size: 60,
     src: '',
-    emptyElement: (props) => (
+    emptyElement: props => (
       <img
         src={require('../../images/default_avatar.png')}
-        style={{...props.style, fontSize: px(props.size) + 'px'}}
-        className={`${props.className} ${props.showBorder ? 'show-border' : ''}`}
+        style={{ ...props.style, fontSize: px(props.size) + 'px' }}
+        className={`${props.className} ${
+          props.showBorder ? 'show-border' : ''
+        }`}
       />
     ),
     showEmptyElement: true,
@@ -49,39 +48,44 @@ class Comp extends React.PureComponent {
     super(props);
     this.state = {
       src: props.src
-    }
+    };
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.src !== this.props.src) {
       this.setState({
         src: nextProps.src
-      })
+      });
     }
   }
 
   calculateStyle = () => {
-    const {circle, size} = this.props;
+    const { circle, size, width, height } = this.props;
     const style = {};
     style.display = 'block';
-    style.width = px(size) + 'px';
-    style.height = px(size) + 'px';
+    style.width = px(width || size) + 'px';
+    style.height = px(height || size) + 'px';
     if (circle) {
-      style.borderRadius = px(size / 2) + 'px'
+      style.borderRadius = px(size / 2) + 'px';
     }
     return style;
   };
 
   renderEmptyElement = () => {
-    const {emptyElement, size, showBorder} = this.props;
+    const { emptyElement, size, showBorder } = this.props;
     const EmptyElement = emptyElement;
     const style = this.calculateStyle();
 
     return (
-      <EmptyElement style={style} className={'picture-empty-element'} size={size} showBorder={showBorder}>
+      <EmptyElement
+        style={style}
+        className={'picture-empty-element'}
+        size={size}
+        showBorder={showBorder}
+      >
         {this.props.children}
       </EmptyElement>
-    )
+    );
   };
 
   /**
@@ -90,11 +94,11 @@ class Comp extends React.PureComponent {
   onError = () => {
     this.setState({
       src: ''
-    })
+    });
   };
 
   renderImg = () => {
-    const {alt, showBorder} = this.props;
+    const { alt, showBorder } = this.props;
     const style = this.calculateStyle();
 
     return (
@@ -107,18 +111,17 @@ class Comp extends React.PureComponent {
       >
         {this.props.children}
       </img>
-    )
+    );
   };
 
   render() {
-    const {showEmptyElement} = this.props;
+    const { showEmptyElement } = this.props;
 
     if (this.state.src === '' && showEmptyElement) {
       return this.renderEmptyElement();
     }
     return this.renderImg();
   }
-
 }
 
 export default Comp;
