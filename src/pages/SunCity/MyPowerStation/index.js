@@ -37,7 +37,7 @@ class Comp extends React.Component {
   barChart = null;
   async componentDidMount() {
     // 获取天气信息
-    const city = getLocalStorage('city');
+    const city = getLocalStorage('city') || '北京';
     this.props.sunCityStore.fetchSCGetWeather({
       cityName: city
     });
@@ -224,6 +224,9 @@ class Comp extends React.Component {
   // 筛选条件更改
   screenChange = e => {
     const type = e.target.dataset.class;
+    if (!type) {
+      return;
+    }
     let barData = [];
     switch (POWER_TYPE[type]) {
       case 2:
@@ -269,9 +272,9 @@ class Comp extends React.Component {
     const weatherInfo = this.props.sunCityStore.weatherInfo;
     let weatherEle = <i className="iconfont">&#xe631;</i>;
     if (weatherInfo) {
-      if (weatherInfo.weather.indexOf('雨') > 0) {
+      if (weatherInfo.type.indexOf('雨') > 0) {
         weatherEle = <i className="iconfont">&#xe622;</i>;
-      } else if (weatherInfo.weather.indexOf('云') > 0) {
+      } else if (weatherInfo.type.indexOf('云') > 0) {
         weatherEle = <i className="iconfont">&#xe61a;</i>;
       }
     }
@@ -292,7 +295,7 @@ class Comp extends React.Component {
             <div className="title">
               <div className="weather">
                 {weatherEle}
-                {(weatherInfo && weatherInfo.weather) || '晴'}
+                {(weatherInfo && weatherInfo.type) || '晴'}
               </div>
               <div className="screen" onClick={this.screenChange}>
                 <div
@@ -332,7 +335,8 @@ class Comp extends React.Component {
               >
                 <Picture
                   src={require('../../../images/transparent_inverter.png')}
-                  size={200}
+                  height={218}
+                  width={264}
                 />
                 <span>还未添加逆变器，快去添加~</span>
               </div>
@@ -413,7 +417,8 @@ class Comp extends React.Component {
                   >
                     <Picture
                       src={require('../../../images/no_inverter.png')}
-                      size={200}
+                      height={218}
+                      width={264}
                     />
                     <span>还未添加逆变器，快去添加~</span>
                   </div>

@@ -94,7 +94,7 @@ class SunCityStore {
       result = await fetchEquipmentList(params);
       runInAction(() => {
         if (result.code === 200) {
-          this.equipmentList = result.data;
+          this.equipmentList = result.data || {};
         }
       });
     } catch (err) {
@@ -172,7 +172,7 @@ class SunCityStore {
       result = await fetchGetWeather(params);
       runInAction(() => {
         if (result.code === 200) {
-          this.weatherInfo = result.data && result.data.weatherinfo;
+          this.weatherInfo = result.data;
         }
       });
     } catch (err) {

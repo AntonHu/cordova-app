@@ -172,7 +172,8 @@ class Comp extends React.Component {
               >
                 <Picture
                   src={require('../../../images/no_inverter.png')}
-                  size={200}
+                  height={218}
+                  width={264}
                 />
                 <span>还未添加逆变器，快去添加~</span>
               </div>
