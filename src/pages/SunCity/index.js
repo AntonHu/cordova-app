@@ -461,7 +461,7 @@ class Comp extends React.Component {
       (equipmentListObj && Object.keys(equipmentListObj)) || [];
     return (
       <div className={'page-sunCity-info'}>
-        {this.state.loading ? <Loading size={100} /> : null}
+        {/* {this.state.loading ? <Loading size={100} /> : null} */}
         <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
           <span className="h4">{lastNews ? `${lastNews.title}:${lastNews.content}` : ''}</span>
         </NoticeBar>
