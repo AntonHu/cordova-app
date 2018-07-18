@@ -30,15 +30,15 @@ class Comp extends React.Component {
     if (!isScanning) {
       this.props.history.goBack();
     }
-    isScanning = false;
+    // alert(isScanning);
   };
   componentDidMount() {
-    // document.addEventListener('backbutton', this.evtbackButton, false);
+    document.addEventListener('backbutton', this.evtbackButton, false);
     // 请求所有逆变器类型
     this.props.sunCityStore.fetchSCInverters();
   }
   componentWillUnmount() {
-    // document.removeEventListener('backbutton', this.evtbackButton, false);
+    document.removeEventListener('backbutton', this.evtbackButton, false);
   }
   // 逆变器类型更改
   inverterTypeChange = value => {
@@ -57,18 +57,23 @@ class Comp extends React.Component {
   // 扫描条形码
   barcodeScanner = () => {
     if (window.cordova) {
+      isScanning = true;
       window.cordova.plugins.barcodeScanner.scan(
         result => {
-          isScanning = false;
-          if (result.cancelled) {
-            isScanning = true;
-          }
+          setTimeout(() => {
+            isScanning = false;
+          }, 200);
+          // if (result.cancelled) {
+          //   isScanning = true;
+          // }
           this.setState({
             barcodeValue: result.text
           });
         },
         error => {
-          isScanning = false;
+          setTimeout(() => {
+            isScanning = false;
+          }, 200);
           //扫码失败
           ToastNoMask(`扫码失败${error}`);
         },
