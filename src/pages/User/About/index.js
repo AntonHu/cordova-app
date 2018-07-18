@@ -1,11 +1,49 @@
 import React from 'react';
 import { BlueBox, PageWithHeader } from '../../../components';
-import { List, Modal } from 'antd-mobile';
+import { List, Modal, ActivityIndicator } from 'antd-mobile';
 import {Link} from 'react-router-dom'
 import './style.less';
 
 const Item = List.Item;
 const alert = Modal.alert;
+
+function syncCallback(syncStatus) {
+  console.log(syncStatus);
+  const SyncStatus = window.SyncStatus;
+  switch (syncStatus) {
+    case SyncStatus.UP_TO_DATE:
+      this.setState({checking: false});
+      alert('检查更新', '您的应用是最新的。', [{text: '好的'}]);
+      break;
+    case SyncStatus.UPDATE_INSTALLED:
+      this.setState({checking: false});
+      alert('检查更新', '已经更新完成，重启APP生效。', [{text: '好的'}]);
+      break;
+    case SyncStatus.UPDATE_IGNORED:
+      this.setState({checking: false});
+      alert('检查更新', '您取消了更新', [{text: '好的'}]);
+      break;
+    case SyncStatus.IN_PROGRESS:
+      this.setState({checkText: '正在更新，请稍候...'});
+      break;
+    case SyncStatus.ERROR:
+      this.setState({checking: false});
+      alert('检查更新', '发生错误', [{text: '好的'}]);
+      break;
+    case SyncStatus.CHECKING_FOR_UPDATE:
+      this.setState({checkText: '检查更新状态，请稍候...'});
+      break;
+    case SyncStatus.AWAITING_USER_ACTION:
+      this.setState({checkText: '等待用户操作'});
+      break;
+    case SyncStatus.DOWNLOADING_PACKAGE:
+      this.setState({checkText: '正在下载更新，请稍候...'});
+      break;
+    case SyncStatus.INSTALLING_UPDATE:
+      this.setState({checkText: '正在安装更新，请稍候...'});
+      break;
+  }
+}
 
 const ListData = [
   {
@@ -19,7 +57,32 @@ const ListData = [
     text: '检查更新',
     horizontal: true,
     onClick: function () {
-      alert('更新', '您目前使用的是最新版', [{text: '好的'}])
+      if (window.codePush) {
+        const _syncCallback = syncCallback.bind(this);
+        const InstallMode = window.InstallMode;
+
+        this.setState({
+          checking: true
+        });
+
+        window.codePush.sync(
+          _syncCallback,
+          {
+            updateDialog: {
+              appendReleaseDescription: true,
+              descriptionPrefix: '更新内容:',
+              optionalIgnoreButtonLabel: '取消',
+              optionalInstallButtonLabel: '立即更新',
+              title: '有更新的内容',
+              optionalUpdateMessage: ''
+            },
+            installMode: InstallMode.IMMEDIATE
+          }
+        )
+      } else {
+        alert('注意', '检查更新必须在app环境下。', [{text: '好的'}])
+      }
+
     }
   },
   {
@@ -32,6 +95,11 @@ const ListData = [
  * 关于
  */
 class Comp extends React.PureComponent {
+
+  state = {
+    checking: false,
+    checkText: '正在检查更新...'
+  };
 
   onClick = (v) => {
     if (v.onClick) {
@@ -60,6 +128,11 @@ class Comp extends React.PureComponent {
             ))}
           </List>
         </PageWithHeader>
+        <ActivityIndicator
+          toast
+          text={this.state.checkText}
+          animating={this.state.checking}
+        />
       </div>
     );
   }

@@ -84,7 +84,8 @@
     "android": "cordova run android",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js && cordova prepare",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "codePush": "node scripts/codePush/index.js"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -165,6 +166,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-react-native-stage-0": "^1.0.1",
     "babel-preset-stage-2": "^6.24.1",
+    "inquirer": "^6.0.0",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "react-app-rewired": "^1.5.2"

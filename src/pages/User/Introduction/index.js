@@ -7,12 +7,6 @@ import './style.less';
  */
 class Introduction extends React.PureComponent {
 
-  onClick = (v) => {
-    if (v.onClick) {
-      v.onClick.call(this)
-    }
-  };
-
   render() {
     return (
       <div className={'page-introduction'}>

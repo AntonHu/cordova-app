@@ -33,12 +33,12 @@ class Comp extends React.Component {
     isScanning = false;
   };
   componentDidMount() {
-    document.addEventListener('backbutton', this.evtbackButton, false);
+    // document.addEventListener('backbutton', this.evtbackButton, false);
     // 请求所有逆变器类型
     this.props.sunCityStore.fetchSCInverters();
   }
   componentWillUnmount() {
-    document.removeEventListener('backbutton', this.evtbackButton, false);
+    // document.removeEventListener('backbutton', this.evtbackButton, false);
   }
   // 逆变器类型更改
   inverterTypeChange = value => {

@@ -76,6 +76,7 @@ class Comp extends React.PureComponent {
             {/*</div>*/}
           </div>
           <div className="admission">
+            <Title title="入驻申请" />
             <img src={require('../../../images/banner_3.png')} width="100%" />
           </div>
         </PageWithHeader>

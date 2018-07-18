@@ -41,6 +41,17 @@ const TEST_PRIVATE_KEY =
 const TEST_PUBLIC_KEY =
   '0439ad8cd4dd8be0a809f7808c9d07fcf0f85a71c079ad9fd265e43f5d5ba114251941c2908b2f42ba393421368ed4da585837cd4a303ffc0ee09a5427a6df2605';
 
+const DEPLYMENT_KEY = {
+  ANDROID: {
+    Staging: 'Oz0UJ62d7mIu8W3IY-ZgqIa78TqV0622c1d1-d19c-494b-a7c7-f4e4d3bc9118',
+    Production: 'Sr9DnzzrkbNdLixAKXUoLOqMmgdx0622c1d1-d19c-494b-a7c7-f4e4d3bc9118'
+  },
+  IOS: {
+    Staging: 'nzYI83mZ03a1Ta1Qprtpupa-gYf50622c1d1-d19c-494b-a7c7-f4e4d3bc9118',
+    Production: 'EkPHRgDL5fQQk_lBCFIugJqAt6oA0622c1d1-d19c-494b-a7c7-f4e4d3bc9118'
+  }
+};
+
 export {
   backendServer,
   userServer,
@@ -50,5 +61,6 @@ export {
   TEST_PRIVATE_KEY,
   KEY_PAIR_LOCAL_STORAGE,
   CURVE,
-  EQUIPMENT_DATA_TYPE
+  EQUIPMENT_DATA_TYPE,
+  DEPLYMENT_KEY
 };

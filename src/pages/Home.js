@@ -11,14 +11,14 @@ const TabsData = [
     title: '太阳城',
     key: 'sunCity',
     unicode: '\ue604',
-    selectedUnicode: '\ue600',
+    selectedUnicode: '\ue60a',
     content: (props) => <SunCity {...props} />
   },
   {
     title: '挖宝',
     key: 'mining',
     unicode: '\ue605',
-    selectedUnicode: '\ue601',
+    selectedUnicode: '\ue60d',
     content: (props) => <Mining {...props} />
   },
   {
@@ -32,7 +32,7 @@ const TabsData = [
     title: '我的',
     key: 'user',
     unicode: '\ue607',
-    selectedUnicode: '\ue602',
+    selectedUnicode: '\ue608',
     content: (props) => <User {...props} />
   }
 ];

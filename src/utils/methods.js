@@ -86,10 +86,10 @@ export const formatPhoneWithSpace = phone => {
 export const sliceLongString = (str, lengthLimit = 5, fullAndHalf = true) => {
   let result = '';
   if (typeof str !== 'string') {
-    return '';
+    return result;
   }
   if (str === '') {
-    return '';
+    return result;
   }
   if (fullAndHalf) {
     let len = 0;

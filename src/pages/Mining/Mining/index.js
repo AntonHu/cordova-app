@@ -147,7 +147,7 @@ class Comp extends React.Component {
                           <Rank num={index + 1} />
                           {item.nickName}
                         </div>
-                        <span>{item.value}</span>
+                        <span>{(item.value || 0).toFixed(2)}</span>
                       </div>
                     );
                   })}
@@ -164,7 +164,7 @@ class Comp extends React.Component {
                           <Rank num={index + 1} />
                           {item.nickName}
                         </div>
-                        <span>{item.value}</span>
+                        <span>{(item.value || 0).toFixed(2)}</span>
                       </div>
                     );
                   })}
