@@ -10,7 +10,11 @@ import {
   getLocalStorage,
   deleteLocalStorage
 } from '../../utils/storage';
-import { decrypt, sliceLongString } from '../../utils/methods';
+import {
+  decrypt,
+  sliceLongString,
+  handleAbnormalData
+} from '../../utils/methods';
 import { getDeviceWidth } from '../../utils/getDevice';
 import './style.less';
 
@@ -352,12 +356,7 @@ class Comp extends React.Component {
             receiveData[item]
           );
           // 处理解密后的异常数据
-          if (decryptedItem.indexOf('#') > 0) {
-            decryptedItem = decryptedItem.replace('#', '"');
-          } else if (decryptedItem.indexOf('/') > 0) {
-            decryptedItem = decryptedItem.replace('/', '.');
-          }
-          powerInfo = decryptedItem && JSON.parse(decryptedItem);
+          powerInfo = decryptedItem && handleAbnormalData(decryptedItem);
         } catch (err) {
           console.log(err);
         }

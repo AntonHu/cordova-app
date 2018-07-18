@@ -4,7 +4,7 @@ import { PageWithHeader } from '../../../components';
 import F2 from '@antv/f2';
 import { px } from '../../../utils/getDevice';
 import { setLocalStorage, getLocalStorage } from '../../../utils/storage';
-import { decrypt } from '../../../utils/methods';
+import { decrypt, handleAbnormalData } from '../../../utils/methods';
 import { EQUIPMENT_DATA_TYPE } from '../../../utils/variable';
 import './style.less';
 
@@ -164,12 +164,7 @@ class Comp extends React.Component {
             receiveData[item]
           );
           // 处理解密后的异常数据
-          if (decryptedItem.indexOf('#') > 0) {
-            decryptedItem = decryptedItem.replace('#', '"');
-          } else if (decryptedItem.indexOf('/') > 0) {
-            decryptedItem = decryptedItem.replace('/', '.');
-          }
-          powerInfo = decryptedItem && JSON.parse(decryptedItem);
+          powerInfo = decryptedItem && handleAbnormalData(decryptedItem);
         } catch (err) {
           console.log(err);
         }
