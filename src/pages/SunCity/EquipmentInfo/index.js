@@ -68,7 +68,7 @@ class Comp extends React.Component {
     // 设备日电量
     let dayElectric = 0;
     dayEquipmentData.forEach(item => {
-      dayElectric += item.number;
+      dayElectric += item.electric;
     });
     // 当前电站发电量
     const maxValue =
@@ -172,10 +172,11 @@ class Comp extends React.Component {
             time: item,
             number:
               dateType === EQUIPMENT_DATA_TYPE.DAY
-                ? powerInfo.power || ''
+                ? powerInfo.power || 0
                 : value,
+            electric: value || 0,
             maxValue: powerInfo.maxEnergy && +powerInfo.maxEnergy,
-            power: powerInfo.power || ''
+            power: powerInfo.power || 0
           });
         }
       });
