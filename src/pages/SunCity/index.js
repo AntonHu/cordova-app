@@ -10,7 +10,11 @@ import {
   getLocalStorage,
   deleteLocalStorage
 } from '../../utils/storage';
-import { decrypt, sliceLongString } from '../../utils/methods';
+import {
+  decrypt,
+  sliceLongString,
+  handleAbnormalData
+} from '../../utils/methods';
 import { getDeviceWidth } from '../../utils/getDevice';
 import './style.less';
 
@@ -118,7 +122,10 @@ class Comp extends React.Component {
           equipmentListObj,
           EQUIPMENT_DATA_TYPE.DAY
         ));
-      setLocalStorage('equipmentListObj', JSON.stringify(equipmentListObj || {})); // 本地储存所有设备列表
+      setLocalStorage(
+        'equipmentListObj',
+        JSON.stringify(equipmentListObj || {})
+      ); // 本地储存所有设备列表
     } else {
       equipmentListObj = JSON.parse(getLocalStorage('equipmentListObj'));
     }
@@ -333,22 +340,23 @@ class Comp extends React.Component {
       });
     }
     const receiveData = toJS(this.props.sunCityStore.equipmentPower);
-    const decryptData = this.handleDecryptData(receiveData);
+    const decryptData = this.handleDecryptData(receiveData, dateType);
     return decryptData;
   }
 
   // 处理获取的解密数据
-  handleDecryptData = receiveData => {
+  handleDecryptData = (receiveData, dateType) => {
     const decryptData = [];
     if (this.props.keyPair.hasKey) {
       Object.keys(receiveData).forEach(item => {
         let powerInfo;
         try {
-          const decryptedItem = decrypt(
+          let decryptedItem = decrypt(
             this.props.keyPair.privateKey,
             receiveData[item]
           );
-          powerInfo = decryptedItem && JSON.parse(decryptedItem);
+          // 处理解密后的异常数据
+          powerInfo = decryptedItem && handleAbnormalData(decryptedItem);
         } catch (err) {
           console.log(err);
         }
@@ -446,9 +454,9 @@ class Comp extends React.Component {
   sliceLongName = name => {
     const shortName = sliceLongString(name);
     if (name === shortName) {
-      return shortName
+      return shortName;
     }
-    return shortName + '...'
+    return shortName + '...';
   };
 
   render() {
@@ -463,7 +471,9 @@ class Comp extends React.Component {
       <div className={'page-sunCity-info'}>
         {/* {this.state.loading ? <Loading size={100} /> : null} */}
         <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
-          <span className="h4">{lastNews ? `${lastNews.title}:${lastNews.content}` : ''}</span>
+          <span className="h4">
+            {lastNews ? `${lastNews.title}:${lastNews.content}` : ''}
+          </span>
         </NoticeBar>
         <div className="sun-content">
           <div className="info">

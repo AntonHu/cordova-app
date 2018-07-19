@@ -56,8 +56,14 @@ class Comp extends React.Component {
         // 各个设备添加功率和日电量,本地储存
         equipmentListObj =
           equipmentListObj &&
-          (await this.addEquipmentPower(equipmentListObj, EQUIPMENT_DATA_TYPE.DAY));
-        setLocalStorage('equipmentListObj', JSON.stringify(equipmentListObj || {})); // 本地储存所有设备状态
+          (await this.addEquipmentPower(
+            equipmentListObj,
+            EQUIPMENT_DATA_TYPE.DAY
+          ));
+        setLocalStorage(
+          'equipmentListObj',
+          JSON.stringify(equipmentListObj || {})
+        ); // 本地储存所有设备状态
       }
       this.setState({
         equipmentListObj
@@ -352,7 +358,7 @@ class Comp extends React.Component {
           </div>
           <div className="detail">
             <div className="detail-item">
-              <div className="number">{`${currentStationPower}kw`}</div>
+              <div className="number">{`${currentStationPower}w`}</div>
               <div className="detail-type">当前</div>
             </div>
             <div className="detail-item">

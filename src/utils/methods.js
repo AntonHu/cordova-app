@@ -9,7 +9,7 @@ const BigInteger = JSRsasign.BigInteger;
  */
 export const clearSpace = string => {
   if (typeof string === 'string') {
-    return string.replace(/\s+/g, '')
+    return string.replace(/\s+/g, '');
   }
   return string.toString();
 };
@@ -58,7 +58,7 @@ export const testContractorCode = code => {
  */
 export const maskIfPhone = string => {
   if (testPhoneNumber(string)) {
-    return string.slice(0, 3) + '****' + string.slice(7)
+    return string.slice(0, 3) + '****' + string.slice(7);
   }
   return string;
 };
@@ -71,9 +71,9 @@ export const maskIfPhone = string => {
 export const formatPhoneWithSpace = phone => {
   if (!phone || !phone.length) return '';
   if (phone.length !== 11) {
-    return phone
+    return phone;
   }
-  return phone.slice(0, 3) + ' ' + phone.slice(3, 7) + ' ' + phone.slice(7)
+  return phone.slice(0, 3) + ' ' + phone.slice(3, 7) + ' ' + phone.slice(7);
 };
 
 /**
@@ -123,11 +123,15 @@ export const sliceLongString = (str, lengthLimit = 5, fullAndHalf = true) => {
 export const getFileEntryFromURL = fileURL => {
   return new Promise((resolve, reject) => {
     if (window.resolveLocalFileSystemURL) {
-      window.resolveLocalFileSystemURL(fileURL, function (fileEntry) {
-        resolve(fileEntry);
-      }, function (err) {
-        reject(err)
-      })
+      window.resolveLocalFileSystemURL(
+        fileURL,
+        function(fileEntry) {
+          resolve(fileEntry);
+        },
+        function(err) {
+          reject(err);
+        }
+      );
     } else {
       reject('there is no window.resolveLocalFileSystemURL');
     }
@@ -140,14 +144,17 @@ export const getFileEntryFromURL = fileURL => {
  * @param fileEntry
  * @returns {Promise}
  */
-export const getFileFromFileEntry = (fileEntry) => {
+export const getFileFromFileEntry = fileEntry => {
   return new Promise((resolve, reject) => {
-    fileEntry.file(function (file) {
-      resolve(file)
-    }, function (err) {
-      reject(err)
-    })
-  })
+    fileEntry.file(
+      function(file) {
+        resolve(file);
+      },
+      function(err) {
+        reject(err);
+      }
+    );
+  });
 };
 
 /**
@@ -155,18 +162,18 @@ export const getFileFromFileEntry = (fileEntry) => {
  * @param file
  * @returns {Promise}
  */
-export const readFileAsBuffer = (file) => {
+export const readFileAsBuffer = file => {
   return new Promise((resolve, reject) => {
     try {
       const reader = new FileReader();
-      reader.onloadend = function (e) {
+      reader.onloadend = function(e) {
         resolve(e.target.result);
       };
-      reader.readAsArrayBuffer(file)
+      reader.readAsArrayBuffer(file);
     } catch (err) {
-      reject(err)
+      reject(err);
     }
-  })
+  });
 };
 
 /**
@@ -174,8 +181,8 @@ export const readFileAsBuffer = (file) => {
  * @param result
  * @returns {*}
  */
-export const turnJpegIntoBlob = (result) => {
-  return new Blob([result], {type: 'image/jpeg'});
+export const turnJpegIntoBlob = result => {
+  return new Blob([result], { type: 'image/jpeg' });
 };
 
 /**
@@ -188,8 +195,7 @@ export const FileMethods = {
   turnJpegIntoBlob
 };
 
-
-let cipherMode = '1';// C1C3C2
+let cipherMode = '1'; // C1C3C2
 const cipher = new SM2Cipher(cipherMode);
 
 /**
@@ -200,7 +206,7 @@ const cipher = new SM2Cipher(cipherMode);
  */
 export const decrypt = (privateKey, cipherMsg) => {
   if (privateKey === '') {
-    return ''
+    return '';
   }
   const privBI = new BigInteger(privateKey, 16);
 
@@ -208,4 +214,18 @@ export const decrypt = (privateKey, cipherMsg) => {
   return decryptedMsg;
 };
 
-
+/**
+ * 处理解密后的异常原始数据
+ * @param strData
+ * @returns {*}
+ */
+export const handleAbnormalData = strData => {
+  let handleStrData = strData;
+  if (strData.indexOf('#') > 0) {
+    handleStrData = strData.replace(/#/g, '"');
+  } else if (strData.indexOf('/') > 0) {
+    handleStrData = strData.replace(/\//g, '.');
+  }
+  handleStrData = JSON.parse(handleStrData);
+  return handleStrData;
+};
