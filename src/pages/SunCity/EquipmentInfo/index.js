@@ -4,7 +4,7 @@ import { PageWithHeader } from '../../../components';
 import F2 from '@antv/f2';
 import { px } from '../../../utils/getDevice';
 import { setLocalStorage, getLocalStorage } from '../../../utils/storage';
-import { decrypt } from '../../../utils/methods';
+import { decrypt, handleAbnormalData } from '../../../utils/methods';
 import { EQUIPMENT_DATA_TYPE } from '../../../utils/variable';
 import './style.less';
 
@@ -23,6 +23,7 @@ class Comp extends React.Component {
       year: false,
       all: false
     },
+    dayElectric: 0,
     chartTitle: '日功率走势图(w)',
     sourceData: '', // 数据来源
     deviceNo: '', //设备编码
@@ -158,11 +159,12 @@ class Comp extends React.Component {
         // 后端数据可能有问题，加一层处理
         let powerInfo;
         try {
-          const decryptedItem = decrypt(
+          let decryptedItem = decrypt(
             this.props.keyPair.privateKey,
             receiveData[item]
           );
-          powerInfo = decryptedItem && JSON.parse(decryptedItem);
+          // 处理解密后的异常数据
+          powerInfo = decryptedItem && handleAbnormalData(decryptedItem);
         } catch (err) {
           console.log(err);
         }
@@ -237,7 +239,7 @@ class Comp extends React.Component {
     });
     this.pieChart.guide().html({
       position: ['110%', '55%'],
-      html: `<div style="width: 250px;height: 40px;text-align: center;"><div style="font-size: 20px">${(currentPower &&
+      html: `<div style="width: 250px;height: 40px;text-align: center;"><div style="font-size: 20px;font-weight:bold">${(currentPower &&
         currentPower.toFixed(2)) ||
         0}w</div><div style="font-size: 14px;margin-top: 5px">当前功率</div></div>`
     });
@@ -365,7 +367,9 @@ class Comp extends React.Component {
         >
           <div className="survey">
             <div className="survey-item">
-              <div className="survey-item-number">{this.state.dayElectric}</div>
+              <div className="survey-item-number">
+                {this.state.dayElectric && this.state.dayElectric.toFixed(2)}
+              </div>
               <div className="survey-item-type">日电量</div>
             </div>
             <canvas id="pie-bar-chart" />
