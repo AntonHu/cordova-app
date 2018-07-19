@@ -23,7 +23,7 @@
         <icon density="xxhdpi" src="res/icon/android/mipmap-xxhdpi/ic_launcher.png" />
         <icon density="xxxhdpi" src="res/icon/android/mipmap-xxxhdpi/ic_launcher.png" />
         <allow-intent href="market:*" />
-        <preference name="CodePushDeploymentKey" value="Sr9DnzzrkbNdLixAKXUoLOqMmgdx0622c1d1-d19c-494b-a7c7-f4e4d3bc9118" />
+        <preference name="CodePushDeploymentKey" value="Oz0UJ62d7mIu8W3IY-ZgqIa78TqV0622c1d1-d19c-494b-a7c7-f4e4d3bc9118" />
     </platform>
     <platform name="ios">
         <icon height="180" src="res/icon/ios/Icon-App-60x60@3x.png" width="180" />
@@ -44,7 +44,7 @@
         <icon height="167" src="res/icon/ios/Icon-App-83.5x83.5@2x.png" width="167" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
-        <preference name="CodePushDeploymentKey" value="EkPHRgDL5fQQk_lBCFIugJqAt6oA0622c1d1-d19c-494b-a7c7-f4e4d3bc9118" />
+        <preference name="CodePushDeploymentKey" value="nzYI83mZ03a1Ta1Qprtpupa-gYf50622c1d1-d19c-494b-a7c7-f4e4d3bc9118" />
     </platform>
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     <preference name="iosPersistentFileLocation" value="Compatibility" />
