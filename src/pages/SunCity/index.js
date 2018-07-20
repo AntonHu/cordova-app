@@ -40,7 +40,7 @@ let pickNumber = 0;
 @observer
 class Comp extends React.Component {
   state = {
-    equipmentListObj: null,
+    equipmentListObj: JSON.parse(getLocalStorage('equipmentListObj')) || {},
     loading: true,
     sunCoordinateArr: null,
     power: 0, // 功率
@@ -85,11 +85,19 @@ class Comp extends React.Component {
           sunCoordinateArr: this.getSunCoordinateArr(this.sunIntegralArr[0])
         });
 
-      // 储存设备列表整理后的数据
-      const equipmentListObj = await this.getEquipmentList(keyPair);
-      this.setState({ equipmentListObj, loading: false });
-      // 获取设备，月，年，所有的数据，并缓存
-      this.cacheEquipmentData(equipmentListObj);
+      // 判断数据是否过期，储存设备列表整理后的数据
+      if (this.isExpire()) {
+        const equipmentListObj = await this.getEquipmentList(keyPair);
+        setLocalStorage(
+          'equipmentListObj',
+          JSON.stringify(equipmentListObj || {})
+        ); // 本地储存所有设备列表
+        this.setState({ equipmentListObj, loading: false });
+        // 获取设备，月，年，所有的数据，并缓存
+        this.cacheEquipmentData(equipmentListObj);
+      } else {
+        this.setState({ loading: false });
+      }
     } else {
       // 若是没有私钥，清空缓存
       deleteLocalStorage('stationExpireTime');
@@ -109,26 +117,15 @@ class Comp extends React.Component {
   // 获取设备列表并处理列表数据
   async getEquipmentList(keyPair) {
     let equipmentListObj = {};
-    if (this.isExpire() || !getLocalStorage('equipmentListObj')) {
-      // 获取设备列表
-      await this.props.sunCityStore.fetchSCEquipmentList({
-        userPubKey: keyPair.publicKey
-      });
-      equipmentListObj = toJS(this.props.sunCityStore.equipmentList);
-      // 添加各个设备的功率和日电量
-      equipmentListObj =
-        equipmentListObj &&
-        (await this.addEquipmentPower(
-          equipmentListObj,
-          EQUIPMENT_DATA_TYPE.DAY
-        ));
-      setLocalStorage(
-        'equipmentListObj',
-        JSON.stringify(equipmentListObj || {})
-      ); // 本地储存所有设备列表
-    } else {
-      equipmentListObj = JSON.parse(getLocalStorage('equipmentListObj'));
-    }
+    // 获取设备列表
+    await this.props.sunCityStore.fetchSCEquipmentList({
+      userPubKey: keyPair.publicKey
+    });
+    equipmentListObj = toJS(this.props.sunCityStore.equipmentList);
+    // 添加各个设备的功率和日电量
+    equipmentListObj =
+      equipmentListObj &&
+      (await this.addEquipmentPower(equipmentListObj, EQUIPMENT_DATA_TYPE.DAY));
     return equipmentListObj;
   }
 
@@ -467,8 +464,7 @@ class Comp extends React.Component {
     const { balance, balanceRanking } = this.props.miningStore;
     const { equipmentListObj } = this.state;
     const lastNews = toJS(this.props.sunCityStore.lastNews);
-    const equipmentNameList =
-      (equipmentListObj && Object.keys(equipmentListObj)) || [];
+    const equipmentNameList = Object.keys(equipmentListObj);
     return (
       <div className={'page-sunCity-info'}>
         {/* {this.state.loading ? <Loading size={100} /> : null} */}
@@ -531,7 +527,8 @@ class Comp extends React.Component {
               })}
           </div>
           <div className="news">
-            <span className="news-title">最新动态</span><span className="help-text">雷神刚刚挖宝10个太阳积分~</span>
+            <span className="news-title">最新动态</span>
+            <span className="help-text">雷神刚刚挖宝10个太阳积分~</span>
           </div>
           <div className="promote">
             <Link to="/user/introduction">
