@@ -27,7 +27,7 @@ class Comp extends React.Component {
       all: false
     },
     barcodeVisible: false,
-    equipmentListObj: {},
+    equipmentListObj: JSON.parse(getLocalStorage('equipmentListObj')),
     dayStationData: [],
     monthStationData: [],
     yearStationData: [],
@@ -46,9 +46,7 @@ class Comp extends React.Component {
     let equipmentListObj = {};
     if (keyPair.hasKey) {
       // 获取设备列表
-      if (getLocalStorage('equipmentListObj')) {
-        equipmentListObj = JSON.parse(getLocalStorage('equipmentListObj'));
-      } else {
+      if (!getLocalStorage('equipmentListObj')) {
         // 获取设备列表
         await this.props.sunCityStore.fetchSCEquipmentList({
           userPubKey: keyPair.publicKey
@@ -65,10 +63,10 @@ class Comp extends React.Component {
           'equipmentListObj',
           JSON.stringify(equipmentListObj || {})
         ); // 本地储存所有设备状态
+        this.setState({
+          equipmentListObj
+        });
       }
-      this.setState({
-        equipmentListObj
-      });
 
       // 获取本地储存的 （月，年，所有） 的数据
       const cacheEquipmentData = this.getCacheEquipmentData();
