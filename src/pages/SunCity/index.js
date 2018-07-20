@@ -338,7 +338,6 @@ class Comp extends React.Component {
     }
     const receiveData = toJS(this.props.sunCityStore.equipmentPower);
     const decryptData = this.handleDecryptData(receiveData, dateType);
-    console.log('decryptData-' + dateType + '===' + decryptData);
     return decryptData;
   }
 
