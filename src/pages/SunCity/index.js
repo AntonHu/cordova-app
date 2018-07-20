@@ -447,7 +447,7 @@ class Comp extends React.Component {
               }, 1000);
             }
           } else {
-            ToastNoMask(`收取失败${result.msg}`);
+            ToastNoMask(`收取失败。${result.msg || ''}`);
           }
         });
     }
