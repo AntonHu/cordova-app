@@ -54,7 +54,7 @@
   }
   .special-one {
     position: absolute;
-    top: 110px;
+    top: 125px;
     width: 50%;
     margin-left: 25%;
     span {
@@ -73,20 +73,20 @@
     align-items: center;
     justify-content: space-around;
     background: @white-text-color;
-    width: 90%;
-    height: 75px;
+    width: 680 * @px;
+    height: 147 * @px;
     margin: 0 auto;
     margin-top: -50px;
     border: 1px solid @grey-border-color;
     border-radius: @border-radius;
-    box-shadow: 0 5px 10px @grey-border-color;
+    box-shadow: 0 5px 20px @grey-border-color;
     position: relative;
     .type-item {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 30%;
-      padding: 0 5px 0 5px;
+      width: 295 * @px;
+      //padding: 0 5px 0 5px;
       border-radius: 5px;
       color: @white-text-color;
       .iconfont {
@@ -95,40 +95,47 @@
       }
     }
     .power {
-      height: 40px;
-      background: @sun-color;
+      height: 73 * @px;
+      background: linear-gradient(to bottom, #ffe31f, #fba316);
     }
     .elec {
-      height: 40px;
-      background: @blue-color-bg;
+      height: 73 * @px;
+      background: linear-gradient(to bottom, #16cbff, #1ca4fe);
     }
   }
   .detail {
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    width: 90%;
-    height: 135px;
+    flex-direction: column;
+    justify-content: center;
+    width: 680 * @px;
+    height: 275 * @px;
     margin: 0 auto;
     background: @white-text-color;
-    padding: 10px;
+    //padding: 10px;
     box-sizing: border-box;
     border-radius: @border-radius;
     border: 1px solid @grey-border-color;
-    box-shadow: 0 5px 10px @grey-border-color;
+    box-shadow: 0 5px 20px @grey-border-color;
+    .detail-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
     .detail-item {
-      width: 30%;
-      padding: 10px;
+      width: 295 * @px;
+      padding: 10px 0;
 
       .number {
-        font-size: 16px;
+        font-size: 40 * @px;
         color: @main-color;
         font-weight: bold;
+        text-align: left;
       }
       .detail-type {
         margin-top: 5px;
         color: @help-text-color;
-        font-size: 12px;
+        font-size: @h5;
+        text-align: left;
       }
     }
   }

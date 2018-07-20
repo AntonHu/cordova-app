@@ -169,6 +169,7 @@
     "inquirer": "^6.0.0",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
-    "react-app-rewired": "^1.5.2"
+    "react-app-rewired": "^1.5.2",
+    "shelljs": "^0.8.2"
   }
 }

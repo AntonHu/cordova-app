@@ -15,7 +15,7 @@ const TabsData = [
     content: (props) => <SunCity {...props} />
   },
   {
-    title: '挖宝',
+    title: '挖宝池',
     key: 'mining',
     unicode: '\ue605',
     selectedUnicode: '\ue60d',

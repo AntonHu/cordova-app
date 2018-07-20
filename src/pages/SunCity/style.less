@@ -65,7 +65,7 @@
         }
       }
       .powerStation {
-        width: 75px;
+        width: 80px;
         margin-top: 65px;
         height: 30px;
         //padding: 0 10px 0 0px;
@@ -79,10 +79,14 @@
         position: relative;
         .powerStation-pic {
           font-size: 40px;
-          margin-left: -6px;
-          //position: absolute;
-          //left: -8px;
-          //top: -8px;
+          margin-right: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 28px;
+          height: 28px;
+          border-radius: 14px;
+          background: @white-text-color;
           color: @pink-color;
         }
       }
@@ -153,10 +157,10 @@
       padding-left: 10px;
       border-radius: 5px;
       box-shadow: 0 5px 20px @shadow-color;
-      span {
+      .news-title {
         background: url('../../images/news.png');
         background-size: cover;
-        padding: 5px 20px;
+        padding: 5px 20px 5px 5px;
         color: @white-text-color;
         margin-right: 5px;
       }

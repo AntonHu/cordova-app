@@ -529,7 +529,7 @@ class Comp extends React.Component {
               })}
           </div>
           <div className="news">
-            <span>最新动态：</span>雷神刚刚挖宝10个太阳积分~
+            <span className="news-title">最新动态</span><span className="help-text">雷神刚刚挖宝10个太阳积分~</span>
           </div>
           <div className="promote">
             <Link to="/user/introduction">
