@@ -226,12 +226,10 @@ class Comp extends React.Component {
     })
       .then(res => {
         const data = res.data;
-        console.log('reqVerifyId success');
-        console.log(JSON.stringify(res));
+        this.setState({
+          showLoading: false
+        });
         if (data.code === 200) {
-          this.setState({
-            showLoading: false
-          });
           this.props.userStore.updateIsKycInChain(true);
           alert('成功', '您已成功验证', [{
             text: '确定', onPress: function () {
@@ -243,8 +241,6 @@ class Comp extends React.Component {
         }
       })
       .catch(err => {
-        console.log('reqVerifyId fali');
-        console.log(JSON.stringify(err));
         this.setState({
           showLoading: false
         });
