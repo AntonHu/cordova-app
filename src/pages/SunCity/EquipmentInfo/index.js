@@ -272,7 +272,7 @@ class Comp extends React.Component {
         range: [0, 1]
       },
       number: {
-        tickCount: data.length === 1 ? 2 : 5,
+        tickCount: data.every(item => item.number === 0) ? 2 : 5,
         min: 0,
         alias: '功率'
       }

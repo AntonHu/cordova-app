@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { toJS } from 'mobx';
 import { observer, inject } from 'mobx-react';
-import { Title, Picture, Loading } from '../../components';
+import { Title, Picture, Loading, ToastNoMask } from '../../components';
 import { NoticeBar, Icon, ActivityIndicator } from 'antd-mobile';
 import { EQUIPMENT_DATA_TYPE } from '../../utils/variable';
 import {
@@ -446,6 +446,8 @@ class Comp extends React.Component {
                 });
               }, 1000);
             }
+          } else {
+            ToastNoMask(`收取失败${result.msg}`);
           }
         });
     }
