@@ -1,17 +1,17 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
-import {toJS} from 'mobx';
-import {observer, inject} from 'mobx-react';
-import {BlueBox, Title, PageWithHeader, Picture} from '../../../components';
-import {Icon, ActivityIndicator} from 'antd-mobile';
-import {decrypt} from '../../../utils/methods';
-import {EQUIPMENT_DATA_TYPE} from '../../../utils/variable';
+import { withRouter } from 'react-router-dom';
+import { toJS } from 'mobx';
+import { observer, inject } from 'mobx-react';
+import { BlueBox, Title, PageWithHeader, Picture } from '../../../components';
+import { Icon, ActivityIndicator } from 'antd-mobile';
+import { decrypt } from '../../../utils/methods';
+import { EQUIPMENT_DATA_TYPE } from '../../../utils/variable';
 
 import F2 from '@antv/f2';
 import './style.less';
 
-import {setLocalStorage, getLocalStorage} from '../../../utils/storage';
-import {POWER_TYPE} from '../../../utils/variable';
+import { setLocalStorage, getLocalStorage } from '../../../utils/storage';
+import { POWER_TYPE } from '../../../utils/variable';
 
 /**
  * 我的电站信息
@@ -27,7 +27,7 @@ class Comp extends React.Component {
       all: false
     },
     barcodeVisible: false,
-    equipmentListObj: JSON.parse(getLocalStorage('equipmentListObj')),
+    equipmentListObj: JSON.parse(getLocalStorage('equipmentListObj')) || {},
     dayStationData: [],
     monthStationData: [],
     yearStationData: [],
@@ -42,7 +42,7 @@ class Comp extends React.Component {
     this.props.sunCityStore.fetchSCGetWeather({
       cityName: city
     });
-    const {keyPair} = this.props;
+    const { keyPair } = this.props;
     let equipmentListObj = {};
     if (keyPair.hasKey) {
       // 获取设备列表
@@ -248,10 +248,10 @@ class Comp extends React.Component {
     }
     // 显示默认数据
     barData.length < 1 &&
-    barData.push({
-      number: 0,
-      time: '00'
-    });
+      barData.push({
+        number: 0,
+        time: '00'
+      });
     this.barChart && this.barChart.clear();
     this.renderBarChart(barData);
 
@@ -260,7 +260,7 @@ class Comp extends React.Component {
       selected[item] = false;
     });
     selected[type] = true;
-    this.setState({selected});
+    this.setState({ selected });
   };
 
   render() {
@@ -271,9 +271,8 @@ class Comp extends React.Component {
       Number(getLocalStorage('monthTotalStationElectric')) ||
       Number(getLocalStorage('yearTotalStationElectric')) ||
       Number(getLocalStorage('allTotalStationElectric')); // 获取本地储存电站总发电量
-    const {equipmentListObj} = this.state;
-    const equipmentNameList =
-      (equipmentListObj && Object.keys(equipmentListObj)) || [];
+    const { equipmentListObj } = this.state;
+    const equipmentNameList = Object.keys(equipmentListObj) || [];
     const weatherInfo = this.props.sunCityStore.weatherInfo;
     let weatherEle = <i className="iconfont">&#xe631;</i>;
     if (weatherInfo) {
@@ -331,7 +330,7 @@ class Comp extends React.Component {
             </div>
             <canvas
               id="pie-bar-chart"
-              style={equipmentNameList.length < 1 ? {zIndex: -10} : null}
+              style={equipmentNameList.length < 1 ? { zIndex: -10 } : null}
             />
             {equipmentNameList.length < 1 ? (
               <div
@@ -358,27 +357,38 @@ class Comp extends React.Component {
           <div className="detail">
             <div className="detail-row">
               <div className="detail-item">
-                <div className="number">{`${currentStationPower}`}<span className="h5">w</span></div>
+                <div className="number">
+                  {`${currentStationPower}`}
+                  <span className="h5">w</span>
+                </div>
                 <div className="detail-type">当前</div>
               </div>
               <div className="detail-item">
-                <div className="number">{`${dayStationElectric}`}<span className="h5">kwh</span></div>
+                <div className="number">
+                  {`${dayStationElectric}`}
+                  <span className="h5">kwh</span>
+                </div>
                 <div className="detail-type">今日</div>
               </div>
             </div>
             <div className="detail-row">
               <div className="detail-item">
-                <div className="number">0<span className="h5">kw</span></div>
+                <div className="number">
+                  0<span className="h5">kw</span>
+                </div>
                 <div className="detail-type">逆变器容量</div>
               </div>
               <div className="detail-item">
-                <div className="number">{`${totalStationElectric}`}<span className="h5">kwh</span></div>
+                <div className="number">
+                  {`${totalStationElectric}`}
+                  <span className="h5">kwh</span>
+                </div>
                 <div className="detail-type">累计</div>
               </div>
             </div>
           </div>
           <div className="equipment">
-            <Title title="太阳城蓄力装备"/>
+            <Title title="太阳城蓄力装备" />
             {equipmentNameList.length > 0 ? (
               equipmentNameList.map((equipment, index) => {
                 return (
@@ -389,9 +399,9 @@ class Comp extends React.Component {
                       this.props.history.push(
                         `/sunCity/equipmentInfo/${
                           equipmentListObj[equipment].deviceNo
-                          }?source=${
+                        }?source=${
                           equipmentListObj[equipment].source
-                          }&name=${equipment}`
+                        }&name=${equipment}`
                       )
                     }
                   >
@@ -406,17 +416,17 @@ class Comp extends React.Component {
                         </span>
                         <span>{`日电量：${
                           equipmentListObj[equipment].dayElectric
-                          }kwh`}</span>
+                        }kwh`}</span>
                       </div>
                     </div>
-                    <Icon type="right"/>
+                    <Icon type="right" />
                   </div>
                 );
               })
             ) : (
               <div className="loading">
                 {this.state.loading ? (
-                  <ActivityIndicator text="加载中..."/>
+                  <ActivityIndicator text="加载中..." />
                 ) : (
                   <div
                     className="pic-wrap"

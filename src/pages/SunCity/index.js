@@ -40,7 +40,7 @@ let pickNumber = 0;
 @observer
 class Comp extends React.Component {
   state = {
-    equipmentListObj: JSON.parse(getLocalStorage('equipmentListObj')),
+    equipmentListObj: JSON.parse(getLocalStorage('equipmentListObj')) || {},
     loading: true,
     sunCoordinateArr: null,
     power: 0, // 功率
@@ -462,8 +462,7 @@ class Comp extends React.Component {
     const { balance, balanceRanking } = this.props.miningStore;
     const { equipmentListObj } = this.state;
     const lastNews = toJS(this.props.sunCityStore.lastNews);
-    const equipmentNameList =
-      (equipmentListObj && Object.keys(equipmentListObj)) || [];
+    const equipmentNameList = Object.keys(equipmentListObj) || [];
     return (
       <div className={'page-sunCity-info'}>
         {/* {this.state.loading ? <Loading size={100} /> : null} */}
@@ -526,7 +525,8 @@ class Comp extends React.Component {
               })}
           </div>
           <div className="news">
-            <span className="news-title">最新动态</span><span className="help-text">雷神刚刚挖宝10个太阳积分~</span>
+            <span className="news-title">最新动态</span>
+            <span className="help-text">雷神刚刚挖宝10个太阳积分~</span>
           </div>
           <div className="promote">
             <Link to="/user/introduction">
