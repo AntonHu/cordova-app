@@ -272,7 +272,7 @@ class Comp extends React.Component {
       Number(getLocalStorage('yearTotalStationElectric')) ||
       Number(getLocalStorage('allTotalStationElectric')); // 获取本地储存电站总发电量
     const { equipmentListObj } = this.state;
-    const equipmentNameList = Object.keys(equipmentListObj) || [];
+    const equipmentNameList = Object.keys(equipmentListObj);
     const weatherInfo = this.props.sunCityStore.weatherInfo;
     let weatherEle = <i className="iconfont">&#xe631;</i>;
     if (weatherInfo) {

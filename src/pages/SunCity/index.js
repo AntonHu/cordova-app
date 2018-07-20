@@ -95,6 +95,8 @@ class Comp extends React.Component {
         this.setState({ equipmentListObj, loading: false });
         // 获取设备，月，年，所有的数据，并缓存
         this.cacheEquipmentData(equipmentListObj);
+      } else {
+        this.setState({ loading: false });
       }
     } else {
       // 若是没有私钥，清空缓存
@@ -336,6 +338,7 @@ class Comp extends React.Component {
     }
     const receiveData = toJS(this.props.sunCityStore.equipmentPower);
     const decryptData = this.handleDecryptData(receiveData, dateType);
+    console.log('decryptData-' + dateType + '===' + decryptData);
     return decryptData;
   }
 
@@ -462,7 +465,7 @@ class Comp extends React.Component {
     const { balance, balanceRanking } = this.props.miningStore;
     const { equipmentListObj } = this.state;
     const lastNews = toJS(this.props.sunCityStore.lastNews);
-    const equipmentNameList = Object.keys(equipmentListObj) || [];
+    const equipmentNameList = Object.keys(equipmentListObj);
     return (
       <div className={'page-sunCity-info'}>
         {/* {this.state.loading ? <Loading size={100} /> : null} */}
