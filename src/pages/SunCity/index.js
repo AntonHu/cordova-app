@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { toJS } from 'mobx';
 import { observer, inject } from 'mobx-react';
-import { Title, Picture, Loading, ToastNoMask } from '../../components';
+import { Title, Picture, Loading, ToastNoMask, EquipmentItem } from '../../components';
 import { NoticeBar, Icon, ActivityIndicator } from 'antd-mobile';
 import { EQUIPMENT_DATA_TYPE } from '../../utils/variable';
 import {
@@ -543,35 +543,20 @@ class Comp extends React.Component {
             {equipmentNameList.length > 0 ? (
               equipmentNameList.map((equipment, index) => {
                 return (
-                  <div
+                  <EquipmentItem
                     key={index}
-                    className="item"
                     onClick={() =>
-                      this.props.history.push(
-                        `/sunCity/equipmentInfo/${
-                          equipmentListObj[equipment].deviceNo
+                    this.props.history.push(
+                      `/sunCity/equipmentInfo/${
+                        equipmentListObj[equipment].deviceNo
                         }?source=${
-                          equipmentListObj[equipment].source
+                        equipmentListObj[equipment].source
                         }&name=${equipment}`
-                      )
-                    }
-                  >
-                    <div className="item-pic">
-                      <i className="iconfont">&#xea35;</i>
-                    </div>
-                    <div className="item-detail">
-                      <div className="item-name">{equipment}</div>
-                      <div className="item-info">
-                        <span>
-                          {`功率：${equipmentListObj[equipment].currentPower}w`}{' '}
-                        </span>
-                        <span>{`日电量：${
-                          equipmentListObj[equipment].dayElectric
-                        }kwh`}</span>
-                      </div>
-                    </div>
-                    <Icon type="right" />
-                  </div>
+                    )}
+                    currentPower={equipmentListObj[equipment].currentPower}
+                    dayElectric={equipmentListObj[equipment].dayElectric}
+                    equipmentName={equipment}
+                  />
                 );
               })
             ) : (

@@ -2,7 +2,7 @@ import React from 'react';
 import {withRouter} from 'react-router-dom';
 import {toJS} from 'mobx';
 import {observer, inject} from 'mobx-react';
-import {BlueBox, Title, PageWithHeader, Picture} from '../../../components';
+import {BlueBox, Title, PageWithHeader, Picture, EquipmentItem} from '../../../components';
 import {Icon, ActivityIndicator} from 'antd-mobile';
 import {decrypt} from '../../../utils/methods';
 import {EQUIPMENT_DATA_TYPE} from '../../../utils/variable';
@@ -384,9 +384,8 @@ class Comp extends React.Component {
             {equipmentNameList.length > 0 ? (
               equipmentNameList.map((equipment, index) => {
                 return (
-                  <div
+                  <EquipmentItem
                     key={index}
-                    className="item"
                     onClick={() =>
                       this.props.history.push(
                         `/sunCity/equipmentInfo/${
@@ -396,23 +395,10 @@ class Comp extends React.Component {
                           }&name=${equipment}`
                       )
                     }
-                  >
-                    <div className="item-pic">
-                      <i className="iconfont">&#xea35;</i>
-                    </div>
-                    <div className="item-detail">
-                      <div className="item-name">{equipment}</div>
-                      <div className="item-info">
-                        <span>
-                          {`功率：${equipmentListObj[equipment].currentPower}w`}{' '}
-                        </span>
-                        <span>{`日电量：${
-                          equipmentListObj[equipment].dayElectric
-                          }kwh`}</span>
-                      </div>
-                    </div>
-                    <Icon type="right"/>
-                  </div>
+                    equipmentName={equipment}
+                    dayElectric={equipmentListObj[equipment].dayElectric}
+                    currentPower={equipmentListObj[equipment].currentPower}
+                  />
                 );
               })
             ) : (

@@ -198,9 +198,9 @@ class Comp extends React.Component {
     // 创建渐变对象
     const canvas = document.getElementById('pie-bar-chart');
     const ctx = canvas.getContext('2d');
-    const grd = ctx.createLinearGradient(0, 0, 140, 0);
-    grd.addColorStop(0, '#fa5a21');
-    grd.addColorStop(1, '#5bd121');
+    // const grd = ctx.createLinearGradient(0, 0, 140, 0);
+    // grd.addColorStop(0, '#fa5a21');
+    // grd.addColorStop(1, '#5bd121');
 
     this.pieChart = new F2.Chart({
       id: 'pie-bar-chart',
@@ -209,10 +209,11 @@ class Comp extends React.Component {
       padding: 0,
       pixelRatio: window.devicePixelRatio
     });
+    this.pieChart.animate(false);
     const data = [
       {
         x: '1',
-        y: 85
+        y: 100
       }
     ];
     this.pieChart.source(data, {
@@ -238,7 +239,7 @@ class Comp extends React.Component {
       }
     });
     this.pieChart.guide().html({
-      position: ['110%', '55%'],
+      position: ['110%', '57.5%'],
       html: `<div style="width: 250px;height: 40px;text-align: center;"><div style="font-size: 20px;font-weight:bold">${(currentPower &&
         currentPower.toFixed(2)) ||
         0}w</div><div style="font-size: 14px;margin-top: 5px">当前功率</div></div>`
@@ -246,14 +247,9 @@ class Comp extends React.Component {
     this.pieChart
       .interval()
       .position('x*y')
-      .color(grd)
+      .color('#8de837')
       .size(15)
-      .animate({
-        appear: {
-          duration: 1200,
-          easing: 'cubicIn'
-        }
-      });
+      .animate(false);
     this.pieChart.render();
 
     return this.pieChart;

@@ -12,6 +12,7 @@ import VerifyIdEmptyElement from './VerifyIdEmptyElement';
 import ToastNoMask from './Toast';
 import Rank from './Rank';
 import Loading from './Loading';
+import EquipmentItem from './EquipmentItem';
 
 export {
   BlueBox,
@@ -27,5 +28,6 @@ export {
   VerifyIdEmptyElement,
   ToastNoMask,
   Rank,
-  Loading
+  Loading,
+  EquipmentItem
 };

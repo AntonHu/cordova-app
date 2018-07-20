@@ -1,7 +1,7 @@
 import React from 'react';
 import { toJS } from 'mobx';
 import { observer, inject } from 'mobx-react';
-import { PageWithHeader, Picture } from '../../../components';
+import { PageWithHeader, Picture, EquipmentItem } from '../../../components';
 import { Icon } from 'antd-mobile';
 import { decrypt } from '../../../utils/methods';
 import './style.less';
@@ -132,37 +132,20 @@ class Comp extends React.Component {
             {equipmentNameList.length > 0 ? (
               equipmentNameList.map((equipment, index) => {
                 return (
-                  <div
-                    key={index}
-                    className="item"
+                  <EquipmentItem
                     onClick={() =>
                       this.props.history.push(
                         `/sunCity/equipmentInfo/${
                           equipmentListObj[equipment].deviceNo
-                        }?source=${
+                          }?source=${
                           equipmentListObj[equipment].source
-                        }&name=${equipment}`
-                      )
-                    }
-                  >
-                    <div className="item-pic">
-                      <i className="iconfont">&#xea35;</i>
-                    </div>
-                    <div className="item-detail">
-                      <div className="item-name">{equipment}</div>
-                      <div className="item-info">
-                        <span>
-                          {`功率：${equipmentListObj[equipment].currentPower}w`}{' '}
-                        </span>
-                        <span>
-                          {`日电量：${
-                            equipmentListObj[equipment].dayElectric
-                          }kwh`}
-                        </span>
-                      </div>
-                    </div>
-                    <Icon type="right" />
-                  </div>
+                          }&name=${equipment}`
+                      )}
+                    currentPower={equipmentListObj[equipment].currentPower}
+                    dayElectric={equipmentListObj[equipment].dayElectric}
+                    equipmentName={equipment}
+                    key={index}
+                  />
                 );
               })
             ) : (
