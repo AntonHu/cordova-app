@@ -98,11 +98,11 @@ class Comp extends React.Component {
     const deviceNo = this.state.barcodeValue;
     const sourceData = this.state.inverterType;
     if (this.props.keyPair.hasKey) {
-      if (!deviceNo) {
-        ToastNoMask.show('请输入逆变器条码');
+      if (!sourceData) {
+        ToastNoMask('请选择逆变器品牌');
         return;
-      } else if (!sourceData) {
-        ToastNoMask.show('请选择逆变器品牌');
+      } else if (!deviceNo) {
+        ToastNoMask('请输入逆变器条码');
         return;
       }
       this.setState({

@@ -8,9 +8,15 @@ class EquipmentItem extends React.PureComponent {
     // 点击事件
     onClick: PropTypes.func.isRequired,
     // 功率
-    currentPower: PropTypes.number,
+    currentPower: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
     // 日电量
-    dayElectric: PropTypes.number,
+    dayElectric: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
     // 设备名
     equipmentName: PropTypes.string
   };
