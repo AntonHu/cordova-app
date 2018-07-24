@@ -19,6 +19,9 @@
         <param name="ios-package" value="CDVGestureHandler" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="Camera">
+        <param name="ios-package" value="CDVCamera" />
+    </feature>
     <feature name="Notification">
         <param name="ios-package" value="CDVNotification" />
     </feature>
@@ -36,24 +39,21 @@
     <feature name="FileTransfer">
         <param name="ios-package" value="CDVFileTransfer" />
     </feature>
-    <feature name="JAnalyticsPlugin">
-        <param name="ios-package" value="JAnalyticsPlugin" />
-    </feature>
-    <feature name="Camera">
-        <param name="ios-package" value="CDVCamera" />
-    </feature>
     <feature name="Geolocation">
         <param name="ios-package" value="CDVLocation" />
     </feature>
-    <feature name="BarcodeScanner">
-        <param name="ios-package" value="CDVBarcodeScanner" />
-    </feature>
-    <feature name="JPushPlugin">
-        <param name="ios-package" value="JPushPlugin" />
+    <feature name="JAnalyticsPlugin">
+        <param name="ios-package" value="JAnalyticsPlugin" />
     </feature>
     <feature name="StatusBar">
         <param name="ios-package" value="CDVStatusBar" />
         <param name="onload" value="true" />
+    </feature>
+    <feature name="JPushPlugin">
+        <param name="ios-package" value="JPushPlugin" />
+    </feature>
+    <feature name="BarcodeScanner">
+        <param name="ios-package" value="CDVBarcodeScanner" />
     </feature>
     <feature name="Zip">
         <param name="ios-package" value="ZipPlugin" />
@@ -91,6 +91,9 @@
     <icon height="167" src="res/icon/ios/Icon-App-83.5x83.5@2x.png" width="167" />
     <allow-intent href="itms:*" />
     <allow-intent href="itms-apps:*" />
+    <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
+        <string>扫码添加设备需要开启相机</string>
+    </edit-config>
     <preference name="AllowInlineMediaPlayback" value="false" />
     <preference name="BackupWebStorage" value="cloud" />
     <preference name="DisallowOverscroll" value="true" />

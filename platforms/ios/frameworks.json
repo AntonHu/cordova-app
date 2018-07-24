@@ -1,18 +1,18 @@
 {
+    "ImageIO.framework": 1,
+    "CoreLocation.framework": 3,
+    "AVFoundation.framework": 1,
     "AudioToolbox.framework": 1,
-    "libz.dylib": 1,
     "UIKit.framework": 2,
     "SystemConfiguration.framework": 2,
     "CoreTelephony.framework": 2,
     "Security.framework": 2,
     "Foundation.framework": 2,
-    "CoreLocation.framework": 3,
     "CoreFoundation.framework": 2,
     "CFNetwork.framework": 2,
     "libz.tbd": 2,
     "libresolv.tbd": 2,
-    "ImageIO.framework": 1,
-    "AVFoundation.framework": 1,
+    "libz.dylib": 1,
     "AdSupport.framework": 1,
     "UserNotifications.framework": 1
 }

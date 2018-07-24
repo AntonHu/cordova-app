@@ -5,9 +5,35 @@
   },
   "config_munge": {
     "files": {
+      "*-Info.plist": {
+        "parents": {
+          "NSCameraUsageDescription": [
+            {
+              "xml": "<string>扫码添加设备需要开启相机</string>",
+              "count": 1,
+              "mode": "merge",
+              "id": "config.xml"
+            }
+          ],
+          "JAnalytics": [
+            {
+              "xml": "<dict><key>APP_KEY</key><string>fd96956cb315ba658d256156</string></dict>",
+              "count": 1
+            }
+          ]
+        }
+      },
       "config.xml": {
         "parents": {
           "/*": [
+            {
+              "xml": "<feature name=\"Camera\"><param name=\"ios-package\" value=\"CDVCamera\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<preference name=\"CameraUsesGeolocation\" value=\"false\" />",
+              "count": 1
+            },
             {
               "xml": "<feature name=\"Notification\"><param name=\"ios-package\" value=\"CDVNotification\" /></feature>",
               "count": 1
@@ -29,27 +55,11 @@
               "count": 1
             },
             {
-              "xml": "<feature name=\"JAnalyticsPlugin\"><param name=\"ios-package\" value=\"JAnalyticsPlugin\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"Camera\"><param name=\"ios-package\" value=\"CDVCamera\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<preference name=\"CameraUsesGeolocation\" value=\"false\" />",
-              "count": 1
-            },
-            {
               "xml": "<feature name=\"Geolocation\"><param name=\"ios-package\" value=\"CDVLocation\" /></feature>",
               "count": 1
             },
             {
-              "xml": "<feature name=\"BarcodeScanner\"><param name=\"ios-package\" value=\"CDVBarcodeScanner\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"JPushPlugin\"><param name=\"ios-package\" value=\"JPushPlugin\" /></feature>",
+              "xml": "<feature name=\"JAnalyticsPlugin\"><param name=\"ios-package\" value=\"JAnalyticsPlugin\" /></feature>",
               "count": 1
             },
             {
@@ -63,21 +73,19 @@
             {
               "xml": "<preference name=\"StatusBarStyle\" value=\"lightcontent\" />",
               "count": 1
+            },
+            {
+              "xml": "<feature name=\"JPushPlugin\"><param name=\"ios-package\" value=\"JPushPlugin\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"BarcodeScanner\"><param name=\"ios-package\" value=\"CDVBarcodeScanner\" /></feature>",
+              "count": 1
             }
           ],
           "/widget": [
             {
               "xml": "<feature name=\"Zip\"><param name=\"ios-package\" value=\"ZipPlugin\" /></feature>",
-              "count": 1
-            }
-          ]
-        }
-      },
-      "*-Info.plist": {
-        "parents": {
-          "JAnalytics": [
-            {
-              "xml": "<dict><key>APP_KEY</key><string>fd96956cb315ba658d256156</string></dict>",
               "count": 1
             }
           ]
@@ -92,26 +100,14 @@
             }
           ]
         }
-      },
-      "AndroidManifest.xml": {
-        "parents": {
-          "/manifest/application/activity[@android:name='MainActivity']": [
-            {
-              "xml": "<activity android:windowSoftInputMode=\"adjustResize\" />",
-              "count": 1,
-              "mode": "merge",
-              "id": "config.xml"
-            }
-          ]
-        }
       }
     }
   },
   "installed_plugins": {
-    "cordova-plugin-whitelist": {
+    "code-push": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
-    "code-push": {
+    "cordova-plugin-camera": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
     "cordova-plugin-dialogs": {
@@ -132,7 +128,7 @@
     "cordova-plugin-file-transfer": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
-    "cordova-plugin-zip": {
+    "cordova-plugin-geolocation": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
     "cordova-plugin-jcore": {
@@ -142,20 +138,20 @@
       "APP_KEY": "fd96956cb315ba658d256156",
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
-    "cordova-plugin-camera": {
+    "cordova-plugin-statusbar": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
-    "cordova-plugin-geolocation": {
+    "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
-    "phonegap-plugin-barcodescanner": {
+    "cordova-plugin-zip": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
     "jpush-phonegap-plugin": {
       "APP_KEY": "fd96956cb315ba658d256156",
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
-    "cordova-plugin-statusbar": {
+    "phonegap-plugin-barcodescanner": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     }
   },
@@ -167,6 +163,38 @@
       "pluginId": "code-push",
       "merges": [
         "window"
+      ]
+    },
+    {
+      "id": "cordova-plugin-camera.Camera",
+      "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
+      "pluginId": "cordova-plugin-camera",
+      "clobbers": [
+        "Camera"
+      ]
+    },
+    {
+      "id": "cordova-plugin-camera.CameraPopoverOptions",
+      "file": "plugins/cordova-plugin-camera/www/CameraPopoverOptions.js",
+      "pluginId": "cordova-plugin-camera",
+      "clobbers": [
+        "CameraPopoverOptions"
+      ]
+    },
+    {
+      "id": "cordova-plugin-camera.camera",
+      "file": "plugins/cordova-plugin-camera/www/Camera.js",
+      "pluginId": "cordova-plugin-camera",
+      "clobbers": [
+        "navigator.camera"
+      ]
+    },
+    {
+      "id": "cordova-plugin-camera.CameraPopoverHandle",
+      "file": "plugins/cordova-plugin-camera/www/ios/CameraPopoverHandle.js",
+      "pluginId": "cordova-plugin-camera",
+      "clobbers": [
+        "CameraPopoverHandle"
       ]
     },
     {
@@ -451,54 +479,6 @@
       ]
     },
     {
-      "id": "cordova-plugin-zip.Zip",
-      "file": "plugins/cordova-plugin-zip/zip.js",
-      "pluginId": "cordova-plugin-zip",
-      "clobbers": [
-        "zip"
-      ]
-    },
-    {
-      "id": "cordova-plugin-janalytics.JAnalytics",
-      "file": "plugins/cordova-plugin-janalytics/www/JAnalytics.js",
-      "pluginId": "cordova-plugin-janalytics",
-      "clobbers": [
-        "JAnalytics"
-      ]
-    },
-    {
-      "id": "cordova-plugin-camera.Camera",
-      "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
-      "pluginId": "cordova-plugin-camera",
-      "clobbers": [
-        "Camera"
-      ]
-    },
-    {
-      "id": "cordova-plugin-camera.CameraPopoverOptions",
-      "file": "plugins/cordova-plugin-camera/www/CameraPopoverOptions.js",
-      "pluginId": "cordova-plugin-camera",
-      "clobbers": [
-        "CameraPopoverOptions"
-      ]
-    },
-    {
-      "id": "cordova-plugin-camera.camera",
-      "file": "plugins/cordova-plugin-camera/www/Camera.js",
-      "pluginId": "cordova-plugin-camera",
-      "clobbers": [
-        "navigator.camera"
-      ]
-    },
-    {
-      "id": "cordova-plugin-camera.CameraPopoverHandle",
-      "file": "plugins/cordova-plugin-camera/www/ios/CameraPopoverHandle.js",
-      "pluginId": "cordova-plugin-camera",
-      "clobbers": [
-        "CameraPopoverHandle"
-      ]
-    },
-    {
       "id": "cordova-plugin-geolocation.Coordinates",
       "file": "plugins/cordova-plugin-geolocation/www/Coordinates.js",
       "pluginId": "cordova-plugin-geolocation",
@@ -531,11 +511,27 @@
       ]
     },
     {
-      "id": "phonegap-plugin-barcodescanner.BarcodeScanner",
-      "file": "plugins/phonegap-plugin-barcodescanner/www/barcodescanner.js",
-      "pluginId": "phonegap-plugin-barcodescanner",
+      "id": "cordova-plugin-janalytics.JAnalytics",
+      "file": "plugins/cordova-plugin-janalytics/www/JAnalytics.js",
+      "pluginId": "cordova-plugin-janalytics",
       "clobbers": [
-        "cordova.plugins.barcodeScanner"
+        "JAnalytics"
+      ]
+    },
+    {
+      "id": "cordova-plugin-statusbar.statusbar",
+      "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+      "pluginId": "cordova-plugin-statusbar",
+      "clobbers": [
+        "window.StatusBar"
+      ]
+    },
+    {
+      "id": "cordova-plugin-zip.Zip",
+      "file": "plugins/cordova-plugin-zip/zip.js",
+      "pluginId": "cordova-plugin-zip",
+      "clobbers": [
+        "zip"
       ]
     },
     {
@@ -547,30 +543,30 @@
       ]
     },
     {
-      "id": "cordova-plugin-statusbar.statusbar",
-      "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
-      "pluginId": "cordova-plugin-statusbar",
+      "id": "phonegap-plugin-barcodescanner.BarcodeScanner",
+      "file": "plugins/phonegap-plugin-barcodescanner/www/barcodescanner.js",
+      "pluginId": "phonegap-plugin-barcodescanner",
       "clobbers": [
-        "window.StatusBar"
+        "cordova.plugins.barcodeScanner"
       ]
     }
   ],
   "plugin_metadata": {
-    "cordova-plugin-whitelist": "1.3.3",
     "code-push": "2.0.4",
+    "cordova-plugin-camera": "4.0.3",
     "cordova-plugin-dialogs": "2.0.1",
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-code-push": "1.11.11",
     "cordova-plugin-compat": "1.2.0",
     "cordova-plugin-file": "4.3.3",
     "cordova-plugin-file-transfer": "1.6.3",
-    "cordova-plugin-zip": "3.1.0",
+    "cordova-plugin-geolocation": "4.0.1",
     "cordova-plugin-jcore": "1.1.12",
     "cordova-plugin-janalytics": "1.1.3",
-    "cordova-plugin-camera": "4.0.3",
-    "cordova-plugin-geolocation": "4.0.1",
-    "phonegap-plugin-barcodescanner": "8.0.0",
+    "cordova-plugin-statusbar": "2.4.2",
+    "cordova-plugin-whitelist": "1.3.3",
+    "cordova-plugin-zip": "3.1.0",
     "jpush-phonegap-plugin": "3.3.2",
-    "cordova-plugin-statusbar": "2.4.2"
+    "phonegap-plugin-barcodescanner": "8.0.0"
   }
 }
