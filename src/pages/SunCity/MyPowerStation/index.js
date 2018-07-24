@@ -368,46 +368,47 @@ class Comp extends React.Component {
               <div className="detail-item">
                 <div className="number">
                   {`${currentStationPower}`}
-                  <span className="h5">w</span>
+                  <span className="h5" />
                 </div>
-                <div className="detail-type">当前</div>
+                <div className="detail-type">当前(w)</div>
               </div>
               <div className="detail-item">
                 <div className="number">
                   {`${dayStationElectric}`}
-                  <span className="h5">kwh</span>
+                  <span className="h5" />
                 </div>
-                <div className="detail-type">今日</div>
+                <div className="detail-type">今日(kwh)</div>
               </div>
               <div className="detail-item">
                 <div className="number">
-                  {`${dayStationElectric * 0.8149}`}
-                  <span className="h5">￥</span>
+                  {`${dayStationElectric &&
+                    (dayStationElectric * 0.8149).toFixed(2)}`}
+                  <span className="h5" />
                 </div>
-                <div className="detail-type">今日</div>
+                <div className="detail-type">今日(￥)</div>
               </div>
             </div>
             <div className="detail-row">
               <div className="detail-item">
                 <div className="number">
-                  0<span className="h5">kw</span>
+                  0<span className="h5" />
                 </div>
-                <div className="detail-type">逆变器容量</div>
+                <div className="detail-type">逆变器容量(kw)</div>
               </div>
               <div className="detail-item">
                 <div className="number">
                   {`${totalStationElectric}`}
-                  <span className="h5">kwh</span>
+                  <span className="h5" />
                 </div>
-                <div className="detail-type">累计</div>
+                <div className="detail-type">累计(kwh)</div>
               </div>
               <div className="detail-item">
                 <div className="number">
                   {`${totalStationElectric &&
                     (totalStationElectric * 0.8149).toFixed(2)}`}
-                  <span className="h5">￥</span>
+                  <span className="h5" />
                 </div>
-                <div className="detail-type">累计</div>
+                <div className="detail-type">累计(￥)</div>
               </div>
             </div>
           </div>

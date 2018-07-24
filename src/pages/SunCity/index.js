@@ -224,7 +224,7 @@ class Comp extends React.Component {
     await this.props.sunCityStore.fetchSCEquipmentList({
       userPubKey: keyPair.publicKey
     });
-    equipmentListObj = toJS(this.props.sunCityStore.equipmentList);
+    equipmentListObj = toJS(this.props.sunCityStore.equipmentListObj);
     // 添加各个设备的功率和日电量
     equipmentListObj =
       equipmentListObj &&
@@ -567,7 +567,7 @@ class Comp extends React.Component {
     const { balance, balanceRanking } = this.props.miningStore;
     const { equipmentListObj } = this.state;
     const { lastNews, lastTrend } = this.props.sunCityStore;
-    const equipmentNameList = Object.keys(equipmentListObj);
+    const equipmentNameList = equipmentListObj && Object.keys(equipmentListObj);
     return (
       <div className={'page-sunCity-info'} id="page-sunCity-info">
         {/* {this.state.loading ? <Loading size={100} /> : null} */}
@@ -649,7 +649,7 @@ class Comp extends React.Component {
         </div>
         <div className="equipment">
           <Title title="太阳城蓄力装备" />
-          {equipmentNameList.length > 0 ? (
+          {equipmentNameList && equipmentNameList.length > 0 ? (
             equipmentNameList.map((equipment, index) => {
               return (
                 <EquipmentItem
