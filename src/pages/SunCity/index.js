@@ -281,25 +281,20 @@ class Comp extends React.Component {
       );
       // 合并每天的设备数据为电站每天数据
       equipmentDataArr = equipmentDataArr.concat(decryptData);
-      // 设备功率
-      const currentPower =
-        (decryptData.length > 0 &&
-          decryptData[decryptData.length - 1].power &&
-          decryptData[decryptData.length - 1].power.toFixed(2)) ||
-        0;
+      // 设备当前功率
+      let currentPower = 0;
       // 设备日电量
       let dayElectric = 0;
-      decryptData.forEach(item => {
-        dayElectric += item.number;
-      });
+      // 当前电站发电量
+      let maxValue = 0;
+      if (decryptData.length > 0 && decryptData[decryptData.length - 1]) {
+        const equipmentData = decryptData[decryptData.length - 1];
+        currentPower = equipmentData.totalPower;
+        dayElectric = equipmentData.todayEnergy;
+        maxValue = equipmentData.totalEnergy;
+      }
       // 电站日电量
       dayStationElectric += dayElectric;
-      // 当前电站发电量
-      const maxValue =
-        (decryptData.length > 0 &&
-          decryptData[decryptData.length - 1] &&
-          decryptData[decryptData.length - 1].maxValue) ||
-        0;
       equipmentListObj[name].currentPower = currentPower || 0; // 设备功率
       equipmentListObj[name].dayElectric = dayElectric.toFixed(2) || 0; // 设备日电量
       currentStationPower += Number(currentPower); // 当前电站功率
@@ -432,17 +427,15 @@ class Comp extends React.Component {
       });
     }
     const receiveData = toJS(this.props.sunCityStore.equipmentPower);
-    // 日数据不用解密
     if (dateType === EQUIPMENT_DATA_TYPE.DAY) {
       return receiveData || [];
     }
-    const decryptData = await this.handleDecryptData(receiveData, dateType);
+    const decryptData = await this.handleDecryptData(receiveData);
     return decryptData;
   }
 
   // 处理获取的解密数据,并排序
-  handleDecryptData =
-    async (receiveData, dateType) => {
+  handleDecryptData = async (receiveData, dateType) => {
     const decryptData = [];
     if (this.props.keyPair.hasKey) {
       Object.keys(receiveData).forEach(async item => {

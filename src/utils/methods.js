@@ -263,3 +263,25 @@ export const isExpire = (hours, type) => {
   }
   return new Date().getTime() - getLocalStorage(type) > hours * 60 * 60 * 1000;
 };
+
+/**
+ * 获取小时和分钟
+ * @param millisecond 毫秒
+ * @returns clock
+ */
+export const getHour_Minute = millisecond => {
+  if (isNaN(Number(millisecond))) {
+    return '00: 00';
+  }
+  const time = new Date(millisecond);
+  const hh = time.getHours(); //时
+  const mm = time.getMinutes(); //分
+  let clock = '';
+  if (hh < 10) {
+    clock += '0';
+  }
+  clock += hh + ':';
+  if (mm < 10) clock += '0';
+  clock += mm;
+  return clock;
+};
