@@ -64,19 +64,16 @@ class Comp extends React.Component {
       this.renderCurve([{ time: '00', number: 0 }]);
     }
 
-    // 设备功率
+    // 设备当前功率
     const currentPower =
-      (dayEquipmentData.length > 0 &&
-        dayEquipmentData[dayEquipmentData.length - 1].totalPower &&
-        dayEquipmentData[dayEquipmentData.length - 1].totalPower.toFixed(2)) ||
-      0;
-
+      dayEquipmentData.length > 0 &&
+      dayEquipmentData[dayEquipmentData.length - 1] &&
+      dayEquipmentData[dayEquipmentData.length - 1].power;
     // 设备日电量
-    const dayElectric =
-      (dayEquipmentData.length > 0 &&
-        dayEquipmentData[dayEquipmentData.length - 1].todayEnergy &&
-        dayEquipmentData[dayEquipmentData.length - 1].todayEnergy.toFixed(2)) ||
-      0;
+    let dayElectric = 0;
+    dayEquipmentData.forEach(item => {
+      dayElectric += item.electric;
+    });
     // 当前电站发电量
     const maxValue =
       (dayEquipmentData.length > 0 &&

@@ -222,16 +222,14 @@ class Comp extends React.Component {
       // 设备功率
       const currentPower =
         (receiveData.length > 0 &&
-          receiveData[receiveData.length - 1].totalPower &&
-          receiveData[receiveData.length - 1].totalPower.toFixed(2)) ||
+          receiveData[receiveData.length - 1].power &&
+          receiveData[receiveData.length - 1].power.toFixed(2)) ||
         0;
-
       // 设备日电量
-      const dayElectric =
-        (receiveData.length > 0 &&
-          receiveData[receiveData.length - 1].todayEnergy &&
-          receiveData[receiveData.length - 1].todayEnergy.toFixed(2)) ||
-        0;
+      let dayElectric = 0;
+      receiveData.forEach(item => {
+        dayElectric += item.number;
+      });
       let equipmentListObj = getLocalStorage('equipmentListObj');
       if (equipmentListObj !== null) {
         equipmentListObj = JSON.parse(equipmentListObj);
@@ -244,7 +242,7 @@ class Comp extends React.Component {
       equipmentListObj[name].source = sourceData;
       equipmentListObj[name].deviceNo = deviceNo;
       equipmentListObj[name].currentPower = currentPower || 0;
-      equipmentListObj[name].dayElectric = dayElectric || 0;
+      equipmentListObj[name].dayElectric = dayElectric.toFixed(2) || 0;
       setLocalStorage('equipmentListObj', JSON.stringify(equipmentListObj));
     }
   };
