@@ -133,7 +133,6 @@ class Comp extends React.Component {
    */
   doIfHasNoKey = () => {
     const self = this;
-    this.props.keyPair.generageNewKeyPair();
     alert('您没有密钥', '设置密钥前，请先设置您的交易密码', [
       {text: '再等等'},
       {text: '去设置', onPress: () => {
