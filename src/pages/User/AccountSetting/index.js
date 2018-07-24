@@ -48,6 +48,7 @@ class Comp extends React.Component {
     this.props.userStore.deleteIsKycInChain();
     this.props.miningStore.resetStore();
     this.props.sunCityStore.resetStore();
+    this.props.sunCityStore.deleteAllCache();
     this.props.history.replace('/');
   };
 

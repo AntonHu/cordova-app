@@ -101,7 +101,7 @@ class Comp extends React.Component {
         this.setState({ loading: false });
       }
     } else {
-      this.deleteAllCache();
+      this.props.sunCityStore.deleteAllCache();
       this.setState({
         loading: false
       });
@@ -131,21 +131,10 @@ class Comp extends React.Component {
     return res;
   };
 
-  deleteAllCache = () => {
-    // 若是没有私钥，清空缓存
-    deleteLocalStorage('stationExpireTime');
-    deleteLocalStorage('equipmentListObj');
-    deleteLocalStorage('currentStationPower');
-    deleteLocalStorage('dayStationElectric');
-    deleteLocalStorage('totalStationElectric');
-    deleteLocalStorage('monthTotalStationElectric');
-    deleteLocalStorage('yearTotalStationElectric');
-    deleteLocalStorage('allTotalStationElectric');
-  };
 
   pullToRefresh = async () => {
     const { keyPair, userStore, history } = this.props;
-    this.deleteAllCache();
+    this.props.sunCityStore.deleteAllCache();
     const promiseArray = [];
     // 获取最新公告,条件固定
     const res1 = this.props.sunCityStore.fetchSCNews({

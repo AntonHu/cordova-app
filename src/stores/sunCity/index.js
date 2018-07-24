@@ -10,6 +10,7 @@ import {
   fetchAddInverter,
   fetchGetWeather
 } from './request';
+import {deleteLocalStorage} from '../../utils/storage';
 
 class SunCityStore {
   @observable
@@ -36,6 +37,18 @@ class SunCityStore {
     this.equipmentPower = {};
     this.inverterList = [];
     this.weatherInfo = {type: ''};
+  };
+
+  deleteAllCache = () => {
+    // 若是没有私钥，清空缓存
+    deleteLocalStorage('stationExpireTime');
+    deleteLocalStorage('equipmentListObj');
+    deleteLocalStorage('currentStationPower');
+    deleteLocalStorage('dayStationElectric');
+    deleteLocalStorage('totalStationElectric');
+    deleteLocalStorage('monthTotalStationElectric');
+    deleteLocalStorage('yearTotalStationElectric');
+    deleteLocalStorage('allTotalStationElectric');
   };
 
   // 获取最新公告
