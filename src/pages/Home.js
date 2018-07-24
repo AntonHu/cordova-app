@@ -8,7 +8,7 @@ import './Home.less';
 
 const TabsData = [
   {
-    title: '太阳城',
+    title: '首页',
     key: 'sunCity',
     unicode: '\ue612',
     selectedUnicode: '\ue60a',

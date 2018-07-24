@@ -7,7 +7,7 @@ export const LONG_TIME_OUT = 15000;
 /*
   请求头为application/json
 */
-const JSONInstance = axios.create({
+export const JSONInstance = axios.create({
   timeout: TIME_OUT,
   headers: {
     'Content-Type': 'application/json'

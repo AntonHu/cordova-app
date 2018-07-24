@@ -158,6 +158,7 @@ class SunCityStore {
     }
     return result;
   };
+
   // 添加逆变器
   @action
   fetchSCAddInverter = async params => {
@@ -170,6 +171,7 @@ class SunCityStore {
     }
     return result;
   };
+
   // 获取天气信息
   @action
   fetchSCGetWeather = async params => {

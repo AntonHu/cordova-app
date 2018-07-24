@@ -1,19 +1,22 @@
 import React from 'react';
-import { observer, inject } from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 import {
   PageWithHeader,
   GreenButton,
   ToastNoMask,
   Popup
 } from '../../../components';
-import { Picker, List, WhiteSpace, InputItem, ActivityIndicator } from 'antd-mobile';
-import { toJS } from 'mobx';
-import { deleteLocalStorage, getLocalStorage, setLocalStorage } from '../../../utils/storage';
-import { EQUIPMENT_DATA_TYPE } from '../../../utils/variable';
-import { decrypt } from '../../../utils/methods';
+import {Picker, List, WhiteSpace, InputItem, ActivityIndicator} from 'antd-mobile';
+import {toJS} from 'mobx';
+import {deleteLocalStorage, getLocalStorage, setLocalStorage} from '../../../utils/storage';
+import {fetchAddInverterAT} from '../../../stores/sunCity/request';
+import {EQUIPMENT_DATA_TYPE} from '../../../utils/variable';
+import {decrypt} from '../../../utils/methods';
 import './style.less';
 
+const AOTAI = 'at';
 let isScanning = false;
+
 /**
  * 添加逆变器
  */
@@ -24,22 +27,28 @@ class Comp extends React.Component {
     inverterType: '',
     barcodeValue: '',
     successModal: false,
-    showLoading: false
+    showLoading: false,
+    username: '',
+    password: ''
   };
+
   evtbackButton = () => {
     if (!isScanning) {
       this.props.history.goBack();
     }
     // alert(isScanning);
   };
+
   componentDidMount() {
     document.addEventListener('backbutton', this.evtbackButton, false);
     // 请求所有逆变器类型
     this.props.sunCityStore.fetchSCInverters();
   }
+
   componentWillUnmount() {
     document.removeEventListener('backbutton', this.evtbackButton, false);
   }
+
   // 逆变器类型更改
   inverterTypeChange = value => {
     this.setState({
@@ -93,11 +102,64 @@ class Comp extends React.Component {
     }
   };
 
+  onSubmit = () => {
+    if (this.state.inverterType === AOTAI) {
+      this.addInverterAT();
+    } else {
+      this.addInverter();
+    }
+  };
+
+  /**
+   * 添加奥泰的逆变器
+   */
+  addInverterAT = () => {
+    const {username, password} = this.state;
+    const sourceData = this.state.inverterType;
+    if (this.props.keyPair.showHasKey(this.props)) {
+      if (!username) {
+        ToastNoMask('请输入用户名');
+        return;
+      }
+      if (!password) {
+        ToastNoMask('请输入密码');
+      }
+      this.setState({
+        showLoading: true
+      });
+      fetchAddInverterAT({
+        userPubKey: this.props.keyPair.publicKey,
+        username,
+        password
+      })
+        .then(result => {
+          this.setState({
+            showLoading: false
+          });
+          if (result.code === 200) {
+            Object.keys(result.data).forEach(deviceNo => {
+              if (result.data[deviceNo] === 'success') {
+                this.addInverterDetail({sourceData, deviceNo, dateType: EQUIPMENT_DATA_TYPE.DAY});
+              }
+            });
+            ToastNoMask('添加逆变器成功');
+          } else {
+            ToastNoMask('添加逆变器失败。' + (result.msg || ''));
+          }
+        })
+        .catch(err => {
+          this.setState({
+            showLoading: false
+          });
+        })
+    }
+  };
+
   // 添加逆变器
   addInverter = () => {
     const deviceNo = this.state.barcodeValue;
     const sourceData = this.state.inverterType;
-    if (this.props.keyPair.hasKey) {
+    if (this.props.keyPair.showHasKey(this.props)) {
       if (!sourceData) {
         ToastNoMask('请选择逆变器品牌');
         return;
@@ -157,7 +219,7 @@ class Comp extends React.Component {
       });
 
       const receiveData = toJS(this.props.sunCityStore.equipmentPower);
-      const decryptData = this.handleDecryptData(receiveData);
+      const decryptData = await this.handleDecryptData(receiveData);
       // 设备功率
       const currentPower =
         (decryptData.length > 0 &&
@@ -187,13 +249,13 @@ class Comp extends React.Component {
   };
 
   // 处理获取的解密数据
-  handleDecryptData = receiveData => {
+  handleDecryptData = async receiveData => {
     const decryptData = [];
     if (this.props.keyPair.hasKey) {
-      Object.keys(receiveData).forEach(item => {
+      Object.keys(receiveData).forEach(async item => {
         let powerInfo;
         try {
-          const decryptedItem = decrypt(
+          const decryptedItem = await decrypt(
             this.props.keyPair.privateKey,
             receiveData[item]
           );
@@ -221,18 +283,20 @@ class Comp extends React.Component {
     });
     this.props.history.goBack();
   };
+
   render() {
     const inverterList = toJS(this.props.sunCityStore.inverterList);
     inverterList &&
-      inverterList.map(item => {
-        item.value = item.id;
-        item.label = item.name;
-        return item;
-      });
+    inverterList.map(item => {
+      item.value = item.id;
+      item.label = item.name;
+      return item;
+    });
+    const { inverterType } = this.state;
     return (
       <div className={'page-add-inverter'}>
         <PageWithHeader title={'添加逆变器'}>
-          <WhiteSpace />
+          <WhiteSpace/>
           <div className="add-inverter">
             <Picker
               data={inverterList}
@@ -243,18 +307,41 @@ class Comp extends React.Component {
             >
               <List.Item arrow="horizontal">逆变器品牌</List.Item>
             </Picker>
-            <InputItem
-              placeholder="请输入条码"
-              clear
-              onChange={this.barcodeChange}
-              value={this.state.barcodeValue}
-            >
-              <i className="iconfont">&#xe654;</i>
-            </InputItem>
-            <div className="scan" onClick={this.barcodeScanner}>
-              <i className="iconfont">&#xe66c;</i>切换扫描条形码
-            </div>
-            <GreenButton size={'big'} onClick={this.addInverter}>
+            {
+              inverterType === AOTAI
+              ?
+                <div>
+                  <InputItem
+                    placeholder="请输入账号"
+                    clear
+                    onChange={value => this.setState({username: value})}
+                    value={this.state.username}
+                  />
+                  <InputItem
+                    placeholder="请输入密码"
+                    clear
+                    type="password"
+                    onChange={value => this.setState({password: value})}
+                    value={this.state.password}
+                  />
+                </div>
+                :
+                <div>
+                  <InputItem
+                    placeholder="请输入条码"
+                    clear
+                    onChange={this.barcodeChange}
+                    value={this.state.barcodeValue}
+                  >
+                    <i className="iconfont">&#xe654;</i>
+                  </InputItem>
+                  <div className="scan" onClick={this.barcodeScanner}>
+                    <i className="iconfont">&#xe66c;</i>切换扫描条形码
+                  </div>
+                </div>
+            }
+
+            <GreenButton size={'big'} onClick={this.onSubmit}>
               确认
             </GreenButton>
             <Popup

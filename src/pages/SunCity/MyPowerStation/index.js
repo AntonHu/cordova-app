@@ -145,18 +145,18 @@ class Comp extends React.Component {
       });
     }
     const receiveData = toJS(this.props.sunCityStore.equipmentPower);
-    const decryptData = this.handleDecryptData(receiveData);
+    const decryptData = await this.handleDecryptData(receiveData);
     return decryptData;
   }
 
   // 处理获取的解密数据
-  handleDecryptData = receiveData => {
+  handleDecryptData = async receiveData => {
     const decryptData = [];
     if (this.props.keyPair.hasKey) {
-      Object.keys(receiveData).forEach(item => {
+      Object.keys(receiveData).forEach(async item => {
         let powerInfo;
         try {
-          const decryptItem = decrypt(
+          const decryptItem = await decrypt(
             this.props.keyPair.privateKey,
             receiveData[item]
           );
