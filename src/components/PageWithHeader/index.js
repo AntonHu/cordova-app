@@ -22,9 +22,9 @@ class Comp extends React.PureComponent {
   };
 
   render() {
-    const { title, rightComponent, leftComponent, headerMarginBottom, fixed } = this.props;
+    const { title, rightComponent, leftComponent, headerMarginBottom, fixed, id } = this.props;
     return (
-      <div className={`page-with-header ${fixed ? 'fixed' : ''}`}>
+      <div className={`page-with-header ${fixed ? 'fixed' : ''}`} id={id}>
         <Header
           title={title}
           rightComponent={rightComponent}
