@@ -1,11 +1,17 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
-import {toJS} from 'mobx';
-import {observer, inject} from 'mobx-react';
-import {BlueBox, Title, PageWithHeader, Picture, EquipmentItem} from '../../../components';
-import {Icon, ActivityIndicator} from 'antd-mobile';
-import {decrypt} from '../../../utils/methods';
-import {EQUIPMENT_DATA_TYPE} from '../../../utils/variable';
+import { withRouter } from 'react-router-dom';
+import { toJS } from 'mobx';
+import { observer, inject } from 'mobx-react';
+import {
+  BlueBox,
+  Title,
+  PageWithHeader,
+  Picture,
+  EquipmentItem
+} from '../../../components';
+import { Icon, ActivityIndicator } from 'antd-mobile';
+import { decrypt } from '../../../utils/methods';
+import { EQUIPMENT_DATA_TYPE } from '../../../utils/variable';
 
 import F2 from '@antv/f2';
 import './style.less';
@@ -21,8 +27,8 @@ import { POWER_TYPE } from '../../../utils/variable';
 class Comp extends React.Component {
   state = {
     selected: {
-      day: true,
-      month: false,
+      // day: true,
+      month: true,
       year: false,
       all: false
     },
@@ -75,7 +81,13 @@ class Comp extends React.Component {
         loading: false
       });
       if (Object.keys(equipmentListObj).length > 0) {
-        this.renderBarChart(cacheEquipmentData.dayStationData);
+        // 显示默认数据
+        cacheEquipmentData.monthStationData.length < 1 &&
+          cacheEquipmentData.monthStationData.push({
+            number: 0,
+            time: '00'
+          });
+        this.renderBarChart(cacheEquipmentData.monthStationData);
       }
     } else {
       this.setState({
@@ -88,10 +100,12 @@ class Comp extends React.Component {
   getCacheEquipmentData = () => {
     const dayStationData = JSON.parse(getLocalStorage('dayStationData')) || []; // 获取本地储存每天发电数据
     const monthStationData =
-      JSON.parse(getLocalStorage('monthStationData')).map(item => {
-        item.time = item.time.substring(item.time.length - 2);
-        return item;
-      }) || []; // 获取本地储存每月发电数据
+      (JSON.parse(getLocalStorage('monthStationData')).length > 0 &&
+        JSON.parse(getLocalStorage('monthStationData')).map(item => {
+          item.time = item.time.substring(item.time.length - 2);
+          return item;
+        })) ||
+      []; // 获取本地储存每月发电数据
     const yearStationData =
       JSON.parse(getLocalStorage('yearStationData')) || []; // 获取本地储存每年发电数据
     const allStationData = JSON.parse(getLocalStorage('allStationData')) || []; // 获取本地储存所有发电数据
@@ -117,19 +131,15 @@ class Comp extends React.Component {
         deviceNo,
         dateType
       );
-      // 设备功率
-      const currentPower =
-        (decryptData.length > 0 &&
-          decryptData[decryptData.length - 1].totalPower &&
-          decryptData[decryptData.length - 1].totalPower.toFixed(2)) ||
-        0;
-
+      // 设备当前功率
+      let currentPower = 0;
       // 设备日电量
-      const dayElectric =
-        (decryptData.length > 0 &&
-          decryptData[decryptData.length - 1].todayEnergy &&
-          decryptData[decryptData.length - 1].todayEnergy.toFixed(2)) ||
-        0;
+      let dayElectric = 0;
+      if (decryptData.length > 0 && decryptData[decryptData.length - 1]) {
+        const equipmentData = decryptData[decryptData.length - 1];
+        currentPower = equipmentData.totalPower;
+        dayElectric = equipmentData.todayEnergy;
+      }
       // 电站日电量
       equipmentListObj[name].currentPower = currentPower || 0; // 设备功率
       equipmentListObj[name].dayElectric = dayElectric || 0; // 设备日电量
@@ -250,7 +260,8 @@ class Comp extends React.Component {
         barData = this.state.allStationData;
         break;
       default:
-        barData = this.state.dayStationData;
+        // barData = this.state.dayStationData;
+        break;
     }
     // 显示默认数据
     barData.length < 1 &&
@@ -308,12 +319,12 @@ class Comp extends React.Component {
                 {(weatherInfo && weatherInfo.type) || '晴'}
               </div>
               <div className="screen" onClick={this.screenChange}>
-                <div
+                {/* <div
                   data-class="day"
                   className={this.state.selected.day ? 'selected' : ''}
                 >
                   日
-                </div>
+                </div> */}
                 <div
                   data-class="month"
                   className={this.state.selected.month ? 'selected' : ''}
@@ -359,37 +370,56 @@ class Comp extends React.Component {
             <div className="type-item elec">
               发电量<i className="iconfont">&#xe677;</i>
             </div>
+            <div className="type-item profit">
+              收益<i className="iconfont">&#xe767;</i>
+            </div>
           </div>
           <div className="detail">
             <div className="detail-row">
               <div className="detail-item">
                 <div className="number">
                   {`${currentStationPower}`}
-                  <span className="h5">w</span>
+                  <span className="h5" />
                 </div>
-                <div className="detail-type">当前</div>
+                <div className="detail-type">当前(w)</div>
               </div>
               <div className="detail-item">
                 <div className="number">
                   {`${dayStationElectric}`}
-                  <span className="h5">kwh</span>
+                  <span className="h5" />
                 </div>
-                <div className="detail-type">今日</div>
+                <div className="detail-type">今日(kwh)</div>
+              </div>
+              <div className="detail-item">
+                <div className="number">
+                  {`${dayStationElectric &&
+                    (dayStationElectric * 0.8149).toFixed(2)}`}
+                  <span className="h5" />
+                </div>
+                <div className="detail-type">今日(￥)</div>
               </div>
             </div>
             <div className="detail-row">
               <div className="detail-item">
                 <div className="number">
-                  0<span className="h5">kw</span>
+                  0<span className="h5" />
                 </div>
-                <div className="detail-type">逆变器容量</div>
+                <div className="detail-type">逆变器容量(kw)</div>
               </div>
               <div className="detail-item">
                 <div className="number">
                   {`${totalStationElectric}`}
-                  <span className="h5">kwh</span>
+                  <span className="h5" />
                 </div>
-                <div className="detail-type">累计</div>
+                <div className="detail-type">累计(kwh)</div>
+              </div>
+              <div className="detail-item">
+                <div className="number">
+                  {`${totalStationElectric &&
+                    (totalStationElectric * 0.8149).toFixed(2)}`}
+                  <span className="h5" />
+                </div>
+                <div className="detail-type">累计(￥)</div>
               </div>
             </div>
           </div>
