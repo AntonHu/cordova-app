@@ -127,7 +127,7 @@ class Comp extends React.Component {
               </div>
               <div className="profit-item">
                 <div className="profit-title">今日太阳积分</div>
-                <div className="profit-number">{todayIntegral}</div>
+                <div className="profit-number">{(todayIntegral).toFixed(2)}</div>
               </div>
             </div>
           </div>

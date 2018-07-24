@@ -606,23 +606,14 @@ class Comp extends React.Component {
                 );
               })}
           </div>
-          <div className="news">
-            <span className="news-title">最新动态</span>
-            <span className="help-text">
-              {(lastTrend && lastTrend.length > 0 && lastTrend[0]) || ''}
-            </span>
-          </div>
-          <div className="promote">
-            <Link to="/user/introduction">
-              <img src={require('../../images/banner_1.png')} width="100%" />
-            </Link>
-          </div>
-
 
         </div>
 
         <div className="news">
-          <span className="news-title">最新动态</span><span className="help-text">雷神刚刚挖宝10个太阳积分~</span>
+          <span className="news-title">最新动态</span>
+          <span className="help-text">
+              {(lastTrend && lastTrend.length > 0 && lastTrend[0]) || ''}
+            </span>
         </div>
         <div className="promote">
           <Link to="/user/introduction">
