@@ -3,6 +3,7 @@ import {Button, WhiteSpace} from 'antd-mobile';
 import {JSRsasign} from '../jssign'
 import SM2Cipher from '../jssign/SM2Cipher';
 import {cMsgTest} from '../jssign/cMsg'
+import {fMsgTest} from '../jssign/test'
 
 const CryptoJS = JSRsasign.CryptoJS;
 const BigInteger = JSRsasign.BigInteger;
@@ -31,6 +32,7 @@ class SM2Demo extends React.PureComponent {
     console.log('encode priv: ', encodeURIComponent(pri64))
     const startTime   = new Date().getTime();
     // this.test();
+    this.testAll();
     console.log(new Date().getTime() - startTime)
   }
 
@@ -188,6 +190,18 @@ class SM2Demo extends React.PureComponent {
     const cMsg = cipher.Encrypt(userKey, msgData);
     this.setState({
       cMsg
+    })
+  };
+
+  testAll = () => {
+    var cMsg = fMsgTest;
+    console.log(cMsg)
+    const privBI = new BigInteger('fc5edd4db333ee99fbebf4b91d8db59b96df280b74c142aef738b0c5482663f1', 16);
+    let cipherMode = '1';// C1C3C2
+    const cipher = new SM2Cipher(cipherMode);
+
+    Object.keys(cMsg).forEach((name) => {
+      console.log(cipher.Decrypt(privBI, cMsg[name]))
     })
   };
 
