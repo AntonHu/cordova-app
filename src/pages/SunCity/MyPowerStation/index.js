@@ -10,8 +10,8 @@ import {EQUIPMENT_DATA_TYPE} from '../../../utils/variable';
 import F2 from '@antv/f2';
 import './style.less';
 
-import {setLocalStorage, getLocalStorage} from '../../../utils/storage';
-import {POWER_TYPE} from '../../../utils/variable';
+import { setLocalStorage, getLocalStorage } from '../../../utils/storage';
+import { POWER_TYPE } from '../../../utils/variable';
 
 /**
  * 我的电站信息
@@ -27,7 +27,7 @@ class Comp extends React.Component {
       all: false
     },
     barcodeVisible: false,
-    equipmentListObj: {},
+    equipmentListObj: JSON.parse(getLocalStorage('equipmentListObj')) || {},
     dayStationData: [],
     monthStationData: [],
     yearStationData: [],
@@ -42,13 +42,11 @@ class Comp extends React.Component {
     this.props.sunCityStore.fetchSCGetWeather({
       cityName: city
     });
-    const {keyPair} = this.props;
+    const { keyPair } = this.props;
     let equipmentListObj = {};
     if (keyPair.hasKey) {
       // 获取设备列表
-      if (getLocalStorage('equipmentListObj')) {
-        equipmentListObj = JSON.parse(getLocalStorage('equipmentListObj'));
-      } else {
+      if (!getLocalStorage('equipmentListObj')) {
         // 获取设备列表
         await this.props.sunCityStore.fetchSCEquipmentList({
           userPubKey: keyPair.publicKey
@@ -65,10 +63,10 @@ class Comp extends React.Component {
           'equipmentListObj',
           JSON.stringify(equipmentListObj || {})
         ); // 本地储存所有设备状态
+        this.setState({
+          equipmentListObj
+        });
       }
-      this.setState({
-        equipmentListObj
-      });
 
       // 获取本地储存的 （月，年，所有） 的数据
       const cacheEquipmentData = this.getCacheEquipmentData();
@@ -250,10 +248,10 @@ class Comp extends React.Component {
     }
     // 显示默认数据
     barData.length < 1 &&
-    barData.push({
-      number: 0,
-      time: '00'
-    });
+      barData.push({
+        number: 0,
+        time: '00'
+      });
     this.barChart && this.barChart.clear();
     this.renderBarChart(barData);
 
@@ -262,7 +260,7 @@ class Comp extends React.Component {
       selected[item] = false;
     });
     selected[type] = true;
-    this.setState({selected});
+    this.setState({ selected });
   };
 
   render() {
@@ -273,9 +271,8 @@ class Comp extends React.Component {
       Number(getLocalStorage('monthTotalStationElectric')) ||
       Number(getLocalStorage('yearTotalStationElectric')) ||
       Number(getLocalStorage('allTotalStationElectric')); // 获取本地储存电站总发电量
-    const {equipmentListObj} = this.state;
-    const equipmentNameList =
-      (equipmentListObj && Object.keys(equipmentListObj)) || [];
+    const { equipmentListObj } = this.state;
+    const equipmentNameList = Object.keys(equipmentListObj);
     const weatherInfo = this.props.sunCityStore.weatherInfo;
     let weatherEle = <i className="iconfont">&#xe631;</i>;
     if (weatherInfo) {
@@ -333,7 +330,7 @@ class Comp extends React.Component {
             </div>
             <canvas
               id="pie-bar-chart"
-              style={equipmentNameList.length < 1 ? {zIndex: -10} : null}
+              style={equipmentNameList.length < 1 ? { zIndex: -10 } : null}
             />
             {equipmentNameList.length < 1 ? (
               <div
@@ -360,27 +357,38 @@ class Comp extends React.Component {
           <div className="detail">
             <div className="detail-row">
               <div className="detail-item">
-                <div className="number">{`${currentStationPower}`}<span className="h5">w</span></div>
+                <div className="number">
+                  {`${currentStationPower}`}
+                  <span className="h5">w</span>
+                </div>
                 <div className="detail-type">当前</div>
               </div>
               <div className="detail-item">
-                <div className="number">{`${dayStationElectric}`}<span className="h5">kwh</span></div>
+                <div className="number">
+                  {`${dayStationElectric}`}
+                  <span className="h5">kwh</span>
+                </div>
                 <div className="detail-type">今日</div>
               </div>
             </div>
             <div className="detail-row">
               <div className="detail-item">
-                <div className="number">0<span className="h5">kw</span></div>
+                <div className="number">
+                  0<span className="h5">kw</span>
+                </div>
                 <div className="detail-type">逆变器容量</div>
               </div>
               <div className="detail-item">
-                <div className="number">{`${totalStationElectric}`}<span className="h5">kwh</span></div>
+                <div className="number">
+                  {`${totalStationElectric}`}
+                  <span className="h5">kwh</span>
+                </div>
                 <div className="detail-type">累计</div>
               </div>
             </div>
           </div>
           <div className="equipment">
-            <Title title="太阳城蓄力装备"/>
+            <Title title="太阳城蓄力装备" />
             {equipmentNameList.length > 0 ? (
               equipmentNameList.map((equipment, index) => {
                 return (
@@ -390,9 +398,9 @@ class Comp extends React.Component {
                       this.props.history.push(
                         `/sunCity/equipmentInfo/${
                           equipmentListObj[equipment].deviceNo
-                          }?source=${
+                        }?source=${
                           equipmentListObj[equipment].source
-                          }&name=${equipment}`
+                        }&name=${equipment}`
                       )
                     }
                     equipmentName={equipment}
@@ -404,7 +412,7 @@ class Comp extends React.Component {
             ) : (
               <div className="loading">
                 {this.state.loading ? (
-                  <ActivityIndicator text="加载中..."/>
+                  <ActivityIndicator text="加载中..." />
                 ) : (
                   <div
                     className="pic-wrap"
