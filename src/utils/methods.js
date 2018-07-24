@@ -1,5 +1,6 @@
 import { JSRsasign } from '../jssign';
 import SM2Cipher from '../jssign/SM2Cipher';
+import { getLocalStorage } from './storage';
 const BigInteger = JSRsasign.BigInteger;
 
 /**
@@ -228,4 +229,18 @@ export const handleAbnormalData = strData => {
   }
   handleStrData = JSON.parse(handleStrData);
   return handleStrData;
+};
+
+/**
+ * 检测数据是否过期
+ * @param hours Number 默认为 1
+ * @param type String
+ * @returns {boolean}
+ */
+export const isExpire = (hours, type) => {
+  hours = isNaN(Number(hours)) ? 1 : Number(hours);
+  if (!getLocalStorage(type)) {
+    return false;
+  }
+  return new Date().getTime() - getLocalStorage(type) > hours * 60 * 60 * 1000;
 };

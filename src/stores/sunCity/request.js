@@ -41,12 +41,12 @@ export const fetchGetSunIntegral = async params => {
 };
 
 /**
- * 获取电站数据
+ * 获取最新动态
  */
-export const fetchPowerstationData = async params => {
+export const fetchLastTrend = async params => {
   let response = {};
   try {
-    response = await get(`${backendServer}/wallet/gainTokens`, params);
+    response = await get(`${backendServer}/wallet/getRecentData`, params);
   } catch (err) {
     console.log(err);
   }

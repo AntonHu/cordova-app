@@ -4,7 +4,7 @@ import { PageWithHeader } from '../../../components';
 import F2 from '@antv/f2';
 import { px } from '../../../utils/getDevice';
 import { setLocalStorage, getLocalStorage } from '../../../utils/storage';
-import { decrypt, handleAbnormalData } from '../../../utils/methods';
+import { decrypt, handleAbnormalData, isExpire } from '../../../utils/methods';
 import { EQUIPMENT_DATA_TYPE } from '../../../utils/variable';
 import './style.less';
 
@@ -44,7 +44,10 @@ class Comp extends React.Component {
 
     let dayEquipmentData = [];
     // 当时间过期或者设备号更换，重新获取并缓存数据
-    if (this.isExpire() || getLocalStorage('equipmentNumber') !== deviceNo) {
+    if (
+      isExpire(1, 'equipmentExpireTime') ||
+      getLocalStorage('equipmentNumber') !== deviceNo
+    ) {
       dayEquipmentData = await this.getPowerData(
         sourceData,
         deviceNo,
@@ -92,7 +95,10 @@ class Comp extends React.Component {
   // 本地储存设备月，年，所有数据
   async cacheEquipmentData(sourceData, deviceNo) {
     // 当时间过期或者设备号更换，重新获取并缓存数据
-    if (this.isExpire() || getLocalStorage('equipmentNumber') !== deviceNo) {
+    if (
+      isExpire(1, 'equipmentExpireTime') ||
+      getLocalStorage('equipmentNumber') !== deviceNo
+    ) {
       // 请求设备月发电数据，本地储存
       const monthEquipmentData = await this.getPowerData(
         sourceData,
@@ -125,14 +131,6 @@ class Comp extends React.Component {
       setLocalStorage('equipmentExpireTime', new Date().getTime()); // 本地储存设备数据过期时间
     }
   }
-
-  // 检测设备数据是否过期
-  isExpire = () => {
-    return (
-      new Date().getTime() - Number(getLocalStorage('equipmentExpireTime')) >
-      3 * 60 * 60 * 1000
-    ); // 设置三个小时的过期时间
-  };
 
   // 按照类型请求电量数据
   async getPowerData(sourceData, deviceNo, dateType) {
@@ -170,15 +168,13 @@ class Comp extends React.Component {
         }
         if (powerInfo) {
           const value = +(powerInfo.maxEnergy - powerInfo.minEnergy).toFixed(2);
+          const power = +(powerInfo.power && powerInfo.power.toFixed(2)) || 0;
           data.push({
             time: item,
-            number:
-              dateType === EQUIPMENT_DATA_TYPE.DAY
-                ? powerInfo.power || 0
-                : value,
+            number: dateType === EQUIPMENT_DATA_TYPE.DAY ? power : value,
             electric: value || 0,
             maxValue: powerInfo.maxEnergy && +powerInfo.maxEnergy,
-            power: powerInfo.power || 0
+            power: power
           });
         }
       });
@@ -240,9 +236,7 @@ class Comp extends React.Component {
     });
     this.pieChart.guide().html({
       position: ['110%', '57.5%'],
-      html: `<div style="width: 250px;height: 40px;text-align: center;"><div style="font-size: 20px;font-weight:bold">${(currentPower &&
-        currentPower.toFixed(2)) ||
-        0}w</div><div style="font-size: 14px;margin-top: 5px">当前功率</div></div>`
+      html: `<div style="width: 250px;height: 40px;text-align: center;"><div style="font-size: 20px;font-weight:bold">${currentPower}w</div><div style="font-size: 14px;margin-top: 5px">当前功率</div></div>`
     });
     this.pieChart
       .interval()
