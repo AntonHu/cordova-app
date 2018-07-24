@@ -223,7 +223,7 @@ class Comp extends React.Component {
     await this.props.sunCityStore.fetchSCEquipmentList({
       userPubKey: keyPair.publicKey
     });
-    equipmentListObj = toJS(this.props.sunCityStore.equipmentList);
+    equipmentListObj = toJS(this.props.sunCityStore.equipmentListObj);
     // 添加各个设备的功率和日电量
     equipmentListObj =
       equipmentListObj &&
@@ -280,25 +280,20 @@ class Comp extends React.Component {
       );
       // 合并每天的设备数据为电站每天数据
       equipmentDataArr = equipmentDataArr.concat(decryptData);
-      // 设备功率
-      const currentPower =
-        (decryptData.length > 0 &&
-          decryptData[decryptData.length - 1].power &&
-          decryptData[decryptData.length - 1].power.toFixed(2)) ||
-        0;
+      // 设备当前功率
+      let currentPower = 0;
       // 设备日电量
       let dayElectric = 0;
-      decryptData.forEach(item => {
-        dayElectric += item.number;
-      });
+      // 当前电站发电量
+      let maxValue = 0;
+      if (decryptData.length > 0 && decryptData[decryptData.length - 1]) {
+        const equipmentData = decryptData[decryptData.length - 1];
+        currentPower = equipmentData.totalPower;
+        dayElectric = equipmentData.todayEnergy;
+        maxValue = equipmentData.totalEnergy;
+      }
       // 电站日电量
       dayStationElectric += dayElectric;
-      // 当前电站发电量
-      const maxValue =
-        (decryptData.length > 0 &&
-          decryptData[decryptData.length - 1] &&
-          decryptData[decryptData.length - 1].maxValue) ||
-        0;
       equipmentListObj[name].currentPower = currentPower || 0; // 设备功率
       equipmentListObj[name].dayElectric = dayElectric.toFixed(2) || 0; // 设备日电量
       currentStationPower += Number(currentPower); // 当前电站功率
@@ -440,16 +435,15 @@ class Comp extends React.Component {
   }
 
   // 处理获取的解密数据,并排序
-  handleDecryptData =
-    async (receiveData, dateType) => {
-    const decryptData = [];
+  handleDecryptData = async (receiveData, dateType) => {
     if (this.props.keyPair.hasKey) {
-      Object.keys(receiveData).forEach(async item => {
+      const decryptData = [];
+      for (let i = 0; i < Object.keys(receiveData).length; i++) {
         let powerInfo;
         try {
           let decryptedItem = await decrypt(
             this.props.keyPair.privateKey,
-            receiveData[item]
+            receiveData[Object.keys(receiveData)[i]]
           );
           // 处理解密后的异常数据
           powerInfo = decryptedItem && handleAbnormalData(decryptedItem);
@@ -459,22 +453,22 @@ class Comp extends React.Component {
         if (powerInfo) {
           const value = +(powerInfo.maxEnergy - powerInfo.minEnergy).toFixed(2);
           decryptData.push({
-            time: item,
+            time: Object.keys(receiveData)[i],
             number: value,
             maxValue: powerInfo.maxEnergy && +powerInfo.maxEnergy,
             power: powerInfo.power || ''
           });
         }
-      });
-    }
-    const decryptDataSort = decryptData.sort((pre, cur) => {
-      if (pre.time.indexOf('-') > 0 && cur.time.indexOf('-') > 0) {
-        return Date.parse(pre.time) - Date.parse(cur.time);
-      } else {
-        return pre.time - cur.time;
       }
-    });
-    return decryptDataSort;
+      const decryptDataSort = decryptData.sort((pre, cur) => {
+        if (pre.time.indexOf('-') > 0 && cur.time.indexOf('-') > 0) {
+          return Date.parse(pre.time) - Date.parse(cur.time);
+        } else {
+          return pre.time - cur.time;
+        }
+      });
+      return decryptDataSort;
+    }
   };
 
   componentWillUnmount() {
@@ -578,14 +572,12 @@ class Comp extends React.Component {
     const { balance, balanceRanking } = this.props.miningStore;
     const { equipmentListObj } = this.state;
     const { lastNews, lastTrend } = this.props.sunCityStore;
-    const equipmentNameList = Object.keys(equipmentListObj);
+    const equipmentNameList = equipmentListObj && Object.keys(equipmentListObj);
     return (
       <div className={'page-sunCity-info'} id="page-sunCity-info">
         {/* {this.state.loading ? <Loading size={100} /> : null} */}
         <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
-          <span className="h4">
-            {lastNews ? `${lastNews.title}:${lastNews.content}` : ''}
-          </span>
+          <span className="h4">{`${lastNews.title}:${lastNews.content}`}</span>
         </NoticeBar>
         <div className="sun-content">
           <div className="info">
@@ -662,7 +654,7 @@ class Comp extends React.Component {
         </div>
         <div className="equipment">
           <Title title="太阳城蓄力装备" />
-          {equipmentNameList.length > 0 ? (
+          {equipmentNameList && equipmentNameList.length > 0 ? (
             equipmentNameList.map((equipment, index) => {
               return (
                 <EquipmentItem

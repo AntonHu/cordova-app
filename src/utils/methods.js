@@ -1,7 +1,7 @@
 import { JSRsasign } from '../jssign';
 import SM2Cipher from '../jssign/SM2Cipher';
 import { getLocalStorage } from './storage';
-import {JSONInstance, post} from './fetch';
+import { JSONInstance, post } from './fetch';
 const BigInteger = JSRsasign.BigInteger;
 
 /**
@@ -217,19 +217,20 @@ export const decrypt = async (privateKey, cipherMsg) => {
 
   let decryptedMsg = '';
 
-  const res =  await post('https://api.thundersdata.com/grpc/blockchain/crypt-service/sm2/Decrypt', {
-    privateKey,
-    ciphertext: cipherMsg
-  });
+  const res = await post(
+    'https://api.thundersdata.com/grpc/blockchain/crypt-service/sm2/Decrypt',
+    {
+      privateKey,
+      ciphertext: cipherMsg
+    }
+  );
 
   const data = res.data || {};
   if (data.responseCode === 200) {
     try {
       const msgJson = JSON.parse(data.responseJson);
       decryptedMsg = msgJson.msg;
-    } catch (err) {
-
-    }
+    } catch (err) {}
   }
   return decryptedMsg;
 };
@@ -259,7 +260,29 @@ export const handleAbnormalData = strData => {
 export const isExpire = (hours, type) => {
   hours = isNaN(Number(hours)) ? 1 : Number(hours);
   if (!getLocalStorage(type)) {
-    return false;
+    return true;
   }
   return new Date().getTime() - getLocalStorage(type) > hours * 60 * 60 * 1000;
+};
+
+/**
+ * 获取小时和分钟
+ * @param millisecond 毫秒
+ * @returns clock
+ */
+export const getHour_Minute = millisecond => {
+  if (isNaN(Number(millisecond))) {
+    return '00: 00';
+  }
+  const time = new Date(millisecond);
+  const hh = time.getHours(); //时
+  const mm = time.getMinutes(); //分
+  let clock = '';
+  if (hh < 10) {
+    clock += '0';
+  }
+  clock += hh + ':';
+  if (mm < 10) clock += '0';
+  clock += mm;
+  return clock;
 };

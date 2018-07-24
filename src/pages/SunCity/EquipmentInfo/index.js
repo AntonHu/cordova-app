@@ -4,7 +4,12 @@ import { PageWithHeader } from '../../../components';
 import F2 from '@antv/f2';
 import { px } from '../../../utils/getDevice';
 import { setLocalStorage, getLocalStorage } from '../../../utils/storage';
-import { decrypt, handleAbnormalData, isExpire } from '../../../utils/methods';
+import {
+  decrypt,
+  handleAbnormalData,
+  isExpire,
+  getHour_Minute
+} from '../../../utils/methods';
 import { EQUIPMENT_DATA_TYPE } from '../../../utils/variable';
 import './style.less';
 
@@ -30,6 +35,7 @@ class Comp extends React.Component {
     count: 0 // 日电量
   };
   pieChart = null;
+  areaChart = null;
   curveChart = null;
   chartTitleObj = {
     day: '日功率走势图(w)',
@@ -53,33 +59,37 @@ class Comp extends React.Component {
         deviceNo,
         EQUIPMENT_DATA_TYPE.DAY
       );
+      dayEquipmentData.length > 0 &&
+        dayEquipmentData.map(item => {
+          item.time = getHour_Minute(item.latestTime);
+          item.number = item.totalPower;
+          return item;
+        });
       setLocalStorage('dayEquipmentData', JSON.stringify(dayEquipmentData)); // 本地储存天设备发电数据
     } else {
       dayEquipmentData = JSON.parse(getLocalStorage('dayEquipmentData'));
     }
     if (dayEquipmentData.length > 0) {
-      this.renderCurve(dayEquipmentData);
+      this.renderArea(dayEquipmentData);
     } else {
       // 默认显示数据
-      this.renderCurve([{ time: '00', number: 0 }]);
+      this.renderArea([{ time: '00', number: 0 }]);
     }
-
     // 设备当前功率
-    const currentPower =
-      dayEquipmentData.length > 0 &&
-      dayEquipmentData[dayEquipmentData.length - 1] &&
-      dayEquipmentData[dayEquipmentData.length - 1].power;
+    let currentPower = 0;
     // 设备日电量
     let dayElectric = 0;
-    dayEquipmentData.forEach(item => {
-      dayElectric += item.electric;
-    });
     // 当前电站发电量
-    const maxValue =
-      (dayEquipmentData.length > 0 &&
-        dayEquipmentData[dayEquipmentData.length - 1] &&
-        dayEquipmentData[dayEquipmentData.length - 1].maxValue) ||
-      0;
+    let maxValue = 0;
+    if (
+      dayEquipmentData.length > 0 &&
+      dayEquipmentData[dayEquipmentData.length - 1]
+    ) {
+      const equipmentData = dayEquipmentData[dayEquipmentData.length - 1];
+      currentPower = equipmentData.totalPower;
+      dayElectric = equipmentData.todayEnergy;
+      maxValue = equipmentData.totalEnergy;
+    }
     this.setState({
       deviceNo,
       sourceData,
@@ -149,7 +159,8 @@ class Comp extends React.Component {
       return receiveData || [];
     }
     const decryptData =
-      (receiveData && await this.handleDecryptData(receiveData, dateType)) || [];
+      (receiveData && (await this.handleDecryptData(receiveData, dateType))) ||
+      [];
     return decryptData;
   }
 
@@ -157,7 +168,7 @@ class Comp extends React.Component {
   handleDecryptData = async (receiveData, dateType) => {
     const data = [];
     if (this.props.keyPair.hasKey) {
-      Object.keys(receiveData).forEach(async (item) => {
+      Object.keys(receiveData).forEach(async item => {
         // 后端数据可能有问题，加一层处理
         let powerInfo;
         try {
@@ -253,6 +264,53 @@ class Comp extends React.Component {
     return this.pieChart;
   };
 
+  // 绘制功率图
+  renderArea = data => {
+    this.areaChart = new F2.Chart({
+      id: 'curve-chart',
+      pixelRatio: window.devicePixelRatio
+    });
+    const defs = {
+      time: {
+        tickCount: 8,
+        range: [0, 1]
+      },
+      number: {
+        tickCount: data.every(item => item.number === 0) ? 2 : 5,
+        min: 0,
+        alias: '功率'
+      }
+    };
+    this.areaChart.source(data, defs);
+    this.areaChart.tooltip({
+      showCrosshairs: true
+    });
+    this.areaChart.tooltip({
+      showCrosshairs: true,
+      onShow: function onShow(ev) {
+        var items = ev.items;
+        items[0].name = null;
+        items[0].value = items[0].value;
+      }
+    });
+    this.areaChart.axis('time', {
+      label: (text, index, total) => {
+        const cfg = {
+          textAlign: 'center'
+        };
+        if (index === 0) {
+          cfg.textAlign = 'start';
+        }
+        if (index > 0 && index === total - 1) {
+          cfg.textAlign = 'end';
+        }
+        return cfg;
+      }
+    });
+    this.areaChart.area().position('time*number');
+    this.areaChart.line().position('time*number');
+    this.areaChart.render();
+  };
   // 绘制发电曲线图
   renderCurve = data => {
     this.curveChart = new F2.Chart({
@@ -345,8 +403,12 @@ class Comp extends React.Component {
         number: 0,
         time: '00'
       });
-    this.curveChart && this.curveChart.clear();
-    this.renderCurve(equipmentData);
+    if (type === 'day') {
+      this.renderArea(equipmentData);
+    } else {
+      // this.curveChart && this.curveChart.clear();
+      this.renderCurve(equipmentData);
+    }
   };
   render() {
     return (
