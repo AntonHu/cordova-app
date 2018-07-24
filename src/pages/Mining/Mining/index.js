@@ -4,6 +4,9 @@ import { observer, inject } from 'mobx-react';
 import { Title, PageWithHeader, Picture, Rank } from '../../../components';
 import { Icon, Tabs, WhiteSpace } from 'antd-mobile';
 import { getLocalStorage } from '../../../utils/storage';
+// import PullToRefresh from 'rmc-pull-to-refresh';
+import Tloader from 'react-touch-loader';
+import PullToRefresh from 'pulltorefreshjs';
 import './style.less';
 
 const tabs2 = [
@@ -18,28 +21,56 @@ const tabs2 = [
 class Comp extends React.Component {
   componentDidMount() {
     this.makeRequest();
+    this.initPullToRefresh();
   }
+
+  componentWillUnmount() {
+    PullToRefresh.destroyAll();
+  }
+
+  /**
+   * 初始化下拉刷新
+   */
+  initPullToRefresh = () => {
+    PullToRefresh.init({
+      mainElement: '#mining-refresh',
+      triggerElement: '#mining-refresh',
+      onRefresh: this.pullToRefresh,
+      shouldPullToRefresh: function () {
+        return document.getElementById('page-mining').parentNode.parentNode.scrollTop === 0;
+      },
+      instructionsPullToRefresh: '下拉刷新',
+      instructionsReleaseToRefresh: '松开刷新',
+      instructionsRefreshing: '正在刷新...'
+    })
+  };
 
   makeRequest = () => {
     const { keyPair } = this.props;
+    const requestArray = [];
     if (keyPair.hasKey) {
       // 获取我的太阳积分
-      this.props.miningStore.fetchBalance({ publicKey: keyPair.publicKey });
+      requestArray.push(this.props.miningStore.fetchBalance({ publicKey: keyPair.publicKey }));
       // 邻居榜
-      this.props.miningStore.fetchNearbyRanking({
+      requestArray.push(this.props.miningStore.fetchNearbyRanking({
         publicKey: keyPair.publicKey
-      });
+      }));
       // 获取"当前积分排行"
-      this.props.miningStore.fetchBalanceRanking({
+      requestArray.push(this.props.miningStore.fetchBalanceRanking({
         publicKey: keyPair.publicKey
-      });
+      }));
       // 获取"今日太阳积分"
-      this.props.miningStore.fetchTodayIntegral({
+      requestArray.push(this.props.miningStore.fetchTodayIntegral({
         publicKey: keyPair.publicKey
-      });
+      }));
     }
-    this.props.miningStore.fetchAllRanking();
-    this.props.miningStore.fetchDigTimes();
+    requestArray.push(this.props.miningStore.fetchAllRanking());
+    requestArray.push(this.props.miningStore.fetchDigTimes());
+    return Promise.all(requestArray);
+  };
+
+  pullToRefresh = (resolve, reject) => {
+    return this.makeRequest();
   };
 
   /**
@@ -70,8 +101,9 @@ class Comp extends React.Component {
     const userInfo = this.props.userStore.userInfo;
     const { avatar } = userInfo;
     return (
-      <div className={'page-mining'}>
-        <PageWithHeader leftComponent={null} title={'挖宝池'}>
+      <div className={'page-mining'} id="page-mining">
+        <PageWithHeader leftComponent={null} title={'挖宝池'}  >
+          <div id="mining-refresh" onScroll={e => console.log(e)}>
           <div className="sun-info">
             <div className="my-sun">
               <Picture src={avatar} size={120} showBorder={true} />
@@ -174,6 +206,7 @@ class Comp extends React.Component {
               </div>
             </Tabs>
             <WhiteSpace />
+          </div>
           </div>
         </PageWithHeader>
       </div>

@@ -5,6 +5,7 @@ import { observer, inject } from 'mobx-react';
 import { Title, Picture, Loading, ToastNoMask, EquipmentItem } from '../../components';
 import { NoticeBar, Icon, ActivityIndicator } from 'antd-mobile';
 import { EQUIPMENT_DATA_TYPE } from '../../utils/variable';
+import PullToRefresh from 'pulltorefreshjs';
 import {
   setLocalStorage,
   getLocalStorage,
@@ -42,6 +43,7 @@ class Comp extends React.Component {
   state = {
     equipmentListObj: null,
     loading: true,
+    refreshing: false,
     sunCoordinateArr: null,
     power: 0, // 功率
     dayPower: 0, // 日发电量
@@ -51,8 +53,10 @@ class Comp extends React.Component {
   selectSunNode = null;
   timeoutID = null;
   sunArea = null; // 大图形
+
   async componentDidMount() {
     const { keyPair, userStore, history } = this.props;
+    this.initPullToRefresh();
     // 获取最新公告,条件固定
     this.props.sunCityStore.fetchSCNews({
       page: 0,
@@ -91,20 +95,88 @@ class Comp extends React.Component {
       // 获取设备，月，年，所有的数据，并缓存
       this.cacheEquipmentData(equipmentListObj);
     } else {
-      // 若是没有私钥，清空缓存
-      deleteLocalStorage('stationExpireTime');
-      deleteLocalStorage('equipmentListObj');
-      deleteLocalStorage('currentStationPower');
-      deleteLocalStorage('dayStationElectric');
-      deleteLocalStorage('totalStationElectric');
-      deleteLocalStorage('monthTotalStationElectric');
-      deleteLocalStorage('yearTotalStationElectric');
-      deleteLocalStorage('allTotalStationElectric');
+      this.deleteAllCache();
       this.setState({
         loading: false
       });
     }
   }
+
+  deleteAllCache = () => {
+    // 若是没有私钥，清空缓存
+    deleteLocalStorage('stationExpireTime');
+    deleteLocalStorage('equipmentListObj');
+    deleteLocalStorage('currentStationPower');
+    deleteLocalStorage('dayStationElectric');
+    deleteLocalStorage('totalStationElectric');
+    deleteLocalStorage('monthTotalStationElectric');
+    deleteLocalStorage('yearTotalStationElectric');
+    deleteLocalStorage('allTotalStationElectric');
+  };
+
+  pullToRefresh = async () => {
+    const { keyPair, userStore, history } = this.props;
+    this.deleteAllCache();
+    const promiseArray = [];
+    // 获取最新公告,条件固定
+    const res1 = this.props.sunCityStore.fetchSCNews({
+      page: 0,
+      pageSize: 10
+    });
+
+    // 获取用户信息
+    const res2 = this.props.userStore.fetchUserInfo({ keyPair, userStore, history });
+    promiseArray.push(res1, res2);
+
+    // 如果有私钥
+    if (keyPair.hasKey) {
+      // 获取我的太阳积分
+      const res4 = this.props.miningStore.fetchBalance({publicKey: keyPair.publicKey});
+      // 获取排行
+      const res5 = this.props.miningStore.fetchBalanceRanking({
+        publicKey: keyPair.publicKey
+      });
+      // 获取积分列表
+      const res6 = await this.props.sunCityStore.fetchSCSunIntegral({
+        publicKey: keyPair.publicKey
+      });
+      // 分割积分数组
+      this.spliceArr(
+        toJS(this.props.sunCityStore.sunIntegral),
+        this.sunIntegralArr
+      );
+      // 获取坐标数组
+      this.sunIntegralArr.length > 0 &&
+      this.setState({
+        sunCoordinateArr: this.getSunCoordinateArr(this.sunIntegralArr[0])
+      });
+
+      // 储存设备列表整理后的数据
+      const equipmentListObj = await this.getEquipmentList(keyPair);
+      this.setState({equipmentListObj, loading: false});
+      // 获取设备，月，年，所有的数据，并缓存
+      this.cacheEquipmentData(equipmentListObj);
+      promiseArray.push(res4, res5, res6, equipmentListObj)
+    }
+    return Promise.all(promiseArray)
+  };
+
+  /**
+   * 初始化下拉刷新
+   */
+  initPullToRefresh = () => {
+    PullToRefresh.init({
+      mainElement: '#page-sunCity-info',
+      triggerElement: '#page-sunCity-info',
+      onRefresh: this.pullToRefresh,
+      shouldPullToRefresh: function () {
+        return document.getElementById('page-sunCity-info').parentNode.parentNode.scrollTop === 0;
+      },
+      instructionsPullToRefresh: '下拉刷新',
+      instructionsReleaseToRefresh: '松开刷新',
+      instructionsRefreshing: '正在刷新...'
+    });
+  };
 
   // 获取设备列表并处理列表数据
   async getEquipmentList(keyPair) {
@@ -376,6 +448,7 @@ class Comp extends React.Component {
 
   componentWillUnmount() {
     this.timeoutID = null;
+    PullToRefresh.destroyAll();
   }
 
   // 将获取的积分数组，分割成每10个一组,preArr为原始数组，newArr为新数组
@@ -410,7 +483,7 @@ class Comp extends React.Component {
   };
   // 收取太阳积分
   selectSunIntegral = (e, sunIntegralInfo) => {
-    const { keyPair } = this.props;
+    const { keyPair, miningStore } = this.props;
     if (keyPair.showHasKey(this.props)) {
       this.selectSunNode = e.target.parentNode;
       this.props.sunCityStore
@@ -421,13 +494,10 @@ class Comp extends React.Component {
         })
         .then(result => {
           if (result.code === 200) {
+            miningStore.updateBalance(sunIntegralInfo.amount + miningStore.balance);
             if (keyPair.hasKey) {
-              // 获取我的太阳积分
-              this.props.miningStore.fetchBalance({
-                publicKey: keyPair.publicKey
-              });
               // 获取排行
-              this.props.miningStore.fetchBalanceRanking({
+              miningStore.fetchBalanceRanking({
                 publicKey: keyPair.publicKey
               });
             }
@@ -470,7 +540,7 @@ class Comp extends React.Component {
     const equipmentNameList =
       (equipmentListObj && Object.keys(equipmentListObj)) || [];
     return (
-      <div className={'page-sunCity-info'}>
+      <div className={'page-sunCity-info'} id="page-sunCity-info">
         {/* {this.state.loading ? <Loading size={100} /> : null} */}
         <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
           <span className="h4">
@@ -530,22 +600,26 @@ class Comp extends React.Component {
                 );
               })}
           </div>
-          <div className="news">
-            <span className="news-title">最新动态</span><span className="help-text">雷神刚刚挖宝10个太阳积分~</span>
-          </div>
-          <div className="promote">
-            <Link to="/user/introduction">
-              <img src={require('../../images/banner_1.png')} width="100%" />
-            </Link>
-          </div>
-          <div className="equipment">
-            <Title title="太阳城蓄力装备" />
-            {equipmentNameList.length > 0 ? (
-              equipmentNameList.map((equipment, index) => {
-                return (
-                  <EquipmentItem
-                    key={index}
-                    onClick={() =>
+
+
+        </div>
+
+        <div className="news">
+          <span className="news-title">最新动态</span><span className="help-text">雷神刚刚挖宝10个太阳积分~</span>
+        </div>
+        <div className="promote">
+          <Link to="/user/introduction">
+            <img src={require('../../images/banner_1.png')} width="100%" />
+          </Link>
+        </div>
+        <div className="equipment">
+          <Title title="太阳城蓄力装备" />
+          {equipmentNameList.length > 0 ? (
+            equipmentNameList.map((equipment, index) => {
+              return (
+                <EquipmentItem
+                  key={index}
+                  onClick={() =>
                     this.props.history.push(
                       `/sunCity/equipmentInfo/${
                         equipmentListObj[equipment].deviceNo
@@ -553,36 +627,36 @@ class Comp extends React.Component {
                         equipmentListObj[equipment].source
                         }&name=${equipment}`
                     )}
-                    currentPower={equipmentListObj[equipment].currentPower}
-                    dayElectric={equipmentListObj[equipment].dayElectric}
-                    equipmentName={equipment}
+                  currentPower={equipmentListObj[equipment].currentPower}
+                  dayElectric={equipmentListObj[equipment].dayElectric}
+                  equipmentName={equipment}
+                />
+              );
+            })
+          ) : (
+            <div className="loading">
+              {this.state.loading ? (
+                <ActivityIndicator text="加载中..." />
+              ) : (
+                <div
+                  className="pic-wrap"
+                  onClick={() =>
+                    this.props.history.push('/sunCity/addInverter')
+                  }
+                >
+                  <Picture
+                    src={require('../../images/no_inverter.png')}
+                    height={218}
+                    width={264}
                   />
-                );
-              })
-            ) : (
-              <div className="loading">
-                {this.state.loading ? (
-                  <ActivityIndicator text="加载中..." />
-                ) : (
-                  <div
-                    className="pic-wrap"
-                    onClick={() =>
-                      this.props.history.push('/sunCity/addInverter')
-                    }
-                  >
-                    <Picture
-                      src={require('../../images/no_inverter.png')}
-                      height={218}
-                      width={264}
-                    />
-                    <span>还未添加逆变器，快去添加~</span>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
+                  <span>还未添加逆变器，快去添加~</span>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
+
     );
   }
 }

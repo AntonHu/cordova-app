@@ -329,6 +329,8 @@
 		if (deviceIsIOS && targetElement.setSelectionRange && targetElement.type.indexOf('date') !== 0 && targetElement.type !== 'time' && targetElement.type !== 'month') {
 			length = targetElement.value.length;
 			targetElement.setSelectionRange(length, length);
+      // https://www.jianshu.com/p/5b578e656966
+      targetElement.focus();
 		} else {
 			targetElement.focus();
 		}

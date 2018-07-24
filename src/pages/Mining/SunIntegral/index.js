@@ -3,6 +3,7 @@ import { PageWithHeader } from '../../../components';
 import { toJS, reaction } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { ListView } from 'antd-mobile';
+import {PAGE_SIZE} from '../../../utils/variable';
 import './style.less';
 /**
  * 挖宝
@@ -44,7 +45,7 @@ class Comp extends React.Component {
   renderRow = (rowData, sectionID, rowID) => {
     return (
       <div key={rowData.tokenId} className="integral-item">
-        <div>{rowData.solarIntegral}</div>
+        <div>{rowData.solarIntegral.toFixed(4)}</div>
         <div>{rowData.gmtCreate}</div>
       </div>
     );
@@ -85,6 +86,7 @@ class Comp extends React.Component {
             <div className="integral-list">
               <div className="title">积分记录</div>
               <ListView
+                initialListSize={PAGE_SIZE}
                 renderFooter={() => (<div style={{ padding: '20px', textAlign: 'center' }}>
                   {this.state.isLoading ? '加载中...' : '没有更多'}
                 </div>)}

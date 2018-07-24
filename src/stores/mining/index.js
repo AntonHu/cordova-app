@@ -100,9 +100,15 @@ class MiningStore {
           this.balance = data.amount || 0;
         });
       }
+      return res;
     } catch (err) {
       throw err;
     }
+  };
+
+  @action
+  updateBalance = newBalance => {
+    this.balance = newBalance
   };
 
   /**
@@ -119,6 +125,7 @@ class MiningStore {
           this.balanceRanking = data.Ranking || 0;
         });
       }
+      return res;
     } catch (err) {
       throw err;
     }
@@ -143,6 +150,7 @@ class MiningStore {
           }
         });
       }
+      return res;
     } catch (err) {
       throw err;
     }
@@ -162,6 +170,7 @@ class MiningStore {
           this.todayIntegral = data.totalSolar || 0;
         });
       }
+      return res;
     } catch (err) {
       throw err;
     }

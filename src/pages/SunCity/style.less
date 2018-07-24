@@ -1,7 +1,8 @@
 @import '../../styles/common';
 .page-sunCity-info {
+  //-webkit-overflow-scrolling: touch;
+  //overflow-y: scroll;
   overflow-x: hidden;
-  height: 100%;
   position: relative;
   .notice {
     text-align: left;
@@ -146,48 +147,50 @@
         animation-fill-mode: forwards;
       }
     }
-    .news {
-      width: 90%;
-      height: 44px;
-      background: @white-text-color;
-      margin: 0 auto;
-      margin-top: -10px;
-      display: flex;
-      align-items: center;
-      padding-left: 10px;
-      border-radius: 5px;
-      box-shadow: 0 5px 20px @shadow-color;
-      .news-title {
-        background: url('../../images/news.png');
-        background-size: cover;
-        padding: 5px 20px 5px 5px;
-        color: @white-text-color;
-        margin-right: 5px;
-      }
+
+  }
+
+  .news {
+    width: 90%;
+    height: 44px;
+    background: @white-text-color;
+    margin: 0 auto;
+    margin-top: -10px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    border-radius: 5px;
+    box-shadow: 0 5px 20px @shadow-color;
+    .news-title {
+      background: url('../../images/news.png');
+      background-size: cover;
+      padding: 5px 20px 5px 5px;
+      color: @white-text-color;
+      margin-right: 5px;
     }
-    .promote {
+  }
+  .promote {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: left;
+    background: transparent;
+    margin-top: 20px;
+  }
+  .equipment {
+    .loading {
+      height: 200px;
+      background: @white-text-color;
       display: flex;
       justify-content: center;
-      flex-direction: column;
-      text-align: left;
-      background: transparent;
-      margin-top: 20px;
-    }
-    .equipment {
-      .loading {
-        height: 200px;
-        background: @white-text-color;
+      align-items: center;
+      .pic-wrap {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         align-items: center;
-        .pic-wrap {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          span {
-            margin-top: 8px;
-            color: @help-text-color;
-          }
+        span {
+          margin-top: 8px;
+          color: @help-text-color;
         }
       }
     }

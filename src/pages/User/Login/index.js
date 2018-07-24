@@ -27,39 +27,52 @@ class Login extends React.PureComponent {
     return _setState;
   };
 
+  validateBeforeLogin = () => {
+    if (!this.state.phone) {
+      alert('错误', '请输入手机号', [{text: '确定'}]);
+      return false;
+    }
+    if (!this.state.password) {
+      alert('错误', '请输入密码', [{text: '确定'}]);
+      return false;
+    }
+    return true;
+  };
+
   onLogin = (e) => {
     e.preventDefault();
-    const {phone, password} = this.state;
-    const trimPhone = phone.replace(/\s+/g, '');
-    reqLogin({
-      username: trimPhone,
-      password
-    })
-      .then(res => {
-        console.log(res);
-        if (res.status === 200) {
-          const data = res.data;
-          const user = new User();
-          user.login(data.access_token);
-          reqRegisterCA({password});
-          this.props.history.replace('/');
-        } else {
-
-        }
+    if (this.validateBeforeLogin()) {
+      const {phone, password} = this.state;
+      const trimPhone = phone.replace(/\s+/g, '');
+      reqLogin({
+        username: trimPhone,
+        password
       })
-      .catch(err => {
-        const data = err.data;
-        let msg = '登录失败';
-        if (data.error_description) {
-          if (data.error_description === 'Bad credentials') {
-            msg = '用户名或密码错误'
+        .then(res => {
+          console.log(res);
+          if (res.status === 200) {
+            const data = res.data;
+            const user = new User();
+            user.login(data.access_token);
+            reqRegisterCA({password});
+            this.props.history.replace('/');
           } else {
-            msg = data.error_description
-          }
-        }
-        alert('错误', msg, [{text: '确定'}]);
-      })
 
+          }
+        })
+        .catch(err => {
+          const data = err.data;
+          let msg = '登录失败';
+          if (data.error_description) {
+            if (data.error_description === 'Bad credentials') {
+              msg = '用户名或密码错误'
+            } else {
+              msg = data.error_description
+            }
+          }
+          alert('错误', msg, [{text: '确定'}]);
+        })
+    }
   };
 
   toRegister = () => {

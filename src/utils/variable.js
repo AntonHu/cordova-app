@@ -4,7 +4,7 @@ const backendServer = 'https://api.thundersdata.com/ebcapp';
 // const backendServer = 'http://47.96.158.229:30135';
 const userServer = 'https://api.thundersdata.com';
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 20;
 // 发电量类型：年/月/日
 const POWER_TYPE = {
   day: 1,

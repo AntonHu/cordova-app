@@ -63,12 +63,14 @@
     "postcss-loader": "2.0.8",
     "promise": "8.0.1",
     "prop-types": "^15.6.1",
+    "pulltorefreshjs": "^0.1.14",
     "qs": "^6.5.2",
     "raf": "3.4.0",
     "react": "^16.4.0",
     "react-dev-utils": "^5.0.1",
     "react-dom": "^16.4.0",
     "react-router-dom": "^4.3.1",
+    "react-touch-loader": "^1.1.2",
     "resolve": "1.6.0",
     "sjcl": "^1.0.7",
     "style-loader": "0.19.0",
@@ -153,8 +155,8 @@
       "cordova-plugin-statusbar": {}
     },
     "platforms": [
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   },
   "devDependencies": {

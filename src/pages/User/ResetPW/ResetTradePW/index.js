@@ -145,7 +145,11 @@ class Comp extends React.Component {
           }
         }])
       } else {
-        alert('错误', '设置交易密码失败', [{
+        let msg = '';
+        if (typeof data.msg === 'string' && data.msg.length > 0) {
+          msg = data.msg
+        }
+        alert('错误', '设置交易密码失败。' + msg, [{
           text: '确定'
         }])
       }

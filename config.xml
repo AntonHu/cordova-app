@@ -45,6 +45,9 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <preference name="CodePushDeploymentKey" value="nzYI83mZ03a1Ta1Qprtpupa-gYf50622c1d1-d19c-494b-a7c7-f4e4d3bc9118" />
+        <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
+            <string>扫码添加设备需要开启相机</string>
+        </edit-config>
     </platform>
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     <preference name="iosPersistentFileLocation" value="Compatibility" />
@@ -68,6 +71,6 @@
         <variable name="APP_KEY" value="fd96956cb315ba658d256156" />
     </plugin>
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
-    <engine name="ios" spec="^4.5.4" />
     <engine name="android" spec="^6.4.0" />
+    <engine name="ios" spec="^4.5.4" />
 </widget>
