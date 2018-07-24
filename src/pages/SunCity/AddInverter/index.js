@@ -222,12 +222,12 @@ class Comp extends React.Component {
       // 设备功率
       const currentPower =
         (receiveData.length > 0 &&
-          decryptData[receiveData.length - 1].power &&
-          decryptData[receiveData.length - 1].power.toFixed(2)) ||
+          receiveData[receiveData.length - 1].power &&
+          receiveData[receiveData.length - 1].power.toFixed(2)) ||
         0;
       // 设备日电量
       let dayElectric = 0;
-      decryptData.forEach(item => {
+      receiveData.forEach(item => {
         dayElectric += item.number;
       });
       let equipmentListObj = getLocalStorage('equipmentListObj');
