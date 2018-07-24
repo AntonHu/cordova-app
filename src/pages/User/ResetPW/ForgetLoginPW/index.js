@@ -58,7 +58,8 @@ class ForgetLoginPW extends React.PureComponent {
     reqSendCode({mobile, type: reqSendCode.MODIFY_TYPE})
       .then(res => {
         console.log(res)
-      })
+      });
+    return true;
   };
 
   render() {

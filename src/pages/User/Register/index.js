@@ -1,7 +1,7 @@
 import React from 'react';
-import {BlueBox, PeakBox, Header} from '../../../components';
+import {BlueBox, PeakBox, Header, ToastNoMask} from '../../../components';
 import {Modal} from 'antd-mobile';
-import {reqSendCode, reqRegister} from '../../../stores/user/request';
+import {reqSendCode, reqRegister, reqExistInfo} from '../../../stores/user/request';
 import BasicPhoneCodePWForm from '../component/BasicPhoneCodePWForm';
 import './style.less';
 
@@ -56,10 +56,40 @@ class Comp extends React.PureComponent {
    * 发送验证码
    */
   sendCode = ({mobile}) => {
-    reqSendCode({mobile, type: reqSendCode.REGISTER_TYPE})
-      .then(res => {
-        console.log(res)
-      })
+    const self = this;
+    return new Promise((resolve, reject) => {
+      const isExist = self.checkIfExist({mobile});
+      if (!isExist) {
+        resolve();
+        reqSendCode({mobile, type: reqSendCode.REGISTER_TYPE})
+          .then(res => {
+            console.log(res)
+          })
+      } else {
+        reject();
+      }
+    });
+  };
+
+  /**
+   * 查询用户是否存在
+   * @param mobile
+   * @returns {Promise.<boolean>}
+   */
+  checkIfExist = async ({mobile}) => {
+    const res = reqExistInfo({username: mobile});
+    const data = res.data || {};
+    if (data.code === 20000) {
+      if (data.result && !data.result.exist) {
+        return false;
+      } else {
+        ToastNoMask('该用户已存在');
+        return true
+      }
+    } else {
+      ToastNoMask('查询用户是否注册出错');
+      return true;
+    }
   };
 
   render() {

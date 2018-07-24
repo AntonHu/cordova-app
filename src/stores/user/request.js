@@ -98,6 +98,21 @@ export const reqSendCode = async ({mobile, type = '0'}) => {
 reqSendCode.REGISTER_TYPE = '0';
 reqSendCode.MODIFY_TYPE = '1';
 
+/**
+ * 注册发送验证码前, 检查用户是否已经存在
+ * @param username
+ * @returns {Promise.<*>}
+ */
+export const reqExistInfo = async ({username}) => {
+  try {
+    // const respnse = await get(`${userServer}/authz/users/existInfo`, {username});
+    const respnse = await get(`http://192.168.1.160:8195/authz/users/existInfo`, {username});
+    return respnse;
+  } catch (err) {
+    throw err.response;
+  }
+};
+
 
 /**
  * 获取个人信息
