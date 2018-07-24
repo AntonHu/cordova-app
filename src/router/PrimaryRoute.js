@@ -12,15 +12,16 @@ import {
   ResetPW,
   ResetTradePW,
   ResetLoginPW,
-  User,
   VerifyID,
   MsgDetail,
-  Introduction
+  Introduction,
+  Agreement
 } from '../pages/User';
 import MyPowerStation from '../pages/SunCity/MyPowerStation';
 import EquipmentInfo from '../pages/SunCity/EquipmentInfo';
 import AddInverter from '../pages/SunCity/AddInverter';
 import SunIntegral from '../pages/Mining/SunIntegral';
+import PointRule from '../pages/Mining/PointRule';
 import { Modal } from 'antd-mobile';
 import { observer, inject } from 'mobx-react';
 import { reqUpdateGeolocation } from '../stores/user/request';
@@ -125,6 +126,7 @@ class PrimaryRoute extends React.Component {
 
         {/* 挖宝 */}
         <Route exact path="/mining/sunIntegral" component={SunIntegral} />
+        <Route exact path="/mining/pointRule" component={PointRule} />
 
         {/* 用户 */}
 
@@ -149,6 +151,7 @@ class PrimaryRoute extends React.Component {
         <Route exact path={'/user/resetLoginPW'} component={ResetLoginPW} />
         <Route exact path={'/user/verifyID/:id'} component={VerifyID} />
         <Route exact path={'/user/introduction'} component={Introduction} />
+        <Route exact path={'/user/agreement'} component={Agreement} />
       </Switch>
     );
   }

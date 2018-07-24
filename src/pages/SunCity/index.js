@@ -612,7 +612,7 @@ class Comp extends React.Component {
         <div className="news">
           <span className="news-title">最新动态</span>
           <span className="help-text">
-              {(lastTrend && lastTrend.length > 0 && lastTrend[0]) || ''}
+              {(lastTrend && lastTrend.length > 0 && lastTrend[0].nickName) || ''}
             </span>
         </div>
         <div className="promote">
