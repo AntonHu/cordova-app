@@ -2,7 +2,13 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { toJS } from 'mobx';
 import { observer, inject } from 'mobx-react';
-import { Title, Picture, Loading, ToastNoMask, EquipmentItem } from '../../components';
+import {
+  Title,
+  Picture,
+  Loading,
+  ToastNoMask,
+  EquipmentItem
+} from '../../components';
 import { NoticeBar, Icon, ActivityIndicator } from 'antd-mobile';
 import { EQUIPMENT_DATA_TYPE } from '../../utils/variable';
 import PullToRefresh from 'pulltorefreshjs';
@@ -17,7 +23,6 @@ import {
   handleAbnormalData,
   isExpire
 } from '../../utils/methods';
-import { getDeviceWidth } from '../../utils/getDevice';
 import './style.less';
 
 /**
@@ -72,7 +77,9 @@ class Comp extends React.Component {
       // 获取我的太阳积分
       this.props.miningStore.fetchBalance({ publicKey: keyPair.publicKey });
       // 获取最新动态
-      this.props.sunCityStore.fetchSCLastTrend();
+      this.props.sunCityStore.fetchSCLastTrend({
+        num: 5
+      });
       // 获取排行
       this.props.miningStore.fetchBalanceRanking({
         publicKey: keyPair.publicKey
@@ -136,13 +143,19 @@ class Comp extends React.Component {
     });
 
     // 获取用户信息
-    const res2 = this.props.userStore.fetchUserInfo({ keyPair, userStore, history });
+    const res2 = this.props.userStore.fetchUserInfo({
+      keyPair,
+      userStore,
+      history
+    });
     promiseArray.push(res1, res2);
 
     // 如果有私钥
     if (keyPair.hasKey) {
       // 获取我的太阳积分
-      const res4 = this.props.miningStore.fetchBalance({publicKey: keyPair.publicKey});
+      const res4 = this.props.miningStore.fetchBalance({
+        publicKey: keyPair.publicKey
+      });
       // 获取排行
       const res5 = this.props.miningStore.fetchBalanceRanking({
         publicKey: keyPair.publicKey
@@ -151,6 +164,10 @@ class Comp extends React.Component {
       const res6 = await this.props.sunCityStore.fetchSCSunIntegral({
         publicKey: keyPair.publicKey
       });
+      // 获取最新动态
+      const res7 = this.props.sunCityStore.fetchSCLastTrend({
+        num: 5
+      });
       // 分割积分数组
       this.spliceArr(
         toJS(this.props.sunCityStore.sunIntegral),
@@ -158,18 +175,22 @@ class Comp extends React.Component {
       );
       // 获取坐标数组
       this.sunIntegralArr.length > 0 &&
-      this.setState({
-        sunCoordinateArr: this.getSunCoordinateArr(this.sunIntegralArr[0])
-      });
+        this.setState({
+          sunCoordinateArr: this.getSunCoordinateArr(this.sunIntegralArr[0])
+        });
 
       // 储存设备列表整理后的数据
       const equipmentListObj = await this.getEquipmentList(keyPair);
-      this.setState({equipmentListObj, loading: false});
+      setLocalStorage(
+        'equipmentListObj',
+        JSON.stringify(equipmentListObj || {})
+      ); // 本地储存所有设备列表
+      this.setState({ equipmentListObj, loading: false });
       // 获取设备，月，年，所有的数据，并缓存
       this.cacheEquipmentData(equipmentListObj);
-      promiseArray.push(res4, res5, res6, equipmentListObj)
+      promiseArray.push(res4, res5, res6, res7, equipmentListObj);
     }
-    return Promise.all(promiseArray)
+    return Promise.all(promiseArray);
   };
 
   /**
@@ -177,16 +198,16 @@ class Comp extends React.Component {
    */
   initPullToRefresh = () => {
     PullToRefresh.init({
-      mainElement: '#page-sunCity-info',// "下拉刷新"把哪个部分包住
-      triggerElement: '#page-sunCity-info',// "下拉刷新"把哪个部分包住
-      onRefresh: this.pullToRefresh,// 下拉刷新的方法，返回一个promise
-      shouldPullToRefresh: function () {
+      mainElement: '#page-sunCity-info', // "下拉刷新"把哪个部分包住
+      triggerElement: '#page-sunCity-info', // "下拉刷新"把哪个部分包住
+      onRefresh: this.pullToRefresh, // 下拉刷新的方法，返回一个promise
+      shouldPullToRefresh: function() {
         // 什么情况下的滚动触发下拉刷新，这个很重要
         // 如果这个页面里有height超过窗口高度的元素
         // 那么应该在这个元素滚动位于顶部的时候，返回true
         const ele = document.getElementById('page-sunCity-info');
         if (ele === null) {
-          return false
+          return false;
         }
         return ele.parentNode.parentNode.scrollTop === 0;
       },
@@ -501,7 +522,9 @@ class Comp extends React.Component {
         })
         .then(result => {
           if (result.code === 200) {
-            miningStore.updateBalance(sunIntegralInfo.amount + miningStore.balance);
+            miningStore.updateBalance(
+              sunIntegralInfo.amount + miningStore.balance
+            );
             if (keyPair.hasKey) {
               // 获取排行
               miningStore.fetchBalanceRanking({
@@ -606,14 +629,21 @@ class Comp extends React.Component {
                 );
               })}
           </div>
-
         </div>
 
-        <div className="news">
-          <span className="news-title">最新动态</span>
-          <span className="help-text">
-              {(lastTrend && lastTrend.length > 0 && lastTrend[0]) || ''}
-            </span>
+        <div className="rend">
+          <span className="rend-title">最新动态</span>
+          <div className="rend-item-wrap">
+            <div className="rend-item">
+              {lastTrend &&
+                lastTrend.length > 0 &&
+                lastTrend.map((item, index) => (
+                  <span key={index} className="help-text">
+                    {`${item.nickName}刚刚收取了${item.value}个太阳积分`}
+                  </span>
+                ))}
+            </div>
+          </div>
         </div>
         <div className="promote">
           <Link to="/user/introduction">
@@ -631,10 +661,11 @@ class Comp extends React.Component {
                     this.props.history.push(
                       `/sunCity/equipmentInfo/${
                         equipmentListObj[equipment].deviceNo
-                        }?source=${
+                      }?source=${
                         equipmentListObj[equipment].source
-                        }&name=${equipment}`
-                    )}
+                      }&name=${equipment}`
+                    )
+                  }
                   currentPower={equipmentListObj[equipment].currentPower}
                   dayElectric={equipmentListObj[equipment].dayElectric}
                   equipmentName={equipment}
@@ -664,7 +695,6 @@ class Comp extends React.Component {
           )}
         </div>
       </div>
-
     );
   }
 }
