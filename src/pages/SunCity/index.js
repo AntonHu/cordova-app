@@ -427,6 +427,8 @@ class Comp extends React.Component {
       });
     }
     const receiveData = toJS(this.props.sunCityStore.equipmentPower);
+    // console.log('dateType==' + dateType);
+    // console.log(receiveData);
     // 日数据不用解密
     if (dateType === EQUIPMENT_DATA_TYPE.DAY) {
       return receiveData || [];
@@ -437,14 +439,14 @@ class Comp extends React.Component {
 
   // 处理获取的解密数据,并排序
   handleDecryptData = async (receiveData, dateType) => {
-    const decryptData = [];
     if (this.props.keyPair.hasKey) {
-      Object.keys(receiveData).forEach(async item => {
+      const decryptData = [];
+      for (let i = 0; i < Object.keys(receiveData).length; i++) {
         let powerInfo;
         try {
           let decryptedItem = await decrypt(
             this.props.keyPair.privateKey,
-            receiveData[item]
+            receiveData[Object.keys(receiveData)[i]]
           );
           // 处理解密后的异常数据
           powerInfo = decryptedItem && handleAbnormalData(decryptedItem);
@@ -454,22 +456,22 @@ class Comp extends React.Component {
         if (powerInfo) {
           const value = +(powerInfo.maxEnergy - powerInfo.minEnergy).toFixed(2);
           decryptData.push({
-            time: item,
+            time: Object.keys(receiveData)[i],
             number: value,
             maxValue: powerInfo.maxEnergy && +powerInfo.maxEnergy,
             power: powerInfo.power || ''
           });
         }
-      });
-    }
-    const decryptDataSort = decryptData.sort((pre, cur) => {
-      if (pre.time.indexOf('-') > 0 && cur.time.indexOf('-') > 0) {
-        return Date.parse(pre.time) - Date.parse(cur.time);
-      } else {
-        return pre.time - cur.time;
       }
-    });
-    return decryptDataSort;
+      const decryptDataSort = decryptData.sort((pre, cur) => {
+        if (pre.time.indexOf('-') > 0 && cur.time.indexOf('-') > 0) {
+          return Date.parse(pre.time) - Date.parse(cur.time);
+        } else {
+          return pre.time - cur.time;
+        }
+      });
+      return decryptDataSort;
+    }
   };
 
   componentWillUnmount() {
