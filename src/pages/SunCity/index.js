@@ -13,7 +13,8 @@ import {
 import {
   decrypt,
   sliceLongString,
-  handleAbnormalData
+  handleAbnormalData,
+  isExpire
 } from '../../utils/methods';
 import { getDeviceWidth } from '../../utils/getDevice';
 import './style.less';
@@ -66,6 +67,8 @@ class Comp extends React.Component {
     if (keyPair.hasKey) {
       // 获取我的太阳积分
       this.props.miningStore.fetchBalance({ publicKey: keyPair.publicKey });
+      // 获取最新动态
+      this.props.sunCityStore.fetchSCLastTrend();
       // 获取排行
       this.props.miningStore.fetchBalanceRanking({
         publicKey: keyPair.publicKey
@@ -86,7 +89,7 @@ class Comp extends React.Component {
         });
 
       // 判断数据是否过期，储存设备列表整理后的数据
-      if (this.isExpire()) {
+      if (isExpire(1, 'stationExpireTime')) {
         const equipmentListObj = await this.getEquipmentList(keyPair);
         setLocalStorage(
           'equipmentListObj',
@@ -132,7 +135,7 @@ class Comp extends React.Component {
   // 获取设备，（月，年，所有）的数据，并缓存
   async cacheEquipmentData(equipmentListObj) {
     // 储存电站数据,EQUIPMENT_DATA_TYPE.MONTH-月，EQUIPMENT_DATA_TYPE.YEAR-年，EQUIPMENT_DATA_TYPE.ALL-全部
-    if (this.isExpire() && equipmentListObj) {
+    if (isExpire(1, 'stationExpireTime') && equipmentListObj) {
       // 请求电站每月发电数据，本地储存
       const monthStationData = await this.equipmentDataIntegrate(
         equipmentListObj,
@@ -157,14 +160,6 @@ class Comp extends React.Component {
       setLocalStorage('stationExpireTime', new Date().getTime()); // 本地储存电站数据过期时间
     }
   }
-
-  // 检测数据是否过期
-  isExpire = () => {
-    return (
-      new Date().getTime() - Number(getLocalStorage('stationExpireTime')) >
-      3 * 60 * 60 * 1000
-    ); // 设置三个小时的过期时间
-  };
 
   // 为每个添加设备的功率和日电量
   async addEquipmentPower(equipmentListObj, dateType) {
@@ -341,7 +336,7 @@ class Comp extends React.Component {
     return decryptData;
   }
 
-  // 处理获取的解密数据
+  // 处理获取的解密数据,并排序
   handleDecryptData = (receiveData, dateType) => {
     const decryptData = [];
     if (this.props.keyPair.hasKey) {
@@ -368,7 +363,14 @@ class Comp extends React.Component {
         }
       });
     }
-    return decryptData;
+    const decryptDataSort = decryptData.sort((pre, cur) => {
+      if (pre.time.indexOf('-') > 0 && cur.time.indexOf('-') > 0) {
+        return Date.parse(pre.time) - Date.parse(cur.time);
+      } else {
+        return pre.time - cur.time;
+      }
+    });
+    return decryptDataSort;
   };
 
   componentWillUnmount() {
@@ -463,7 +465,7 @@ class Comp extends React.Component {
     const { avatar, nickName } = userInfo;
     const { balance, balanceRanking } = this.props.miningStore;
     const { equipmentListObj } = this.state;
-    const lastNews = toJS(this.props.sunCityStore.lastNews);
+    const { lastNews, lastTrend } = this.props.sunCityStore;
     const equipmentNameList = Object.keys(equipmentListObj);
     return (
       <div className={'page-sunCity-info'}>
@@ -528,7 +530,9 @@ class Comp extends React.Component {
           </div>
           <div className="news">
             <span className="news-title">最新动态</span>
-            <span className="help-text">雷神刚刚挖宝10个太阳积分~</span>
+            <span className="help-text">
+              {(lastTrend && lastTrend.length > 0 && lastTrend[0]) || ''}
+            </span>
           </div>
           <div className="promote">
             <Link to="/user/introduction">

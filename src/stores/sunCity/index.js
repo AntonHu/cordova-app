@@ -3,7 +3,7 @@ import {
   fetchNews,
   fetchSunIntegral,
   fetchGetSunIntegral,
-  fetchPowerstationData,
+  fetchLastTrend,
   fetchEquipmentList,
   fetchEquipmentInfo,
   fetchEquipmentPower,
@@ -14,6 +14,7 @@ import {
 
 class SunCityStore {
   @observable lastNews;
+  @observable lastTrend;
   @observable sunIntegral;
   @observable powerstationData;
   @observable equipmentList;
@@ -69,16 +70,16 @@ class SunCityStore {
     return result;
   };
 
-  // 获取电站数据
+  // 获取最新动态
   @action
-  fetchSCPowerstationData = async params => {
+  fetchSCLastTrend = async params => {
     let result = {};
     try {
-      // result = await fetchPowerstationData(params);
+      result = await fetchLastTrend(params);
       runInAction(() => {
-        // if (result.responseCode === 200) {
-        //   this.powerstationData = order.total;
-        // }
+        if (result.code === 200) {
+          this.lastTrend = result.data;
+        }
       });
     } catch (err) {
       console.log(err);
