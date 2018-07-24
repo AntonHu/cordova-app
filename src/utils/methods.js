@@ -239,5 +239,8 @@ export const handleAbnormalData = strData => {
  */
 export const isExpire = (hours, type) => {
   hours = isNaN(Number(hours)) ? 1 : Number(hours);
+  if (!getLocalStorage(type)) {
+    return false;
+  }
   return new Date().getTime() - getLocalStorage(type) > hours * 60 * 60 * 1000;
 };
