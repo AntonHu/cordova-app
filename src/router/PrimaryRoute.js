@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import {Switch, Route, Redirect} from 'react-router-dom';
 import Home from '../pages/Home';
 import {
   About,
@@ -12,20 +12,21 @@ import {
   ResetPW,
   ResetTradePW,
   ResetLoginPW,
-  User,
   VerifyID,
   MsgDetail,
-  Introduction
+  Introduction,
+  Agreement
 } from '../pages/User';
 import MyPowerStation from '../pages/SunCity/MyPowerStation';
 import EquipmentInfo from '../pages/SunCity/EquipmentInfo';
 import AddInverter from '../pages/SunCity/AddInverter';
 import SunIntegral from '../pages/Mining/SunIntegral';
-import { Modal } from 'antd-mobile';
-import { observer, inject } from 'mobx-react';
-import { reqUpdateGeolocation } from '../stores/user/request';
-import { ToastNoMask } from '../components';
-import { setLocalStorage } from '../utils/storage';
+import PointRule from '../pages/Mining/PointRule';
+import {Modal} from 'antd-mobile';
+import {observer, inject} from 'mobx-react';
+import {reqUpdateGeolocation} from '../stores/user/request';
+import {ToastNoMask} from '../components';
+import {setLocalStorage} from '../utils/storage';
 
 const alert = Modal.alert;
 
@@ -43,7 +44,7 @@ function getAddress(longitude, latitude) {
 }
 
 function onSuccess(publicKey) {
-  return function(position) {
+  return function (position) {
     ToastNoMask('获取坐标成功');
     getAddress(position.coords.longitude, position.coords.latitude);
     reqUpdateGeolocation({
@@ -73,17 +74,20 @@ class PrimaryRoute extends React.Component {
     super(props);
     const hasKey = props.keyPair.checkKeyPairExist();
     if (!hasKey) {
-      alert('该账号没有私钥', '这将导致app大部分功能不可用。是否现在去生成？', [
-        {
-          text: '再等等'
-        },
-        {
-          text: '马上去',
-          onPress: () => {
-            props.history.push('/user/myData');
+      alert(
+        '该账号没有私钥',
+        '这将导致app大部分功能不可用，如查看逆变器、添加逆变器、收取太阳积分、查看太阳积分等。是否现在去生成？',
+        [
+          {
+            text: '再等等'
+          },
+          {
+            text: '马上去',
+            onPress: () => {
+              props.history.push('/user/myData');
+            }
           }
-        }
-      ]);
+        ]);
     }
   }
 
@@ -109,46 +113,48 @@ class PrimaryRoute extends React.Component {
   render() {
     return (
       <Switch>
-        <Route exact path={'/'} component={Home} />
-        <Route exact path={'/sunCity'} component={Home} />
-        <Route exact path={'/mining'} component={Home} />
-        <Route exact path={'/user'} component={Home} />
-        <Route exact path={'/apply'} component={Home} />
+        <Route exact path={'/'} component={Home}/>
+        <Route exact path={'/sunCity'} component={Home}/>
+        <Route exact path={'/mining'} component={Home}/>
+        <Route exact path={'/user'} component={Home}/>
+        <Route exact path={'/apply'} component={Home}/>
         {/* 太阳城 */}
-        <Route exact path="/sunCity/powerStation" component={MyPowerStation} />
+        <Route exact path="/sunCity/powerStation" component={MyPowerStation}/>
         <Route
           exact
           path="/sunCity/equipmentInfo/:id"
           component={EquipmentInfo}
         />
-        <Route exact path="/sunCity/addInverter" component={AddInverter} />
+        <Route exact path="/sunCity/addInverter" component={AddInverter}/>
 
         {/* 挖宝 */}
-        <Route exact path="/mining/sunIntegral" component={SunIntegral} />
+        <Route exact path="/mining/sunIntegral" component={SunIntegral}/>
+        <Route exact path="/mining/pointRule" component={PointRule}/>
 
         {/* 用户 */}
 
-        <Route exact path={'/user/about'} component={About} />
-        <Route exact path={`/user/accountSetting`} component={AccountSetting} />
-        <Route exact path={'/user/msgCenter'} component={MsgCenter} />
+        <Route exact path={'/user/about'} component={About}/>
+        <Route exact path={`/user/accountSetting`} component={AccountSetting}/>
+        <Route exact path={'/user/msgCenter'} component={MsgCenter}/>
         <Route
           exact
           path={'/user/msgDetail/:messageId'}
           component={MsgDetail}
         />
-        <Route exact path={'/user/myData'} component={MyData} />
-        <Route exact path={'/user/myStation'} component={MyStation} />
-        <Route exact path={'/user/personalInfo'} component={PersonalInfo} />
+        <Route exact path={'/user/myData'} component={MyData}/>
+        <Route exact path={'/user/myStation'} component={MyStation}/>
+        <Route exact path={'/user/personalInfo'} component={PersonalInfo}/>
         <Route
           exact
           path={'/user/personalNickname/:id'}
           component={PersonalNickname}
         />
-        <Route exact path={'/user/resetPW'} component={ResetPW} />
-        <Route exact path={'/user/resetTradePW'} component={ResetTradePW} />
-        <Route exact path={'/user/resetLoginPW'} component={ResetLoginPW} />
-        <Route exact path={'/user/verifyID/:id'} component={VerifyID} />
-        <Route exact path={'/user/introduction'} component={Introduction} />
+        <Route exact path={'/user/resetPW'} component={ResetPW}/>
+        <Route exact path={'/user/resetTradePW'} component={ResetTradePW}/>
+        <Route exact path={'/user/resetLoginPW'} component={ResetLoginPW}/>
+        <Route exact path={'/user/verifyID/:id'} component={VerifyID}/>
+        <Route exact path={'/user/introduction'} component={Introduction}/>
+        <Route exact path={'/user/agreement'} component={Agreement}/>
       </Switch>
     );
   }

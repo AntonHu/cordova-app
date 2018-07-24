@@ -630,7 +630,6 @@ class Comp extends React.Component {
               })}
           </div>
         </div>
-
         <div className="rend">
           <span className="rend-title">最新动态</span>
           <div className="rend-item-wrap">

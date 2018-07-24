@@ -48,7 +48,7 @@ class SunCityStore {
       result = await fetchSunIntegral(params);
       runInAction(() => {
         if (result.code === 200) {
-          this.sunIntegral = JSON.parse(result.data).filter(item => !item.pick);
+          this.sunIntegral = result.data.filter(item => !item.pick);
         }
       });
     } catch (err) {

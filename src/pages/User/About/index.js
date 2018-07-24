@@ -50,7 +50,7 @@ const ListData = [
     text: '用户协议',
     horizontal: true,
     onClick: function () {
-      alert('协议', '暂无用户协议', [{text: '好的'}])
+      this.props.history.push('/user/agreement');
     }
   },
   {

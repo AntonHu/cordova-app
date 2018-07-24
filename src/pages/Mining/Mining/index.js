@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import { Title, PageWithHeader, Picture, Rank } from '../../../components';
 import { Icon, Tabs, WhiteSpace } from 'antd-mobile';
@@ -102,7 +102,13 @@ class Comp extends React.Component {
     const { avatar } = userInfo;
     return (
       <div className={'page-mining'} id="page-mining">
-        <PageWithHeader leftComponent={null} title={'挖宝池'}  >
+        <PageWithHeader
+          leftComponent={null}
+          title={'挖宝池'}
+          rightComponent={<Link to="/mining/pointRule">
+            <span className="h4 main-text">积分规则</span>
+          </Link>}
+        >
           <div id="mining-refresh" onScroll={e => console.log(e)}>
           <div className="sun-info">
             <div className="my-sun">

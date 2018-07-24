@@ -14,7 +14,6 @@ const showError = (text) => {
 };
 
 
-
 /**
  * 注册和忘记密码的共用部分
  *
@@ -153,14 +152,24 @@ class BasicPhoneCodePWForm extends React.PureComponent {
 
   /**
    * 发送验证码
+   * 如果sendCodeMethod返回的是一个promise，那么promise.then里面开始计时
+   * 如果sendCodeMethod返回的是非false，那么开始计时
+   * 如果sendCodeMethod返回的是undefined或者false，那么不计时
    */
   sendCode = () => {
     const {sendCodeMethod} = this.props;
     if (this.validateBeforeSendCode()) {
       const {phone} = this.state;
-      this.countdown.startCounting();
       if (sendCodeMethod) {
-        sendCodeMethod({mobile: clearSpace(phone)})
+        const res = sendCodeMethod({mobile: clearSpace(phone)});
+        if (res.then) {
+          res.then(() => {
+            this.countdown.startCounting();
+          })
+        } else if (res) {
+          this.countdown.startCounting();
+        }
+
       }
     }
   };
@@ -177,9 +186,6 @@ class BasicPhoneCodePWForm extends React.PureComponent {
     }
     return true;
   };
-
-  countdownCallBack = (str) => {};
-
 
   onModalPress = () => {
     this.hideModal();
