@@ -84,20 +84,8 @@ class Comp extends React.Component {
       this.props.miningStore.fetchBalanceRanking({
         publicKey: keyPair.publicKey
       });
-      // 获取积分列表
-      await this.props.sunCityStore.fetchSCSunIntegral({
-        publicKey: keyPair.publicKey
-      });
-      // 分割积分数组
-      this.spliceArr(
-        toJS(this.props.sunCityStore.sunIntegral),
-        this.sunIntegralArr
-      );
-      // 获取坐标数组
-      this.sunIntegralArr.length > 0 &&
-        this.setState({
-          sunCoordinateArr: this.getSunCoordinateArr(this.sunIntegralArr[0])
-        });
+      // 获取太阳积分
+      this.getSunFromRemote();
 
       // 判断数据是否过期，储存设备列表整理后的数据
       if (isExpire(1, 'stationExpireTime')) {
@@ -119,6 +107,29 @@ class Comp extends React.Component {
       });
     }
   }
+
+  /**
+   * 从服务器获取积分列表，并且同步到state
+   * @returns {Promise.<void>}
+   */
+  getSunFromRemote = async () => {
+    const { keyPair, userStore, history } = this.props;
+    // 获取积分列表
+    const res = await this.props.sunCityStore.fetchSCSunIntegral({
+      publicKey: keyPair.publicKey
+    });
+    // 分割积分数组
+    this.spliceArr(
+      toJS(this.props.sunCityStore.sunIntegral),
+      this.sunIntegralArr
+    );
+    // 获取坐标数组
+    this.sunIntegralArr.length > 0 &&
+    this.setState({
+      sunCoordinateArr: this.getSunCoordinateArr(this.sunIntegralArr[0])
+    });
+    return res;
+  };
 
   deleteAllCache = () => {
     // 若是没有私钥，清空缓存
@@ -161,23 +172,11 @@ class Comp extends React.Component {
         publicKey: keyPair.publicKey
       });
       // 获取积分列表
-      const res6 = await this.props.sunCityStore.fetchSCSunIntegral({
-        publicKey: keyPair.publicKey
-      });
+      const res6 = await this.getSunFromRemote();
       // 获取最新动态
       const res7 = this.props.sunCityStore.fetchSCLastTrend({
         num: 5
       });
-      // 分割积分数组
-      this.spliceArr(
-        toJS(this.props.sunCityStore.sunIntegral),
-        this.sunIntegralArr
-      );
-      // 获取坐标数组
-      this.sunIntegralArr.length > 0 &&
-        this.setState({
-          sunCoordinateArr: this.getSunCoordinateArr(this.sunIntegralArr[0])
-        });
 
       // 储存设备列表整理后的数据
       const equipmentListObj = await this.getEquipmentList(keyPair);
@@ -538,19 +537,26 @@ class Comp extends React.Component {
             }
             pickNumber += 1;
             this.selectSunNode.classList.add('remove');
-            // 每删除10个，重置一次，并进入下一个
-            if (pickNumber && pickNumber % 10 === 0) {
-              this.timeoutID = setTimeout(() => {
-                document
-                  .querySelectorAll('.remove')
-                  .forEach(item => item.classList.remove('remove'));
-                this.setState({
-                  sunCoordinateArr: this.getSunCoordinateArr(
-                    this.sunIntegralArr[pickNumber / 10]
-                  )
-                });
-              }, 1000);
+            // 如果pickNumber与目前太阳总数相等
+            if (pickNumber === this.state.sunCoordinateArr.length) {
+              pickNumber = 0;
+              setTimeout(() => {
+                this.getSunFromRemote();
+              }, 2000);
             }
+            // 每删除10个，重置一次，并进入下一个
+            // if (pickNumber && pickNumber % 10 === 0) {
+            //   this.timeoutID = setTimeout(() => {
+            //     document
+            //       .querySelectorAll('.remove')
+            //       .forEach(item => item.classList.remove('remove'));
+            //     this.setState({
+            //       sunCoordinateArr: this.getSunCoordinateArr(
+            //         this.sunIntegralArr[pickNumber / 10]
+            //       )
+            //     });
+            //   }, 1000);
+            // }
           } else {
             ToastNoMask(`收取失败。${result.msg || ''}`);
           }
