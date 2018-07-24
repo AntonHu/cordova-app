@@ -21,7 +21,6 @@ import {
 } from '../../../utils/storage';
 import { fetchAddInverterAT } from '../../../stores/sunCity/request';
 import { EQUIPMENT_DATA_TYPE } from '../../../utils/variable';
-import { decrypt } from '../../../utils/methods';
 import './style.less';
 
 const AOTAI = 'at';
@@ -261,35 +260,6 @@ class Comp extends React.Component {
       equipmentListObj[name].dayElectric = dayElectric.toFixed(2) || 0;
       setLocalStorage('equipmentListObj', JSON.stringify(equipmentListObj));
     }
-  };
-
-  // 处理获取的解密数据
-  handleDecryptData = async receiveData => {
-    const decryptData = [];
-    if (this.props.keyPair.hasKey) {
-      Object.keys(receiveData).forEach(async item => {
-        let powerInfo;
-        try {
-          const decryptedItem = await decrypt(
-            this.props.keyPair.privateKey,
-            receiveData[item]
-          );
-          powerInfo = decryptedItem && JSON.parse(decryptedItem);
-        } catch (err) {
-          console.log(err);
-        }
-        if (powerInfo) {
-          const value = +(powerInfo.maxEnergy - powerInfo.minEnergy).toFixed(2);
-          decryptData.push({
-            time: item,
-            number: value,
-            maxValue: powerInfo.maxEnergy && +powerInfo.maxEnergy,
-            power: powerInfo.power || ''
-          });
-        }
-      });
-    }
-    return decryptData;
   };
 
   onModalPress = () => {
