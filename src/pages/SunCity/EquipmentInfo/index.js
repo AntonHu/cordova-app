@@ -272,7 +272,7 @@ class Comp extends React.Component {
     });
     const defs = {
       time: {
-        tickCount: 4,
+        tickCount: 8,
         range: [0, 1]
       },
       number: {
