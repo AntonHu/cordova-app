@@ -120,16 +120,19 @@ class Comp extends React.Component {
       // 设备功率
       const currentPower =
         (decryptData.length > 0 &&
-          decryptData[decryptData.length - 1].power &&
-          decryptData[decryptData.length - 1].power.toFixed(2)) ||
+          decryptData[decryptData.length - 1].totalPower &&
+          decryptData[decryptData.length - 1].totalPower.toFixed(2)) ||
         0;
+
       // 设备日电量
-      let dayElectric = 0;
-      decryptData.forEach(item => {
-        dayElectric += item.number;
-      });
+      const dayElectric =
+        (decryptData.length > 0 &&
+          decryptData[decryptData.length - 1].todayEnergy &&
+          decryptData[decryptData.length - 1].todayEnergy.toFixed(2)) ||
+        0;
+      // 电站日电量
       equipmentListObj[name].currentPower = currentPower || 0; // 设备功率
-      equipmentListObj[name].dayElectric = dayElectric.toFixed(2) || 0; // 设备日电量
+      equipmentListObj[name].dayElectric = dayElectric || 0; // 设备日电量
     }
     return equipmentListObj;
   }
