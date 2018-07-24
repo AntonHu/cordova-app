@@ -166,15 +166,14 @@ class Comp extends React.Component {
 
   // 处理获取的解密数据
   handleDecryptData = async (receiveData, dateType) => {
-    const data = [];
     if (this.props.keyPair.hasKey) {
-      Object.keys(receiveData).forEach(async item => {
-        // 后端数据可能有问题，加一层处理
+      const data = [];
+      for (let i = 0; i < Object.keys(receiveData).length; i++) {
         let powerInfo;
         try {
           let decryptedItem = await decrypt(
             this.props.keyPair.privateKey,
-            receiveData[item]
+            receiveData[Object.keys(receiveData)[i]]
           );
           // 处理解密后的异常数据
           powerInfo = decryptedItem && handleAbnormalData(decryptedItem);
@@ -183,25 +182,23 @@ class Comp extends React.Component {
         }
         if (powerInfo) {
           const value = +(powerInfo.maxEnergy - powerInfo.minEnergy).toFixed(2);
-          const power = +(powerInfo.power && powerInfo.power.toFixed(2)) || 0;
           data.push({
-            time: item,
-            number: dateType === EQUIPMENT_DATA_TYPE.DAY ? power : value,
-            electric: value || 0,
+            time: Object.keys(receiveData)[i],
+            number: value,
             maxValue: powerInfo.maxEnergy && +powerInfo.maxEnergy,
-            power: power
+            power: powerInfo.power || ''
           });
         }
-      });
-    }
-    const sortData = data.sort((pre, cur) => {
-      if (pre.time.indexOf('-') > 0 && cur.time.indexOf('-') > 0) {
-        return Date.parse(pre.time) - Date.parse(cur.time);
-      } else {
-        return pre.time - cur.time;
       }
-    });
-    return sortData;
+      const sortData = data.sort((pre, cur) => {
+        if (pre.time.indexOf('-') > 0 && cur.time.indexOf('-') > 0) {
+          return Date.parse(pre.time) - Date.parse(cur.time);
+        } else {
+          return pre.time - cur.time;
+        }
+      });
+      return sortData;
+    }
   };
 
   // 绘制发电环图

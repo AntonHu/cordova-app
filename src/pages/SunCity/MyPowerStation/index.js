@@ -10,7 +10,7 @@ import {
   EquipmentItem
 } from '../../../components';
 import { Icon, ActivityIndicator } from 'antd-mobile';
-import { decrypt } from '../../../utils/methods';
+import { decrypt, handleAbnormalData } from '../../../utils/methods';
 import { EQUIPMENT_DATA_TYPE } from '../../../utils/variable';
 
 import F2 from '@antv/f2';
@@ -167,32 +167,39 @@ class Comp extends React.Component {
 
   // 处理获取的解密数据
   handleDecryptData = async receiveData => {
-    const decryptData = [];
     if (this.props.keyPair.hasKey) {
-      Object.keys(receiveData).forEach(async item => {
+      const decryptData = [];
+      for (let i = 0; i < Object.keys(receiveData).length; i++) {
         let powerInfo;
         try {
-          const decryptItem = await decrypt(
+          let decryptedItem = await decrypt(
             this.props.keyPair.privateKey,
-            receiveData[item]
+            receiveData[Object.keys(receiveData)[i]]
           );
-          powerInfo = decryptItem && JSON.parse(decryptItem);
+          // 处理解密后的异常数据
+          powerInfo = decryptedItem && handleAbnormalData(decryptedItem);
         } catch (err) {
           console.log(err);
         }
         if (powerInfo) {
           const value = +(powerInfo.maxEnergy - powerInfo.minEnergy).toFixed(2);
           decryptData.push({
-            time: item,
+            time: Object.keys(receiveData)[i],
             number: value,
             maxValue: powerInfo.maxEnergy && +powerInfo.maxEnergy,
             power: powerInfo.power || ''
           });
         }
+      }
+      const decryptDataSort = decryptData.sort((pre, cur) => {
+        if (pre.time.indexOf('-') > 0 && cur.time.indexOf('-') > 0) {
+          return Date.parse(pre.time) - Date.parse(cur.time);
+        } else {
+          return pre.time - cur.time;
+        }
       });
+      return decryptDataSort;
     }
-
-    return decryptData;
   };
 
   // 初始化柱形图
