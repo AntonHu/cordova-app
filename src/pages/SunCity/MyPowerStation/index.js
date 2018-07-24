@@ -43,7 +43,7 @@ class Comp extends React.Component {
       cityName: city
     });
     const { keyPair } = this.props;
-    let equipmentListObj = {};
+    let equipmentListObj = this.state.equipmentListObj;
     if (keyPair.hasKey) {
       // 获取设备列表
       if (!getLocalStorage('equipmentListObj')) {
@@ -68,7 +68,7 @@ class Comp extends React.Component {
         });
       }
 
-      // 获取本地储存的 （月，年，所有） 的数据
+      // 获取本地储存的 （天，月，年，所有） 的数据
       const cacheEquipmentData = this.getCacheEquipmentData();
       this.setState({
         ...cacheEquipmentData,
@@ -84,7 +84,7 @@ class Comp extends React.Component {
     }
   }
 
-  // 获取本地储存的 （月，年，所有） 的数据
+  // 获取本地储存的 （天，月，年，所有） 的数据
   getCacheEquipmentData = () => {
     const dayStationData = JSON.parse(getLocalStorage('dayStationData')) || []; // 获取本地储存每天发电数据
     const monthStationData =
