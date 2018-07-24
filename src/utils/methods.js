@@ -233,10 +233,11 @@ export const handleAbnormalData = strData => {
 
 /**
  * 检测数据是否过期
- * @param hours Number
+ * @param hours Number 默认为 1
  * @param type String
  * @returns {boolean}
  */
 export const isExpire = (hours, type) => {
+  hours = isNaN(Number(hours)) ? 1 : Number(hours);
   return new Date().getTime() - getLocalStorage(type) > hours * 60 * 60 * 1000;
 };
