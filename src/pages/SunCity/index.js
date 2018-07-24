@@ -174,11 +174,18 @@ class Comp extends React.Component {
    */
   initPullToRefresh = () => {
     PullToRefresh.init({
-      mainElement: '#page-sunCity-info',
-      triggerElement: '#page-sunCity-info',
-      onRefresh: this.pullToRefresh,
+      mainElement: '#page-sunCity-info',// "下拉刷新"把哪个部分包住
+      triggerElement: '#page-sunCity-info',// "下拉刷新"把哪个部分包住
+      onRefresh: this.pullToRefresh,// 下拉刷新的方法，返回一个promise
       shouldPullToRefresh: function () {
-        return document.getElementById('page-sunCity-info').parentNode.parentNode.scrollTop === 0;
+        // 什么情况下的滚动触发下拉刷新，这个很重要
+        // 如果这个页面里有height超过窗口高度的元素
+        // 那么应该在这个元素滚动位于顶部的时候，返回true
+        const ele = document.getElementById('page-sunCity-info');
+        if (ele === null) {
+          return false
+        }
+        return ele.parentNode.parentNode.scrollTop === 0;
       },
       instructionsPullToRefresh: '下拉刷新',
       instructionsReleaseToRefresh: '松开刷新',
@@ -445,6 +452,7 @@ class Comp extends React.Component {
 
   componentWillUnmount() {
     this.timeoutID = null;
+    // 清除监听事件，重要。
     PullToRefresh.destroyAll();
   }
 
