@@ -187,10 +187,6 @@ class BasicPhoneCodePWForm extends React.PureComponent {
     return true;
   };
 
-  countdownCallBack = (str) => {
-  };
-
-
   onModalPress = () => {
     this.hideModal();
     const {popupProps} = this.props;
