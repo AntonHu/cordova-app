@@ -432,6 +432,10 @@ class Comp extends React.Component {
       });
     }
     const receiveData = toJS(this.props.sunCityStore.equipmentPower);
+    // 日数据不用解密
+    if (dateType === EQUIPMENT_DATA_TYPE.DAY) {
+      return receiveData;
+    }
     const decryptData = await this.handleDecryptData(receiveData, dateType);
     return decryptData;
   }
