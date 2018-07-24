@@ -649,7 +649,7 @@ class Comp extends React.Component {
                 lastTrend.length > 0 &&
                 lastTrend.map((item, index) => (
                   <span key={index} className="help-text">
-                    {`${item.nickName}刚刚收取了${item.value}个太阳积分`}
+                    {`${item.nickName}收取了${item.value}个太阳积分`}
                   </span>
                 ))}
             </div>

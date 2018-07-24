@@ -45,7 +45,7 @@ function getAddress(longitude, latitude) {
 
 function onSuccess(publicKey) {
   return function (position) {
-    ToastNoMask('获取坐标成功');
+    // ToastNoMask('获取坐标成功');
     getAddress(position.coords.longitude, position.coords.latitude);
     reqUpdateGeolocation({
       rectangle: position.coords.latitude + ',' + position.coords.longitude,
@@ -53,18 +53,18 @@ function onSuccess(publicKey) {
     })
       .then(res => {
         console.log(res);
-        ToastNoMask('上传坐标成功');
+        // ToastNoMask('上传坐标成功');
       })
       .catch(err => {
-        console.log('上传坐标失败');
+        // console.log('上传坐标失败');
         console.log(JSON.stringify(err.response));
-        ToastNoMask('上传坐标失败');
+        // ToastNoMask('上传坐标失败');
       });
   };
 }
 
 function onError(error) {
-  ToastNoMask('获取坐标失败');
+  // ToastNoMask('获取坐标失败');
 }
 
 @inject('keyPair')
