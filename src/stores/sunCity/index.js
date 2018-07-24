@@ -1,4 +1,4 @@
-import { observable, action, runInAction } from 'mobx';
+import {observable, action, runInAction} from 'mobx';
 import {
   fetchNews,
   fetchSunIntegral,
@@ -22,11 +22,20 @@ class SunCityStore {
   @observable equipmentListObj = {};
   @observable equipmentPower = {};
   @observable inverterList = [];
-  @observable weatherInfo = { type: '' };
+  @observable weatherInfo = {type: ''};
 
   @action
   resetStore = () => {
-
+    this.lastNews = {
+      title: '',
+      content: ''
+    };
+    this.lastTrend = [];
+    this.sunIntegral = [];
+    this.equipmentListObj = {};
+    this.equipmentPower = {};
+    this.inverterList = [];
+    this.weatherInfo = {type: ''};
   };
 
   // 获取最新公告
@@ -69,7 +78,8 @@ class SunCityStore {
     let result = {};
     try {
       result = await fetchGetSunIntegral(params);
-      runInAction(() => {});
+      runInAction(() => {
+      });
     } catch (err) {
       console.log(err);
     }
@@ -149,7 +159,8 @@ class SunCityStore {
     let result = {};
     try {
       result = await fetchAddInverter(params);
-      runInAction(() => {});
+      runInAction(() => {
+      });
     } catch (err) {
       console.log(err);
     }
