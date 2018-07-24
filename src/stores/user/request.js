@@ -105,8 +105,7 @@ reqSendCode.MODIFY_TYPE = '1';
  */
 export const reqExistInfo = async ({username}) => {
   try {
-    // const respnse = await get(`${userServer}/authz/users/existInfo`, {username});
-    const respnse = await get(`http://192.168.1.160:8195/authz/users/existInfo`, {username});
+    const respnse = await get(`${userServer}/authz/users/existInfo`, {username});
     return respnse;
   } catch (err) {
     throw err.response;
