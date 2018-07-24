@@ -145,6 +145,9 @@ class Comp extends React.Component {
     }
 
     const receiveData = toJS(this.props.sunCityStore.equipmentPower);
+    if (dateType === EQUIPMENT_DATA_TYPE.DAY) {
+      return receiveData || [];
+    }
     const decryptData =
       (receiveData && await this.handleDecryptData(receiveData, dateType)) || [];
     return decryptData;

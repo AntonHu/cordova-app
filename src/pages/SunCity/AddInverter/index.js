@@ -218,13 +218,12 @@ class Comp extends React.Component {
         dateType
       });
 
-      const receiveData = toJS(this.props.sunCityStore.equipmentPower);
-      const decryptData = await this.handleDecryptData(receiveData);
+      const receiveData = toJS(this.props.sunCityStore.equipmentPower) || [];
       // 设备功率
       const currentPower =
-        (decryptData.length > 0 &&
-          decryptData[decryptData.length - 1].power &&
-          decryptData[decryptData.length - 1].power.toFixed(2)) ||
+        (receiveData.length > 0 &&
+          decryptData[receiveData.length - 1].power &&
+          decryptData[receiveData.length - 1].power.toFixed(2)) ||
         0;
       // 设备日电量
       let dayElectric = 0;

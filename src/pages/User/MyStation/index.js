@@ -4,6 +4,7 @@ import { observer, inject } from 'mobx-react';
 import { PageWithHeader, Picture, EquipmentItem } from '../../../components';
 import { Icon } from 'antd-mobile';
 import { decrypt } from '../../../utils/methods';
+import {EQUIPMENT_DATA_TYPE} from '../../../utils/variable';
 import './style.less';
 
 import { getLocalStorage, setLocalStorage } from '../../../utils/storage';
@@ -88,6 +89,9 @@ class Comp extends React.Component {
       });
     }
     const receiveData = toJS(this.props.sunCityStore.equipmentPower);
+    if (dateType === EQUIPMENT_DATA_TYPE.DAY) {
+      return receiveData || [];
+    }
     const decryptData = await this.handleDecryptData(receiveData);
     return decryptData;
   }
