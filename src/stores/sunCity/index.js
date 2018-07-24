@@ -5,7 +5,6 @@ import {
   fetchGetSunIntegral,
   fetchLastTrend,
   fetchEquipmentList,
-  fetchEquipmentInfo,
   fetchEquipmentPower,
   fetchInverters,
   fetchAddInverter,
@@ -13,15 +12,17 @@ import {
 } from './request';
 
 class SunCityStore {
-  @observable lastNews;
-  @observable lastTrend;
-  @observable sunIntegral;
-  @observable powerstationData;
-  @observable equipmentList;
-  @observable equipmentInfo;
-  @observable equipmentPower;
-  @observable inverterList;
-  @observable weatherInfo;
+  @observable
+  lastNews = {
+    title: '',
+    content: ''
+  };
+  @observable lastTrend = [];
+  @observable sunIntegral = [];
+  @observable equipmentListObj = {};
+  @observable equipmentPower = {};
+  @observable inverterList = [];
+  @observable weatherInfo = { type: '' };
 
   // 获取最新公告
   @action
@@ -95,24 +96,7 @@ class SunCityStore {
       result = await fetchEquipmentList(params);
       runInAction(() => {
         if (result.code === 200) {
-          this.equipmentList = result.data || {};
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-    return result;
-  };
-
-  // 获取设备信息
-  @action
-  fetchSCEquipmentInfo = async params => {
-    let result = {};
-    try {
-      result = await fetchEquipmentInfo(params);
-      runInAction(() => {
-        if (result.code === 200) {
-          this.equipmentInfo = result.data;
+          this.equipmentListObj = result.data || {};
         }
       });
     } catch (err) {

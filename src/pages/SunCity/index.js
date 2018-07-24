@@ -572,9 +572,7 @@ class Comp extends React.Component {
       <div className={'page-sunCity-info'} id="page-sunCity-info">
         {/* {this.state.loading ? <Loading size={100} /> : null} */}
         <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
-          <span className="h4">
-            {lastNews ? `${lastNews.title}:${lastNews.content}` : ''}
-          </span>
+          <span className="h4">{`${lastNews.title}:${lastNews.content}`}</span>
         </NoticeBar>
         <div className="sun-content">
           <div className="info">

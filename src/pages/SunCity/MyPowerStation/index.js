@@ -1,11 +1,17 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
-import {toJS} from 'mobx';
-import {observer, inject} from 'mobx-react';
-import {BlueBox, Title, PageWithHeader, Picture, EquipmentItem} from '../../../components';
-import {Icon, ActivityIndicator} from 'antd-mobile';
-import {decrypt} from '../../../utils/methods';
-import {EQUIPMENT_DATA_TYPE} from '../../../utils/variable';
+import { withRouter } from 'react-router-dom';
+import { toJS } from 'mobx';
+import { observer, inject } from 'mobx-react';
+import {
+  BlueBox,
+  Title,
+  PageWithHeader,
+  Picture,
+  EquipmentItem
+} from '../../../components';
+import { Icon, ActivityIndicator } from 'antd-mobile';
+import { decrypt } from '../../../utils/methods';
+import { EQUIPMENT_DATA_TYPE } from '../../../utils/variable';
 
 import F2 from '@antv/f2';
 import './style.less';
@@ -353,6 +359,9 @@ class Comp extends React.Component {
             <div className="type-item elec">
               发电量<i className="iconfont">&#xe677;</i>
             </div>
+            <div className="type-item profit">
+              收益<i className="iconfont">&#xe767;</i>
+            </div>
           </div>
           <div className="detail">
             <div className="detail-row">
@@ -370,6 +379,13 @@ class Comp extends React.Component {
                 </div>
                 <div className="detail-type">今日</div>
               </div>
+              <div className="detail-item">
+                <div className="number">
+                  {`${dayStationElectric * 0.8149}`}
+                  <span className="h5">￥</span>
+                </div>
+                <div className="detail-type">今日</div>
+              </div>
             </div>
             <div className="detail-row">
               <div className="detail-item">
@@ -382,6 +398,14 @@ class Comp extends React.Component {
                 <div className="number">
                   {`${totalStationElectric}`}
                   <span className="h5">kwh</span>
+                </div>
+                <div className="detail-type">累计</div>
+              </div>
+              <div className="detail-item">
+                <div className="number">
+                  {`${totalStationElectric &&
+                    (totalStationElectric * 0.8149).toFixed(2)}`}
+                  <span className="h5">￥</span>
                 </div>
                 <div className="detail-type">累计</div>
               </div>

@@ -63,12 +63,12 @@ class Comp extends React.Component {
       // 默认显示数据
       this.renderCurve([{ time: '00', number: 0 }]);
     }
-
     // 设备当前功率
     const currentPower =
-      dayEquipmentData.length > 0 &&
-      dayEquipmentData[dayEquipmentData.length - 1] &&
-      dayEquipmentData[dayEquipmentData.length - 1].power;
+      (dayEquipmentData.length > 0 &&
+        dayEquipmentData[dayEquipmentData.length - 1] &&
+        dayEquipmentData[dayEquipmentData.length - 1].power) ||
+      0;
     // 设备日电量
     let dayElectric = 0;
     dayEquipmentData.forEach(item => {
