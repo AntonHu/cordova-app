@@ -1,8 +1,7 @@
 @import '../../styles/common';
 .page-sunCity-info {
-  //-webkit-overflow-scrolling: touch;
-  //overflow-y: scroll;
   overflow-x: hidden;
+  height: 100%;
   position: relative;
   .notice {
     text-align: left;
@@ -148,9 +147,16 @@
       }
     }
 
+    .promote {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      text-align: left;
+      background: transparent;
+      margin-top: 20px;
+    }
   }
-
-  .news {
+  .rend {
     width: 90%;
     height: 44px;
     background: @white-text-color;
@@ -161,23 +167,83 @@
     padding-left: 10px;
     border-radius: 5px;
     box-shadow: 0 5px 20px @shadow-color;
-    .news-title {
+    .rend-title {
       background: url('../../images/news.png');
       background-size: cover;
       padding: 5px 20px 5px 5px;
       color: @white-text-color;
       margin-right: 5px;
     }
-  }
-  .promote {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    text-align: left;
-    background: transparent;
-    margin-top: 20px;
+    .rend-item-wrap {
+      width: 70%;
+      height: 24px;
+      position: relative;
+      overflow: hidden;
+
+      .rend-item {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        animation: midToTop 6s linear 0s infinite;
+        .help-text {
+          line-height: 24px;
+          width: 90%;
+          margin-left: 10px;
+          text-align: left;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        @keyframes midToTop {
+          0% {
+            top: 0;
+          }
+          100% {
+            top: -120px;
+          }
+        }
+      }
+    }
   }
   .equipment {
+    .item {
+      background: @white-text-color;
+      margin: 0 10px 10px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 15px 15px 25px;
+      border-radius: @border-radius;
+      .item-pic {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: @light-blue-bg;
+        border-radius: 28px;
+        height: 56px;
+        width: 56px;
+        .iconfont {
+          margin-left: 2px;
+          margin-top: 3px;
+          color: @white-text-color;
+          font-size: 40px;
+        }
+        .icon-shebeiguanli {
+          font-size: 28px;
+        }
+      }
+      .item-detail {
+        width: 65%;
+        text-align: left;
+        .item-info {
+          margin-top: 5px;
+          color: @help-text-color;
+        }
+      }
+      .am-icon-right {
+        color: @help-text-color;
+      }
+    }
     .loading {
       height: 200px;
       background: @white-text-color;
