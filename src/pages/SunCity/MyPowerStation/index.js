@@ -126,16 +126,19 @@ class Comp extends React.Component {
       // 设备功率
       const currentPower =
         (decryptData.length > 0 &&
-          decryptData[decryptData.length - 1].power &&
-          decryptData[decryptData.length - 1].power.toFixed(2)) ||
+          decryptData[decryptData.length - 1].totalPower &&
+          decryptData[decryptData.length - 1].totalPower.toFixed(2)) ||
         0;
+
       // 设备日电量
-      let dayElectric = 0;
-      decryptData.forEach(item => {
-        dayElectric += item.number;
-      });
+      const dayElectric =
+        (decryptData.length > 0 &&
+          decryptData[decryptData.length - 1].todayEnergy &&
+          decryptData[decryptData.length - 1].todayEnergy.toFixed(2)) ||
+        0;
+      // 电站日电量
       equipmentListObj[name].currentPower = currentPower || 0; // 设备功率
-      equipmentListObj[name].dayElectric = dayElectric.toFixed(2) || 0; // 设备日电量
+      equipmentListObj[name].dayElectric = dayElectric || 0; // 设备日电量
     }
     return equipmentListObj;
   }
@@ -151,18 +154,21 @@ class Comp extends React.Component {
       });
     }
     const receiveData = toJS(this.props.sunCityStore.equipmentPower);
-    const decryptData = this.handleDecryptData(receiveData);
+    if (dateType === EQUIPMENT_DATA_TYPE.DAY) {
+      return receiveData || [];
+    }
+    const decryptData = await this.handleDecryptData(receiveData);
     return decryptData;
   }
 
   // 处理获取的解密数据
-  handleDecryptData = receiveData => {
+  handleDecryptData = async receiveData => {
     const decryptData = [];
     if (this.props.keyPair.hasKey) {
-      Object.keys(receiveData).forEach(item => {
+      Object.keys(receiveData).forEach(async item => {
         let powerInfo;
         try {
-          const decryptItem = decrypt(
+          const decryptItem = await decrypt(
             this.props.keyPair.privateKey,
             receiveData[item]
           );

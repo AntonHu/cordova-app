@@ -94,8 +94,6 @@ class KeyPair {
   generageNewKeyPair = () => {
     const ec = new JSRsasign.crypto.ECDSA({curve: CURVE});
     const keyPair = ec.generateKeyPairHex();
-    this.savePrivateKey(keyPair.ecprvhex);
-    this.savePublicKey(keyPair.ecpubhex);
     return {
       publicKey: keyPair.ecpubhex,
       privateKey: keyPair.ecprvhex

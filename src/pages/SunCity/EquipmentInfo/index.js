@@ -126,6 +126,7 @@ class Comp extends React.Component {
         deviceNo,
         EQUIPMENT_DATA_TYPE.ALL
       );
+
       setLocalStorage('allEquipmentData', JSON.stringify(allEquipmentData));
       setLocalStorage('equipmentNumber', deviceNo); // 本地储存设备号
       setLocalStorage('equipmentExpireTime', new Date().getTime()); // 本地储存设备数据过期时间
@@ -144,20 +145,23 @@ class Comp extends React.Component {
     }
 
     const receiveData = toJS(this.props.sunCityStore.equipmentPower);
+    if (dateType === EQUIPMENT_DATA_TYPE.DAY) {
+      return receiveData || [];
+    }
     const decryptData =
-      (receiveData && this.handleDecryptData(receiveData, dateType)) || [];
+      (receiveData && await this.handleDecryptData(receiveData, dateType)) || [];
     return decryptData;
   }
 
   // 处理获取的解密数据
-  handleDecryptData = (receiveData, dateType) => {
+  handleDecryptData = async (receiveData, dateType) => {
     const data = [];
     if (this.props.keyPair.hasKey) {
-      Object.keys(receiveData).forEach(item => {
+      Object.keys(receiveData).forEach(async (item) => {
         // 后端数据可能有问题，加一层处理
         let powerInfo;
         try {
-          let decryptedItem = decrypt(
+          let decryptedItem = await decrypt(
             this.props.keyPair.privateKey,
             receiveData[item]
           );

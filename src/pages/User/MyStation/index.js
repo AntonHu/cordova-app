@@ -4,6 +4,7 @@ import { observer, inject } from 'mobx-react';
 import { PageWithHeader, Picture, EquipmentItem } from '../../../components';
 import { Icon } from 'antd-mobile';
 import { decrypt } from '../../../utils/methods';
+import {EQUIPMENT_DATA_TYPE} from '../../../utils/variable';
 import './style.less';
 
 import { getLocalStorage, setLocalStorage } from '../../../utils/storage';
@@ -88,18 +89,21 @@ class Comp extends React.Component {
       });
     }
     const receiveData = toJS(this.props.sunCityStore.equipmentPower);
-    const decryptData = this.handleDecryptData(receiveData);
+    if (dateType === EQUIPMENT_DATA_TYPE.DAY) {
+      return receiveData || [];
+    }
+    const decryptData = await this.handleDecryptData(receiveData);
     return decryptData;
   }
 
   // 处理获取的解密数据
-  handleDecryptData = receiveData => {
+  handleDecryptData = async receiveData => {
     const decryptData = [];
     if (this.props.keyPair.hasKey) {
-      Object.keys(receiveData).forEach(item => {
+      Object.keys(receiveData).forEach(async item => {
         let powerInfo;
         try {
-          const decryptItem = decrypt(
+          const decryptItem = await decrypt(
             this.props.keyPair.privateKey,
             receiveData[item]
           );

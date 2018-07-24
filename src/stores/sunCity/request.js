@@ -119,6 +119,20 @@ export const fetchAddInverter = async params => {
 };
 
 /**
+ * 奥泰 添加逆变器
+ * 是输入账号和密码
+ */
+export const fetchAddInverterAT = async params => {
+  let response = {};
+  try {
+    response = await post(`${backendServer}/equipment/inverterAT`, params);
+  } catch (err) {
+    console.log(err);
+  }
+  return response.data || [];
+};
+
+/**
  * 获取天气信息
  */
 export const fetchGetWeather = async params => {

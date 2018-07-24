@@ -24,6 +24,11 @@ class SunCityStore {
   @observable inverterList = [];
   @observable weatherInfo = { type: '' };
 
+  @action
+  resetStore = () => {
+
+  };
+
   // 获取最新公告
   @action
   fetchSCNews = async params => {
@@ -137,6 +142,7 @@ class SunCityStore {
     }
     return result;
   };
+
   // 添加逆变器
   @action
   fetchSCAddInverter = async params => {
@@ -149,6 +155,7 @@ class SunCityStore {
     }
     return result;
   };
+
   // 获取天气信息
   @action
   fetchSCGetWeather = async params => {

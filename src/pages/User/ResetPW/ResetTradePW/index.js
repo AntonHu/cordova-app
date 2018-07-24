@@ -135,11 +135,12 @@ class Comp extends React.Component {
       });
       const data = setTradeRes.data || {};
       if (data.code === 200) {
+        const {publicKey, privateKey} = this.props.keyPair.generageNewKeyPair();
         alert('成功', '设置交易密码成功。请一定备份您的交易密码，如果忘记，将导致账户资金无法取出', [{
           text: '确定', onPress: function () {
             self.encryptAndUpload({
-              publicKey: self.props.keyPair.getPubFromLocalStorage(),
-              privateKey: self.props.keyPair.getPrivFromLocalStorage(),
+              publicKey,
+              privateKey,
               password: tradePassword
             })
           }
@@ -174,7 +175,7 @@ class Comp extends React.Component {
         const data = res.data || {};
         if (data.code === 200) {
           this.setSuccess = true;
-          this.props.keyPair.checkKeyPairExist();
+          this.props.keyPair.savePubAndPriv({publicKey, privateKey});
           alert('成功', '上传公钥成功', [{text: '好的', onPress: () => {
             self.props.history.goBack();
           }}]);

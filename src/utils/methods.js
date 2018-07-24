@@ -1,6 +1,7 @@
 import { JSRsasign } from '../jssign';
 import SM2Cipher from '../jssign/SM2Cipher';
 import { getLocalStorage } from './storage';
+import {JSONInstance, post} from './fetch';
 const BigInteger = JSRsasign.BigInteger;
 
 /**
@@ -205,13 +206,31 @@ const cipher = new SM2Cipher(cipherMode);
  * @param cipherMsg
  * @returns {*}
  */
-export const decrypt = (privateKey, cipherMsg) => {
-  if (privateKey === '') {
+export const decrypt = async (privateKey, cipherMsg) => {
+  if (privateKey === '' || cipherMsg === '') {
     return '';
   }
-  const privBI = new BigInteger(privateKey, 16);
+  // const privBI = new BigInteger(privateKey, 16);
+  //
+  // const decryptedMsg = cipher.Decrypt(privBI, cipherMsg);
+  // return decryptedMsg;
 
-  const decryptedMsg = cipher.Decrypt(privBI, cipherMsg);
+  let decryptedMsg = '';
+
+  const res =  await post('https://api.thundersdata.com/grpc/blockchain/crypt-service/sm2/Decrypt', {
+    privateKey,
+    ciphertext: cipherMsg
+  });
+
+  const data = res.data || {};
+  if (data.responseCode === 200) {
+    try {
+      const msgJson = JSON.parse(data.responseJson);
+      decryptedMsg = msgJson.msg;
+    } catch (err) {
+
+    }
+  }
   return decryptedMsg;
 };
 

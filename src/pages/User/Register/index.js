@@ -77,7 +77,7 @@ class Comp extends React.PureComponent {
    * @returns {Promise.<boolean>}
    */
   checkIfExist = async ({mobile}) => {
-    const res = reqExistInfo({username: mobile});
+    const res = await reqExistInfo({username: mobile});
     const data = res.data || {};
     if (data.code === 20000) {
       if (data.result && !data.result.exist) {
