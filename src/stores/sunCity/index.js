@@ -23,6 +23,11 @@ class SunCityStore {
   @observable inverterList;
   @observable weatherInfo;
 
+  @action
+  resetStore = () => {
+
+  };
+
   // 获取最新公告
   @action
   fetchSCNews = async params => {

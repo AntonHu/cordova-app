@@ -31,7 +31,7 @@ const ListData = [
 /**
  * 账号设置
  */
-@inject('userStore', 'keyPair')
+@inject('userStore', 'keyPair', 'miningStore', 'sunCityStore')
 @observer
 class Comp extends React.Component {
 
@@ -46,6 +46,8 @@ class Comp extends React.Component {
     user.logout();
     this.props.keyPair.clearKeyPair();
     this.props.userStore.deleteIsKycInChain();
+    this.props.miningStore.resetStore();
+    this.props.sunCityStore.resetStore();
     this.props.history.replace('/');
   };
 

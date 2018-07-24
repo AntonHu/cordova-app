@@ -1,4 +1,4 @@
-import { observable, action, runInAction, computed } from 'mobx';
+import {observable, action, runInAction, computed} from 'mobx';
 import {
   getTokenRecords,
   getAllRanking,
@@ -22,6 +22,20 @@ class MiningStore {
   };
   @observable todayIntegral = 0; // 今日太阳积分
 
+  @action
+  resetStore = () => {
+    this.tokenRecords = [];
+    this.allRanking = [];
+    this.nearbyRank = [];
+    this.balance = 0;
+    this.balanceRanking = 0;
+    this.digTimes = {
+      countAllTimes: 0,
+      countAllTimesToday: 0
+    };
+    this.todayIntegral = 0; // 今日太阳积分
+  };
+
   /**
    * 太阳积分
    * @param publicKey
@@ -29,9 +43,9 @@ class MiningStore {
    * @returns {Promise.<void>}
    */
   @action
-  fetchTokenRecords = async ({ publicKey, page }) => {
+  fetchTokenRecords = async ({publicKey, page}) => {
     try {
-      const res = await getTokenRecords({ publicKey, page });
+      const res = await getTokenRecords({publicKey, page});
       if (res.status === 200) {
         runInAction(() => {
           if (page === 0) {
@@ -47,6 +61,7 @@ class MiningStore {
       throw err;
     }
   };
+
 
   /**
    * 全民排行榜
@@ -72,9 +87,9 @@ class MiningStore {
    * @returns {Promise.<void>}
    */
   @action
-  fetchNearbyRanking = async ({ publicKey }) => {
+  fetchNearbyRanking = async ({publicKey}) => {
     try {
-      const res = await getNearbyWalletTopRank({ publicKey });
+      const res = await getNearbyWalletTopRank({publicKey});
       if (res.data.code === 200) {
         runInAction(() => {
           this.nearbyRank = res.data.data;
@@ -91,9 +106,9 @@ class MiningStore {
    * @returns {Promise.<void>}
    */
   @action
-  fetchBalance = async ({ publicKey }) => {
+  fetchBalance = async ({publicKey}) => {
     try {
-      const res = await getTokenBalance({ publicKey });
+      const res = await getTokenBalance({publicKey});
       if (res.data && res.data.code === 200) {
         runInAction(() => {
           const data = res.data.data || {};
@@ -116,9 +131,9 @@ class MiningStore {
    * @returns {Promise.<void>}
    */
   @action
-  fetchBalanceRanking = async ({ publicKey }) => {
+  fetchBalanceRanking = async ({publicKey}) => {
     try {
-      const res = await getTokenBalanceRanking({ publicKey });
+      const res = await getTokenBalanceRanking({publicKey});
       if (res.data && res.data.code === 200) {
         runInAction(() => {
           const data = res.data.data || {};
@@ -161,9 +176,9 @@ class MiningStore {
    * @returns {Promise.<void>}
    */
   @action
-  fetchTodayIntegral = async ({ publicKey }) => {
+  fetchTodayIntegral = async ({publicKey}) => {
     try {
-      const res = await getTodayIntegral({ publicKey });
+      const res = await getTodayIntegral({publicKey});
       if (res.data && res.data.code === 200) {
         runInAction(() => {
           const data = res.data.data || {};
