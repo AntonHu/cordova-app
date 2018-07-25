@@ -58,7 +58,7 @@
     <feature name="Zip">
         <param name="ios-package" value="ZipPlugin" />
     </feature>
-    <name>blockChainMobile</name>
+    <name>能源星球</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>
