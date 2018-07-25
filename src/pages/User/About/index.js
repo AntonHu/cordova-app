@@ -1,6 +1,6 @@
 import React from 'react';
-import { BlueBox, PageWithHeader } from '../../../components';
-import { List, Modal, ActivityIndicator } from 'antd-mobile';
+import {BlueBox, PageWithHeader} from '../../../components';
+import {List, Modal, ActivityIndicator} from 'antd-mobile';
 import {Link} from 'react-router-dom'
 import './style.less';
 
@@ -98,7 +98,8 @@ class Comp extends React.PureComponent {
 
   state = {
     checking: false,
-    checkText: '正在检查更新...'
+    checkText: '正在检查更新...',
+    appVersion: ''
   };
 
   onClick = (v) => {
@@ -107,25 +108,44 @@ class Comp extends React.PureComponent {
     }
   };
 
+  componentDidMount() {
+    this.getPackageVersion();
+  }
+
+  getPackageVersion = () => {
+    if (window.codePush) {
+      const appVersion = window.LocalPackage.appVersion || '';
+      this.setState({
+        appVersion
+      })
+    }
+  };
+
   render() {
     return (
       <div className={'page-about'}>
         <PageWithHeader title={'关于我们'}>
           <Link to="/user/introduction">
-            <img src={require('../../../images/banner_1.png')} width="100%" className="banner" />
+            <img src={require('../../../images/banner_1.png')} width="100%" className="banner"/>
           </Link>
 
           <List>
-            {ListData.map((v, i) => (
-              <Item
-                key={i}
-                arrow={v.horizontal && 'horizontal'}
-                extra={v.extra}
-                onClick={() => this.onClick(v)}
-              >
-                {v.text}
-              </Item>
-            ))}
+            {ListData.map((v, i) => {
+              let extra = v.extra;
+              if (v.text === '检查更新') {
+                extra = this.state.appVersion
+              }
+              return (
+                <Item
+                  key={i}
+                  arrow={v.horizontal && 'horizontal'}
+                  extra={extra}
+                  onClick={() => this.onClick(v)}
+                >
+                  {v.text}
+                </Item>
+              )
+            })}
           </List>
         </PageWithHeader>
         <ActivityIndicator

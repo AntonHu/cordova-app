@@ -59,6 +59,9 @@
         <param name="ios-package" value="CDVSplashScreen" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="NetworkStatus">
+        <param name="ios-package" value="CDVConnection" />
+    </feature>
     <feature name="Zip">
         <param name="ios-package" value="ZipPlugin" />
     </feature>
