@@ -283,7 +283,8 @@ class Comp extends React.Component {
           equipmentData.totalPower && equipmentData.totalPower.toFixed(2);
         dayElectric =
           equipmentData.todayEnergy && equipmentData.todayEnergy.toFixed(2);
-        maxValue = equipmentData.totalEnergy;
+        maxValue =
+          equipmentData.totalEnergy && equipmentData.totalEnergy.toFixed(2);
       }
       // 电站日电量
       dayStationElectric += dayElectric;

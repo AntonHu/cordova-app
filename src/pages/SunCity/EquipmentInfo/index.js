@@ -145,7 +145,7 @@ class Comp extends React.Component {
         equipmentData.totalPower && equipmentData.totalPower.toFixed(2);
       dayElectric =
         equipmentData.todayEnergy && equipmentData.todayEnergy.toFixed(2);
-      maxValue = equipmentData.totalEnergy;
+      maxValue = equipmentData.totalEnergy && equipmentData.totalEnergy.toFixed(2);
     } else {
       // 默认显示数据
       dayEquipmentData.push({ time: '00', number: 0 });
