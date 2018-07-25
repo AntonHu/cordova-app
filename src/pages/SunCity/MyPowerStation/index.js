@@ -16,8 +16,13 @@ import { EQUIPMENT_DATA_TYPE } from '../../../utils/variable';
 import F2 from '@antv/f2';
 import './style.less';
 
-import { setLocalStorage, getLocalStorage } from '../../../utils/storage';
+import {
+  setLocalStorage,
+  getLocalStorage,
+  deleteLocalStorage
+} from '../../../utils/storage';
 import { POWER_TYPE } from '../../../utils/variable';
+import PullToRefresh from 'pulltorefreshjs';
 
 /**
  * 我的电站信息
@@ -43,32 +48,15 @@ class Comp extends React.Component {
   barChart = null;
 
   async componentDidMount() {
-    // 获取天气信息
-    const city = getLocalStorage('city') || '北京';
-    this.props.sunCityStore.fetchSCGetWeather({
-      cityName: city
-    });
+    this.initPullToRefresh();
     const { keyPair } = this.props;
+    this.getOtherInfo(keyPair);
+
     let equipmentListObj = this.state.equipmentListObj;
     if (keyPair.hasKey) {
       // 获取设备列表
       if (!getLocalStorage('equipmentListObj')) {
-        // 获取设备列表
-        await this.props.sunCityStore.fetchSCEquipmentList({
-          userPubKey: keyPair.publicKey
-        });
-        equipmentListObj = toJS(this.props.sunCityStore.equipmentList);
-        // 各个设备添加功率和日电量,本地储存
-        equipmentListObj =
-          equipmentListObj &&
-          (await this.addEquipmentPower(
-            equipmentListObj,
-            EQUIPMENT_DATA_TYPE.DAY
-          ));
-        setLocalStorage(
-          'equipmentListObj',
-          JSON.stringify(equipmentListObj || {})
-        ); // 本地储存所有设备状态
+        equipmentListObj = await this.getEquipmentList(keyPair);
         this.setState({
           equipmentListObj
         });
@@ -95,7 +83,93 @@ class Comp extends React.Component {
       });
     }
   }
+  componentWillUnmount() {
+    // 清除监听事件，重要。
+    PullToRefresh.destroyAll();
+  }
+  pullToRefresh = async () => {
+    this.barChart && this.barChart.clear();
+    // 删除缓存
+    deleteLocalStorage('equipmentListObj');
+    const { keyPair } = this.props;
+    this.getOtherInfo(keyPair);
 
+    // 如果有私钥
+    if (keyPair.hasKey) {
+      const equipmentListObj = await this.getEquipmentList(keyPair);
+      const selected = Object.assign({}, this.state.selected);
+      Object.keys(selected).forEach(item => {
+        selected[item] = false;
+      });
+      selected.month = true;
+
+      // 获取本地储存的 （天，月，年，所有） 的数据
+      const cacheEquipmentData = this.getCacheEquipmentData();
+      this.setState({
+        selected,
+        equipmentListObj,
+        ...cacheEquipmentData
+      });
+      if (Object.keys(equipmentListObj).length > 0) {
+        // 显示默认数据
+        cacheEquipmentData.monthStationData.length < 1 &&
+          cacheEquipmentData.monthStationData.push({
+            number: 0,
+            time: '00'
+          });
+        this.renderBarChart(cacheEquipmentData.monthStationData);
+      }
+    }
+  };
+  // 获取其他信息
+  getOtherInfo = keyPair => {
+    // 获取天气信息
+    const city = getLocalStorage('city') || '北京';
+    this.props.sunCityStore.fetchSCGetWeather({
+      cityName: city
+    });
+    // 获取电价
+    this.props.sunCityStore.fetchSCGetElectricityPrice({
+      userPubKey: keyPair.publicKey
+    });
+  };
+  // 获取设备列表，并添加发电量和功率
+  getEquipmentList = async keyPair => {
+    // 获取设备列表
+    await this.props.sunCityStore.fetchSCEquipmentList({
+      userPubKey: keyPair.publicKey
+    });
+    let equipmentListObj = toJS(this.props.sunCityStore.equipmentListObj);
+    // 各个设备添加功率和日电量,本地储存
+    equipmentListObj =
+      equipmentListObj &&
+      (await this.addEquipmentPower(equipmentListObj, EQUIPMENT_DATA_TYPE.DAY));
+    setLocalStorage('equipmentListObj', JSON.stringify(equipmentListObj || {})); // 本地储存所有设备状态
+    return equipmentListObj;
+  };
+  /**
+   * 初始化下拉刷新
+   */
+  initPullToRefresh = (deviceNo, sourceData) => {
+    PullToRefresh.init({
+      mainElement: '#page-powerStation-info', // "下拉刷新"把哪个部分包住
+      triggerElement: '#page-powerStation-info', // "下拉刷新"把哪个部分包住
+      onRefresh: this.pullToRefresh, // 下拉刷新的方法，返回一个promise
+      shouldPullToRefresh: function() {
+        // 什么情况下的滚动触发下拉刷新，这个很重要
+        // 如果这个页面里有height超过窗口高度的元素
+        // 那么应该在这个元素滚动位于顶部的时候，返回true
+        const ele = document.getElementById('page-powerStation-info');
+        if (ele === null) {
+          return false;
+        }
+        return ele.parentNode.parentNode.scrollTop === 0;
+      },
+      instructionsPullToRefresh: '下拉刷新',
+      instructionsReleaseToRefresh: '松开刷新',
+      instructionsRefreshing: '正在刷新...'
+    });
+  };
   // 获取本地储存的 （天，月，年，所有） 的数据
   getCacheEquipmentData = () => {
     const dayStationData = JSON.parse(getLocalStorage('dayStationData')) || []; // 获取本地储存每天发电数据
@@ -137,8 +211,10 @@ class Comp extends React.Component {
       let dayElectric = 0;
       if (decryptData.length > 0 && decryptData[decryptData.length - 1]) {
         const equipmentData = decryptData[decryptData.length - 1];
-        currentPower = equipmentData.totalPower;
-        dayElectric = equipmentData.todayEnergy;
+        currentPower =
+          equipmentData.totalPower && equipmentData.totalPower.toFixed(2);
+        dayElectric =
+          equipmentData.todayEnergy && equipmentData.todayEnergy.toFixed(2);
       }
       // 电站日电量
       equipmentListObj[name].currentPower = currentPower || 0; // 设备功率
@@ -220,12 +296,12 @@ class Comp extends React.Component {
     });
     const defs = {
       time: {
-        tickCount: data.length > 20 ? 8 : 4
+        tickCount: data.length > 20 ? Math.round(data.length / 3) + 1 : 4
       },
       number: {
         min: 0,
         formatter: function formatter(val) {
-          return `${val}kWh`;
+          return `${val && val.toFixed(2)}kWh`;
         }
       }
     };
@@ -235,7 +311,7 @@ class Comp extends React.Component {
       onShow: function onShow(ev) {
         const items = ev.items;
         items[0].name = null;
-        items[0].value = `${items[0].value}kWh`;
+        items[0].value = items[0].value;
       }
     });
     this.barChart.axis('time', {
@@ -308,7 +384,7 @@ class Comp extends React.Component {
       Number(getLocalStorage('allTotalStationElectric')); // 获取本地储存电站总发电量
     const { equipmentListObj } = this.state;
     const equipmentNameList = Object.keys(equipmentListObj);
-    const weatherInfo = this.props.sunCityStore.weatherInfo;
+    const { weatherInfo, electricityPrice } = this.props.sunCityStore;
     let weatherEle = <i className="iconfont">&#xe631;</i>;
     if (weatherInfo) {
       if (weatherInfo.type.indexOf('雨') > 0) {
@@ -318,7 +394,7 @@ class Comp extends React.Component {
       }
     }
     return (
-      <div className={'page-powerStation-info'}>
+      <div className={'page-powerStation-info'} id="page-powerStation-info">
         <PageWithHeader
           title={'我的电站'}
           rightComponent={
@@ -411,7 +487,7 @@ class Comp extends React.Component {
               <div className="detail-item">
                 <div className="number">
                   {`${dayStationElectric &&
-                    (dayStationElectric * 0.8149).toFixed(2)}`}
+                    (dayStationElectric * electricityPrice).toFixed(2)}`}
                   <span className="h5" />
                 </div>
                 <div className="detail-type">今日(￥)</div>
@@ -420,13 +496,13 @@ class Comp extends React.Component {
             <div className="detail-row">
               <div className="detail-item">
                 <div className="number">
-                  0<span className="h5" />
+                  0.00<span className="h5" />
                 </div>
                 <div className="detail-type">逆变器容量(kw)</div>
               </div>
               <div className="detail-item">
                 <div className="number">
-                  {`${totalStationElectric}`}
+                  {`${totalStationElectric && totalStationElectric.toFixed(2)}`}
                   <span className="h5" />
                 </div>
                 <div className="detail-type">累计(kWh)</div>

@@ -1,4 +1,4 @@
-import {observable, action, runInAction} from 'mobx';
+import { observable, action, runInAction } from 'mobx';
 import {
   fetchNews,
   fetchSunIntegral,
@@ -8,9 +8,10 @@ import {
   fetchEquipmentPower,
   fetchInverters,
   fetchAddInverter,
-  fetchGetWeather
+  fetchGetWeather,
+  fetchGetElectricityPrice
 } from './request';
-import {deleteLocalStorage} from '../../utils/storage';
+import { deleteLocalStorage } from '../../utils/storage';
 
 class SunCityStore {
   @observable
@@ -23,7 +24,8 @@ class SunCityStore {
   @observable equipmentListObj = {};
   @observable equipmentPower = {};
   @observable inverterList = [];
-  @observable weatherInfo = {type: ''};
+  @observable weatherInfo = { type: '' };
+  @observable electricityPrice = 0;
 
   @action
   resetStore = () => {
@@ -36,7 +38,7 @@ class SunCityStore {
     this.equipmentListObj = {};
     this.equipmentPower = {};
     this.inverterList = [];
-    this.weatherInfo = {type: ''};
+    this.weatherInfo = { type: '' };
   };
 
   deleteAllCache = () => {
@@ -91,8 +93,7 @@ class SunCityStore {
     let result = {};
     try {
       result = await fetchGetSunIntegral(params);
-      runInAction(() => {
-      });
+      runInAction(() => {});
     } catch (err) {
       console.log(err);
     }
@@ -172,8 +173,7 @@ class SunCityStore {
     let result = {};
     try {
       result = await fetchAddInverter(params);
-      runInAction(() => {
-      });
+      runInAction(() => {});
     } catch (err) {
       console.log(err);
     }
@@ -189,6 +189,23 @@ class SunCityStore {
       runInAction(() => {
         if (result.code === 200) {
           this.weatherInfo = result.data;
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    return result;
+  };
+
+  // 获取电价信息
+  @action
+  fetchSCGetElectricityPrice = async params => {
+    let result = {};
+    try {
+      result = await fetchGetElectricityPrice(params);
+      runInAction(() => {
+        if (result.code === 200) {
+          this.electricityPrice = result.data.fee || 0;
         }
       });
     } catch (err) {
