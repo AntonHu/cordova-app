@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		0207B226A7904B7BB8312C87 /* CodePushJWTAlgorithmHSBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4A3D9B18664E7DB8001698 /* CodePushJWTAlgorithmHSBase.m */; };
 		0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0207DA571B56EA530066E2B4 /* Images.xcassets */; };
@@ -97,6 +96,8 @@
 		F7F0E56FA45B4BD4BD6FB75A /* AppDelegate+JPush.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD37F497D6E40F39A2015A6 /* AppDelegate+JPush.m */; };
 		FCAA6BA113D34C6DB97F9D47 /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 2A58EAC217F34BF6B71F8982 /* sha1.c */; };
 		FF9263313EDE4ACAA5C637F6 /* aeskey.c in Sources */ = {isa = PBXBuildFile; fileRef = 9C0EA20A1CBC40E18D15FDE7 /* aeskey.c */; };
+		FE059B0D291B42C49ED16F1E /* CDVSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8064C7B2434D799C1BFE24 /* CDVSplashScreen.m */; };
+		F06393FA31524F8A822B4803 /* CDVViewController+SplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = B1174DC6FDEB46F480D3DB3F /* CDVViewController+SplashScreen.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -301,6 +302,10 @@
 		FCD7314039F84EA2A606D8EB /* JANALYTICSEventObject.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = JANALYTICSEventObject.h; path = "cordova-plugin-janalytics/JANALYTICSEventObject.h"; sourceTree = "<group>"; };
 		FD86D5542C9E418597F983F6 /* CodePushJWT.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CodePushJWT.h; path = "cordova-plugin-code-push/CodePushJWT.h"; sourceTree = "<group>"; };
 		FF320943CC8A430490E249EA /* CDVFileTransfer.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVFileTransfer.m; path = "cordova-plugin-file-transfer/CDVFileTransfer.m"; sourceTree = "<group>"; };
+		BD8064C7B2434D799C1BFE24 /* CDVSplashScreen.m */ = {isa = PBXFileReference; name = "CDVSplashScreen.m"; path = "cordova-plugin-splashscreen/CDVSplashScreen.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		B1174DC6FDEB46F480D3DB3F /* CDVViewController+SplashScreen.m */ = {isa = PBXFileReference; name = "CDVViewController+SplashScreen.m"; path = "cordova-plugin-splashscreen/CDVViewController+SplashScreen.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		47AF1FD5BDBC42159564EE5D /* CDVSplashScreen.h */ = {isa = PBXFileReference; name = "CDVSplashScreen.h"; path = "cordova-plugin-splashscreen/CDVSplashScreen.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		095997AA8E9D4948814B9B8B /* CDVViewController+SplashScreen.h */ = {isa = PBXFileReference; name = "CDVViewController+SplashScreen.h"; path = "cordova-plugin-splashscreen/CDVViewController+SplashScreen.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -581,6 +586,10 @@
 				DEA2F86053774157B55A34E5 /* AppDelegate+JPush.h */,
 				9A7E208E52B140488DDDD562 /* JPUSHService.h */,
 				3D9C06C3F2A64A0C9F6342D8 /* CDVBarcodeScanner.mm */,
+				BD8064C7B2434D799C1BFE24 /* CDVSplashScreen.m */,
+				B1174DC6FDEB46F480D3DB3F /* CDVViewController+SplashScreen.m */,
+				47AF1FD5BDBC42159564EE5D /* CDVSplashScreen.h */,
+				095997AA8E9D4948814B9B8B /* CDVViewController+SplashScreen.h */,
 			);
 			name = Plugins;
 			path = "能源星球/Plugins";
@@ -772,6 +781,8 @@
 				E6721A191A2B424C937C5DED /* JPushPlugin.m in Sources */,
 				F7F0E56FA45B4BD4BD6FB75A /* AppDelegate+JPush.m in Sources */,
 				9896F3B23CA3425FAC4637A3 /* CDVBarcodeScanner.mm in Sources */,
+				FE059B0D291B42C49ED16F1E /* CDVSplashScreen.m in Sources */,
+				F06393FA31524F8A822B4803 /* CDVViewController+SplashScreen.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -870,6 +881,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 			};
 			name = Debug;
 		};
@@ -895,6 +907,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 			};
 			name = Release;
 		};

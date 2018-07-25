@@ -55,6 +55,10 @@
     <feature name="BarcodeScanner">
         <param name="ios-package" value="CDVBarcodeScanner" />
     </feature>
+    <feature name="SplashScreen">
+        <param name="ios-package" value="CDVSplashScreen" />
+        <param name="onload" value="true" />
+    </feature>
     <feature name="Zip">
         <param name="ios-package" value="ZipPlugin" />
     </feature>
@@ -89,6 +93,13 @@
     <icon height="50" src="res/icon/ios/Icon-Small-50x50@1x.png" width="50" />
     <icon height="100" src="res/icon/ios/Icon-Small-50x50@2x.png" width="100" />
     <icon height="167" src="res/icon/ios/Icon-App-83.5x83.5@2x.png" width="167" />
+    <splash height="480" src="res/screen/ios/Default~iphone.png" width="320" />
+    <splash height="960" src="res/screen/ios/Default@2x~iphone.png" width="640" />
+    <splash height="1024" src="res/screen/ios/Default-Portrait~ipad.png" width="768" />
+    <splash height="2048" src="res/screen/ios/Default-Portrait@2x~ipad.png" width="1536" />
+    <splash height="1136" src="res/screen/ios/Default-568h@2x~iphone.png" width="640" />
+    <splash height="1334" src="res/screen/ios/Default-667h.png" width="750" />
+    <splash height="2208" src="res/screen/ios/Default-736h.png" width="1242" />
     <allow-intent href="itms:*" />
     <allow-intent href="itms-apps:*" />
     <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">

@@ -37,6 +37,10 @@
         <param name="android-package" value="org.apache.cordova.statusbar.StatusBar" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="SplashScreen">
+        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
+        <param name="onload" value="true" />
+    </feature>
     <feature name="Zip">
         <param name="android-package" value="org.apache.cordova.Zip" />
     </feature>
@@ -65,6 +69,12 @@
     <icon density="xhdpi" src="res/icon/android/mipmap-xhdpi/ic_launcher.png" />
     <icon density="xxhdpi" src="res/icon/android/mipmap-xxhdpi/ic_launcher.png" />
     <icon density="xxxhdpi" src="res/icon/android/mipmap-xxxhdpi/ic_launcher.png" />
+    <splash density="port-hdpi" src="res/screen/android/drawable-port-hdpi-screen.png" />
+    <splash density="port-ldpi" src="res/screen/android/drawable-port-ldpi-screen.png" />
+    <splash density="port-mdpi" src="res/screen/android/drawable-port-mdpi-screen.png" />
+    <splash density="port-xhdpi" src="res/screen/android/drawable-port-xhdpi-screen.png" />
+    <splash density="port-xxhdpi" src="res/screen/android/drawable-port-xxhdpi-screen.png" />
+    <splash density="port-xxxhdpi" src="res/screen/android/drawable-port-xxxhdpi-screen.png" />
     <allow-intent href="market:*" />
     <preference name="loglevel" value="DEBUG" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />

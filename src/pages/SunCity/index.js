@@ -629,7 +629,7 @@ class Comp extends React.Component {
               {lastTrend &&
                 lastTrend.length > 0 &&
                 lastTrend.map((item, index) => (
-                  <span key={index} className="help-text">
+                  <span key={index} style={{color: '#888'}}>
                     {`${item.nickName}收取了${item.value}个太阳积分`}
                   </span>
                 ))}
