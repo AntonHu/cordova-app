@@ -129,7 +129,7 @@ class Comp extends React.Component {
             <div className="my-profit">
               <div className="profit-item">
                 <div className="profit-title">今日发电</div>
-                <div className="profit-number">{`${dayStationElectric}kwh`}</div>
+                <div className="profit-number">{`${dayStationElectric}kWh`}</div>
               </div>
               <div className="profit-item">
                 <div className="profit-title">今日太阳积分</div>
