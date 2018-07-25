@@ -1,4 +1,4 @@
-import {observable, action, runInAction} from 'mobx';
+import { observable, action, runInAction } from 'mobx';
 import {
   fetchNews,
   fetchSunIntegral,
@@ -8,9 +8,10 @@ import {
   fetchEquipmentPower,
   fetchInverters,
   fetchAddInverter,
-  fetchGetWeather
+  fetchGetWeather,
+  fetchGetElectricityPrice
 } from './request';
-import {deleteLocalStorage, getLocalStorage} from '../../utils/storage';
+import { deleteLocalStorage, getLocalStorage } from '../../utils/storage';
 
 class SunCityStore {
   @observable
@@ -23,8 +24,9 @@ class SunCityStore {
   @observable equipmentListObj = {};
   @observable equipmentPower = {};
   @observable inverterList = [];
-  @observable weatherInfo = {type: ''};
+  @observable weatherInfo = { type: '' };
   @observable dayStationElectric = 0;
+  @observable electricityPrice = 0;
 
   @action
   resetStore = () => {
@@ -37,7 +39,7 @@ class SunCityStore {
     this.equipmentListObj = {};
     this.equipmentPower = {};
     this.inverterList = [];
-    this.weatherInfo = {type: ''};
+    this.weatherInfo = { type: '' };
     this.dayStationElectric = 0;
   };
 
@@ -67,7 +69,7 @@ class SunCityStore {
   };
 
   @action
-  updateDayStationElectric = (electricity) => {
+  updateDayStationElectric = electricity => {
     this.dayStationElectric = electricity;
   };
 
@@ -111,8 +113,7 @@ class SunCityStore {
     let result = {};
     try {
       result = await fetchGetSunIntegral(params);
-      runInAction(() => {
-      });
+      runInAction(() => {});
     } catch (err) {
       console.log(err);
     }
@@ -192,8 +193,7 @@ class SunCityStore {
     let result = {};
     try {
       result = await fetchAddInverter(params);
-      runInAction(() => {
-      });
+      runInAction(() => {});
     } catch (err) {
       console.log(err);
     }
@@ -209,6 +209,23 @@ class SunCityStore {
       runInAction(() => {
         if (result.code === 200) {
           this.weatherInfo = result.data;
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    return result;
+  };
+
+  // 获取电价信息
+  @action
+  fetchSCGetElectricityPrice = async params => {
+    let result = {};
+    try {
+      result = await fetchGetElectricityPrice(params);
+      runInAction(() => {
+        if (result.code === 200) {
+          this.electricityPrice = result.data.fee || 0;
         }
       });
     } catch (err) {

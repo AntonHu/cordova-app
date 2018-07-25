@@ -144,3 +144,16 @@ export const fetchGetWeather = async params => {
   }
   return response.data || [];
 };
+
+/**
+ * 获取电价信息
+ */
+export const fetchGetElectricityPrice = async params => {
+  let response = {};
+  try {
+    response = await get(`${backendServer}/user/getDetailInfo`, params);
+  } catch (err) {
+    console.log(err);
+  }
+  return response.data || [];
+};

@@ -37,6 +37,7 @@ class Comp extends React.Component {
     chartTitle: '日功率走势图(w)',
     sourceData: '', // 数据来源
     deviceNo: '', //设备编码
+    maxValue: 0, // 设备发电量
     count: 0 // 日电量
   };
   pieChart = null;
@@ -141,9 +142,14 @@ class Comp extends React.Component {
     if (dayEquipmentData.length > 0) {
       const equipmentData = dayEquipmentData[dayEquipmentData.length - 1];
       currentPower =
-        equipmentData.totalPower && equipmentData.totalPower.toFixed(2);
-      dayElectric = equipmentData.todayEnergy;
-      maxValue = equipmentData.totalEnergy;
+        (equipmentData.totalPower && equipmentData.totalPower.toFixed(2)) ||
+        '0.00';
+      dayElectric =
+        (equipmentData.todayEnergy && equipmentData.todayEnergy.toFixed(2)) ||
+        '0.00';
+      maxValue =
+        (equipmentData.totalEnergy && equipmentData.totalEnergy.toFixed(2)) ||
+        '0.00';
     } else {
       // 默认显示数据
       dayEquipmentData.push({ time: '00', number: 0 });
@@ -387,13 +393,13 @@ class Comp extends React.Component {
     });
     const defs = {
       time: {
-        tickCount: 4
+        tickCount: 5
       },
       number: {
-        tickCount: data.every(item => item.number === 0) ? 2 : 5,
+        tickCount: data.every(item => item.number === 0) ? 2 : 6,
         min: 0,
         formatter: function formatter(val) {
-          return `${val}w`;
+          return `${val && val.toFixed(2)}w`;
         }
       }
     };
@@ -440,10 +446,10 @@ class Comp extends React.Component {
         range: [0, 1]
       },
       number: {
-        tickCount: data.every(item => item.number === 0) ? 2 : 5,
+        tickCount: data.every(item => item.number === 0) ? 2 : 6,
         min: 0,
         formatter: function formatter(val) {
-          return `${val}kWh`;
+          return `${val && val.toFixed(2)}kWh`;
         }
       }
     };
@@ -542,9 +548,7 @@ class Comp extends React.Component {
         >
           <div className="survey">
             <div className="survey-item">
-              <div className="survey-item-number">
-                {this.state.dayElectric && this.state.dayElectric.toFixed(2)}
-              </div>
+              <div className="survey-item-number">{this.state.dayElectric}</div>
               <div className="survey-item-type">日电量(kWh)</div>
             </div>
             <canvas id="pie-bar-chart" />

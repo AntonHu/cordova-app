@@ -50,7 +50,7 @@ class Comp extends React.Component {
     equipmentListObj: JSON.parse(getLocalStorage('equipmentListObj')) || {},
     loading: true,
     refreshing: false,
-    sunCoordinateArr: null,
+    sunCoordinateArr: [],
     power: 0, // 功率
     dayPower: 0, // 日发电量
     sumPower: 0 // 总发电量
@@ -120,15 +120,18 @@ class Comp extends React.Component {
       publicKey: keyPair.publicKey
     });
     // 分割积分数组
+    this.sunIntegralArr = [];
     this.spliceArr(
       toJS(this.props.sunCityStore.sunIntegral),
       this.sunIntegralArr
     );
     // 获取坐标数组
-    this.sunIntegralArr.length > 0 &&
-      this.setState({
-        sunCoordinateArr: this.getSunCoordinateArr(this.sunIntegralArr[0])
-      });
+    this.setState({
+      sunCoordinateArr:
+        this.sunIntegralArr.length > 0
+          ? this.getSunCoordinateArr(this.sunIntegralArr[0])
+          : []
+    });
     return res;
   };
 
@@ -278,14 +281,19 @@ class Comp extends React.Component {
       if (decryptData.length > 0 && decryptData[decryptData.length - 1]) {
         const equipmentData = decryptData[decryptData.length - 1];
         currentPower =
-          equipmentData.totalPower && equipmentData.totalPower.toFixed(2);
-        dayElectric = equipmentData.todayEnergy;
-        maxValue = equipmentData.totalEnergy;
+          (equipmentData.totalPower && equipmentData.totalPower.toFixed(2)) ||
+          '0.00';
+        dayElectric =
+          (equipmentData.todayEnergy && equipmentData.todayEnergy.toFixed(2)) ||
+          '0.00';
+        maxValue =
+          (equipmentData.totalEnergy && equipmentData.totalEnergy.toFixed(2)) ||
+          '0.00';
       }
       // 电站日电量
       dayStationElectric += +dayElectric;
       equipmentListObj[name].currentPower = currentPower || 0; // 设备功率
-      equipmentListObj[name].dayElectric = dayElectric.toFixed(2) || 0; // 设备日电量
+      equipmentListObj[name].dayElectric = dayElectric || 0; // 设备日电量
       currentStationPower += Number(currentPower); // 当前电站功率
       totalStationElectric += Number(maxValue); // 当前电站发电量
     }
@@ -526,22 +534,12 @@ class Comp extends React.Component {
             if (pickNumber === this.state.sunCoordinateArr.length) {
               pickNumber = 0;
               setTimeout(() => {
+                this.setState({
+                  sunCoordinateArr: []
+                });
                 this.getSunFromRemote();
               }, 2000);
             }
-            // 每删除10个，重置一次，并进入下一个
-            // if (pickNumber && pickNumber % 10 === 0) {
-            //   this.timeoutID = setTimeout(() => {
-            //     document
-            //       .querySelectorAll('.remove')
-            //       .forEach(item => item.classList.remove('remove'));
-            //     this.setState({
-            //       sunCoordinateArr: this.getSunCoordinateArr(
-            //         this.sunIntegralArr[pickNumber / 10]
-            //       )
-            //     });
-            //   }, 1000);
-            // }
           } else {
             ToastNoMask(`收取失败。${result.msg || ''}`);
           }
@@ -566,7 +564,6 @@ class Comp extends React.Component {
     const equipmentNameList = equipmentListObj && Object.keys(equipmentListObj);
     return (
       <div className={'page-sunCity-info'} id="page-sunCity-info">
-        {/* {this.state.loading ? <Loading size={100} /> : null} */}
         <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
           <span className="h4">{`${lastNews.title}:${lastNews.content}`}</span>
         </NoticeBar>
@@ -603,7 +600,7 @@ class Comp extends React.Component {
             </div>
           </div>
           <div className="sun-items" ref={el => (this.sunArea = el)}>
-            {this.state.sunCoordinateArr &&
+            {this.sunIntegralArr.length > 0 ? (
               this.state.sunCoordinateArr.map((item, index) => {
                 return (
                   <div
@@ -621,7 +618,13 @@ class Comp extends React.Component {
                     <span className="sun-number">{item.info.amount}</span>
                   </div>
                 );
-              })}
+              })
+            ) : (
+              <div className="sun sun-wait">
+                <span className="sun-pic wait-pic " />
+                <span className="sun-number">挖宝中...</span>
+              </div>
+            )}
           </div>
         </div>
         <div className="rend">
@@ -631,7 +634,7 @@ class Comp extends React.Component {
               {lastTrend &&
                 lastTrend.length > 0 &&
                 lastTrend.map((item, index) => (
-                  <span key={index} style={{color: '#888'}}>
+                  <span key={index} style={{ color: '#888' }}>
                     {`${item.nickName}收取了${item.value}个太阳积分`}
                   </span>
                 ))}
