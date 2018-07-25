@@ -55,16 +55,16 @@ class Comp extends React.PureComponent {
   /**
    * 发送验证码
    */
-  sendCode = ({mobile}) => {
+  sendCode = async ({mobile}) => {
     const self = this;
-    return new Promise((resolve, reject) => {
-      const isExist = self.checkIfExist({mobile});
+    return new Promise(async (resolve, reject) => {
+      const isExist = await self.checkIfExist({mobile});
       if (!isExist) {
-        resolve();
         reqSendCode({mobile, type: reqSendCode.REGISTER_TYPE})
           .then(res => {
             console.log(res)
-          })
+          });
+        resolve();
       } else {
         reject();
       }

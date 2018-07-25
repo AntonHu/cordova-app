@@ -3,6 +3,7 @@ import { PageWithHeader, GreenButton } from '../../../../components';
 import { InputItem, Modal } from 'antd-mobile';
 import {modifyLoginPassword} from '../../../../stores/user/request';
 import User from '../../../../utils/user';
+import {testPassword} from '../../../../utils/methods';
 import './style.less';
 
 const alert = Modal.alert;
@@ -25,12 +26,12 @@ class Comp extends React.PureComponent {
 
   validate = () => {
     const { newPassword, oldPassword, confirmNewPassword} = this.state;
-    if (!oldPassword) {
-      showError('请输入旧密码！');
+    if (!testPassword(oldPassword)) {
+      showError('旧密码长度6到16位，包含英文、数字、下划线');
       return false;
     }
-    if (!newPassword) {
-      showError('请输入新密码！');
+    if (!testPassword(newPassword)) {
+      showError('新密码长度6到16位，包含英文、数字、下划线');
       return false;
     }
     if (oldPassword === newPassword) {
@@ -64,7 +65,7 @@ class Comp extends React.PureComponent {
           if (data.success) {
             this.onModifySuccess();
           } else {
-            this.onModifyFail();
+            this.onModifyFail(data.msg);
           }
         })
     }
@@ -80,8 +81,14 @@ class Comp extends React.PureComponent {
     ])
   };
 
-  onModifyFail = () => {
-    showError('修改登录密码失败，请稍候重试');
+  onModifyFail = (msg) => {
+    switch (msg) {
+      case 'old password error!':
+        showError('您输入的旧密码错误，请重新输入');
+        break;
+      default:
+        showError('修改登录密码失败，请稍候重试');
+    }
   };
 
   render() {
@@ -89,7 +96,7 @@ class Comp extends React.PureComponent {
     return (
       <div className={'page-reset-login-pw'}>
         <PageWithHeader title={'重置登录密码'}>
-          <div className="login-title">您已登录能信宝，可直接重置登录密码</div>
+          <div className="login-title">您已登录能源星球，可直接重置登录密码</div>
           <div className="reset-login-pw">
             <InputItem
               clear
