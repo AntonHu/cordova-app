@@ -212,9 +212,11 @@ class Comp extends React.Component {
       if (decryptData.length > 0 && decryptData[decryptData.length - 1]) {
         const equipmentData = decryptData[decryptData.length - 1];
         currentPower =
-          equipmentData.totalPower && equipmentData.totalPower.toFixed(2);
+          (equipmentData.totalPower && equipmentData.totalPower.toFixed(2)) ||
+          '0.00';
         dayElectric =
-          equipmentData.todayEnergy && equipmentData.todayEnergy.toFixed(2);
+          (equipmentData.todayEnergy && equipmentData.todayEnergy.toFixed(2)) ||
+          '0.00';
       }
       // 电站日电量
       equipmentListObj[name].currentPower = currentPower || 0; // 设备功率

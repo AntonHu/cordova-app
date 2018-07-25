@@ -280,16 +280,19 @@ class Comp extends React.Component {
       if (decryptData.length > 0 && decryptData[decryptData.length - 1]) {
         const equipmentData = decryptData[decryptData.length - 1];
         currentPower =
-          equipmentData.totalPower && equipmentData.totalPower.toFixed(2);
+          (equipmentData.totalPower && equipmentData.totalPower.toFixed(2)) ||
+          '0.00';
         dayElectric =
-          equipmentData.todayEnergy && equipmentData.todayEnergy.toFixed(2);
+          (equipmentData.todayEnergy && equipmentData.todayEnergy.toFixed(2)) ||
+          '0.00';
         maxValue =
-          equipmentData.totalEnergy && equipmentData.totalEnergy.toFixed(2);
+          (equipmentData.totalEnergy && equipmentData.totalEnergy.toFixed(2)) ||
+          '0.00';
       }
       // 电站日电量
-      dayStationElectric += dayElectric;
+      dayStationElectric += Number(dayElectric);
       equipmentListObj[name].currentPower = currentPower || 0; // 设备功率
-      equipmentListObj[name].dayElectric = dayElectric.toFixed(2) || 0; // 设备日电量
+      equipmentListObj[name].dayElectric = dayElectric || 0; // 设备日电量
       currentStationPower += Number(currentPower); // 当前电站功率
       totalStationElectric += Number(maxValue); // 当前电站发电量
     }
@@ -528,13 +531,12 @@ class Comp extends React.Component {
             // 如果pickNumber与目前太阳总数相等
             if (pickNumber === this.state.sunCoordinateArr.length) {
               pickNumber = 0;
-              this.setState({
-                sunCoordinateArr: []
-              });
-              this.getSunFromRemote();
-              // setTimeout(() => {
-              //   this.getSunFromRemote();
-              // }, 1000);
+              setTimeout(() => {
+                this.setState({
+                  sunCoordinateArr: []
+                });
+                this.getSunFromRemote();
+              }, 2000);
             }
           } else {
             ToastNoMask(`收取失败。${result.msg || ''}`);
