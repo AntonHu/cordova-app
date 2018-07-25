@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
-               BuildableName = "blockChainMobile.app"
-               BlueprintName = "blockChainMobile"
-               ReferencedContainer = "container:blockChainMobile.xcodeproj">
+               BuildableName = "能源星球.app"
+               BlueprintName = "能源星球"
+               ReferencedContainer = "container:能源星球.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
-            BuildableName = "blockChainMobile.app"
-            BlueprintName = "blockChainMobile"
-            ReferencedContainer = "container:blockChainMobile.xcodeproj">
+            BuildableName = "能源星球.app"
+            BlueprintName = "能源星球"
+            ReferencedContainer = "container:能源星球.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
-            BuildableName = "blockChainMobile.app"
-            BlueprintName = "blockChainMobile"
-            ReferencedContainer = "container:blockChainMobile.xcodeproj">
+            BuildableName = "能源星球.app"
+            BlueprintName = "能源星球"
+            ReferencedContainer = "container:能源星球.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
-            BuildableName = "blockChainMobile.app"
-            BlueprintName = "blockChainMobile"
-            ReferencedContainer = "container:blockChainMobile.xcodeproj">
+            BuildableName = "能源星球.app"
+            BlueprintName = "能源星球"
+            ReferencedContainer = "container:能源星球.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

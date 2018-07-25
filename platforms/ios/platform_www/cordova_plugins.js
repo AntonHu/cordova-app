@@ -403,6 +403,7 @@ module.exports.metadata =
   "cordova-plugin-device": "2.0.2",
   "cordova-plugin-code-push": "1.11.11",
   "cordova-plugin-compat": "1.2.0",
+  "cordova-plugin-crosswalk-webview": "2.4.0",
   "cordova-plugin-file": "4.3.3",
   "cordova-plugin-file-transfer": "1.6.3",
   "cordova-plugin-geolocation": "4.0.1",
