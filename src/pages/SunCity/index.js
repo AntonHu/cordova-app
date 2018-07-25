@@ -98,6 +98,7 @@ class Comp extends React.Component {
         // 获取设备，月，年，所有的数据，并缓存
         this.cacheEquipmentData(equipmentListObj);
       } else {
+        this.props.sunCityStore.recoverDataFromCache();
         this.setState({ loading: false });
       }
     } else {
@@ -282,7 +283,7 @@ class Comp extends React.Component {
         maxValue = equipmentData.totalEnergy;
       }
       // 电站日电量
-      dayStationElectric += dayElectric;
+      dayStationElectric += +dayElectric;
       equipmentListObj[name].currentPower = currentPower || 0; // 设备功率
       equipmentListObj[name].dayElectric = dayElectric.toFixed(2) || 0; // 设备日电量
       currentStationPower += Number(currentPower); // 当前电站功率
@@ -290,6 +291,7 @@ class Comp extends React.Component {
     }
     const dayStationData = this.mergeEquipmentData(equipmentDataArr);
     setLocalStorage('dayStationData', JSON.stringify(dayStationData)); // 本地储存电站每天发电数据
+    this.props.sunCityStore.updateDayStationElectric(dayStationElectric);
     setLocalStorage(
       'dayStationElectric',
       dayStationElectric && dayStationElectric.toFixed(2)

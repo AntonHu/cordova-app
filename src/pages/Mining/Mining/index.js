@@ -16,7 +16,7 @@ const tabs2 = [
 /**
  * 挖宝
  */
-@inject('miningStore', 'userStore', 'keyPair')
+@inject('miningStore', 'userStore', 'keyPair', 'sunCityStore')
 @observer
 class Comp extends React.Component {
   componentDidMount() {
@@ -89,7 +89,7 @@ class Comp extends React.Component {
   };
 
   render() {
-    const dayStationElectric = getLocalStorage('dayStationElectric') || 0; // 获取本地储存今日发电量
+    const dayStationElectric = this.props.sunCityStore.dayStationElectric.toFixed(2);
     const {
       balanceRanking,
       digTimes,

@@ -299,7 +299,8 @@ class Comp extends React.Component {
   };
 
   render() {
-    const dayStationElectric = getLocalStorage('dayStationElectric') || 0; // 获取本地储存今日发电量
+    const dayStationElectric = this.props.sunCityStore.dayStationElectric;
+
     const currentStationPower = getLocalStorage('currentStationPower') || 0; // 获取本地储存当前电站功率
     const totalStationElectric =
       Number(getLocalStorage('totalStationElectric')) ||
@@ -403,7 +404,7 @@ class Comp extends React.Component {
               </div>
               <div className="detail-item">
                 <div className="number">
-                  {`${dayStationElectric}`}
+                  {`${dayStationElectric.toFixed(2)}`}
                   <span className="h5" />
                 </div>
                 <div className="detail-type">今日(kWh)</div>

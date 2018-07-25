@@ -10,7 +10,7 @@ import {
   fetchAddInverter,
   fetchGetWeather
 } from './request';
-import {deleteLocalStorage} from '../../utils/storage';
+import {deleteLocalStorage, getLocalStorage} from '../../utils/storage';
 
 class SunCityStore {
   @observable
@@ -24,6 +24,7 @@ class SunCityStore {
   @observable equipmentPower = {};
   @observable inverterList = [];
   @observable weatherInfo = {type: ''};
+  @observable dayStationElectric = 0;
 
   @action
   resetStore = () => {
@@ -37,6 +38,7 @@ class SunCityStore {
     this.equipmentPower = {};
     this.inverterList = [];
     this.weatherInfo = {type: ''};
+    this.dayStationElectric = 0;
   };
 
   deleteAllCache = () => {
@@ -49,6 +51,24 @@ class SunCityStore {
     deleteLocalStorage('monthTotalStationElectric');
     deleteLocalStorage('yearTotalStationElectric');
     deleteLocalStorage('allTotalStationElectric');
+  };
+
+  /**
+   * 从缓存取数据放到store
+   */
+  recoverDataFromCache = () => {
+    this.recoverStationElectric();
+  };
+
+  recoverStationElectric = () => {
+    let electric = getLocalStorage('dayStationElectric');
+    electric = !!electric ? +electric : 0;
+    this.updateDayStationElectric(electric);
+  };
+
+  @action
+  updateDayStationElectric = (electricity) => {
+    this.dayStationElectric = electricity;
   };
 
   // 获取最新公告
