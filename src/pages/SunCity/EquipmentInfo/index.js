@@ -75,7 +75,10 @@ class Comp extends React.Component {
     // 本地储存设备月，年，所有数据
     this.cacheEquipmentData(sourceData, deviceNo);
   }
-
+  componentWillUnmount() {
+    // 清除监听事件，重要。
+    PullToRefresh.destroyAll();
+  }
   pullToRefresh = async (deviceNo, sourceData) => {
     // 删除缓存
     deleteLocalStorage('equipmentExpireTime');
