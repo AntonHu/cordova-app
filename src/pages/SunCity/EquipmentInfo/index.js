@@ -51,8 +51,10 @@ class Comp extends React.Component {
     let dayEquipmentData = [];
     // 当时间过期或者设备号更换，重新获取并缓存数据
     if (
-      isExpire(1, 'equipmentExpireTime') ||
-      getLocalStorage('equipmentNumber') !== deviceNo
+      // isExpire(1, 'equipmentExpireTime') ||
+      // getLocalStorage('equipmentNumber') !== deviceNo
+    // TODO: 暂时先不缓存了，后面再弄回来
+      true
     ) {
       dayEquipmentData = await this.getPowerData(
         sourceData,
@@ -106,8 +108,10 @@ class Comp extends React.Component {
   async cacheEquipmentData(sourceData, deviceNo) {
     // 当时间过期或者设备号更换，重新获取并缓存数据
     if (
-      isExpire(1, 'equipmentExpireTime') ||
-      getLocalStorage('equipmentNumber') !== deviceNo
+      // isExpire(1, 'equipmentExpireTime') ||
+      // getLocalStorage('equipmentNumber') !== deviceNo
+      // TODO: 暂时先不缓存了，后面再弄回来
+      true
     ) {
       // 请求设备月发电数据，本地储存
       const monthEquipmentData = await this.getPowerData(
@@ -394,6 +398,7 @@ class Comp extends React.Component {
       default:
         break;
     }
+    console.log(equipmentData)
     // 显示默认数据
     equipmentData.length < 1 &&
       equipmentData.push({
