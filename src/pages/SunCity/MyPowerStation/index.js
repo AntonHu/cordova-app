@@ -218,7 +218,18 @@ class Comp extends React.Component {
       id: 'pie-bar-chart',
       pixelRatio: window.devicePixelRatio
     });
-    this.barChart.source(data);
+    const defs = {
+      time: {
+        tickCount: data.length > 20 ? 8 : 4
+      },
+      number: {
+        min: 0,
+        formatter: function formatter(val) {
+          return `${val}kwh`;
+        }
+      }
+    };
+    this.barChart.source(data, defs);
     this.barChart.tooltip({
       showItemMarker: false,
       onShow: function onShow(ev) {

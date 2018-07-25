@@ -123,11 +123,15 @@ class Comp extends React.Component {
       setLocalStorage('monthEquipmentData', JSON.stringify(monthEquipmentData));
 
       // 请求设备年发电数据，本地储存
-      const yearEquipmentData = await this.getPowerData(
+      let yearEquipmentData = await this.getPowerData(
         sourceData,
         deviceNo,
         EQUIPMENT_DATA_TYPE.YEAR
       );
+      yearEquipmentData = yearEquipmentData.map(item => {
+        item.time = item.time.substring(5);
+        return item;
+      });
       setLocalStorage('yearEquipmentData', JSON.stringify(yearEquipmentData));
       this.cacheAllEquipmentData(sourceData, deviceNo);
     }
@@ -251,13 +255,6 @@ class Comp extends React.Component {
 
   // 绘制发电环图
   renderPieBar = currentPower => {
-    // 创建渐变对象
-    const canvas = document.getElementById('pie-bar-chart');
-    const ctx = canvas.getContext('2d');
-    // const grd = ctx.createLinearGradient(0, 0, 140, 0);
-    // grd.addColorStop(0, '#fa5a21');
-    // grd.addColorStop(1, '#5bd121');
-
     this.pieChart = new F2.Chart({
       id: 'pie-bar-chart',
       width: px(340),
@@ -317,13 +314,14 @@ class Comp extends React.Component {
     });
     const defs = {
       time: {
-        tickCount: 8,
-        range: [0, 1]
+        tickCount: 4
       },
       number: {
         tickCount: data.every(item => item.number === 0) ? 2 : 5,
         min: 0,
-        alias: '功率'
+        formatter: function formatter(val) {
+          return `${val}w`;
+        }
       }
     };
     this.areaChart.source(data, defs);
@@ -371,7 +369,9 @@ class Comp extends React.Component {
       number: {
         tickCount: data.every(item => item.number === 0) ? 2 : 5,
         min: 0,
-        alias: '功率'
+        formatter: function formatter(val) {
+          return `${val}kwh`;
+        }
       }
     };
     this.curveChart.source(data, defs);
