@@ -155,7 +155,9 @@ class Comp extends React.Component {
                 });
               }
             });
-            ToastNoMask('添加逆变器成功');
+            this.setState({
+              successModal: true
+            });
           } else {
             ToastNoMask('添加逆变器失败。' + (result.msg || ''));
           }
@@ -333,7 +335,7 @@ class Comp extends React.Component {
               buttonText="确定"
               visible={this.state.successModal}
               onPress={this.onModalPress}
-              onClose={null}
+              onClose={() => this.setState({successModal: false})}
             />
             <ActivityIndicator
               toast
