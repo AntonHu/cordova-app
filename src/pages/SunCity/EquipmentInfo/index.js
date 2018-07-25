@@ -3,7 +3,11 @@ import { observer, inject } from 'mobx-react';
 import { PageWithHeader } from '../../../components';
 import F2 from '@antv/f2';
 import { px } from '../../../utils/getDevice';
-import { setLocalStorage, getLocalStorage } from '../../../utils/storage';
+import {
+  setLocalStorage,
+  getLocalStorage,
+  deleteLocalStorage
+} from '../../../utils/storage';
 import {
   decrypt,
   handleAbnormalData,
@@ -14,6 +18,7 @@ import { EQUIPMENT_DATA_TYPE } from '../../../utils/variable';
 import './style.less';
 
 import { toJS } from 'mobx';
+import PullToRefresh from 'pulltorefreshjs';
 
 /**
  * 电站设备信息
@@ -39,79 +44,143 @@ class Comp extends React.Component {
   curveChart = null;
   chartTitleObj = {
     day: '日功率走势图(w)',
-    month: '月发电量(kwh)',
-    year: '年发电量(kwh)',
-    all: '全部发电量(kwh)'
+    month: '月发电量(kWh)',
+    year: '年发电量(kWh)',
+    all: '全部发电量(kWh)'
   };
   async componentDidMount() {
     const deviceNo = this.props.match.params.id;
     const params = this.props.location.search.substring(1);
     const sourceData = params.split('&')[0].split('=')[1];
+    this.initPullToRefresh(deviceNo, sourceData);
 
     let dayEquipmentData = [];
     // 当时间过期或者设备号更换，重新获取并缓存数据
     if (
-      // isExpire(1, 'equipmentExpireTime') ||
-      // getLocalStorage('equipmentNumber') !== deviceNo
-    // TODO: 暂时先不缓存了，后面再弄回来
-      true
+      isExpire(1, 'equipmentExpireTime') ||
+      getLocalStorage('equipmentNumber') !== deviceNo
+      // TODO: 暂时先不缓存了，后面再弄回来
+      // true
     ) {
-      dayEquipmentData = await this.getPowerData(
-        sourceData,
-        deviceNo,
-        EQUIPMENT_DATA_TYPE.DAY
-      );
-      dayEquipmentData.length > 0 &&
-        dayEquipmentData.map(item => {
-          item.time = getHour_Minute(item.latestTime);
-          item.number = item.totalPower;
-          return item;
-        });
-      setLocalStorage('dayEquipmentData', JSON.stringify(dayEquipmentData)); // 本地储存天设备发电数据
+      dayEquipmentData = await this.cacheDayEquipmentData(sourceData, deviceNo);
     } else {
       dayEquipmentData = JSON.parse(getLocalStorage('dayEquipmentData'));
     }
-    if (dayEquipmentData.length > 0) {
-      this.renderArea(dayEquipmentData);
-    } else {
-      // 默认显示数据
-      this.renderArea([{ time: '00', number: 0 }]);
+    this.renderCharts(dayEquipmentData);
+    this.setState({
+      deviceNo,
+      sourceData
+    });
+
+    // 本地储存设备月，年，所有数据
+    this.cacheEquipmentData(sourceData, deviceNo);
+  }
+  componentWillUnmount() {
+    // 清除监听事件，重要。
+    PullToRefresh.destroyAll();
+  }
+  pullToRefresh = async (deviceNo, sourceData) => {
+    // 删除缓存
+    deleteLocalStorage('equipmentExpireTime');
+    const { keyPair } = this.props;
+    const promiseArray = [];
+    // 如果有私钥
+    if (keyPair.hasKey) {
+      const dayEquipmentData = await this.cacheDayEquipmentData(
+        sourceData,
+        deviceNo
+      );
+      const selected = Object.assign({}, this.state.selected);
+      Object.keys(selected).forEach(item => {
+        selected[item] = false;
+      });
+      selected.day = true;
+      this.setState({
+        selected,
+        chartTitle: this.chartTitleObj.day
+      });
+      this.renderCharts(dayEquipmentData);
+      // 本地储存设备月，年，所有数据
+      this.cacheEquipmentData(sourceData, deviceNo);
+
+      promiseArray.push(dayEquipmentData);
     }
+    return Promise.all(promiseArray);
+  };
+  /**
+   * 初始化下拉刷新
+   */
+  initPullToRefresh = (deviceNo, sourceData) => {
+    PullToRefresh.init({
+      mainElement: '#page-equipment-info', // "下拉刷新"把哪个部分包住
+      triggerElement: '#page-equipment-info', // "下拉刷新"把哪个部分包住
+      onRefresh: () => this.pullToRefresh(deviceNo, sourceData), // 下拉刷新的方法，返回一个promise
+      shouldPullToRefresh: function() {
+        // 什么情况下的滚动触发下拉刷新，这个很重要
+        // 如果这个页面里有height超过窗口高度的元素
+        // 那么应该在这个元素滚动位于顶部的时候，返回true
+        const ele = document.getElementById('page-equipment-info');
+        if (ele === null) {
+          return false;
+        }
+        return ele.parentNode.parentNode.scrollTop === 0;
+      },
+      instructionsPullToRefresh: '下拉刷新',
+      instructionsReleaseToRefresh: '松开刷新',
+      instructionsRefreshing: '正在刷新...'
+    });
+  };
+  // 渲染可视化图
+  renderCharts = dayEquipmentData => {
     // 设备当前功率
     let currentPower = 0;
     // 设备日电量
     let dayElectric = 0;
     // 当前电站发电量
     let maxValue = 0;
-    if (
-      dayEquipmentData.length > 0 &&
-      dayEquipmentData[dayEquipmentData.length - 1]
-    ) {
+    if (dayEquipmentData.length > 0) {
       const equipmentData = dayEquipmentData[dayEquipmentData.length - 1];
-      currentPower = equipmentData.totalPower;
+      currentPower =
+        equipmentData.totalPower && equipmentData.totalPower.toFixed(2);
       dayElectric = equipmentData.todayEnergy;
       maxValue = equipmentData.totalEnergy;
+    } else {
+      // 默认显示数据
+      dayEquipmentData.push({ time: '00', number: 0 });
     }
+    this.pieChart && this.pieChart.clear();
+    this.curveChart && this.curveChart.clear();
+    this.areaChart && this.areaChart.clear();
+    this.renderArea(dayEquipmentData);
+    this.renderPieBar(currentPower);
     this.setState({
-      deviceNo,
-      sourceData,
       dayElectric,
       maxValue
     });
-    this.renderPieBar(currentPower);
-
-    // 本地储存设备月，年，所有数据
-    this.cacheEquipmentData(sourceData, deviceNo);
+  };
+  // 本地储存设备天数据
+  async cacheDayEquipmentData(sourceData, deviceNo) {
+    const dayEquipmentData = await this.getPowerData(
+      sourceData,
+      deviceNo,
+      EQUIPMENT_DATA_TYPE.DAY
+    );
+    dayEquipmentData.length > 0 &&
+      dayEquipmentData.map(item => {
+        item.time = getHour_Minute(item.latestTime);
+        item.number = item.totalPower;
+        return item;
+      });
+    setLocalStorage('dayEquipmentData', JSON.stringify(dayEquipmentData)); // 本地储存天设备发电数据
+    return dayEquipmentData;
   }
 
   // 本地储存设备月，年，所有数据
   async cacheEquipmentData(sourceData, deviceNo) {
     // 当时间过期或者设备号更换，重新获取并缓存数据
     if (
-      // isExpire(1, 'equipmentExpireTime') ||
-      // getLocalStorage('equipmentNumber') !== deviceNo
-      // TODO: 暂时先不缓存了，后面再弄回来
-      true
+      isExpire(1, 'equipmentExpireTime') ||
+      getLocalStorage('equipmentNumber') !== deviceNo
     ) {
       // 请求设备月发电数据，本地储存
       const monthEquipmentData = await this.getPowerData(
@@ -127,25 +196,77 @@ class Comp extends React.Component {
       setLocalStorage('monthEquipmentData', JSON.stringify(monthEquipmentData));
 
       // 请求设备年发电数据，本地储存
-      const yearEquipmentData = await this.getPowerData(
+      let yearEquipmentData = await this.getPowerData(
         sourceData,
         deviceNo,
         EQUIPMENT_DATA_TYPE.YEAR
       );
+      yearEquipmentData = yearEquipmentData.map(item => {
+        item.time = item.time.substring(5);
+        return item;
+      });
       setLocalStorage('yearEquipmentData', JSON.stringify(yearEquipmentData));
-
-      // 请求设备所有发电数据，本地储存
-      const allEquipmentData = await this.getPowerData(
-        sourceData,
-        deviceNo,
-        EQUIPMENT_DATA_TYPE.ALL
-      );
-
-      setLocalStorage('allEquipmentData', JSON.stringify(allEquipmentData));
-      setLocalStorage('equipmentNumber', deviceNo); // 本地储存设备号
-      setLocalStorage('equipmentExpireTime', new Date().getTime()); // 本地储存设备数据过期时间
+      this.cacheAllEquipmentData(sourceData, deviceNo);
     }
   }
+  // 请求设备所有发电数据，本地储存
+  async cacheAllEquipmentData(sourceData, deviceNo) {
+    // 请求设备所有发电数据，本地储存
+    const allEquipmentData = await this.getPowerData(
+      sourceData,
+      deviceNo,
+      EQUIPMENT_DATA_TYPE.ALL
+    );
+    const allEquipmentDataIntegrate = this.allEquipmentDataIntegrate(
+      allEquipmentData
+    );
+    setLocalStorage(
+      'allEquipmentData',
+      JSON.stringify(allEquipmentDataIntegrate)
+    );
+    setLocalStorage('equipmentNumber', deviceNo); // 本地储存设备号
+    setLocalStorage('equipmentExpireTime', new Date().getTime()); // 本地储存设备数据过期时间
+  }
+  // 整合设备所有的数据
+  allEquipmentDataIntegrate = allEquipmentData => {
+    allEquipmentData.map(item => {
+      item.time = item && item.time.substring(0, 4);
+      return item;
+    });
+    const dataIntegrate = this.mergeEquipmentData(allEquipmentData);
+    return dataIntegrate;
+  };
+
+  // 合并所有的数据并排序
+  mergeEquipmentData = equipmentDataArr => {
+    const mergeEquipmentDataArr = [];
+    const timeList = equipmentDataArr.map(item => item.time.substring(0, 4));
+    var uniqueTimeArr = [];
+    for (var i = 0, len = timeList.length; i < len; i++) {
+      var current = timeList[i];
+      if (uniqueTimeArr.indexOf(current) === -1) {
+        uniqueTimeArr.push(current);
+      }
+    }
+    uniqueTimeArr.forEach(year => {
+      let sum = 0;
+      equipmentDataArr
+        .filter(info => info.time.indexOf(year) > -1)
+        .forEach(item => (sum += item.number));
+      mergeEquipmentDataArr.push({
+        time: year,
+        number: sum ? Number(sum.toFixed(2)) : 0
+      });
+    });
+    const sortEquipmentDataArr = mergeEquipmentDataArr.sort((pre, cur) => {
+      if (pre.time.indexOf('-') > 0 && cur.time.indexOf('-') > 0) {
+        return Date.parse(pre.time) - Date.parse(cur.time);
+      } else {
+        return pre.time - cur.time;
+      }
+    });
+    return sortEquipmentDataArr;
+  };
 
   // 按照类型请求电量数据
   async getPowerData(sourceData, deviceNo, dateType) {
@@ -207,13 +328,6 @@ class Comp extends React.Component {
 
   // 绘制发电环图
   renderPieBar = currentPower => {
-    // 创建渐变对象
-    const canvas = document.getElementById('pie-bar-chart');
-    const ctx = canvas.getContext('2d');
-    // const grd = ctx.createLinearGradient(0, 0, 140, 0);
-    // grd.addColorStop(0, '#fa5a21');
-    // grd.addColorStop(1, '#5bd121');
-
     this.pieChart = new F2.Chart({
       id: 'pie-bar-chart',
       width: px(340),
@@ -252,7 +366,7 @@ class Comp extends React.Component {
     });
     this.pieChart.guide().html({
       position: ['110%', '57.5%'],
-      html: `<div style="width: 250px;height: 40px;text-align: center;"><div style="font-size: 20px;font-weight:bold">${currentPower}w</div><div style="font-size: 14px;margin-top: 5px">当前功率</div></div>`
+      html: `<div style="width: 250px;height: 40px;text-align: center;"><div style="font-size: 20px;font-weight:bold">${currentPower}</div><div style="font-size: 14px;margin-top: 5px">当前功率(w)</div></div>`
     });
     this.pieChart
       .interval()
@@ -273,13 +387,14 @@ class Comp extends React.Component {
     });
     const defs = {
       time: {
-        tickCount: 8,
-        range: [0, 1]
+        tickCount: 4
       },
       number: {
         tickCount: data.every(item => item.number === 0) ? 2 : 5,
         min: 0,
-        alias: '功率'
+        formatter: function formatter(val) {
+          return `${val}w`;
+        }
       }
     };
     this.areaChart.source(data, defs);
@@ -327,7 +442,9 @@ class Comp extends React.Component {
       number: {
         tickCount: data.every(item => item.number === 0) ? 2 : 5,
         min: 0,
-        alias: '功率'
+        formatter: function formatter(val) {
+          return `${val}kWh`;
+        }
       }
     };
     this.curveChart.source(data, defs);
@@ -398,23 +515,23 @@ class Comp extends React.Component {
       default:
         break;
     }
-    console.log(equipmentData)
     // 显示默认数据
     equipmentData.length < 1 &&
       equipmentData.push({
         number: 0,
         time: '00'
       });
+    this.curveChart && this.curveChart.clear();
+    this.areaChart && this.areaChart.clear();
     if (type === 'day') {
       this.renderArea(equipmentData);
     } else {
-      // this.curveChart && this.curveChart.clear();
       this.renderCurve(equipmentData);
     }
   };
   render() {
     return (
-      <div className={'page-equipment-info'}>
+      <div className={'page-equipment-info'} id="page-equipment-info">
         <PageWithHeader
           title={
             this.props.location.search
@@ -428,12 +545,12 @@ class Comp extends React.Component {
               <div className="survey-item-number">
                 {this.state.dayElectric && this.state.dayElectric.toFixed(2)}
               </div>
-              <div className="survey-item-type">日电量</div>
+              <div className="survey-item-type">日电量(kWh)</div>
             </div>
             <canvas id="pie-bar-chart" />
             <div className="survey-item">
               <div className="survey-item-number">{this.state.maxValue}</div>
-              <div className="survey-item-type">总电量</div>
+              <div className="survey-item-type">总电量(kWh)</div>
             </div>
           </div>
           <div className="equipment-content">

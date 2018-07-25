@@ -125,12 +125,11 @@ class Comp extends React.Component {
     );
     // 获取坐标数组
     this.sunIntegralArr.length > 0 &&
-    this.setState({
-      sunCoordinateArr: this.getSunCoordinateArr(this.sunIntegralArr[0])
-    });
+      this.setState({
+        sunCoordinateArr: this.getSunCoordinateArr(this.sunIntegralArr[0])
+      });
     return res;
   };
-
 
   pullToRefresh = async () => {
     const { keyPair, userStore, history } = this.props;
@@ -277,7 +276,8 @@ class Comp extends React.Component {
       let maxValue = 0;
       if (decryptData.length > 0 && decryptData[decryptData.length - 1]) {
         const equipmentData = decryptData[decryptData.length - 1];
-        currentPower = equipmentData.totalPower;
+        currentPower =
+          equipmentData.totalPower && equipmentData.totalPower.toFixed(2);
         dayElectric = equipmentData.todayEnergy;
         maxValue = equipmentData.totalEnergy;
       }

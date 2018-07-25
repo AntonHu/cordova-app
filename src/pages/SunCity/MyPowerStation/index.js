@@ -218,13 +218,24 @@ class Comp extends React.Component {
       id: 'pie-bar-chart',
       pixelRatio: window.devicePixelRatio
     });
-    this.barChart.source(data);
+    const defs = {
+      time: {
+        tickCount: data.length > 20 ? 8 : 4
+      },
+      number: {
+        min: 0,
+        formatter: function formatter(val) {
+          return `${val}kWh`;
+        }
+      }
+    };
+    this.barChart.source(data, defs);
     this.barChart.tooltip({
       showItemMarker: false,
       onShow: function onShow(ev) {
         const items = ev.items;
         items[0].name = null;
-        items[0].value = `${items[0].value}kwh`;
+        items[0].value = `${items[0].value}kWh`;
       }
     });
     this.barChart.axis('time', {
@@ -395,7 +406,7 @@ class Comp extends React.Component {
                   {`${dayStationElectric}`}
                   <span className="h5" />
                 </div>
-                <div className="detail-type">今日(kwh)</div>
+                <div className="detail-type">今日(kWh)</div>
               </div>
               <div className="detail-item">
                 <div className="number">
@@ -418,7 +429,7 @@ class Comp extends React.Component {
                   {`${totalStationElectric}`}
                   <span className="h5" />
                 </div>
-                <div className="detail-type">累计(kwh)</div>
+                <div className="detail-type">累计(kWh)</div>
               </div>
               <div className="detail-item">
                 <div className="number">
