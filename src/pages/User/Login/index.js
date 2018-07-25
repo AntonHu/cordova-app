@@ -55,6 +55,7 @@ class Login extends React.PureComponent {
             const user = new User();
             user.login(data.access_token);
             reqRegisterCA({password});
+            this.jpushLoginEvent(true, {phone});
             this.props.history.replace('/');
           } else {
 
@@ -63,6 +64,7 @@ class Login extends React.PureComponent {
         .catch(err => {
           const data = err.data;
           let msg = '登录失败';
+          this.jpushLoginEvent(false, {data, phone});
           if (data.error_description) {
             if (data.error_description === 'Bad credentials') {
               msg = '用户名或密码错误'
@@ -81,6 +83,16 @@ class Login extends React.PureComponent {
 
   toForgetLoginPW = () => {
     this.props.history.push('/forgetLoginPW')
+  };
+
+  jpushLoginEvent = (success, extras = {}) => {
+    if (window.JAnalytics) {
+      window.JAnalytics.addLoginEvent({
+        loginMethod: 'app',
+        isLoginSuccess: success,
+        extras
+      })
+    }
   };
 
   render() {

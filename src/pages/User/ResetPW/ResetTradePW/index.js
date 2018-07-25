@@ -146,6 +146,10 @@ class Comp extends React.Component {
           }
         }])
       } else {
+        this.jpushSetFailEvent({
+          phone: clearSpace(phone),
+          response: data
+        });
         let msg = '';
         if (typeof data.msg === 'string' && data.msg.length > 0) {
           msg = data.msg
@@ -192,6 +196,18 @@ class Comp extends React.Component {
           showLoading: false
         });
       })
+  };
+
+  jpushSetFailEvent = (data) => {
+    if  (window.JAnalytics) {
+      window.JAnalytics.addBrowseEvent({
+        browseId: 'trade_password_fail',       // 浏览内容 id
+        browseName: '设置交易密码失败',     // 内容名称
+        browseType: '报错',     // 内容类型
+        browseDuration: 1, // 浏览时长，单位秒
+        extras: data          // Optional. 扩展参数，类似 {'key1': 'value1'}
+      })
+    }
   };
 
   validateBeforeSubmit = () => {

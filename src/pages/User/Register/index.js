@@ -32,8 +32,15 @@ class Comp extends React.PureComponent {
     this.isRegistering = false;
     if (data && data.code === 20000) {
       this.registerSuccess(showModal);
+      this.jpushRegisterEvent(true, {
+        phone: mobile
+      });
     } else {
-      this.registerFail(data.msg)
+      this.registerFail(data.msg);
+      this.jpushRegisterEvent(false, {
+        phone: mobile,
+        response: data
+      });
     }
   };
 
@@ -50,6 +57,16 @@ class Comp extends React.PureComponent {
       errorMsg = '错误的验证码';
     }
     showError(errorMsg || '注册失败')
+  };
+
+  jpushRegisterEvent = (success, extras = {}) => {
+    if (window.JAnalytics) {
+      window.JAnalytics.addRegisterEvent({
+        registerMethod: 'app',
+        isRegisterSuccess: success,
+        extras
+      })
+    }
   };
 
   /**
