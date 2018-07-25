@@ -129,19 +129,67 @@ class Comp extends React.Component {
         EQUIPMENT_DATA_TYPE.YEAR
       );
       setLocalStorage('yearEquipmentData', JSON.stringify(yearEquipmentData));
-
-      // 请求设备所有发电数据，本地储存
-      const allEquipmentData = await this.getPowerData(
-        sourceData,
-        deviceNo,
-        EQUIPMENT_DATA_TYPE.ALL
-      );
-
-      setLocalStorage('allEquipmentData', JSON.stringify(allEquipmentData));
-      setLocalStorage('equipmentNumber', deviceNo); // 本地储存设备号
-      setLocalStorage('equipmentExpireTime', new Date().getTime()); // 本地储存设备数据过期时间
+      this.cacheAllEquipmentData(sourceData, deviceNo);
     }
   }
+  // 请求设备所有发电数据，本地储存
+  async cacheAllEquipmentData(sourceData, deviceNo) {
+    // 请求设备所有发电数据，本地储存
+    const allEquipmentData = await this.getPowerData(
+      sourceData,
+      deviceNo,
+      EQUIPMENT_DATA_TYPE.ALL
+    );
+    const allEquipmentDataIntegrate = this.allEquipmentDataIntegrate(
+      allEquipmentData
+    );
+    setLocalStorage(
+      'allEquipmentData',
+      JSON.stringify(allEquipmentDataIntegrate)
+    );
+    setLocalStorage('equipmentNumber', deviceNo); // 本地储存设备号
+    setLocalStorage('equipmentExpireTime', new Date().getTime()); // 本地储存设备数据过期时间
+  }
+  // 整合设备所有的数据
+  allEquipmentDataIntegrate = allEquipmentData => {
+    allEquipmentData.map(item => {
+      item.time = item && item.time.substring(0, 4);
+      return item;
+    });
+    const dataIntegrate = this.mergeEquipmentData(allEquipmentData);
+    return dataIntegrate;
+  };
+
+  // 合并所有的数据并排序
+  mergeEquipmentData = equipmentDataArr => {
+    const mergeEquipmentDataArr = [];
+    const timeList = equipmentDataArr.map(item => item.time.substring(0, 4));
+    var uniqueTimeArr = [];
+    for (var i = 0, len = timeList.length; i < len; i++) {
+      var current = timeList[i];
+      if (uniqueTimeArr.indexOf(current) === -1) {
+        uniqueTimeArr.push(current);
+      }
+    }
+    uniqueTimeArr.forEach(year => {
+      let sum = 0;
+      equipmentDataArr
+        .filter(info => info.time.indexOf(year) > -1)
+        .forEach(item => (sum += item.number));
+      mergeEquipmentDataArr.push({
+        time: year,
+        number: sum ? Number(sum.toFixed(2)) : 0
+      });
+    });
+    const sortEquipmentDataArr = mergeEquipmentDataArr.sort((pre, cur) => {
+      if (pre.time.indexOf('-') > 0 && cur.time.indexOf('-') > 0) {
+        return Date.parse(pre.time) - Date.parse(cur.time);
+      } else {
+        return pre.time - cur.time;
+      }
+    });
+    return sortEquipmentDataArr;
+  };
 
   // 按照类型请求电量数据
   async getPowerData(sourceData, deviceNo, dateType) {
@@ -400,10 +448,11 @@ class Comp extends React.Component {
         number: 0,
         time: '00'
       });
+    this.curveChart && this.curveChart.clear();
+    this.areaChart && this.areaChart.clear();
     if (type === 'day') {
       this.renderArea(equipmentData);
     } else {
-      // this.curveChart && this.curveChart.clear();
       this.renderCurve(equipmentData);
     }
   };
@@ -423,12 +472,12 @@ class Comp extends React.Component {
               <div className="survey-item-number">
                 {this.state.dayElectric && this.state.dayElectric.toFixed(2)}
               </div>
-              <div className="survey-item-type">日电量</div>
+              <div className="survey-item-type">日电量(kwh)</div>
             </div>
             <canvas id="pie-bar-chart" />
             <div className="survey-item">
               <div className="survey-item-number">{this.state.maxValue}</div>
-              <div className="survey-item-type">总电量</div>
+              <div className="survey-item-type">总电量(kwh)</div>
             </div>
           </div>
           <div className="equipment-content">
