@@ -152,8 +152,8 @@ class Comp extends React.Component {
    */
   initPullToRefresh = (deviceNo, sourceData) => {
     PullToRefresh.init({
-      mainElement: '#page-powerStation-info', // "下拉刷新"把哪个部分包住
-      triggerElement: '#page-powerStation-info', // "下拉刷新"把哪个部分包住
+      mainElement: 'body', // "下拉刷新"把哪个部分包住
+      triggerElement: 'body', // "下拉刷新"把哪个部分包住
       onRefresh: this.pullToRefresh, // 下拉刷新的方法，返回一个promise
       shouldPullToRefresh: function() {
         // 什么情况下的滚动触发下拉刷新，这个很重要
@@ -163,7 +163,7 @@ class Comp extends React.Component {
         if (ele === null) {
           return false;
         }
-        return ele.parentNode.parentNode.scrollTop === 0;
+        return ele.scrollTop === 0;
       },
       instructionsPullToRefresh: '下拉刷新',
       instructionsReleaseToRefresh: '松开刷新',
