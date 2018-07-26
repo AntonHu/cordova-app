@@ -163,16 +163,30 @@
 }
 
 .am-popover {
-  .am-popover-item-container {
+  .am-popover-arrow {
+    background: #f44c78;
+  }
+  .am-popover-item {
     padding: 0;
-    .am-popover-item-content {
-      display: flex;
-      align-items: center;
+    color: @white-text-color;
+    background: linear-gradient(to bottom, #fb7ba3, #f44c78);
+    .am-popover-item-container {
+      height: 30px;
+    }
+  }
+}
 
-      .am-icon {
-        height: 16px;
-        width: 16px;
-        margin-right: 3px;
+.am-modal {
+  .am-modal-body {
+    .am-list-item {
+      padding-left: 0;
+      .am-input-label {
+        font-size: 12px;
+        width: 90px;
+      }
+      input {
+        color: @main-color;
+        font-size: 16px;
       }
     }
   }

@@ -34,7 +34,7 @@ class Comp extends React.Component {
       all: false
     },
     dayElectric: 0,
-    chartTitle: '日功率走势图(w)',
+    chartTitle: '日功率走势图(W)',
     sourceData: '', // 数据来源
     deviceNo: '', //设备编码
     maxValue: 0, // 设备发电量
@@ -44,7 +44,7 @@ class Comp extends React.Component {
   areaChart = null;
   curveChart = null;
   chartTitleObj = {
-    day: '日功率走势图(w)',
+    day: '日功率走势图(W)',
     month: '月发电量(kWh)',
     year: '年发电量(kWh)',
     all: '全部发电量(kWh)'
@@ -174,7 +174,7 @@ class Comp extends React.Component {
     dayEquipmentData.length > 0 &&
       dayEquipmentData.map(item => {
         item.time = getHour_Minute(item.latestTime);
-        item.number = item.totalPower;
+        item.number = item.totalPower || 0;
         return item;
       });
     setLocalStorage('dayEquipmentData', JSON.stringify(dayEquipmentData)); // 本地储存天设备发电数据
@@ -261,7 +261,7 @@ class Comp extends React.Component {
         .forEach(item => (sum += item.number));
       mergeEquipmentDataArr.push({
         time: year,
-        number: sum ? Number(sum.toFixed(2)) : 0
+        number: sum || 0
       });
     });
     const sortEquipmentDataArr = mergeEquipmentDataArr.sort((pre, cur) => {
@@ -312,7 +312,7 @@ class Comp extends React.Component {
           console.log(err);
         }
         if (powerInfo) {
-          const value = +(powerInfo.maxEnergy - powerInfo.minEnergy).toFixed(2);
+          const value = powerInfo.maxEnergy - powerInfo.minEnergy;
           data.push({
             time: Object.keys(receiveData)[i],
             number: value,
@@ -372,7 +372,7 @@ class Comp extends React.Component {
     });
     this.pieChart.guide().html({
       position: ['110%', '57.5%'],
-      html: `<div style="width: 250px;height: 40px;text-align: center;"><div style="font-size: 20px;font-weight:bold">${currentPower}</div><div style="font-size: 14px;margin-top: 5px">当前功率(w)</div></div>`
+      html: `<div style="width: 250px;height: 40px;text-align: center;"><div style="font-size: 20px;font-weight:bold">${currentPower}</div><div style="font-size: 14px;margin-top: 5px">当前功率(W)</div></div>`
     });
     this.pieChart
       .interval()
@@ -393,14 +393,12 @@ class Comp extends React.Component {
     });
     const defs = {
       time: {
-        tickCount: 5
+        tickCount: 5,
+        range: [0, 1]
       },
       number: {
         tickCount: data.every(item => item.number === 0) ? 2 : 6,
-        min: 0,
-        formatter: function formatter(val) {
-          return `${val && val.toFixed(2)}w`;
-        }
+        min: 0
       }
     };
     this.areaChart.source(data, defs);
@@ -411,8 +409,9 @@ class Comp extends React.Component {
       showCrosshairs: true,
       onShow: function onShow(ev) {
         var items = ev.items;
-        items[0].name = null;
-        items[0].value = items[0].value;
+        items[0].name = items[0].title;
+        items[0].value =
+          items[0].value && `${Number(items[0].value).toFixed(2)}W`;
       }
     });
     this.areaChart.axis('time', {
@@ -447,10 +446,7 @@ class Comp extends React.Component {
       },
       number: {
         tickCount: data.every(item => item.number === 0) ? 2 : 6,
-        min: 0,
-        formatter: function formatter(val) {
-          return `${val && val.toFixed(2)}kWh`;
-        }
+        min: 0
       }
     };
     this.curveChart.source(data, defs);
@@ -471,9 +467,10 @@ class Comp extends React.Component {
     this.curveChart.tooltip({
       showCrosshairs: true,
       onShow: function onShow(ev) {
-        var items = ev.items;
-        items[0].name = null;
-        items[0].value = items[0].value;
+        const items = ev.items;
+        items[0].name = items[0].title;
+        items[0].value =
+          items[0].value && `${Number(items[0].value).toFixed(2)}kWh`;
       }
     });
     this.curveChart

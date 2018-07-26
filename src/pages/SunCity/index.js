@@ -50,6 +50,7 @@ class Comp extends React.Component {
     equipmentListObj: JSON.parse(getLocalStorage('equipmentListObj')) || {},
     loading: true,
     refreshing: false,
+    emptySunCoordinateArr: [],
     sunCoordinateArr: [],
     power: 0, // 功率
     dayPower: 0, // 日发电量
@@ -63,6 +64,11 @@ class Comp extends React.Component {
   async componentDidMount() {
     const { keyPair, userStore, history } = this.props;
     this.initPullToRefresh();
+    // 获取任意三个位置的空太阳坐标
+    const emptySunCoordinateArr = this.getSunCoordinateArr(Array(3));
+    this.setState({
+      emptySunCoordinateArr
+    });
     // 获取最新公告,条件固定
     this.props.sunCityStore.fetchSCNews({
       page: 0,
@@ -574,7 +580,7 @@ class Comp extends React.Component {
     const userInfo = toJS(this.props.userStore.userInfo);
     const { avatar, nickName } = userInfo;
     const { balance, balanceRanking } = this.props.miningStore;
-    const { equipmentListObj } = this.state;
+    const { equipmentListObj, emptySunCoordinateArr } = this.state;
     const { lastNews, lastTrend } = this.props.sunCityStore;
     const equipmentNameList = equipmentListObj && Object.keys(equipmentListObj);
     console.log(toJS(lastTrend))
@@ -636,9 +642,22 @@ class Comp extends React.Component {
                 );
               })
             ) : (
-              <div className="sun sun-wait">
-                <span className="sun-pic wait-pic " />
-                <span className="sun-number">挖宝中...</span>
+              <div>
+                {emptySunCoordinateArr.map((item, index) => {
+                  return (
+                    <div
+                      key={index}
+                      style={{
+                        left: `${item.left}px`,
+                        top: `${item.top}px`
+                      }}
+                      className="sun sun-wait"
+                    >
+                      <span className="sun-pic wait-pic " />
+                      <span className="sun-number">挖宝中...</span>
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>

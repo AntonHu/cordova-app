@@ -146,12 +146,38 @@ export const fetchGetWeather = async params => {
 };
 
 /**
+ * 获取地址
+ */
+export const fetchGetAddress = async params => {
+  let response = {};
+  try {
+    response = await get(`${backendServer}/dim/getCityList`, params);
+  } catch (err) {
+    console.log(err);
+  }
+  return response.data || [];
+};
+
+/**
  * 获取电价信息
  */
 export const fetchGetElectricityPrice = async params => {
   let response = {};
   try {
     response = await get(`${backendServer}/user/getDetailInfo`, params);
+  } catch (err) {
+    console.log(err);
+  }
+  return response.data || [];
+};
+
+/**
+ * 电价修改
+ */
+export const fetchModifyElectricityPrice = async params => {
+  let response = {};
+  try {
+    response = await get(`${backendServer}/user/setDetailInfo`, params);
   } catch (err) {
     console.log(err);
   }
