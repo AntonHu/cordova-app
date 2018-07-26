@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'babel-polyfill'; // 添加async函数支持
+// import 'babel-polyfill'; // 添加async函数支持
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
