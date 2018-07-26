@@ -8,47 +8,32 @@ class EquipmentItem extends React.PureComponent {
     // 点击事件
     onClick: PropTypes.func.isRequired,
     // 功率
-    currentPower: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number
-    ]),
+    currentPower: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     // 日电量
-    dayElectric: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number
-    ]),
+    dayElectric: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     // 设备名
     equipmentName: PropTypes.string
   };
 
-  static defaultProps = {
-
-  };
+  static defaultProps = {};
 
   render() {
-    const {onClick, currentPower, dayElectric, equipmentName} = this.props;
+    const { onClick, currentPower, dayElectric, equipmentName } = this.props;
     return (
-      <div
-        className="equipment-item"
-        onClick={onClick}
-      >
+      <div className="equipment-item" onClick={onClick}>
         <div className="item-pic">
           <i className="iconfont">&#xea35;</i>
         </div>
         <div className="item-detail">
           <div className="item-name">{equipmentName}</div>
           <div className="item-info">
-            <span>
-              {`功率：${currentPower}w`}
-            </span>
-            <span>
-              {`日电量：${dayElectric}kwh`}
-            </span>
+            <span>{`功率：${currentPower}W`}</span>
+            <span>{`日电量：${dayElectric}kWh`}</span>
           </div>
         </div>
-        <Icon type="right"/>
+        <Icon type="right" />
       </div>
-    )
+    );
   }
 }
 

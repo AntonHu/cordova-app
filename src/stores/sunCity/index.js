@@ -9,7 +9,9 @@ import {
   fetchInverters,
   fetchAddInverter,
   fetchGetWeather,
-  fetchGetElectricityPrice
+  fetchGetAddress,
+  fetchGetElectricityPrice,
+  fetchModifyElectricityPrice
 } from './request';
 import { deleteLocalStorage, getLocalStorage } from '../../utils/storage';
 
@@ -25,6 +27,7 @@ class SunCityStore {
   @observable equipmentPower = {};
   @observable inverterList = [];
   @observable weatherInfo = { type: '' };
+  @observable addressInfo = [];
   @observable dayStationElectric = 0;
   @observable electricityPrice = 0;
 
@@ -40,6 +43,7 @@ class SunCityStore {
     this.equipmentPower = {};
     this.inverterList = [];
     this.weatherInfo = { type: '' };
+    this.addressInfo = [];
     this.dayStationElectric = 0;
   };
 
@@ -200,6 +204,27 @@ class SunCityStore {
     return result;
   };
 
+  // 获取地址
+  @action
+  fetchSCGetAddress = async params => {
+    let result = {};
+    try {
+      result = await fetchGetAddress(params);
+      runInAction(() => {
+        if (result.code === 200) {
+          this.addressInfo = result.data.map(item => {
+            item.label = item.cityName;
+            item.value = item.cityName;
+            return item;
+          });
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    return result;
+  };
+
   // 获取天气信息
   @action
   fetchSCGetWeather = async params => {
@@ -228,6 +253,19 @@ class SunCityStore {
           this.electricityPrice = result.data.fee || 0;
         }
       });
+    } catch (err) {
+      console.log(err);
+    }
+    return result;
+  };
+
+  // 电价修改
+  @action
+  fetchSCModifyElectricityPrice = async params => {
+    let result = {};
+    try {
+      result = await fetchModifyElectricityPrice(params);
+      runInAction(() => {});
     } catch (err) {
       console.log(err);
     }
