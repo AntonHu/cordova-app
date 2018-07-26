@@ -78,6 +78,9 @@ class Comp extends React.Component {
   }
 
   componentDidMount() {
+    if (!this.props.keyPair.hasKey) {
+      this.onClick();
+    }
     // this.checkAfterGetPub(this.props.keyPair.publicKey)
   }
 
