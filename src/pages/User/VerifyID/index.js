@@ -120,7 +120,7 @@ class Comp extends React.Component {
   };
 
   validateBeforeSend = () => {
-    const {username, idPositive, idNegative, idHandheld, contractorCode, id} = this.state;
+    const {username, idPositive, idNegative, idHandheld, id} = this.state;
     if (username === '') {
       showError('请输入真实姓名');
       return false;
@@ -131,10 +131,6 @@ class Comp extends React.Component {
     }
     if (!IdCard.info(id).valid) {
       showError('身份证号格式错误');
-      return false;
-    }
-    if (!testContractorCode(contractorCode)) {
-      showError('代理商编码0-20个字母或数字');
       return false;
     }
     if (idPositive === '') {
@@ -313,7 +309,7 @@ class Comp extends React.Component {
               <span className="h3 main-text">身份证号</span>
             </InputItem>
             <InputItem
-              placeholder="请输入代理商编码"
+              placeholder="没有可不填"
               clear
               onChange={this.changeState('contractorCode')}
               value={contractorCode}

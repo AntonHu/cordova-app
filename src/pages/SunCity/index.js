@@ -577,6 +577,7 @@ class Comp extends React.Component {
     const { equipmentListObj } = this.state;
     const { lastNews, lastTrend } = this.props.sunCityStore;
     const equipmentNameList = equipmentListObj && Object.keys(equipmentListObj);
+    console.log(toJS(lastTrend))
     return (
       <div className={'page-sunCity-info'} id="page-sunCity-info">
         <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
@@ -645,24 +646,30 @@ class Comp extends React.Component {
         <div className="rend">
           <span className="rend-title">最新动态</span>
           <div className="rend-item-wrap">
-            <Carousel
-              className="rend-item"
-              vertical
-              dots={false}
-              dragging={false}
-              swiping={false}
-              autoplay
-              infinite
-              autoplayInterval={1000}
-            >
-              {lastTrend &&
-                lastTrend.length > 0 &&
-                lastTrend.map((item, index) => (
-                  <div key={index} className="help-text">
-                    {`${item.nickName}收取了${item.value}个太阳积分`}
-                  </div>
-                ))}
-            </Carousel>
+            {
+              lastTrend.length > 0
+              ?
+                <Carousel
+                  className="rend-item"
+                  vertical
+                  dots={false}
+                  dragging={false}
+                  swiping={false}
+                  autoplay
+                  infinite
+                  autoplayInterval={3000}
+                >
+                  {
+                    toJS(lastTrend).map((item, index) => (
+                      <div key={index} className="help-text">
+                        {`${item.nickName}收取了${item.value}个太阳积分`}
+                      </div>
+                    ))
+                  }
+                </Carousel>
+                :
+                null
+            }
           </div>
         </div>
         <div className="promote">
