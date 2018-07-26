@@ -569,7 +569,8 @@ class Comp extends React.Component {
   };
 
   sliceLongName = name => {
-    const shortName = sliceLongString(name);
+    const lengthLimit = 10;
+    const shortName = sliceLongString(name, lengthLimit);
     if (name === shortName) {
       return shortName;
     }

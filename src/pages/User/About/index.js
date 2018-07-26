@@ -73,8 +73,8 @@ const ListData = [
               descriptionPrefix: '更新内容:',
               optionalIgnoreButtonLabel: '取消',
               optionalInstallButtonLabel: '立即更新',
-              title: '有更新的内容',
-              optionalUpdateMessage: ''
+              optionalUpdateMessage: '',
+              updateTitle: '有更新可用'
             },
             installMode: InstallMode.IMMEDIATE
           }
@@ -109,7 +109,7 @@ class Comp extends React.PureComponent {
   };
 
   componentDidMount() {
-    this.getPackageVersion();
+    // this.getPackageVersion();
   }
 
   getPackageVersion = () => {
