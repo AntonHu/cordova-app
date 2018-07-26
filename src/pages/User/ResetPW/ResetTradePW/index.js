@@ -147,8 +147,11 @@ class Comp extends React.Component {
         }])
       } else {
         this.jpushSetFailEvent({
-          phone: clearSpace(phone),
-          response: data
+          msg: {
+            phone: clearSpace(phone),
+            data,
+            type: '设置交易密码失败'
+          }
         });
         let msg = '';
         if (typeof data.msg === 'string' && data.msg.length > 0) {

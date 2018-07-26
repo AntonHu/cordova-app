@@ -230,7 +230,7 @@ class Comp extends React.Component {
                   <Button onClick={this.showPubKey} size="small" inline>显示公钥</Button>
                 </div>
                 :
-                <GreenButton onClick={this.onClick}>一键生成</GreenButton>
+                <GreenButton onClick={this.onClick}>获取密钥</GreenButton>
             }
           </BlueBox>
 

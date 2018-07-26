@@ -2,7 +2,7 @@ import React from 'react';
 import {PageWithHeader} from '../../../components';
 import {List} from 'antd-mobile';
 import {getMessages} from '../../../stores/user/request';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {observer, inject} from 'mobx-react';
 import './style.less';
 
@@ -44,9 +44,11 @@ class Comp extends React.Component {
             {
               this.props.userStore.msgList.map((v, i) => (
                 <Link key={i} to={`/user/msgDetail/${v.messageId}`}>
-                <Item arrow={'horizontal'}>
-                  {v.title}
-                </Item>
+                  <Item
+                    arrow={'horizontal'}
+                    extra={<span className="h4">{v.updatedTime.slice(0, 10)}</span>}>
+                    <span className="h3">{v.title}</span>
+                  </Item>
                 </Link>
               ))
             }

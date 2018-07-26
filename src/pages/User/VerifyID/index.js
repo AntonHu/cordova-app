@@ -237,6 +237,9 @@ class Comp extends React.Component {
             }
           }])
         } else {
+          this.jpushSetFailEvent({
+            msg: {data, type: '实名认证失败'}
+          });
           showError('认证失败');
         }
       })
@@ -248,8 +251,23 @@ class Comp extends React.Component {
           showError('认证请求超时');
           return;
         }
+        this.jpushSetFailEvent({
+          msg: {data: err.data || {}, type: '实名认证失败'}
+        });
         showError('认证失败');
       })
+  };
+
+  jpushSetFailEvent = (data) => {
+    if  (window.JAnalytics) {
+      window.JAnalytics.addBrowseEvent({
+        browseId: 'verify_id_fail',       // 浏览内容 id
+        browseName: '身份验证失败',     // 内容名称
+        browseType: '报错',     // 内容类型
+        browseDuration: 1, // 浏览时长，单位秒
+        extras: data          // Optional. 扩展参数，类似 {'key1': 'value1'}
+      })
+    }
   };
 
   onClick = (stateName) => {

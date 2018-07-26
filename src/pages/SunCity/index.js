@@ -511,6 +511,12 @@ class Comp extends React.Component {
     const { keyPair, miningStore } = this.props;
     if (keyPair.showHasKey(this.props)) {
       this.selectSunNode = e.target.parentNode;
+      // 避免重复点击
+      if (this.selectSunNode._clicked) {
+        return;
+      } else {
+        this.selectSunNode._clicked = true;
+      }
       this.props.sunCityStore
         .fetchSCGetSunIntegral({
           tokenId: sunIntegralInfo.id,
