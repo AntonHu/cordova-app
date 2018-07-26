@@ -6,11 +6,11 @@ import './style.less';
 const Apps = [
   {
     text: 'AI运营',
-    icon: '\ue6b8'
+    icon: '\ue61b'
   },
   {
     text: '数据金融',
-    icon: '\ue61b'
+    icon: '\ue688'
   }
 
 ];

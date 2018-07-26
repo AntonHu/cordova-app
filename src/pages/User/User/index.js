@@ -60,7 +60,7 @@ class Comp extends React.Component {
     const {username, avatar, nickName} = userInfo;
     return (
       <div className={'page-user'}>
-        <PageWithHeader leftComponent={null} title={'个人中心'}>
+        <PageWithHeader leftComponent={null} title={'我的'}>
           {/* <BlueBox>
 
           </BlueBox> */}

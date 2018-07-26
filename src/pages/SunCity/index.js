@@ -9,7 +9,7 @@ import {
   ToastNoMask,
   EquipmentItem
 } from '../../components';
-import { NoticeBar, Icon, ActivityIndicator } from 'antd-mobile';
+import { NoticeBar, Icon, ActivityIndicator, Carousel } from 'antd-mobile';
 import { EQUIPMENT_DATA_TYPE } from '../../utils/variable';
 import PullToRefresh from 'pulltorefreshjs';
 import {
@@ -479,6 +479,7 @@ class Comp extends React.Component {
   };
 
   componentWillUnmount() {
+    console.log('Suncity will unmount');
     this.timeoutID = null;
     // 清除监听事件，重要。
     PullToRefresh.destroyAll();
@@ -644,15 +645,24 @@ class Comp extends React.Component {
         <div className="rend">
           <span className="rend-title">最新动态</span>
           <div className="rend-item-wrap">
-            <div className="rend-item">
+            <Carousel
+              className="rend-item"
+              vertical
+              dots={false}
+              dragging={false}
+              swiping={false}
+              autoplay
+              infinite
+              autoplayInterval={1000}
+            >
               {lastTrend &&
                 lastTrend.length > 0 &&
                 lastTrend.map((item, index) => (
-                  <span key={index} style={{ color: '#888' }}>
+                  <div key={index} className="help-text">
                     {`${item.nickName}收取了${item.value}个太阳积分`}
-                  </span>
+                  </div>
                 ))}
-            </div>
+            </Carousel>
           </div>
         </div>
         <div className="promote">
