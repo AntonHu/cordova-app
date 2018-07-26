@@ -217,7 +217,7 @@ class Comp extends React.Component {
           });
         });
     } else {
-      ToastNoMask('该账号没有私钥,请到个人中心添加！');
+      ToastNoMask('该账号没有私钥,请到"我的"页面添加！');
     }
   };
 

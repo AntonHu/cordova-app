@@ -140,8 +140,8 @@ class Comp extends React.Component {
                 <div className="profit-number">{`${dayStationElectric.toFixed(2)}kWh`}</div>
               </div>
               <div className="profit-item">
-                <div className="profit-title">今日发电收益(¥)</div>
-                <div className="profit-number">{this.calcTodayProfit(dayStationElectric, electricityPrice).toFixed(2)}</div>
+                <div className="profit-title">今日发电收益</div>
+                <div className="profit-number">{`${this.calcTodayProfit(dayStationElectric, electricityPrice).toFixed(2)}元`}</div>
               </div>
               <div className="profit-item">
                 <div className="profit-title">今日太阳积分</div>
