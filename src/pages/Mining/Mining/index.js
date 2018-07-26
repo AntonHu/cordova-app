@@ -73,6 +73,13 @@ class Comp extends React.Component {
     return this.makeRequest();
   };
 
+  calcTodayProfit = (dayStationElectric, electricityPrice) => {
+    if (dayStationElectric && electricityPrice) {
+      return dayStationElectric * electricityPrice;
+    }
+    return 0;
+  };
+
   /**
    * 给较短的list补齐空元素
    * @param length
@@ -89,7 +96,8 @@ class Comp extends React.Component {
   };
 
   render() {
-    const dayStationElectric = this.props.sunCityStore.dayStationElectric.toFixed(2);
+    // const dayStationElectric = this.props.sunCityStore.dayStationElectric.toFixed(2);
+    const { dayStationElectric, electricityPrice } = this.props.sunCityStore;
     const {
       balanceRanking,
       digTimes,
@@ -129,7 +137,11 @@ class Comp extends React.Component {
             <div className="my-profit">
               <div className="profit-item">
                 <div className="profit-title">今日发电</div>
-                <div className="profit-number">{`${dayStationElectric}kWh`}</div>
+                <div className="profit-number">{`${dayStationElectric.toFixed(2)}kWh`}</div>
+              </div>
+              <div className="profit-item">
+                <div className="profit-title">今日发电收益(¥)</div>
+                <div className="profit-number">{this.calcTodayProfit(dayStationElectric, electricityPrice).toFixed(2)}</div>
               </div>
               <div className="profit-item">
                 <div className="profit-title">今日太阳积分</div>

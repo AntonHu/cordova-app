@@ -84,6 +84,10 @@ class Comp extends React.Component {
       this.props.miningStore.fetchBalanceRanking({
         publicKey: keyPair.publicKey
       });
+      // 获取电价
+      this.props.sunCityStore.fetchSCGetElectricityPrice({
+        userPubKey: keyPair.publicKey
+      });
       // 获取太阳积分
       this.getSunFromRemote();
 
@@ -155,6 +159,10 @@ class Comp extends React.Component {
 
     // 如果有私钥
     if (keyPair.hasKey) {
+      // 获取电价
+      this.props.sunCityStore.fetchSCGetElectricityPrice({
+        userPubKey: keyPair.publicKey
+      });
       // 获取我的太阳积分
       const res4 = this.props.miningStore.fetchBalance({
         publicKey: keyPair.publicKey
