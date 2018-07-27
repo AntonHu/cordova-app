@@ -141,14 +141,17 @@ class Comp extends React.Component {
         userPubKey: this.props.keyPair.publicKey,
         username,
         password,
-        sourceData
+        source: sourceData
       })
         .then(result => {
           this.setState({
             showLoading: false
           });
           if (result.code === 200) {
-            Object.keys(result.data).forEach(deviceNo => {
+            this.setState({
+              successModal: true
+            });
+            Object.keys(result.data || {}).forEach(deviceNo => {
               if (result.data[deviceNo] === 'success') {
                 this.addInverterDetail({
                   sourceData,
@@ -156,9 +159,6 @@ class Comp extends React.Component {
                   dateType: EQUIPMENT_DATA_TYPE.DAY
                 });
               }
-            });
-            this.setState({
-              successModal: true
             });
           } else {
             ToastNoMask('添加逆变器失败。' + (result.msg || ''));
