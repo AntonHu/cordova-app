@@ -254,10 +254,6 @@ class Comp extends React.Component {
   // 本地储存设备月，年，所有数据
   async cacheEquipmentData(sourceData, deviceNo) {
     // 当时间过期或者设备号更换，重新获取并缓存数据
-    // if (
-    //   isExpire(1, 'equipmentExpireTime') ||
-    //   getLocalStorage('equipmentNumber') !== deviceNo
-    // ) {
     // 请求设备月发电数据，本地储存
     const monthEquipmentData = await this.getPowerData(
       sourceData,
@@ -283,7 +279,6 @@ class Comp extends React.Component {
     });
     setLocalStorage('yearEquipmentData', JSON.stringify(yearEquipmentData));
     this.cacheAllEquipmentData(sourceData, deviceNo);
-    // }
   }
   // 请求设备所有发电数据，本地储存
   async cacheAllEquipmentData(sourceData, deviceNo) {
