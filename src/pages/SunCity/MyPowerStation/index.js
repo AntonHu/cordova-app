@@ -96,6 +96,9 @@ class Comp extends React.Component {
   }
   pullToRefresh = async () => {
     this.barChart && this.barChart.clear();
+    this.setState({
+      popoverVisible: false
+    });
     // 删除缓存
     deleteLocalStorage('equipmentListObj');
     const { keyPair } = this.props;
