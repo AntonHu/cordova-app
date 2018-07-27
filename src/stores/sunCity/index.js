@@ -256,7 +256,7 @@ class SunCityStore {
       result = await fetchGetElectricityPrice(params);
       runInAction(() => {
         if (result.code === 200) {
-          this.electricityPrice = result.data.fee || 0;
+          this.electricityPrice = result.data.fee || 0.3949;
         }
       });
     } catch (err) {
