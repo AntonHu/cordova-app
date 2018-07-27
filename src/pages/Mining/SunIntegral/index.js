@@ -44,11 +44,11 @@ class Comp extends React.Component {
   };
 
   renderRow = (rowData, sectionID, rowID) => {
-    const iconStyle = rowData.addWay === 'power' ? '\ue6d1' : '\ue611';
+    const icon = rowData.addWay === 'power' ? '\ue6d1' : '\ue611';
     return (
       <div key={rowData.tokenId} className="integral-item">
         <div className={`integral-pic ${rowData.addWay}`}>
-          <i className="iconfont">{iconStyle}</i>
+          <i className="iconfont">{icon}</i>
         </div>
         <div className="integral-title">
           <div>{INTEGRAL_TYPE[rowData.addWay]}</div>

@@ -419,12 +419,13 @@ class Comp extends React.Component {
   };
   addressChange = value => {
     const addressInfo = toJS(this.props.sunCityStore.addressInfo);
-    if (value.trim()) {
+    const valueTrim = value.trim();
+    if (valueTrim) {
       this.setState({
-        address: value.trim()
+        address: valueTrim
       });
       const addressFilters = addressInfo.filter(
-        item => item.city.indexOf(value.trim()) > -1
+        item => item.city.indexOf(valueTrim) > -1
       );
       if (addressFilters.length > 0) {
         this.setState({
