@@ -44,12 +44,20 @@ const TEST_PUBLIC_KEY =
 const DEPLYMENT_KEY = {
   ANDROID: {
     Staging: 'Oz0UJ62d7mIu8W3IY-ZgqIa78TqV0622c1d1-d19c-494b-a7c7-f4e4d3bc9118',
-    Production: 'Sr9DnzzrkbNdLixAKXUoLOqMmgdx0622c1d1-d19c-494b-a7c7-f4e4d3bc9118'
+    Production:
+      'Sr9DnzzrkbNdLixAKXUoLOqMmgdx0622c1d1-d19c-494b-a7c7-f4e4d3bc9118'
   },
   IOS: {
     Staging: 'nzYI83mZ03a1Ta1Qprtpupa-gYf50622c1d1-d19c-494b-a7c7-f4e4d3bc9118',
-    Production: 'EkPHRgDL5fQQk_lBCFIugJqAt6oA0622c1d1-d19c-494b-a7c7-f4e4d3bc9118'
+    Production:
+      'EkPHRgDL5fQQk_lBCFIugJqAt6oA0622c1d1-d19c-494b-a7c7-f4e4d3bc9118'
   }
+};
+
+// 积分类型
+const INTEGRAL_TYPE = {
+  power: '挖宝积分',
+  login: '登陆奖励'
 };
 
 export {
@@ -62,5 +70,6 @@ export {
   KEY_PAIR_LOCAL_STORAGE,
   CURVE,
   EQUIPMENT_DATA_TYPE,
-  DEPLYMENT_KEY
+  DEPLYMENT_KEY,
+  INTEGRAL_TYPE
 };

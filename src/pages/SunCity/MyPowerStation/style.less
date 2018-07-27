@@ -110,8 +110,32 @@
       background: linear-gradient(to bottom, #16cbff, #1ca4fe);
     }
     .profit {
+      position: relative;
       height: 73 * @px;
       background: linear-gradient(to bottom, #fb7ba3, #f44c78);
+      .bubble {
+        font-size: 12px;
+        width: 110px;
+        line-height: 28px;
+        position: absolute;
+        background: linear-gradient(to bottom, #fb7ba3, #f44c78);
+        top: -95%;
+        border-radius: @border-radius / 2;
+        &:before {
+          content: '';
+          position: absolute;
+          top: 100%;
+          left: 15px;
+          width: 0;
+          height: 0;
+          border-width: 6px;
+          border-style: solid;
+          border-color: transparent;
+          border-top-width: 6px;
+          border-top-color: @pink-color;
+          color: @pink-color;
+        }
+      }
     }
   }
   .detail {
@@ -162,20 +186,6 @@
   }
 }
 
-.am-popover {
-  .am-popover-arrow {
-    background: #f44c78;
-  }
-  .am-popover-item {
-    padding: 0;
-    color: @white-text-color;
-    background: linear-gradient(to bottom, #fb7ba3, #f44c78);
-    .am-popover-item-container {
-      height: 30px;
-    }
-  }
-}
-
 .am-modal {
   .am-modal-body {
     .am-list-item {
@@ -187,6 +197,17 @@
       input {
         color: @main-color;
         font-size: 16px;
+      }
+    }
+    .address-wrap {
+      border-radius: @border-radius;
+      max-height: 210px;
+      overflow-y: scroll;
+      .address {
+        line-height: 30px;
+        text-align: left;
+        padding-left: 10px;
+        background: @default-bg;
       }
     }
   }

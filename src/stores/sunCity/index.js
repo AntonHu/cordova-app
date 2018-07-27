@@ -212,11 +212,12 @@ class SunCityStore {
       result = await fetchGetAddress(params);
       runInAction(() => {
         if (result.code === 200) {
-          this.addressInfo = result.data.map(item => {
-            item.label = item.cityName;
-            item.value = item.cityName;
-            return item;
-          });
+          this.addressInfo = result.data;
+          // this.addressInfo = result.data.map(item => {
+          //   item.label = item.cityName;
+          //   item.value = item.cityName;
+          //   return item;
+          // });
         }
       });
     } catch (err) {
