@@ -77,6 +77,8 @@ class Comp extends React.Component {
 
     // 获取用户信息
     this.props.userStore.fetchUserInfo({ keyPair, userStore, history });
+    // 用户邀请码
+    this.props.userStore.fetchInvitationCode();
 
     // 如果有私钥
     if (keyPair.hasKey) {

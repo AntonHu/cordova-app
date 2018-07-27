@@ -15,7 +15,9 @@ import {
   VerifyID,
   MsgDetail,
   Introduction,
-  Agreement
+  Agreement,
+  InviteFriends,
+  InviteDetail
 } from '../pages/User';
 import MyPowerStation from '../pages/SunCity/MyPowerStation';
 import EquipmentInfo from '../pages/SunCity/EquipmentInfo';
@@ -218,6 +220,8 @@ class PrimaryRoute extends React.Component {
         <Route exact path={'/user/verifyID/:id'} component={VerifyID}/>
         <Route exact path={'/user/introduction'} component={Introduction}/>
         <Route exact path={'/user/agreement'} component={Agreement}/>
+        <Route exact path={'/user/inviteFriends'} component={InviteFriends}/>
+        <Route exact path={'/user/inviteDetail'} component={InviteDetail}/>
       </Switch>
     );
   }

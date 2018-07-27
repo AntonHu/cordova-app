@@ -36,6 +36,10 @@ class MiningStore {
     this.todayIntegral = 0; // 今日太阳积分
   };
 
+  onLogout = () => {
+    this.resetStore();
+  };
+
   /**
    * 太阳积分
    * @param publicKey

@@ -1,0 +1,83 @@
+@import "../../../styles/common";
+
+@code-btn-width: 236 * @px;
+@code-btn-height: 66 * @px;
+
+.page-invite-friends {
+  height: 100%;
+  .page-with-header {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .content {
+    flex-grow: 1;
+    background: url("../../../images/invite_bg.png") no-repeat no-repeat;
+    background-size: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    .code-area{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-top: 112 * @px;
+      .code {
+        font-size: 50 * @px;
+        color: @white-text-color;
+      }
+      .code-btn {
+        margin-top: 34 * @px;
+        background: linear-gradient(to bottom, @orange-gradient-start, @orange-gradient-end);
+        height: @code-btn-height;
+        line-height: @code-btn-height;
+        border-radius: @code-btn-height / 2;
+        width: @code-btn-width;
+        color: @white-text-color;
+        font-size: @h3;
+      }
+    }
+
+    .rule-area {
+      flex-grow: 1;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 112 * @px;
+      box-sizing: border-box;
+      width: 90%;
+      border-radius: @border-radius;
+      background: @white-text-color;
+      padding: 20px;
+      .rule-title {
+        font-size: @h2;
+        margin-bottom: 20px;
+      }
+      .rule-content {
+        p {
+          margin-top: 0;
+          margin-bottom: 0;
+          line-height: @px * 55;
+          color: @help-text-color;
+          text-align: left;
+        }
+      }
+    }
+
+    .invite-btn {
+      width: 100vw;
+      position: absolute;
+      bottom: 0;
+      display: block;
+      background: linear-gradient(to bottom, @orange-gradient-start, @orange-gradient-end);
+      height: 120 * @px;
+      line-height: 120 * @px;
+      color: @white-text-color;
+      font-size: @h2;
+    }
+    .invite-btn:active {
+      opacity: 0.6;
+    }
+  }
+}

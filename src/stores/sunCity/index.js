@@ -59,6 +59,11 @@ class SunCityStore {
     deleteLocalStorage('allTotalStationElectric');
   };
 
+  onLogout = () => {
+    this.deleteAllCache();
+    this.resetStore();
+  };
+
   /**
    * 从缓存取数据放到store
    */

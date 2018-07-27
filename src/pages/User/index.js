@@ -16,6 +16,8 @@ import VerifyID from './VerifyID';
 import MsgDetail from './MsgCenter/Detail';
 import Introduction from './Introduction';
 import Agreement from './Agreement';
+import InviteFriends from './InviteFriends';
+import InviteDetail from './InviteFriends/InviteDetail';
 
 export {
   About,
@@ -35,5 +37,7 @@ export {
   MsgDetail,
   ForgetLoginPW,
   Introduction,
-  Agreement
+  Agreement,
+  InviteFriends,
+  InviteDetail
 };

@@ -151,7 +151,7 @@ const avatarModalData = [
  */
 @inject('userStore', 'keyPair') // 如果注入多个store，用数组表示
 @observer
-class Comp extends React.Component {
+class PersonalInfo extends React.Component {
   state = {
     sexArr: ['男'],
   };
@@ -248,4 +248,4 @@ class Comp extends React.Component {
   }
 }
 
-export default withRouter(Comp);
+export default withRouter(PersonalInfo);

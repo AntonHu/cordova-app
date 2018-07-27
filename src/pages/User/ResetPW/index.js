@@ -19,7 +19,7 @@ const ListData = [
 /**
  * 重置密码
  */
-class Comp extends React.PureComponent {
+class ResetPW extends React.PureComponent {
   render() {
     return (
       <div className={'page-reset-pw'}>
@@ -37,4 +37,4 @@ class Comp extends React.PureComponent {
   }
 }
 
-export default Comp;
+export default ResetPW;

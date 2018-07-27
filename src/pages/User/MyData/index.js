@@ -62,7 +62,7 @@ const ListData = [
  */
 @inject('keyPair', 'userStore')
 @observer
-class Comp extends React.Component {
+class MyData extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -297,4 +297,4 @@ class Comp extends React.Component {
   }
 }
 
-export default Comp;
+export default MyData;

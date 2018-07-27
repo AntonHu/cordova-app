@@ -19,7 +19,7 @@ const findDetailByID = (list, id) => {
  */
 @inject('userStore')
 @observer
-class Comp extends React.Component {
+class MsgDetail extends React.Component {
   constructor(props) {
     super(props);
     const messageId = props.match.params.messageId;
@@ -52,4 +52,4 @@ class Comp extends React.Component {
   }
 };
 
-export default Comp;
+export default MsgDetail;

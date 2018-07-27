@@ -21,6 +21,13 @@ const ListData = [
     unicode: '\ue609'
   },
   {
+    text: '邀请好友',
+    horizontal: true,
+    path: 'inviteFriends',
+    unicode: '\ue6b8'
+  },
+
+  {
     text: '消息中心',
     extra: '女',
     path: 'msgCenter',
@@ -39,12 +46,13 @@ const ListData = [
  */
 @inject('userStore', 'keyPair') // 如果注入多个store，用数组表示
 @observer
-class Comp extends React.Component {
+class User extends React.Component {
 
   componentDidMount() {
     const {keyPair, userStore, history} = this.props;
     console.log(history);
     this.props.userStore.fetchUserInfo({keyPair, userStore, history});
+    this.props.userStore.fetchInvitationCode();
   }
 
   sliceLongName = (name) => {
@@ -93,4 +101,4 @@ class Comp extends React.Component {
   }
 }
 
-export default Comp;
+export default User;

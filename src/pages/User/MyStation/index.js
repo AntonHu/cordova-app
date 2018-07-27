@@ -14,7 +14,7 @@ import { getLocalStorage, setLocalStorage } from '../../../utils/storage';
  */
 @inject('sunCityStore', 'keyPair') // 如果注入多个store，用数组表示
 @observer
-class Comp extends React.Component {
+class MyStation extends React.Component {
   state = {
     equipmentListObj: {}
   };
@@ -172,4 +172,4 @@ class Comp extends React.Component {
   }
 }
 
-export default Comp;
+export default MyStation;

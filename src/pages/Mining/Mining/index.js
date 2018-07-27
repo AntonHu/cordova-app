@@ -18,7 +18,7 @@ const tabs2 = [
  */
 @inject('miningStore', 'userStore', 'keyPair', 'sunCityStore')
 @observer
-class Comp extends React.Component {
+class Mining extends React.Component {
   componentDidMount() {
     this.makeRequest();
     this.initPullToRefresh();
@@ -125,10 +125,6 @@ class Comp extends React.Component {
                 <div className="sun-type">我的太阳积分</div>
                 <div className="rank">{balance.toFixed(2)}</div>
               </div>
-              <div>
-                <div className="sun-type">当前排行</div>
-                <div className="rank">{balanceRanking}</div>
-              </div>
               <Icon
                 type="right"
                 onClick={() => this.props.history.push('/mining/sunIntegral')}
@@ -232,4 +228,4 @@ class Comp extends React.Component {
   }
 }
 
-export default withRouter(Comp);
+export default withRouter(Mining);

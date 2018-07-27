@@ -140,6 +140,33 @@ export const getMessages = async ({page}) => {
 };
 
 /**
+ * 获取用户邀请码
+ * @returns {Promise.<*>}
+ */
+export const getInvitationCode = async () => {
+  try {
+    const response = await get(`${backendServer}/user/invitationCode`);
+    return response;
+  } catch (err) {
+    throw err.response;
+  }
+};
+
+/**
+ * 绑定邀请码
+ * @returns {Promise.<*>}
+ */
+export const bindInvitationCode = async ({username, invitationCode}) => {
+  try {
+    const response = await post(`${backendServer}/user/bindInvitationCode`, {username, invitationCode});
+    return response;
+  } catch (err) {
+    throw err.response;
+  }
+};
+
+
+/**
  * 修改登录密码
  * @returns {Promise.<*>}
  */
