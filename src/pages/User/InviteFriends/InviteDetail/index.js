@@ -6,6 +6,8 @@ import './style.less';
 
 const alert = Modal.alert;
 
+@inject('userStore') // 如果注入多个store，用数组表示
+@observer
 class InviteDetail extends React.PureComponent {
 
   componentDidMount() {
