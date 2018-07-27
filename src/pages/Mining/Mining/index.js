@@ -174,7 +174,7 @@ class Mining extends React.Component {
               <span>{digTimes.countAllTimesToday}</span>
             </div>
             <div className="item">
-              <div>累计全民累计挖宝总次数</div>
+              <div>历史全民累计挖宝次数</div>
               <span>{digTimes.countAllTimes}</span>
             </div>
           </div>

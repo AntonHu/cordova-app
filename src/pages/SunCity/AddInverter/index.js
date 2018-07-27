@@ -24,7 +24,7 @@ import { EQUIPMENT_DATA_TYPE } from '../../../utils/variable';
 import './style.less';
 
 const AOTAI = 'at';
-const GUDEWEI = 'gdw';
+const GUDEWEI = 'goodway';
 let isScanning = false;
 
 /**
