@@ -18,7 +18,7 @@ class InviteDetail extends React.PureComponent {
    * 获取邀请码
    */
   showGuide = () => {
-    alert('如何分享', '用手机截图把这个页面保存下来，然后分享给好友。加入能量星球，每天抢10万积分', [{text: '知道了'}])
+    alert('如何分享', '用手机截图把这个页面保存下来，然后分享给好友。加入能源星球，每天抢10万积分', [{text: '知道了'}])
   };
 
   render () {
