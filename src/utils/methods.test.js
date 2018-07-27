@@ -6,7 +6,8 @@ import {
   maskIfPhone,
   testContractorCode,
   formatPhoneWithSpace,
-  sliceLongString
+  sliceLongString,
+  testInvitationCode
 } from './methods';
 
 test('去掉字符串里的空格', () => {
@@ -108,4 +109,13 @@ test('截取超过长度的字符串', () => {
   expect(sliceLongString('全角情况四舍五入', 9, false)).toBe('全角情况四舍五入');
   expect(sliceLongString('123全角情况四舍五入', 9, false)).toBe('123全角情况四舍');
   expect(sliceLongString('1234全角情况四舍五入', 9, false)).toBe('1234全角情况四');
+});
+
+test('校验邀请码', () => {
+  expect(testInvitationCode('123456')).toBe(true);
+  expect(testInvitationCode('abc456')).toBe(true);
+  expect(testInvitationCode('abC456')).toBe(true);
+
+  expect(testInvitationCode('12345')).toBe(false);
+  expect(testInvitationCode('1234567')).toBe(false);
 });

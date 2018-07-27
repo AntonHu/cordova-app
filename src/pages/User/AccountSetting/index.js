@@ -33,7 +33,7 @@ const ListData = [
  */
 @inject('userStore', 'keyPair', 'miningStore', 'sunCityStore')
 @observer
-class Comp extends React.Component {
+class AccountSetting extends React.Component {
 
   /**
    * 删除token
@@ -45,10 +45,9 @@ class Comp extends React.Component {
     const user = new User();
     user.logout();
     this.props.keyPair.clearKeyPair();
-    this.props.userStore.deleteIsKycInChain();
-    this.props.miningStore.resetStore();
-    this.props.sunCityStore.resetStore();
-    this.props.sunCityStore.deleteAllCache();
+    this.props.userStore.onLogout();
+    this.props.miningStore.onLogout();
+    this.props.sunCityStore.onLogout();
     this.props.history.replace('/');
   };
 
@@ -97,4 +96,4 @@ class Comp extends React.Component {
   }
 }
 
-export default Comp;
+export default AccountSetting;

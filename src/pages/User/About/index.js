@@ -94,7 +94,7 @@ const ListData = [
 /**
  * 关于
  */
-class Comp extends React.PureComponent {
+class About extends React.PureComponent {
 
   state = {
     checking: false,
@@ -158,4 +158,4 @@ class Comp extends React.PureComponent {
   }
 }
 
-export default Comp;
+export default About;

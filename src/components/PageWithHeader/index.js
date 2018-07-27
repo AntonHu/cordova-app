@@ -29,6 +29,7 @@ class Comp extends React.PureComponent {
           title={title}
           rightComponent={rightComponent}
           leftComponent={leftComponent}
+          fixed={fixed}
         />
         <div style={{ height: `${px(headerMarginBottom)}px` }} />
         {this.props.children}

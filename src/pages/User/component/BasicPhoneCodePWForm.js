@@ -47,7 +47,18 @@ class BasicPhoneCodePWForm extends React.PureComponent {
       code: PropTypes.string,
       password: PropTypes.string,
       confirmPassword: PropTypes.string
-    })
+    }),
+    // 除了那4个之外，如果还要加input
+    // 比如邀请码
+    extraInputs: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        placeholder: PropTypes.string,
+        clear: PropTypes.bool,
+        type: PropTypes.string,
+        validate: PropTypes.func
+      })
+    )
   };
 
   static defaultProps = {
@@ -61,18 +72,25 @@ class BasicPhoneCodePWForm extends React.PureComponent {
       code: '验证码',
       password: '6-16位密码',
       confirmPassword: '确认密码'
-    }
+    },
+    extraInputs: []
   };
 
 
-  state = {
-    phone: '',
-    code: '',
-    password: '',
-    confirmPassword: '',
-    status: 'able',
-    successModal: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      phone: '',
+      code: '',
+      password: '',
+      confirmPassword: '',
+      status: 'able',
+      successModal: false
+    };
+    props.extraInputs.forEach(inputProps => {
+      this.state[inputProps.name] = '';
+    })
+  }
 
   isRegistering = false;
 
@@ -99,16 +117,20 @@ class BasicPhoneCodePWForm extends React.PureComponent {
 
     if (this.validateBeforeRegister()) {
       const {phone, code, password} = this.state;
-      const {submitMethod} = this.props;
+      const {submitMethod, extraInputs} = this.props;
       this.isRegistering = true;
       if (submitMethod) {
-        submitMethod({
+        const params = {
           mobile: clearSpace(phone),
           password,
           verificationCode: code,
           showModal: this.showModal,
           hideModal: this.hideModal
-        })
+        };
+        extraInputs.forEach(inputProps => {
+          params[inputProps.name] = this.state[inputProps.name]
+        });
+        submitMethod(params)
       }
     }
   };
@@ -131,6 +153,7 @@ class BasicPhoneCodePWForm extends React.PureComponent {
    */
   validateBeforeRegister = () => {
     const {phone, code, password, confirmPassword} = this.state;
+    const {extraInputs} = this.props;
     if (!testPhoneNumber(clearSpace(phone))) {
       showError('请输入正确手机号！');
       return false;
@@ -147,6 +170,21 @@ class BasicPhoneCodePWForm extends React.PureComponent {
       showError('两次输入密码不一致！');
       return false
     }
+
+    // 做extraInputs的校验
+    if (extraInputs.length > 0) {
+      const extraInputsValidations = extraInputs.map(inputProps => {
+        let validateMethod = () => true;
+        if (inputProps.validate) {
+          validateMethod = inputProps.validate;
+        }
+        return validateMethod(this.state[inputProps.name]);
+      });
+      if (extraInputsValidations.some(valid => !valid)) {
+        return false
+      }
+    }
+
     return true;
   };
 
@@ -197,7 +235,7 @@ class BasicPhoneCodePWForm extends React.PureComponent {
 
   render() {
     const {phone, code, password, confirmPassword} = this.state;
-    const {popupProps, placeholder} = this.props;
+    const {popupProps, placeholder, extraInputs} = this.props;
     return (
       <div className="basic-phone-code-pw-body">
         <InputItem
@@ -242,6 +280,18 @@ class BasicPhoneCodePWForm extends React.PureComponent {
           value={confirmPassword}
           onChange={this.changeState('confirmPassword')}
         />
+        {
+          extraInputs.map(inputProps => (
+            <InputItem
+              key={inputProps.name}
+              placeholder={inputProps.placeholder}
+              clear={inputProps.clear}
+              type={inputProps.type || 'text'}
+              value={this.state[inputProps.name]}
+              onChange={this.changeState(inputProps.name)}
+            />
+          ))
+        }
 
         <GreenButton size={'big'} onClick={this.onRegister}>确认</GreenButton>
 

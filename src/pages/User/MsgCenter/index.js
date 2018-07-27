@@ -25,7 +25,7 @@ const ListData = [
  */
 @inject('userStore') // 如果注入多个store，用数组表示
 @observer
-class Comp extends React.Component {
+class MsgCenter extends React.Component {
   state = {
     list: [],
     page: 0
@@ -59,4 +59,4 @@ class Comp extends React.Component {
   }
 }
 
-export default Comp;
+export default MsgCenter;

@@ -53,6 +53,11 @@ export const testContractorCode = code => {
   return reg.test(code);
 };
 
+export const testInvitationCode = code => {
+  const reg = /^[a-zA-Z0-9]{6}$/;
+  return reg.test(code);
+};
+
 /**
  * 如果是手机号，用星号代替中间四位
  * @param string

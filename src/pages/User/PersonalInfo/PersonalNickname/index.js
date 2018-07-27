@@ -19,7 +19,7 @@ const showMsg = (text) => {
  */
 @inject('userStore', 'keyPair') // 如果注入多个store，用数组表示
 @observer
-class Comp extends React.Component {
+class PersonalNickName extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -100,4 +100,4 @@ class Comp extends React.Component {
   }
 }
 
-export default Comp;
+export default PersonalNickName;

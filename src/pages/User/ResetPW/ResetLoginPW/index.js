@@ -17,7 +17,7 @@ const showError = (text) => {
 /**
  * 重置密码
  */
-class Comp extends React.PureComponent {
+class ResetLoginPW extends React.PureComponent {
   state = {
     newPassword: '',
     oldPassword: '',
@@ -127,4 +127,4 @@ class Comp extends React.PureComponent {
   }
 }
 
-export default Comp;
+export default ResetLoginPW;

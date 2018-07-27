@@ -20,7 +20,7 @@ const showError = (text) => {
  */
 @inject('keyPair', 'userStore')
 @observer
-class Comp extends React.Component {
+class ResetTradePW extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -312,4 +312,4 @@ class Comp extends React.Component {
   }
 }
 
-export default Comp;
+export default ResetTradePW;

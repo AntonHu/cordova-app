@@ -1,5 +1,5 @@
-import { observable, action, runInAction, computed, toJS } from 'mobx';
-import { getOwnerInfo, getMessages, getIsInChain, getIsKycInChain, putUserIntoChain } from './request';
+import {observable, action, runInAction, computed, toJS} from 'mobx';
+import {getOwnerInfo, getMessages, getIsInChain, getIsKycInChain, getInvitationCode} from './request';
 import {getLocalStorage, setLocalStorage, deleteLocalStorage} from '../../utils/storage';
 import {testPhoneNumber, formatPhoneWithSpace} from '../../utils/methods';
 import {ToastNoMask} from '../../components';
@@ -10,18 +10,20 @@ const alert = Modal.alert;
 const IS_KYC_IN_CHAIN = 'IS_KYC_IN_CHAIN';
 
 class UserStore {
-  //用户信息
+  // 用户信息
   @observable userInfo = {};
-  //消息列表
+  // 消息列表
   @observable msgList = [];
-  //用户是否身份认证了
+  // 用户是否身份认证了
   @observable isKycInChain = false;
+  // 用户邀请码
+  @observable invitationCode = '';
 
   /**
    * '138 0000 1111'
    */
   @computed
-  get userPhoneWithSpace () {
+  get userPhoneWithSpace() {
     if (testPhoneNumber(this.userInfo.username)) {
       return formatPhoneWithSpace(this.userInfo.username)
     }
@@ -48,13 +50,15 @@ class UserStore {
     } catch (err) {
       console.log(err);
       if (err.data && err.data.error === 'invalid_token') {
-        alert('登录过期', '您的登录已过期，请重新登录。', [{text: '好的', onPress: function () {
-          const user = new User();
-          user.logout();
-          keyPair.clearKeyPair();
-          userStore.deleteIsKycInChain();
-          history.replace('/');
-        }}]);
+        alert('登录过期', '您的登录已过期，请重新登录。', [{
+          text: '好的', onPress: function () {
+            const user = new User();
+            user.logout();
+            keyPair.clearKeyPair();
+            userStore.deleteIsKycInChain();
+            history.replace('/');
+          }
+        }]);
       } else {
         throw err;
       }
@@ -96,7 +100,7 @@ class UserStore {
       const res = await getIsKycInChain({publicKey});
       runInAction(() => {
         if (res.data) {
-          const status =  !!res.data.msg || false;
+          const status = !!res.data.msg || false;
           this.isKycInChain = status;
           setLocalStorage(IS_KYC_IN_CHAIN, status);
         }
@@ -104,6 +108,28 @@ class UserStore {
     } catch (err) {
       if (err.data && err.data.code === 0) {
         ToastNoMask('检查实名认证超时')
+      }
+    }
+  };
+
+  /**
+   * 获取用户邀请码
+   * @returns {Promise.<void>}
+   */
+  @action
+  fetchInvitationCode = async () => {
+    // 存在邀请码就没必要获取了
+    if (!this.invitationCode) {
+      try {
+        const res = await getInvitationCode();
+        const data = res.data || {};
+        if (data.code === 200) {
+          runInAction(() => {
+            this.invitationCode = data.data.invitationCode || '';
+          })
+        }
+      } catch (err) {
+        console.log(err);
       }
     }
   };
@@ -147,6 +173,15 @@ class UserStore {
    */
   deleteIsKycInChain = () => {
     deleteLocalStorage(IS_KYC_IN_CHAIN);
+  };
+
+  @action
+  onLogout = () => {
+    this.deleteIsKycInChain();
+    this.userInfo = {};
+    this.msgList = [];
+    this.isKycInChain = false;
+    this.invitationCode = '';
   }
 }
 
