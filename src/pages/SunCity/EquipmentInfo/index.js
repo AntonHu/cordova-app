@@ -211,15 +211,23 @@ class Comp extends React.Component {
       currentPower = equipmentData.totalPower;
       dayElectric = equipmentData.todayEnergy;
       maxValue = equipmentData.totalEnergy;
+      const selected = Object.assign({}, this.state.selected);
+      Object.keys(selected).forEach(item => {
+        selected[item] = false;
+      });
+      selected.day = true;
       this.setState({
         deviceNo,
         sourceData,
         dayElectric,
-        maxValue
+        maxValue,
+        selected,
+        chartTitle: this.chartTitleObj.day
       });
       this.pieChart && this.pieChart.clear();
       this.areaChart && this.areaChart.clear();
       this.renderPieBar(currentPower);
+      this.renderArea(dayEquipmentData);
       // 本地储存设备月，年，所有数据
       this.cacheEquipmentData(sourceData, deviceNo);
 
