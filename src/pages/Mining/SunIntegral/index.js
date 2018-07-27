@@ -3,7 +3,7 @@ import { PageWithHeader } from '../../../components';
 import { toJS, reaction } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { ListView } from 'antd-mobile';
-import {PAGE_SIZE} from '../../../utils/variable';
+import { PAGE_SIZE, INTEGRAL_TYPE } from '../../../utils/variable';
 import './style.less';
 /**
  * 挖宝
@@ -21,7 +21,7 @@ class Comp extends React.Component {
       dataSource,
       isLoading: false,
       page: 0
-    }
+    };
   }
 
   hasMore = true;
@@ -31,22 +31,32 @@ class Comp extends React.Component {
   }
 
   makeRequest = (props, page) => {
-    const {keyPair} = props;
+    const { keyPair } = props;
     if (keyPair.hasKey) {
-      this.props.miningStore.fetchTokenRecords({page, publicKey: keyPair.publicKey})
+      this.props.miningStore
+        .fetchTokenRecords({ page, publicKey: keyPair.publicKey })
         .then(data => {
           if (data.length < 1) {
             this.hasMore = false;
           }
-        })
+        });
     }
   };
 
   renderRow = (rowData, sectionID, rowID) => {
+    const icon = rowData.addWay === 'power' ? '\ue6d1' : '\ue611';
     return (
       <div key={rowData.tokenId} className="integral-item">
-        <div>{rowData.solarIntegral.toFixed(4)}</div>
-        <div>{rowData.gmtCreate}</div>
+        <div className={`integral-pic ${rowData.addWay}`}>
+          <i className="iconfont">{icon}</i>
+        </div>
+        <div className="integral-title">
+          <div>{INTEGRAL_TYPE[rowData.addWay]}</div>
+          <div>{rowData.gmtCreate}</div>
+        </div>
+        <div className="integral-number">
+          {`+${rowData.solarIntegral.toFixed(4)}`}
+        </div>
       </div>
     );
   };
@@ -57,7 +67,7 @@ class Comp extends React.Component {
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(toJS(tokenRecords)),
         isLoading: false
-      })
+      });
     }
   );
 
@@ -65,16 +75,19 @@ class Comp extends React.Component {
     if (this.state.isLoading || !this.hasMore) {
       return;
     }
-    this.setState({
-      isLoading: true,
-      page: this.state.page + 1
-    }, () => {
-      this.makeRequest(this.props, this.state.page)
-    });
+    this.setState(
+      {
+        isLoading: true,
+        page: this.state.page + 1
+      },
+      () => {
+        this.makeRequest(this.props, this.state.page);
+      }
+    );
   };
 
   render() {
-    const {balance} = this.props.miningStore;
+    const { balance } = this.props.miningStore;
     return (
       <div className={'page-sun-integral'}>
         <PageWithHeader title={'太阳积分'}>
@@ -87,9 +100,11 @@ class Comp extends React.Component {
               <div className="title">积分记录</div>
               <ListView
                 initialListSize={PAGE_SIZE}
-                renderFooter={() => (<div style={{ padding: '20px', textAlign: 'center' }}>
-                  {this.state.isLoading ? '加载中...' : '没有更多'}
-                </div>)}
+                renderFooter={() => (
+                  <div style={{ padding: '20px', textAlign: 'center' }}>
+                    {this.state.isLoading ? '加载中...' : '没有更多'}
+                  </div>
+                )}
                 dataSource={this.state.dataSource}
                 renderRow={this.renderRow}
                 className="integral-list-view"

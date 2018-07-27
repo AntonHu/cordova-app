@@ -138,7 +138,7 @@ export const fetchAddInverterAT = async params => {
 export const fetchGetWeather = async params => {
   let response = {};
   try {
-    response = await get(`${backendServer}/info/WeatherbyCityName`, params);
+    response = await get(`${backendServer}/info/WeatherbyCityId`, params);
   } catch (err) {
     console.log(err);
   }
