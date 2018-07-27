@@ -181,39 +181,104 @@ class Comp extends React.Component {
     return dayEquipmentData;
   }
 
+  pullToRefresh = async (deviceNo, sourceData) => {
+    const { keyPair, userStore, history } = this.props;
+    // this.props.sunCityStore.deleteAllCache();
+    const promiseArray = [];
+
+    // 如果有私钥
+    if (keyPair.hasKey) {
+      let dayEquipmentData = [];
+      dayEquipmentData = await this.getPowerData(
+        sourceData,
+        deviceNo,
+        EQUIPMENT_DATA_TYPE.DAY
+      );
+      dayEquipmentData.length > 0 &&
+        dayEquipmentData.map(item => {
+          item.time = getHour_Minute(item.latestTime);
+          item.number = item.totalPower;
+          return item;
+        });
+      setLocalStorage('dayEquipmentData', JSON.stringify(dayEquipmentData)); // 本地储存天设备发电数据
+      // 设备当前功率
+      let currentPower = 0;
+      // 设备日电量
+      let dayElectric = 0;
+      // 当前电站发电量
+      let maxValue = 0;
+      const equipmentData = dayEquipmentData[dayEquipmentData.length - 1];
+      currentPower = equipmentData.totalPower;
+      dayElectric = equipmentData.todayEnergy;
+      maxValue = equipmentData.totalEnergy;
+      this.setState({
+        deviceNo,
+        sourceData,
+        dayElectric,
+        maxValue
+      });
+      this.pieChart && this.pieChart.clear();
+      this.areaChart && this.areaChart.clear();
+      this.renderPieBar(currentPower);
+      // 本地储存设备月，年，所有数据
+      this.cacheEquipmentData(sourceData, deviceNo);
+
+      promiseArray.push(dayEquipmentData);
+    }
+    return Promise.all(promiseArray);
+  };
+  /**
+   * 初始化下拉刷新
+   */
+  initPullToRefresh = (deviceNo, sourceData) => {
+    PullToRefresh.init({
+      mainElement: '#page-equipment-info', // "下拉刷新"把哪个部分包住
+      triggerElement: '#page-equipment-info', // "下拉刷新"把哪个部分包住
+      onRefresh: () => this.pullToRefresh(deviceNo, sourceData), // 下拉刷新的方法，返回一个promise
+      shouldPullToRefresh: function() {
+        // 什么情况下的滚动触发下拉刷新，这个很重要
+        // 如果这个页面里有height超过窗口高度的元素
+        // 那么应该在这个元素滚动位于顶部的时候，返回true
+        const ele = document.getElementById('page-equipment-info');
+        if (ele === null) {
+          return false;
+        }
+        return ele.parentNode.parentNode.scrollTop === 0;
+      },
+      instructionsPullToRefresh: '下拉刷新',
+      instructionsReleaseToRefresh: '松开刷新',
+      instructionsRefreshing: '正在刷新...'
+    });
+  };
+
   // 本地储存设备月，年，所有数据
   async cacheEquipmentData(sourceData, deviceNo) {
     // 当时间过期或者设备号更换，重新获取并缓存数据
-    if (
-      isExpire(1, 'equipmentExpireTime') ||
-      getLocalStorage('equipmentNumber') !== deviceNo
-    ) {
-      // 请求设备月发电数据，本地储存
-      const monthEquipmentData = await this.getPowerData(
-        sourceData,
-        deviceNo,
-        EQUIPMENT_DATA_TYPE.MONTH
-      );
-      monthEquipmentData.length > 0 &&
-        monthEquipmentData.map(item => {
-          item.time = item.time.substring(item.time.length - 5);
-          return item;
-        });
-      setLocalStorage('monthEquipmentData', JSON.stringify(monthEquipmentData));
-
-      // 请求设备年发电数据，本地储存
-      let yearEquipmentData = await this.getPowerData(
-        sourceData,
-        deviceNo,
-        EQUIPMENT_DATA_TYPE.YEAR
-      );
-      yearEquipmentData = yearEquipmentData.map(item => {
-        item.time = item.time.substring(5);
+    // 请求设备月发电数据，本地储存
+    const monthEquipmentData = await this.getPowerData(
+      sourceData,
+      deviceNo,
+      EQUIPMENT_DATA_TYPE.MONTH
+    );
+    monthEquipmentData.length > 0 &&
+      monthEquipmentData.map(item => {
+        item.time = item.time.substring(item.time.length - 5);
         return item;
       });
-      setLocalStorage('yearEquipmentData', JSON.stringify(yearEquipmentData));
-      this.cacheAllEquipmentData(sourceData, deviceNo);
-    }
+    setLocalStorage('monthEquipmentData', JSON.stringify(monthEquipmentData));
+
+    // 请求设备年发电数据，本地储存
+    let yearEquipmentData = await this.getPowerData(
+      sourceData,
+      deviceNo,
+      EQUIPMENT_DATA_TYPE.YEAR
+    );
+    yearEquipmentData = yearEquipmentData.map(item => {
+      item.time = item.time.substring(5);
+      return item;
+    });
+    setLocalStorage('yearEquipmentData', JSON.stringify(yearEquipmentData));
+    this.cacheAllEquipmentData(sourceData, deviceNo);
   }
   // 请求设备所有发电数据，本地储存
   async cacheAllEquipmentData(sourceData, deviceNo) {

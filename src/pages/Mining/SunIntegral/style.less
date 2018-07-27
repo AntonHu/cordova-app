@@ -25,15 +25,45 @@
 
       .am-list-body::after,
       .am-list-body::before {
-        background-color: transparent!important;
+        background-color: transparent !important;
       }
 
       .integral-item {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
         align-items: center;
-        height: 84 * @px;
+        height: 120 * @px;
         border-bottom: 1px solid @white-grey;
+        .integral-pic {
+          height: 80 * @px;
+          width: 80 * @px;
+          border-radius: 40 * @px;
+          display: flex;
+          justify-content: center;
+          .iconfont {
+            font-size: 22px;
+            line-height: 80 * @px;
+            color: @white-text-color;
+          }
+        }
+        .power {
+          background: @power-color;
+        }
+        .login {
+          background: @recommend-color;
+        }
+        .integral-title {
+          width: 50%;
+          font-size: 12px;
+          div {
+            &:nth-child(2) {
+              margin-top: 10 * @px;
+            }
+          }
+        }
+        .integral-number {
+          font-size: 16px;
+        }
       }
     }
   }

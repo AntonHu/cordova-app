@@ -10,14 +10,7 @@ import {
   EquipmentItem,
   ToastNoMask
 } from '../../../components';
-import {
-  Popover,
-  ActivityIndicator,
-  InputItem,
-  Picker,
-  Modal,
-  List
-} from 'antd-mobile';
+import { ActivityIndicator, InputItem, Modal, SearchBar } from 'antd-mobile';
 import { decrypt, handleAbnormalData } from '../../../utils/methods';
 import { EQUIPMENT_DATA_TYPE } from '../../../utils/variable';
 
@@ -32,9 +25,6 @@ import {
 import { POWER_TYPE } from '../../../utils/variable';
 import PullToRefresh from 'pulltorefreshjs';
 
-const Item = Popover.Item;
-const prompt = Modal.prompt;
-
 /**
  * 我的电站信息
  */
@@ -48,7 +38,7 @@ class Comp extends React.Component {
       year: false,
       all: false
     },
-    barcodeVisible: false,
+    cityId: '',
     equipmentListObj: JSON.parse(getLocalStorage('equipmentListObj')) || {},
     dayStationData: [],
     monthStationData: [],
@@ -59,6 +49,7 @@ class Comp extends React.Component {
     priceModalVisible: false,
     addressModalVisible: false,
     electricityPrice: '',
+    addressFilters: [],
     address: ''
   };
   barChart = null;
@@ -141,21 +132,29 @@ class Comp extends React.Component {
   getOtherInfo = keyPair => {
     // 获取地址信息
     this.props.sunCityStore.fetchSCGetAddress();
-    // 获取天气信息
-    const city = getLocalStorage('city') || '北京';
-    this.props.sunCityStore.fetchSCGetWeather({
-      cityName: city
-    });
     // 获取电价
     this.props.sunCityStore
       .fetchSCGetElectricityPrice({
         userPubKey: keyPair.publicKey
       })
       .then(result => {
-        if (result.code === 200 && !result.data.fee) {
-          this.setState({
-            popoverVisible: true
-          });
+        if (result.code === 200) {
+          if (!result.data.fee) {
+            this.setState({
+              popoverVisible: true
+            });
+          }
+          this.setState(
+            {
+              cityId: result.data.city_id
+            },
+            () => {
+              // 获取天气信息
+              this.props.sunCityStore.fetchSCGetWeather({
+                cityId: this.state.cityId
+              });
+            }
+          );
         }
       });
   };
@@ -178,8 +177,8 @@ class Comp extends React.Component {
    */
   initPullToRefresh = (deviceNo, sourceData) => {
     PullToRefresh.init({
-      mainElement: 'body', // "下拉刷新"把哪个部分包住
-      triggerElement: 'body', // "下拉刷新"把哪个部分包住
+      mainElement: '#page-powerStation-info', // "下拉刷新"把哪个部分包住
+      triggerElement: '#page-powerStation-info', // "下拉刷新"把哪个部分包住
       onRefresh: this.pullToRefresh, // 下拉刷新的方法，返回一个promise
       shouldPullToRefresh: function() {
         // 什么情况下的滚动触发下拉刷新，这个很重要
@@ -419,28 +418,49 @@ class Comp extends React.Component {
     });
   };
   addressChange = value => {
+    const addressInfo = toJS(this.props.sunCityStore.addressInfo);
+    const valueTrim = value.trim();
+    if (valueTrim) {
+      this.setState({
+        address: valueTrim
+      });
+      const addressFilters = addressInfo.filter(
+        item => item.city.indexOf(valueTrim) > -1
+      );
+      if (addressFilters.length > 0) {
+        this.setState({
+          addressFilters
+        });
+      }
+    } else {
+      this.addressHandle();
+    }
+  };
+  addressHandle = (city, cityId) => {
     this.setState({
-      address: value[0]
+      address: city || '',
+      cityId: cityId || '',
+      addressFilters: []
     });
   };
   modifyAddress = () => {
-    this.setState(
-      {
-        addressModalVisible: false
-      },
-      () => {
-        this.props.sunCityStore.fetchSCGetWeather({
-          cityName: this.state.address
-        });
-      }
-    );
+    if (this.state.address) {
+      this.setState(
+        {
+          address: '',
+          addressModalVisible: false
+        },
+        () => {
+          this.props.sunCityStore.fetchSCGetWeather({
+            cityId: this.state.cityId
+          });
+        }
+      );
+    } else {
+      ToastNoMask('请输入地址');
+    }
   };
-  // 气泡显隐
-  popoverShow = () => {
-    this.setState({
-      popoverVisible: !this.state.popoverVisible
-    });
-  };
+
   priceModalHide = () => {
     this.setState({
       priceModalVisible: false
@@ -448,7 +468,6 @@ class Comp extends React.Component {
   };
   priceModalShow = () => {
     this.setState({
-      popoverVisible: false,
       priceModalVisible: true
     });
   };
@@ -465,13 +484,15 @@ class Comp extends React.Component {
       this.props.sunCityStore
         .fetchSCModifyElectricityPrice({
           userPubKey: keyPair.publicKey,
-          electricityFee: price.trim()
+          electricityFee: price.trim(),
+          city: this.state.cityId
         })
         .then(result => {
           if (result.code === 200) {
             ToastNoMask('更改成功');
             this.setState(
               {
+                popoverVisible: false,
                 priceModalVisible: false
               },
               () =>
@@ -501,11 +522,7 @@ class Comp extends React.Component {
       Number(getLocalStorage('allTotalStationElectric')); // 获取本地储存电站总发电量
     const { equipmentListObj } = this.state;
     const equipmentNameList = Object.keys(equipmentListObj);
-    const {
-      weatherInfo,
-      electricityPrice,
-      addressInfo
-    } = this.props.sunCityStore;
+    const { weatherInfo, electricityPrice } = this.props.sunCityStore;
     let weatherEle = <i className="iconfont">&#xe631;</i>;
     if (weatherInfo) {
       if (weatherInfo.type.indexOf('雨') > 0) {
@@ -538,16 +555,43 @@ class Comp extends React.Component {
                 title="坐标地址"
                 visible={this.state.addressModalVisible}
                 onClose={this.addressModalHide}
-                footer={[{ text: '确定', onPress: this.modifyAddress }]}
+                footer={[
+                  {
+                    text: '取消',
+                    onPress: () =>
+                      this.setState({
+                        addressModalVisible: false
+                      })
+                  },
+                  { text: '确定', onPress: this.modifyAddress }
+                ]}
               >
-                <Picker
-                  data={addressInfo}
-                  cols={1}
-                  value={[this.state.address]}
+                <SearchBar
+                  value={this.state.address}
+                  placeholder="请输入地址"
+                  maxLength={20}
                   onChange={this.addressChange}
-                >
-                  <List.Item arrow="horizontal">坐标地址</List.Item>
-                </Picker>
+                  onCancel={this.addressHandle}
+                  onClear={this.addressHandle}
+                />
+                <div className="address-wrap">
+                  {this.state.addressFilters.map((item, index) => {
+                    const cityDetail = `${item.district || item.city}-${
+                      item.city
+                    }`;
+                    return (
+                      <div
+                        className="address"
+                        key={index}
+                        onClick={() => {
+                          this.addressHandle(cityDetail, item.cityId);
+                        }}
+                      >
+                        {cityDetail}
+                      </div>
+                    );
+                  })}
+                </div>
               </Modal>
               <div className="screen" onClick={this.screenChange}>
                 {/* <div
@@ -601,19 +645,12 @@ class Comp extends React.Component {
             <div className="type-item elec">
               发电量<i className="iconfont">&#xe677;</i>
             </div>
-            <Popover
-              overlayClassName="fortest"
-              overlay={[
-                <Item style={{ fontSize: '12px' }}>填写电价计算收益</Item>
-              ]}
-              placement="topLeft"
-              visible={this.state.popoverVisible}
-              onSelect={this.priceModalShow}
-            >
-              <div className="type-item profit" onClick={this.popoverShow}>
-                收益<i className="iconfont">&#xe767;</i>
-              </div>
-            </Popover>
+            <div className="type-item profit" onClick={this.priceModalShow}>
+              收益<i className="iconfont">&#xe767;</i>
+              {this.state.popoverVisible ? (
+                <div className="bubble">填写电价计算收益</div>
+              ) : null}
+            </div>
             <Modal
               transparent
               title="填写电价"
@@ -672,7 +709,7 @@ class Comp extends React.Component {
               <div className="detail-item">
                 <div className="number">
                   {`${totalStationElectric &&
-                    (totalStationElectric * 0.8149).toFixed(2)}`}
+                    (totalStationElectric * electricityPrice).toFixed(2)}`}
                   <span className="h5" />
                 </div>
                 <div className="detail-type">累计(￥)</div>
