@@ -41,7 +41,7 @@ class Comp extends React.Component {
    * willUnmount的时候，再设置为100vh
    *
    * TODO: 这种改法有点无奈，暂时没想到好的
-   * @param isMount
+   * @param isMount  didMount：true  willUnmount： false
    */
   changeAppElementHeight = (isMount) => {
     const appElement = document.getElementById(APP_ID);
