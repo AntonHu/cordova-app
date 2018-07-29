@@ -60,6 +60,8 @@ const INTEGRAL_TYPE = {
   login: '登陆奖励'
 };
 
+const APP_ID = 'App';
+
 export {
   backendServer,
   userServer,
@@ -71,5 +73,6 @@ export {
   CURVE,
   EQUIPMENT_DATA_TYPE,
   DEPLYMENT_KEY,
-  INTEGRAL_TYPE
+  INTEGRAL_TYPE,
+  APP_ID
 };
