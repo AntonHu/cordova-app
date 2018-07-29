@@ -38,9 +38,9 @@ class Comp extends React.Component {
     sourceData: '', // 数据来源
     deviceNo: '', //设备编码
     maxValue: 0, // 设备发电量
-    count: 0 // 日电量
+    count: 0, // 日电量
+    currentPower: 0 //当前功率
   };
-  pieChart = null;
   areaChart = null;
   curveChart = null;
   chartTitleObj = {
@@ -154,14 +154,13 @@ class Comp extends React.Component {
       // 默认显示数据
       dayEquipmentData.push({ time: '00', number: 0 });
     }
-    this.pieChart && this.pieChart.clear();
     this.curveChart && this.curveChart.clear();
     this.areaChart && this.areaChart.clear();
     this.renderArea(dayEquipmentData);
-    this.renderPieBar(currentPower);
     this.setState({
       dayElectric,
-      maxValue
+      maxValue,
+      currentPower
     });
   };
   // 本地储存设备天数据
@@ -215,11 +214,10 @@ class Comp extends React.Component {
         deviceNo,
         sourceData,
         dayElectric,
-        maxValue
+        maxValue,
+        currentPower
       });
-      this.pieChart && this.pieChart.clear();
       this.areaChart && this.areaChart.clear();
-      this.renderPieBar(currentPower);
       // 本地储存设备月，年，所有数据
       this.cacheEquipmentData(sourceData, deviceNo);
 
@@ -397,59 +395,6 @@ class Comp extends React.Component {
     }
   };
 
-  // 绘制发电环图
-  renderPieBar = currentPower => {
-    this.pieChart = new F2.Chart({
-      id: 'pie-bar-chart',
-      width: px(340),
-      height: px(340),
-      padding: 0,
-      pixelRatio: window.devicePixelRatio
-    });
-    this.pieChart.animate(false);
-    const data = [
-      {
-        x: '1',
-        y: 100
-      }
-    ];
-    this.pieChart.source(data, {
-      y: {
-        max: 100,
-        min: 0
-      }
-    });
-    this.pieChart.axis(false);
-    this.pieChart.tooltip(false);
-    this.pieChart.coord('polar', {
-      transposed: true,
-      innerRadius: 0.8,
-      radius: 0.9
-    });
-    this.pieChart.guide().arc({
-      start: [0, 0],
-      end: [1, 99.98],
-      top: false,
-      style: {
-        lineWidth: 15,
-        stroke: '#024dc8'
-      }
-    });
-    this.pieChart.guide().html({
-      position: ['110%', '57.5%'],
-      html: `<div style="width: 250px;height: 40px;text-align: center;"><div style="font-size: 20px;font-weight:bold">${currentPower}</div><div style="font-size: 14px;margin-top: 5px">当前功率(W)</div></div>`
-    });
-    this.pieChart
-      .interval()
-      .position('x*y')
-      .color('#8de837')
-      .size(15)
-      .animate(false);
-    this.pieChart.render();
-
-    return this.pieChart;
-  };
-
   // 绘制功率图
   renderArea = data => {
     this.areaChart = new F2.Chart({
@@ -613,7 +558,10 @@ class Comp extends React.Component {
               <div className="survey-item-number">{this.state.dayElectric}</div>
               <div className="survey-item-type">日电量(kWh)</div>
             </div>
-            <canvas id="pie-bar-chart" />
+            <div className="survey-item" id="current-power-item">
+              <div className="survey-item-number">{this.state.currentPower}</div>
+              <div className="survey-item-type">当前功率(W)</div>
+            </div>
             <div className="survey-item">
               <div className="survey-item-number">{this.state.maxValue}</div>
               <div className="survey-item-type">总电量(kWh)</div>

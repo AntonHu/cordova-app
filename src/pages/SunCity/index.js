@@ -204,7 +204,7 @@ class Comp extends React.Component {
    * 初始化下拉刷新
    */
   initPullToRefresh = () => {
-    PullToRefresh.init({
+    this.ptr = PullToRefresh.init({
       mainElement: '#page-sunCity-info', // "下拉刷新"把哪个部分包住
       triggerElement: '#page-sunCity-info', // "下拉刷新"把哪个部分包住
       onRefresh: this.pullToRefresh, // 下拉刷新的方法，返回一个promise
@@ -222,6 +222,7 @@ class Comp extends React.Component {
       instructionsReleaseToRefresh: '松开刷新',
       instructionsRefreshing: '正在刷新...'
     });
+    console.log(this.ptr)
   };
 
   // 获取设备列表并处理列表数据
