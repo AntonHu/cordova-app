@@ -57,7 +57,8 @@ const DEPLYMENT_KEY = {
 // 积分类型
 const INTEGRAL_TYPE = {
   power: '挖宝积分',
-  login: '登陆奖励'
+  login: '登陆奖励',
+  transfer: '转账'
 };
 
 export {

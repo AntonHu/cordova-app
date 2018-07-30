@@ -327,9 +327,28 @@ class Comp extends React.Component {
       id: 'pie-bar-chart',
       pixelRatio: window.devicePixelRatio
     });
+    let tickCount = 4;
+    if (data.length > 20) {
+      /*
+      * 将柱形图x轴划分为8-15份
+      * i是x轴需要显示的数据个数，i-1是中间的空隙
+      * data.length - i是除去需要显示的剩余的数据
+      * (data.length - i) / (i - 1)是将剩余的数据平分
+      */
+      for (let i = 8; i < 16; i++) {
+        const number = (data.length - i) / (i - 1);
+        if (Number.isInteger(number)) {
+          tickCount = i;
+          break;
+        }
+      }
+      if (tickCount === 4) {
+        tickCount = Math.round(data.length / 3);
+      }
+    }
     const defs = {
       time: {
-        tickCount: data.length > 20 ? Math.round(data.length / 3) + 1 : 4
+        tickCount: tickCount
       },
       number: {
         min: 0,
