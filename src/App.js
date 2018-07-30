@@ -3,7 +3,6 @@ import React from 'react';
 import './App.css';
 import './styles/commonText.less';
 import Routes from './router';
-import {APP_ID} from './utils/variable';
 import SM2Demo from './pages/SM2Demo';
 import Secp256k1 from './pages/Secp256k1';
 
@@ -11,7 +10,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App" id={APP_ID}>
+      <div className="App">
         <Routes/>
         {/*<SM2Demo />*/}
         {/*<Secp256k1 />*/}

@@ -3,7 +3,7 @@ import { PageWithHeader } from '../../../components';
 import { toJS, reaction } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { ListView } from 'antd-mobile';
-import { PAGE_SIZE, INTEGRAL_TYPE, APP_ID } from '../../../utils/variable';
+import { PAGE_SIZE, INTEGRAL_TYPE } from '../../../utils/variable';
 import './style.less';
 /**
  * 挖宝
@@ -27,30 +27,9 @@ class SunIntegral extends React.Component {
   hasMore = true;
 
   componentDidMount() {
-    this.changeAppElementHeight(true);
     this.makeRequest(this.props, this.state.page);
   }
 
-  componentWillUnmount() {
-    this.changeAppElementHeight(false);
-  }
-
-  /**
-   * 由于id="App"的height为100vh，导致listview的onscroll不触发
-   * 现在didMount的时候，设置为auto
-   * willUnmount的时候，再设置为100vh
-   *
-   * TODO: 这种改法有点无奈，暂时没想到好的
-   * @param isMount  didMount：true  willUnmount： false
-   */
-  changeAppElementHeight = (isMount) => {
-    const appElement = document.getElementById(APP_ID);
-    if (isMount) {
-      !!appElement && (appElement.style.height = 'auto');
-    } else {
-      !!appElement && (appElement.style.height = '100vh');
-    }
-  };
 
   makeRequest = (props, page) => {
     const { keyPair } = props;
