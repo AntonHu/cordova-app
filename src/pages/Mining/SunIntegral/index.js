@@ -30,7 +30,6 @@ class SunIntegral extends React.Component {
     this.makeRequest(this.props, this.state.page);
   }
 
-
   makeRequest = (props, page) => {
     const { keyPair } = props;
     if (keyPair.hasKey) {
@@ -56,7 +55,9 @@ class SunIntegral extends React.Component {
           <div>{rowData.gmtCreate}</div>
         </div>
         <div className="integral-number">
-          {`+${rowData.solarIntegral.toFixed(4)}`}
+          {rowData.solarIntegral < 0
+            ? rowData.solarIntegral.toFixed(4)
+            : `+${rowData.solarIntegral.toFixed(4)}`}
         </div>
       </div>
     );
