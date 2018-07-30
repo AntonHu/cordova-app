@@ -45,7 +45,7 @@ let pickNumber = 0;
 
 @inject('sunCityStore', 'userStore', 'miningStore', 'keyPair') // 如果注入多个store，用数组表示
 @observer
-class Comp extends React.Component {
+class SunCity extends React.Component {
   state = {
     equipmentListObj: JSON.parse(getLocalStorage('equipmentListObj')) || {},
     loading: true,
@@ -749,4 +749,4 @@ class Comp extends React.Component {
   }
 }
 
-export default withRouter(Comp);
+export default withRouter(SunCity);
