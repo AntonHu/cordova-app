@@ -214,8 +214,8 @@ class MyData extends React.Component {
   render() {
     const {keyPair} = this.props;
     return (
-      <div className={'page-my-data'}>
-        <PageWithHeader title={'我的数据'}>
+
+        <PageWithHeader title={'我的数据'} id="page-my-data">
           <WhiteSpace />
 
           <BlueBox>
@@ -258,35 +258,36 @@ class MyData extends React.Component {
               </div>
             ))}
           </List>
-        </PageWithHeader>
-        <Modal
-          visible={this.state.modalVisible}
-          className="my-data-modal"
-          maskClosable={true}
-          onClose={this.hideModal}
-          transparent
-        >
-          <div className="tips-box">* 输入交易密码，解锁您的密钥</div>
-          <InputItem
-            clear
-            placeholder="请输入您的交易密码"
-            value={this.state.tradePassword}
-            type="password"
-            onChange={(tradePassword) => this.setState({tradePassword})}
-          />
-          <Button
-            onClick={() => this.onDecrypt({publicKey: this.publicKey, encryptPrivateKey: this.encryptPrivateKey})}
-            disabled={!this.clickAble}
+          <Modal
+            visible={this.state.modalVisible}
+            className="my-data-modal"
+            maskClosable={true}
+            onClose={this.hideModal}
+            transparent
           >
-            解密
-          </Button>
-        </Modal>
-        <ActivityIndicator
-          toast
-          text={this.state.loadingText}
-          animating={this.state.showLoading}
-        />
-      </div>
+            <div className="tips-box">* 输入交易密码，解锁您的密钥</div>
+            <InputItem
+              clear
+              placeholder="请输入您的交易密码"
+              value={this.state.tradePassword}
+              type="password"
+              onChange={(tradePassword) => this.setState({tradePassword})}
+            />
+            <Button
+              onClick={() => this.onDecrypt({publicKey: this.publicKey, encryptPrivateKey: this.encryptPrivateKey})}
+              disabled={!this.clickAble}
+            >
+              解密
+            </Button>
+          </Modal>
+          <ActivityIndicator
+            toast
+            text={this.state.loadingText}
+            animating={this.state.showLoading}
+          />
+        </PageWithHeader>
+
+
     );
   }
 }

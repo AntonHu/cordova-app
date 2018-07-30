@@ -37,7 +37,7 @@ class Mining extends React.Component {
       triggerElement: '#mining-refresh',
       onRefresh: this.pullToRefresh,
       shouldPullToRefresh: function () {
-        return document.getElementById('page-mining').parentNode.parentNode.scrollTop === 0;
+        return document.getElementById(PageWithHeader.bodyId).scrollTop === 0;
       },
       instructionsPullToRefresh: '下拉刷新',
       instructionsReleaseToRefresh: '松开刷新',
@@ -109,8 +109,8 @@ class Mining extends React.Component {
     const userInfo = this.props.userStore.userInfo;
     const { avatar } = userInfo;
     return (
-      <div className={'page-mining'} id="page-mining">
         <PageWithHeader
+          id="page-mining"
           leftComponent={null}
           title={'挖宝池'}
           rightComponent={<Link to="/mining/pointRule">
@@ -223,7 +223,7 @@ class Mining extends React.Component {
           </div>
           </div>
         </PageWithHeader>
-      </div>
+
     );
   }
 }

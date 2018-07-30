@@ -108,29 +108,7 @@ class Comp extends React.Component {
     }
     return Promise.all(promiseArray);
   };
-  /**
-   * 初始化下拉刷新
-   */
-  initPullToRefresh = (deviceNo, sourceData) => {
-    PullToRefresh.init({
-      mainElement: 'body', // "下拉刷新"把哪个部分包住
-      triggerElement: 'body', // "下拉刷新"把哪个部分包住
-      onRefresh: () => this.pullToRefresh(deviceNo, sourceData), // 下拉刷新的方法，返回一个promise
-      shouldPullToRefresh: function() {
-        // 什么情况下的滚动触发下拉刷新，这个很重要
-        // 如果这个页面里有height超过窗口高度的元素
-        // 那么应该在这个元素滚动位于顶部的时候，返回true
-        const ele = document.getElementById('page-equipment-info');
-        if (ele === null) {
-          return false;
-        }
-        return ele.scrollTop === 0;
-      },
-      instructionsPullToRefresh: '下拉刷新',
-      instructionsReleaseToRefresh: '松开刷新',
-      instructionsRefreshing: '正在刷新...'
-    });
-  };
+
   // 渲染可视化图
   renderCharts = dayEquipmentData => {
     // 设备当前功率
@@ -248,11 +226,11 @@ class Comp extends React.Component {
         // 什么情况下的滚动触发下拉刷新，这个很重要
         // 如果这个页面里有height超过窗口高度的元素
         // 那么应该在这个元素滚动位于顶部的时候，返回true
-        const ele = document.getElementById('page-equipment-info');
+        const ele = document.getElementById(PageWithHeader.bodyId);
         if (ele === null) {
           return false;
         }
-        return ele.parentNode.parentNode.scrollTop === 0;
+        return ele.scrollTop === 0;
       },
       instructionsPullToRefresh: '下拉刷新',
       instructionsReleaseToRefresh: '松开刷新',
@@ -555,8 +533,9 @@ class Comp extends React.Component {
   };
   render() {
     return (
-      <div className={'page-equipment-info'} id="page-equipment-info">
+
         <PageWithHeader
+          id="page-equipment-info"
           title={
             this.props.location.search
               .substring(1)
@@ -611,7 +590,7 @@ class Comp extends React.Component {
             <canvas id="curve-chart" />
           </div>
         </PageWithHeader>
-      </div>
+
     );
   }
 }

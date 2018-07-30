@@ -94,8 +94,8 @@ class ResetLoginPW extends React.PureComponent {
   render() {
     const { newPassword, oldPassword, confirmNewPassword} = this.state;
     return (
-      <div className={'page-reset-login-pw'}>
-        <PageWithHeader title={'重置登录密码'}>
+
+        <PageWithHeader title={'重置登录密码'} id="page-reset-login-pw">
           <div className="login-title">您已登录能源星球，可直接重置登录密码</div>
           <div className="reset-login-pw">
             <InputItem
@@ -122,7 +122,7 @@ class ResetLoginPW extends React.PureComponent {
             <GreenButton onClick={this.onClick} size="big">确认</GreenButton>
           </div>
         </PageWithHeader>
-      </div>
+
     );
   }
 }

@@ -33,8 +33,8 @@ class MsgDetail extends React.Component {
   render() {
     const {detail} = this.state;
     return (
-      <div className="page-msg-detail">
-        <PageWithHeader title="消息详情">
+
+        <PageWithHeader title="消息详情" id="page-msg-detail">
           <div className="title-box">
             <div className="title">
               {detail.title || '无标题'}
@@ -47,7 +47,7 @@ class MsgDetail extends React.Component {
             {detail.content || '无内容'}
           </div>
         </PageWithHeader>
-      </div>
+
     )
   }
 };

@@ -284,8 +284,8 @@ class VerifyID extends React.Component {
   render() {
     const {username, idPositive, idNegative, idHandheld, id, contractorCode} = this.state;
     return (
-      <div className={'page-verifyID'}>
-        <PageWithHeader title={'实名认证'}>
+
+        <PageWithHeader title={'实名认证'} id="page-verifyID">
           <BlueBox>
             <div className={'title-of-blue h2 white-text'}>身份认证</div>
           </BlueBox>
@@ -356,14 +356,14 @@ class VerifyID extends React.Component {
 
             <GreenButton size={'big'} onClick={this.onSubmit}>提交认证</GreenButton>
           </div>
-
+          <ActivityIndicator
+            toast
+            text="正在提交认证，请稍候..."
+            animating={this.state.showLoading}
+          />
         </PageWithHeader>
-        <ActivityIndicator
-          toast
-          text="正在提交认证，请稍候..."
-          animating={this.state.showLoading}
-        />
-      </div>
+
+
     );
   }
 }

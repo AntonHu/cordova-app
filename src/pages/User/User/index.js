@@ -67,8 +67,8 @@ class User extends React.Component {
     const {userInfo} = this.props.userStore;
     const {username, avatar, nickName} = userInfo;
     return (
-      <div className={'page-user'}>
-        <PageWithHeader leftComponent={null} title={'我的'}>
+
+        <PageWithHeader leftComponent={null} title={'我的'} id="page-user">
           {/* <BlueBox>
 
           </BlueBox> */}
@@ -96,7 +96,7 @@ class User extends React.Component {
             ))}
           </List>
         </PageWithHeader>
-      </div>
+
     );
   }
 }

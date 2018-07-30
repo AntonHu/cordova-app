@@ -130,8 +130,8 @@ class MyStation extends React.Component {
     const equipmentNameList =
       (equipmentListObj && Object.keys(equipmentListObj)) || [];
     return (
-      <div className={'page-my-station'}>
-        <PageWithHeader title={'我的设备'}>
+
+        <PageWithHeader title={'我的设备'} id="page-my-station">
           <div className="station-list">
             {equipmentNameList.length > 0 ? (
               equipmentNameList.map((equipment, index) => {
@@ -167,7 +167,7 @@ class MyStation extends React.Component {
             )}
           </div>
         </PageWithHeader>
-      </div>
+
     );
   }
 }

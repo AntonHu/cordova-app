@@ -22,8 +22,8 @@ const ListData = [
 class ResetPW extends React.PureComponent {
   render() {
     return (
-      <div className={'page-reset-pw'}>
-        <PageWithHeader title={'密码设置'}>
+
+        <PageWithHeader title={'密码设置'} id="page-reset-pw">
           <List>
             {ListData.map((v, i) => (
               <Link key={i} to={`/user/${v.path}`}>
@@ -32,7 +32,7 @@ class ResetPW extends React.PureComponent {
             ))}
           </List>
         </PageWithHeader>
-      </div>
+
     );
   }
 }

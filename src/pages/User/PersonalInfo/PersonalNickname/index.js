@@ -83,8 +83,7 @@ class PersonalNickName extends React.Component {
 
   render() {
     return (
-      <div className={'page-personal-nick-name'}>
-        <PageWithHeader title={'昵称'} rightComponent={<div onClick={this.updateNickName} className="h3">保存</div>}>
+        <PageWithHeader id="page-personal-nick-name" title={'昵称'} rightComponent={<div onClick={this.updateNickName} className="h3 right-btn">保存</div>}>
           <div className="change-nickname">
             <InputItem
               clear
@@ -95,7 +94,6 @@ class PersonalNickName extends React.Component {
             />
           </div>
         </PageWithHeader>
-      </div>
     );
   }
 }
