@@ -257,10 +257,8 @@ class BasicPhoneCodePWForm extends React.PureComponent {
           extra={
             <Countdown
               ref={ref => this.countdown = ref}
-              status={this.state.status}
               nums={60}
               sendCode={this.sendCode}
-              callback={this.countdownCallBack}
               sendingClick={'正在发送中，请稍候'}
             />
           }
