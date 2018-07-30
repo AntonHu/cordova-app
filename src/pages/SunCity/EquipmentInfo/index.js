@@ -207,17 +207,28 @@ class Comp extends React.Component {
       // 当前电站发电量
       let maxValue = 0;
       const equipmentData = dayEquipmentData[dayEquipmentData.length - 1];
-      currentPower = equipmentData.totalPower;
-      dayElectric = equipmentData.todayEnergy;
-      maxValue = equipmentData.totalEnergy;
+      currentPower =
+        equipmentData.totalPower && equipmentData.totalPower.toFixed(2);
+      dayElectric =
+        equipmentData.todayEnergy && equipmentData.todayEnergy.toFixed(2);
+      maxValue =
+        equipmentData.totalEnergy && equipmentData.totalEnergy.toFixed(2);
+      const selected = Object.assign({}, this.state.selected);
+      Object.keys(selected).forEach(item => {
+        selected[item] = false;
+      });
+      selected.day = true;
       this.setState({
         deviceNo,
         sourceData,
         dayElectric,
         maxValue,
+        selected,
+        chartTitle: this.chartTitleObj.day,
         currentPower
       });
       this.areaChart && this.areaChart.clear();
+      this.renderArea(dayEquipmentData);
       // 本地储存设备月，年，所有数据
       this.cacheEquipmentData(sourceData, deviceNo);
 
@@ -559,7 +570,9 @@ class Comp extends React.Component {
               <div className="survey-item-type">日电量(kWh)</div>
             </div>
             <div className="survey-item" id="current-power-item">
-              <div className="survey-item-number">{this.state.currentPower}</div>
+              <div className="survey-item-number">
+                {this.state.currentPower}
+              </div>
               <div className="survey-item-type">当前功率(W)</div>
             </div>
             <div className="survey-item">

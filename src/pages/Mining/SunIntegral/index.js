@@ -45,7 +45,7 @@ class SunIntegral extends React.Component {
   };
 
   renderRow = (rowData, sectionID, rowID) => {
-    const icon = rowData.addWay === 'power' ? '\ue6d1' : '\ue611';
+    const icon = rowData.addWay === 'power' ? '\ue611' : '\ue6d1';
     return (
       <div key={rowData.tokenId} className="integral-item">
         <div className={`integral-pic ${rowData.addWay}`}>
