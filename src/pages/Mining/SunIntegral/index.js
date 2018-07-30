@@ -10,7 +10,7 @@ import './style.less';
  */
 @inject('miningStore', 'keyPair')
 @observer
-class Comp extends React.Component {
+class SunIntegral extends React.Component {
   constructor(props) {
     super(props);
     const dataSource = new ListView.DataSource({
@@ -46,9 +46,9 @@ class Comp extends React.Component {
   changeAppElementHeight = (isMount) => {
     const appElement = document.getElementById(APP_ID);
     if (isMount) {
-      appElement.style.height = 'auto';
+      !!appElement && (appElement.style.height = 'auto');
     } else {
-      appElement.style.height = '100vh';
+      !!appElement && (appElement.style.height = '100vh');
     }
   };
 
@@ -144,4 +144,4 @@ class Comp extends React.Component {
   }
 }
 
-export default Comp;
+export default SunIntegral;
