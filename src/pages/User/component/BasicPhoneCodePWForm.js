@@ -171,17 +171,22 @@ class BasicPhoneCodePWForm extends React.PureComponent {
       return false
     }
 
-    // 做extraInputs的校验
+    /**
+     * 做extraInputs的校验
+     * 如果有一个个extraInputs.validate返回false，直接返回
+     * 如果extraInputs没有validate，那么给它个默认的，永远返回true
+     */
     if (extraInputs.length > 0) {
-      const extraInputsValidations = extraInputs.map(inputProps => {
+      for (let i = 0; i < extraInputs.length; i++) {
         let validateMethod = () => true;
+        const inputProps = extraInputs[i];
         if (inputProps.validate) {
           validateMethod = inputProps.validate;
         }
-        return validateMethod(this.state[inputProps.name]);
-      });
-      if (extraInputsValidations.some(valid => !valid)) {
-        return false
+        const valid = validateMethod(this.state[inputProps.name]);
+        if (!valid) {
+          return valid
+        }
       }
     }
 
