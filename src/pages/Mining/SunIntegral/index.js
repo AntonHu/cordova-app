@@ -10,7 +10,7 @@ import './style.less';
  */
 @inject('miningStore', 'keyPair')
 @observer
-class Comp extends React.Component {
+class SunIntegral extends React.Component {
   constructor(props) {
     super(props);
     const dataSource = new ListView.DataSource({
@@ -29,6 +29,7 @@ class Comp extends React.Component {
   componentDidMount() {
     this.makeRequest(this.props, this.state.page);
   }
+
 
   makeRequest = (props, page) => {
     const { keyPair } = props;
@@ -100,6 +101,7 @@ class Comp extends React.Component {
               <div className="title">积分记录</div>
               <ListView
                 initialListSize={PAGE_SIZE}
+                pageSize={PAGE_SIZE}
                 renderFooter={() => (
                   <div style={{ padding: '20px', textAlign: 'center' }}>
                     {this.state.isLoading ? '加载中...' : '没有更多'}
@@ -121,4 +123,4 @@ class Comp extends React.Component {
   }
 }
 
-export default Comp;
+export default SunIntegral;

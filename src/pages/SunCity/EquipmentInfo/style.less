@@ -1,5 +1,8 @@
 @import '../../../styles/common';
 
+@item-size: 200 * @px;
+@pie-border-width: 15px;
+
 .page-equipment-info {
   height: 100%;
   overflow-y: scroll;
@@ -12,12 +15,22 @@
     background: @main-color;
     color: @white-text-color;
     .survey-item {
-      width: 25%;
+      width: @item-size;
+      height: @item-size;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       .survey-item-number {
         font-weight: bold;
         font-size: 20px;
         margin-bottom: 5px;
       }
+    }
+    #current-power-item {
+      position: relative;
+      border: @pie-border-width #8de837 solid;
+      border-radius: @item-size;
     }
   }
   .equipment-content {

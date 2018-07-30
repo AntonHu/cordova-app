@@ -24,6 +24,7 @@ import { EQUIPMENT_DATA_TYPE } from '../../../utils/variable';
 import './style.less';
 
 const AOTAI = 'at';
+const GUDEWEI = 'goodway';
 let isScanning = false;
 
 /**
@@ -112,7 +113,7 @@ class Comp extends React.Component {
   };
 
   onSubmit = () => {
-    if (this.state.inverterType === AOTAI) {
+    if (this.state.inverterType === AOTAI || this.state.inverterType === GUDEWEI) {
       this.addInverterAT();
     } else {
       this.addInverter();
@@ -120,7 +121,7 @@ class Comp extends React.Component {
   };
 
   /**
-   * 添加奥泰的逆变器
+   * 添加奥泰、顾得威的逆变器
    */
   addInverterAT = () => {
     const { username, password } = this.state;
@@ -139,14 +140,18 @@ class Comp extends React.Component {
       fetchAddInverterAT({
         userPubKey: this.props.keyPair.publicKey,
         username,
-        password
+        password,
+        source: sourceData
       })
         .then(result => {
           this.setState({
             showLoading: false
           });
           if (result.code === 200) {
-            Object.keys(result.data).forEach(deviceNo => {
+            this.setState({
+              successModal: true
+            });
+            Object.keys(result.data || {}).forEach(deviceNo => {
               if (result.data[deviceNo] === 'success') {
                 this.addInverterDetail({
                   sourceData,
@@ -154,9 +159,6 @@ class Comp extends React.Component {
                   dateType: EQUIPMENT_DATA_TYPE.DAY
                 });
               }
-            });
-            this.setState({
-              successModal: true
             });
           } else {
             ToastNoMask('添加逆变器失败。' + (result.msg || ''));
@@ -294,7 +296,7 @@ class Comp extends React.Component {
             >
               <List.Item arrow="horizontal">逆变器品牌</List.Item>
             </Picker>
-            {inverterType === AOTAI ? (
+            {inverterType === AOTAI || inverterType === GUDEWEI ? (
               <div>
                 <InputItem
                   placeholder="请输入账号"

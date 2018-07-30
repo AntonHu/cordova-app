@@ -20,6 +20,7 @@ test('检验是否合法手机号', () => {
   expect(testPhoneNumber(undefined)).toBe(false);
   expect(testPhoneNumber('')).toBe(false);
   expect(testPhoneNumber('15201458525')).toBe(true);
+  expect(testPhoneNumber('19975279179')).toBe(true);
   expect(testPhoneNumber('12345678912')).toBe(false);
 });
 
