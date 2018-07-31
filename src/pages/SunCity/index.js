@@ -549,19 +549,9 @@ class SunCity extends React.Component {
         })
         .then(result => {
           if (result.code === 200) {
-            miningStore.updateBalance(
-              sunIntegralInfo.amount + miningStore.balance
+            miningStore.updateUnconfirmedToken(
+              sunIntegralInfo.amount + miningStore.unconfirmedToken
             );
-            if (keyPair.hasKey) {
-              // 获取排行
-              miningStore.fetchBalanceRanking({
-                publicKey: keyPair.publicKey
-              });
-              miningStore.fetchUnconfirmedToken({
-                publicKey: keyPair.publicKey
-              });
-
-            }
             pickNumber += 1;
             this.selectSunNode.classList.add('remove');
             // 如果pickNumber与目前太阳总数相等

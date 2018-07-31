@@ -139,13 +139,16 @@ class MiningStore {
       const res = await geUnconfirmedToken({publicKey});
       if (res.data && res.data.code === 200) {
         const data = res.data.data || {};
-        runInAction(() => {
-          this.unconfirmedToken = data.total || 0;
-        });
+        this.updateUnconfirmedToken(data.total || 0)
       }
     } catch (err) {
       console.log(err)
     }
+  };
+
+  @action
+  updateUnconfirmedToken = token => {
+    this.unconfirmedToken = token
   };
 
   /**
