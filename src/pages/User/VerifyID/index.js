@@ -3,6 +3,7 @@ import {BlueBox, GreenButton, PageWithHeader, Picture, VerifyIdEmptyElement} fro
 import {InputItem, Modal, ActionSheet, Flex, ActivityIndicator} from 'antd-mobile';
 import {reqUploadVerifyId} from '../../../stores/user/request';
 import {FileMethods, testContractorCode} from '../../../utils/methods';
+import {VERIFY_STATUS} from '../../../utils/variable';
 import {observer, inject} from 'mobx-react';
 import IdCard from 'idcard';
 import './style.less';
@@ -226,7 +227,7 @@ class VerifyID extends React.Component {
           showLoading: false
         });
         if (data.code === 200) {
-          this.props.userStore.updateIsKycInChain(true);
+          this.props.userStore.updateIsKycInChain(VERIFY_STATUS.AUTHENTICATING);
           alert('成功', '您已成功验证', [{
             text: '确定', onPress: function () {
               self.props.history.goBack();

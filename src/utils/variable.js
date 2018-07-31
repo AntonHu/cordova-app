@@ -64,6 +64,13 @@ const INTEGRAL_TYPE = {
   fail: { title: '失败', icon: '\ue639' }
 };
 
+// 认证状态
+const VERIFY_STATUS = {
+  UNAUTHORIZED: 0,
+  AUTHENTICATING: 1,
+  AUTHORIZED: 2
+};
+
 export {
   backendServer,
   userServer,
@@ -75,5 +82,6 @@ export {
   CURVE,
   EQUIPMENT_DATA_TYPE,
   DEPLYMENT_KEY,
-  INTEGRAL_TYPE
+  INTEGRAL_TYPE,
+  VERIFY_STATUS
 };

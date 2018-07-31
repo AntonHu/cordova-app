@@ -2,6 +2,7 @@ import {observable, action, runInAction, computed, toJS} from 'mobx';
 import {getOwnerInfo, getMessages, getIsInChain, getIsKycInChain, getInvitationCode} from './request';
 import {getLocalStorage, setLocalStorage, deleteLocalStorage} from '../../utils/storage';
 import {testPhoneNumber, formatPhoneWithSpace} from '../../utils/methods';
+import {VERIFY_STATUS} from '../../utils/variable';
 import {ToastNoMask} from '../../components';
 import {Modal} from 'antd-mobile';
 import User from '../../utils/user';
@@ -15,9 +16,18 @@ class UserStore {
   // 消息列表
   @observable msgList = [];
   // 用户是否身份认证了
-  @observable isKycInChain = false;
+  @observable isKycInChain = VERIFY_STATUS.UNAUTHORIZED;
   // 用户邀请码
   @observable invitationCode = '';
+
+  @action
+  onLogout = () => {
+    this.deleteIsKycInChain();
+    this.userInfo = {};
+    this.msgList = [];
+    this.isKycInChain = VERIFY_STATUS.UNAUTHORIZED;
+    this.invitationCode = '';
+  };
 
   /**
    * '138 0000 1111'
@@ -98,13 +108,14 @@ class UserStore {
   fetchIsKycInChain = async ({publicKey}) => {
     try {
       const res = await getIsKycInChain({publicKey});
-      runInAction(() => {
-        if (res.data) {
-          const status = !!res.data.msg || false;
+      console.log(res)
+      if (res.data && res.data.code === 200) {
+        const data = res.data.data || {};
+        const status = data.statusId || VERIFY_STATUS.UNAUTHORIZED;
+        runInAction(() => {
           this.isKycInChain = status;
-          setLocalStorage(IS_KYC_IN_CHAIN, status);
-        }
-      });
+        })
+      }
     } catch (err) {
       if (err.data && err.data.code === 0) {
         ToastNoMask('检查实名认证超时')
@@ -144,28 +155,21 @@ class UserStore {
   };
 
   /**
-   * 从缓存取出IsKycInChain
-   * 如果为null，发请求获取
+   * 检查是否身份认证了
    * @param publicKey
    */
   @action
   checkIsKycInChain = ({publicKey}) => {
-    const status = getLocalStorage(IS_KYC_IN_CHAIN);
-    if (status === null) {
-      this.fetchIsKycInChain({publicKey});
-    } else {
-      this.isKycInChain = (status === 'true');
-    }
+    this.fetchIsKycInChain({publicKey});
   };
 
   /**
-   * 更新IsKycInChain，并且缓存在localStorage
+   * 更新IsKycInChain
    * @param status
    */
   @action
   updateIsKycInChain = status => {
     this.isKycInChain = status;
-    setLocalStorage(IS_KYC_IN_CHAIN, status);
   };
 
   /**
@@ -175,14 +179,6 @@ class UserStore {
     deleteLocalStorage(IS_KYC_IN_CHAIN);
   };
 
-  @action
-  onLogout = () => {
-    this.deleteIsKycInChain();
-    this.userInfo = {};
-    this.msgList = [];
-    this.isKycInChain = false;
-    this.invitationCode = '';
-  }
 }
 
 const userStore = new UserStore();

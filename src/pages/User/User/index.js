@@ -49,11 +49,18 @@ const ListData = [
 class User extends React.Component {
 
   componentDidMount() {
+    this.makeRequest();
+  }
+
+  makeRequest = () => {
     const {keyPair, userStore, history} = this.props;
     console.log(history);
     this.props.userStore.fetchUserInfo({keyPair, userStore, history});
     this.props.userStore.fetchInvitationCode();
-  }
+    if (keyPair.hasKey) {
+      this.props.userStore.checkIsKycInChain({publicKey: keyPair.publicKey});
+    }
+  };
 
   sliceLongName = (name) => {
     const MAX_LENGTH = 20;

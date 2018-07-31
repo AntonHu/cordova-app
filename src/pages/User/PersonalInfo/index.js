@@ -4,6 +4,7 @@ import {BlueBox, PageWithHeader, Picture, ToastNoMask} from '../../../components
 import {List, Picker, Icon, Modal, Button, ActionSheet} from 'antd-mobile';
 import {observer, inject} from 'mobx-react';
 import {FileMethods} from '../../../utils/methods';
+import {VERIFY_STATUS} from '../../../utils/variable';
 import {reqUploadAvatar, reqUpdateUser} from '../../../stores/user/request';
 import './style.less';
 
@@ -156,16 +157,6 @@ class PersonalInfo extends React.Component {
     sexArr: ['男'],
   };
 
-  componentDidMount() {
-    this.makeRequest(this.props);
-  }
-
-  makeRequest = (props) => {
-    const { keyPair } = props;
-    if (keyPair.hasKey) {
-      this.props.userStore.checkIsKycInChain({publicKey: keyPair.publicKey});
-    }
-  };
   // 头像更改
   picChange = () => {
 
@@ -196,17 +187,30 @@ class PersonalInfo extends React.Component {
     }
   };
 
+  getVerifyStatusCN = (verifyStatus) => {
+    switch (verifyStatus) {
+      case VERIFY_STATUS.UNAUTHORIZED:
+        return '未实名认证';
+      case VERIFY_STATUS.AUTHENTICATING:
+        return '认证审核中，请稍候';
+      case VERIFY_STATUS.AUTHORIZED:
+        return '您已实名认证成功！';
+      default:
+        return ''
+    }
+  };
+
   render() {
     const {userInfo, isKycInChain} = this.props.userStore;
     const {avatar, nickName} = userInfo;
     return (
 
         <PageWithHeader title={'个人信息'} id="page-personal-info">
-          <BlueBox type="pic" picType={isKycInChain ? 'blue' : 'grey'}>
+          <BlueBox type="pic" picType={isKycInChain === VERIFY_STATUS.AUTHORIZED ? 'blue' : 'grey'}>
             <div className="personal-info">
               <Picture size={120} src={avatar} showBorder={true}/>
               <div className="personal-prompt">
-                {isKycInChain ? '您已实名认证成功!' : '未实名认证'}
+                {this.getVerifyStatusCN(isKycInChain)}
               </div>
             </div>
             <div className="personal-name">{nickName || '未知'}</div>
