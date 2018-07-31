@@ -59,6 +59,7 @@ const INTEGRAL_TYPE = {
   power: { title: '挖宝积分', icon: '\ue611' },
   login: { title: '登陆奖励', icon: '\ue6d1' },
   transfer: { title: '入账', icon: '\ue614' },
+  invitation: { title: '推荐奖励', icon: '\ue6d1' },
   fail: { title: '失败', icon: '\ue639' }
 };
 
