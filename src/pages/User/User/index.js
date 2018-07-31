@@ -54,7 +54,6 @@ class User extends React.Component {
 
   makeRequest = () => {
     const {keyPair, userStore, history} = this.props;
-    console.log(history);
     this.props.userStore.fetchUserInfo({keyPair, userStore, history});
     this.props.userStore.fetchInvitationCode();
     if (keyPair.hasKey) {

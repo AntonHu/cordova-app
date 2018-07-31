@@ -586,7 +586,6 @@ class SunCity extends React.Component {
     const { equipmentListObj, emptySunCoordinateArr } = this.state;
     const { lastNews, lastTrend } = this.props.sunCityStore;
     const equipmentNameList = equipmentListObj && Object.keys(equipmentListObj);
-    console.log(toJS(lastTrend))
     return (
       <div className={'page-sunCity-info'} id="page-sunCity-info">
         <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
