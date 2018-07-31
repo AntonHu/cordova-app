@@ -84,6 +84,8 @@ class SunCity extends React.Component {
     if (keyPair.hasKey) {
       // 获取我的太阳积分
       this.props.miningStore.fetchBalance({ publicKey: keyPair.publicKey });
+      // 获取"在路上"的积分
+      this.props.miningStore.fetchUnconfirmedToken({ publicKey: keyPair.publicKey });
       // 获取最新动态
       this.props.sunCityStore.fetchSCLastTrend({
         num: 5
@@ -175,6 +177,7 @@ class SunCity extends React.Component {
       const res4 = this.props.miningStore.fetchBalance({
         publicKey: keyPair.publicKey
       });
+
       // 获取排行
       const res5 = this.props.miningStore.fetchBalanceRanking({
         publicKey: keyPair.publicKey
@@ -185,6 +188,9 @@ class SunCity extends React.Component {
       const res7 = this.props.sunCityStore.fetchSCLastTrend({
         num: 5
       });
+      // 获取"在路上"的积分
+      const res8 =
+        this.props.miningStore.fetchUnconfirmedToken({ publicKey: keyPair.publicKey });
 
       // 储存设备列表整理后的数据
       const equipmentListObj = await this.getEquipmentList(keyPair);
@@ -195,7 +201,7 @@ class SunCity extends React.Component {
       this.setState({ equipmentListObj, loading: false });
       // 获取设备，月，年，所有的数据，并缓存
       this.cacheEquipmentData(equipmentListObj);
-      promiseArray.push(res4, res5, res6, res7, equipmentListObj);
+      promiseArray.push(res4, res5, res6, res7, res8, equipmentListObj);
     }
     return Promise.all(promiseArray);
   };
@@ -551,6 +557,10 @@ class SunCity extends React.Component {
               miningStore.fetchBalanceRanking({
                 publicKey: keyPair.publicKey
               });
+              miningStore.fetchUnconfirmedToken({
+                publicKey: keyPair.publicKey
+              });
+
             }
             pickNumber += 1;
             this.selectSunNode.classList.add('remove');
@@ -582,7 +592,7 @@ class SunCity extends React.Component {
   render() {
     const userInfo = toJS(this.props.userStore.userInfo);
     const { avatar, nickName } = userInfo;
-    const { balance, balanceRanking } = this.props.miningStore;
+    const { balance, balanceRanking, unconfirmedToken } = this.props.miningStore;
     const { equipmentListObj, emptySunCoordinateArr } = this.state;
     const { lastNews, lastTrend } = this.props.sunCityStore;
     const equipmentNameList = equipmentListObj && Object.keys(equipmentListObj);
@@ -615,10 +625,14 @@ class SunCity extends React.Component {
                 <span>太阳积分：</span>
                 {balance.toFixed(2)}
               </div>
-              <div>
-                <span>在路上：</span>
-                20.0
-              </div>
+              {
+                unconfirmedToken > 0 ?
+                  <div>
+                    <span>在路上：</span>
+                    {unconfirmedToken.toFixed(2)}
+                  </div> :
+                  null
+              }
             </div>
             <div
               className="powerStation"

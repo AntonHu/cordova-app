@@ -6,7 +6,8 @@ import {
   getTokenBalance,
   getTokenBalanceRanking,
   getDigTimes,
-  getTodayIntegral
+  getTodayIntegral,
+  geUnconfirmedToken
 } from './request';
 
 class MiningStore {
@@ -14,6 +15,7 @@ class MiningStore {
   @observable allRanking = [];
   @observable nearbyRank = [];
   @observable balance = 0;
+  @observable unconfirmedToken = 0;
   @observable balanceRanking = 0;
   @observable
   digTimes = {
@@ -28,6 +30,7 @@ class MiningStore {
     this.allRanking = [];
     this.nearbyRank = [];
     this.balance = 0;
+    this.unconfirmedToken = 0;
     this.balanceRanking = 0;
     this.digTimes = {
       countAllTimes: 0,
@@ -128,6 +131,21 @@ class MiningStore {
   @action
   updateBalance = newBalance => {
     this.balance = newBalance
+  };
+
+  @action
+  fetchUnconfirmedToken = async ({publicKey}) => {
+    try {
+      const res = await geUnconfirmedToken({publicKey});
+      if (res.data && res.data.code === 200) {
+        const data = res.data.data || {};
+        runInAction(() => {
+          this.unconfirmedToken = data.total || 0;
+        });
+      }
+    } catch (err) {
+      console.log(err)
+    }
   };
 
   /**

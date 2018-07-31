@@ -67,6 +67,22 @@ export const getTokenBalance = async ({ publicKey }) => {
 };
 
 /**
+ * "在路上"的积分
+ * @param publicKey
+ * @returns {Promise.<*>}
+ */
+export const geUnconfirmedToken = async ({ publicKey }) => {
+  try {
+    const response = await get(`${backendServer}/wallet/geUnconfirmedToken`, {
+      publicKey
+    });
+    return response;
+  } catch (err) {
+    return err.response;
+  }
+};
+
+/**
  * 用户的"当前排行"
  * @param publicKey
  * @returns {Promise.<*>}
