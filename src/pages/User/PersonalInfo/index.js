@@ -200,8 +200,8 @@ class PersonalInfo extends React.Component {
     const {userInfo, isKycInChain} = this.props.userStore;
     const {avatar, nickName} = userInfo;
     return (
-      <div className={'page-personal-info'}>
-        <PageWithHeader title={'个人信息'}>
+
+        <PageWithHeader title={'个人信息'} id="page-personal-info">
           <BlueBox type="pic" picType={isKycInChain ? 'blue' : 'grey'}>
             <div className="personal-info">
               <Picture size={120} src={avatar} showBorder={true}/>
@@ -243,7 +243,6 @@ class PersonalInfo extends React.Component {
           </div>
         </PageWithHeader>
 
-      </div>
     );
   }
 }

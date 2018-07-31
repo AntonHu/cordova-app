@@ -5,8 +5,8 @@ import './style.less';
 class Agreement extends React.PureComponent {
   render() {
     return (
-      <div className="page-agreement">
-        <PageWithHeader title="能源星球服务协议"/>
+
+      <PageWithHeader title="能源星球服务协议" id="page-agreement">
         <div className="body">
           <p>“能源星球”为杭州能信科技有限公司开发运营的手机端app软件。以下如无特别说明，本协议中所称“能源星球”即指杭州能信科技有限公司。</p>
           <p>请您阅读本协议,本协议是约定您（以下简称“用户”或“您”）和能源星球之间权利义务关系的有效协议。</p>
@@ -101,7 +101,7 @@ class Agreement extends React.PureComponent {
           <p className="sub-title">十三、其他</p>
           <p>如果您对本协议或本服务有意见或建议，可与能源星球官方联系（【官网地址】），我们会给予您必要的帮助。</p>
         </div>
-      </div>
+      </PageWithHeader>
     )
   }
 }

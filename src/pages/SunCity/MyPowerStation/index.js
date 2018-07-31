@@ -187,7 +187,7 @@ class Comp extends React.Component {
         // 什么情况下的滚动触发下拉刷新，这个很重要
         // 如果这个页面里有height超过窗口高度的元素
         // 那么应该在这个元素滚动位于顶部的时候，返回true
-        const ele = document.getElementById('page-powerStation-info');
+        const ele = document.getElementById(PageWithHeader.bodyId);
         if (ele === null) {
           return false;
         }
@@ -554,9 +554,9 @@ class Comp extends React.Component {
       }
     }
     return (
-      <div className={'page-powerStation-info'} id="page-powerStation-info">
         <PageWithHeader
           title={'我的电站'}
+          id="page-powerStation-info"
           rightComponent={
             <i
               className="iconfont"
@@ -783,7 +783,6 @@ class Comp extends React.Component {
             )}
           </div>
         </PageWithHeader>
-      </div>
     );
   }
 }

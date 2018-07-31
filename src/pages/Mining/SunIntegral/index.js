@@ -95,8 +95,8 @@ class SunIntegral extends React.Component {
   render() {
     const { balance } = this.props.miningStore;
     return (
-      <div className={'page-sun-integral'}>
-        <PageWithHeader title={'太阳积分'}>
+
+        <PageWithHeader title={'太阳积分'} id="page-sun-integral">
           <div className="integral">
             <div className="integral-survey">
               <div>我的太阳积分</div>
@@ -123,7 +123,7 @@ class SunIntegral extends React.Component {
             </div>
           </div>
         </PageWithHeader>
-      </div>
+
     );
   }
 }

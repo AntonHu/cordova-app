@@ -234,8 +234,8 @@ class ResetTradePW extends React.Component {
       confirmTradePassword
     } = this.state;
     return (
-      <div className={'page-reset-trade-pw'}>
-        <PageWithHeader title={'设置交易密码'}>
+
+        <PageWithHeader title={'设置交易密码'} id="page-reset-trade-pw">
           <div className="progress-prompt">
             <div
               className={
@@ -301,13 +301,12 @@ class ResetTradePW extends React.Component {
             />
             <GreenButton size={'big'} onClick={this.onSubmit}>确认</GreenButton>
           </div>
+          <ActivityIndicator
+            toast
+            text={'正在备份您的密钥...'}
+            animating={this.state.showLoading}
+          />
         </PageWithHeader>
-        <ActivityIndicator
-          toast
-          text={'正在备份您的密钥...'}
-          animating={this.state.showLoading}
-        />
-      </div>
     );
   }
 }

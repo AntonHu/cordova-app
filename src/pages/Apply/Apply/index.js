@@ -21,8 +21,8 @@ const Apps = [
 class Comp extends React.PureComponent {
   render() {
     return (
-      <div className={'page-apply'}>
-        <PageWithHeader leftComponent={null} title={'应用'}>
+
+        <PageWithHeader leftComponent={null} title={'应用'} id="page-apply">
           <div className="apply-survey">
             <img src={require('../../../images/banner_2.png')} width="100%" />
           </div>
@@ -80,7 +80,7 @@ class Comp extends React.PureComponent {
             <img src={require('../../../images/banner_3.png')} width="100%" />
           </div>
         </PageWithHeader>
-      </div>
+
     );
   }
 }

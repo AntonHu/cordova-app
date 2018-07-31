@@ -11,13 +11,13 @@ class Countdown extends Component {
       nums:props.nums,												// 倒计时时间（s）
       tips:'',														// 提示信息
       countdown: initCountDownTxt,						// 倒计时按钮值
-      status:props.status,											// 倒计时按钮状态(disable:不可发送,able:可发送,sending:倒计时中)
+      status: props.status || 'able',											// 倒计时按钮状态(disable:不可发送,able:可发送,sending:倒计时中)
     }
   }
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      status:nextProps.status
-    });
+    // this.setState({
+    //   status:nextProps.status
+    // });
   }
   componentWillUnmount() {
     if (this.clock) {

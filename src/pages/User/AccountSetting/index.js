@@ -67,8 +67,8 @@ class AccountSetting extends React.Component {
 
   render() {
     return (
-      <div className={'page-account-setting'}>
-        <PageWithHeader title={'账号设置'}>
+
+        <PageWithHeader title={'账号设置'} id="page-account-setting">
           <List>
             {
               ListData.map((v, i) => {
@@ -91,7 +91,7 @@ class AccountSetting extends React.Component {
 
           <PlainButton onClick={this.onLogout}>退出登录</PlainButton>
         </PageWithHeader>
-      </div>
+
     );
   }
 }

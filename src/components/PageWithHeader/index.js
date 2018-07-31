@@ -4,38 +4,48 @@ import Header from '../Header';
 import {px} from '../../utils/getDevice'
 import './style.less';
 
+const BODY_ID = 'body_of_pageWithHeader';
+
 /**
  * 带有Header的页面
  */
-class Comp extends React.PureComponent {
+class PageWithHeader extends React.PureComponent {
   static propTypes = {
     title: PropTypes.string.isRequired,
     leftComponent: PropTypes.element,
     rightComponent: PropTypes.element,
     headerMarginBottom: PropTypes.number,
-    fixed: PropTypes.bool
+    id: PropTypes.string
   };
 
   static defaultProps = {
     headerMarginBottom: 20,
-    fixed: true
+    id: ''
   };
 
   render() {
-    const { title, rightComponent, leftComponent, headerMarginBottom, fixed, id } = this.props;
+    const { title, rightComponent, leftComponent, headerMarginBottom, id } = this.props;
+    const containerProps = {};
+    if (id) {
+      containerProps.id = id
+    }
     return (
-      <div className={`page-with-header ${fixed ? 'fixed' : ''}`} id={id}>
+      <div className={`page-with-header`} {...containerProps}>
         <Header
           title={title}
           rightComponent={rightComponent}
           leftComponent={leftComponent}
-          fixed={fixed}
         />
         <div style={{ height: `${px(headerMarginBottom)}px` }} />
-        {this.props.children}
+        <div id={BODY_ID}>
+          {this.props.children}
+        </div>
+
       </div>
     );
   }
 }
 
-export default Comp;
+PageWithHeader.bodyId = BODY_ID;
+
+export default PageWithHeader;

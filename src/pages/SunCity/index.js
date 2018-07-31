@@ -45,7 +45,7 @@ let pickNumber = 0;
 
 @inject('sunCityStore', 'userStore', 'miningStore', 'keyPair') // 如果注入多个store，用数组表示
 @observer
-class Comp extends React.Component {
+class SunCity extends React.Component {
   state = {
     equipmentListObj: JSON.parse(getLocalStorage('equipmentListObj')) || {},
     loading: true,
@@ -204,7 +204,7 @@ class Comp extends React.Component {
    * 初始化下拉刷新
    */
   initPullToRefresh = () => {
-    this.ptr = PullToRefresh.init({
+    PullToRefresh.init({
       mainElement: '#page-sunCity-info', // "下拉刷新"把哪个部分包住
       triggerElement: '#page-sunCity-info', // "下拉刷新"把哪个部分包住
       onRefresh: this.pullToRefresh, // 下拉刷新的方法，返回一个promise
@@ -216,13 +216,13 @@ class Comp extends React.Component {
         if (ele === null) {
           return false;
         }
-        return ele.parentNode.parentNode.scrollTop === 0;
+        // return ele.parentNode.parentNode.scrollTop === 0;
+        return ele.scrollTop === 0;
       },
       instructionsPullToRefresh: '下拉刷新',
       instructionsReleaseToRefresh: '松开刷新',
       instructionsRefreshing: '正在刷新...'
     });
-    console.log(this.ptr)
   };
 
   // 获取设备列表并处理列表数据
@@ -749,4 +749,4 @@ class Comp extends React.Component {
   }
 }
 
-export default withRouter(Comp);
+export default withRouter(SunCity);

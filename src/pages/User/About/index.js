@@ -99,7 +99,7 @@ class About extends React.PureComponent {
   state = {
     checking: false,
     checkText: '正在检查更新...',
-    appVersion: '0.0.3'
+    appVersion: '0.0.5'
   };
 
   onClick = (v) => {
@@ -123,8 +123,8 @@ class About extends React.PureComponent {
 
   render() {
     return (
-      <div className={'page-about'}>
-        <PageWithHeader title={'关于我们'}>
+
+        <PageWithHeader title={'关于我们'} id="page-about">
           <Link to="/user/introduction">
             <img src={require('../../../images/banner_1.png')} width="100%" className="banner"/>
           </Link>
@@ -147,13 +147,14 @@ class About extends React.PureComponent {
               )
             })}
           </List>
+          <ActivityIndicator
+            toast
+            text={this.state.checkText}
+            animating={this.state.checking}
+          />
         </PageWithHeader>
-        <ActivityIndicator
-          toast
-          text={this.state.checkText}
-          animating={this.state.checking}
-        />
-      </div>
+
+
     );
   }
 }

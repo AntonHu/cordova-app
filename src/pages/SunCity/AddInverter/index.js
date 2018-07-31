@@ -283,8 +283,8 @@ class Comp extends React.Component {
       });
     const { inverterType } = this.state;
     return (
-      <div className={'page-add-inverter'}>
-        <PageWithHeader title={'添加逆变器'}>
+
+        <PageWithHeader title={'添加逆变器'} id="page-add-inverter">
           <WhiteSpace />
           <div className="add-inverter">
             <Picker
@@ -346,7 +346,7 @@ class Comp extends React.Component {
             />
           </div>
         </PageWithHeader>
-      </div>
+
     );
   }
 }

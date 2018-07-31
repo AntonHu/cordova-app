@@ -38,8 +38,8 @@ class MsgCenter extends React.Component {
   render() {
     console.log(this.state.list)
     return (
-      <div className={'page-msg-center'}>
-        <PageWithHeader title={'消息中心'}>
+
+        <PageWithHeader title={'消息中心'} id="page-msg-center">
           <List>
             {
               this.props.userStore.msgList.map((v, i) => (
@@ -54,7 +54,7 @@ class MsgCenter extends React.Component {
             }
           </List>
         </PageWithHeader>
-      </div>
+
     );
   }
 }

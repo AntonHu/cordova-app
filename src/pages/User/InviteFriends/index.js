@@ -17,8 +17,8 @@ class InviteFriends extends React.Component {
   render () {
     const { invitationCode } = this.props.userStore;
     return (
-      <div className="page-invite-friends">
-        <PageWithHeader title="邀请好友" headerMarginBottom={0} fixed={false}>
+
+        <PageWithHeader title="邀请好友" headerMarginBottom={0} fixed={false} id="page-invite-friends">
           <div className="content">
 
             {/* 邀请码 */}
@@ -50,7 +50,7 @@ class InviteFriends extends React.Component {
 
           </div>
         </PageWithHeader>
-      </div>
+
     )
   }
 }
