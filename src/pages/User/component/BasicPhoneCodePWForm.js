@@ -130,7 +130,12 @@ class BasicPhoneCodePWForm extends React.PureComponent {
         extraInputs.forEach(inputProps => {
           params[inputProps.name] = this.state[inputProps.name]
         });
-        submitMethod(params)
+        const res = submitMethod(params);
+        if (res.finally) {
+          res.finally(() => this.isRegistering = false)
+        } else {
+          this.isRegistering = false;
+        }
       }
     }
   };

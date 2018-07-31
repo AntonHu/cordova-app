@@ -46,6 +46,7 @@ class Register extends React.PureComponent {
         response: data
       });
     }
+    return res;
   };
 
   registerSuccess = (showModal) => {

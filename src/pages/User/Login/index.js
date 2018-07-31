@@ -2,7 +2,7 @@ import React from 'react';
 import {BlueBox, PeakBox, GreenButton, Countdown, Picture} from '../../../components';
 import {InputItem, Flex, Button, Modal} from 'antd-mobile';
 import './style.less';
-import {reqLogin, reqRegisterCA} from '../../../stores/user/request';
+import {reqLogin, reqRegisterCA, reqIsRegisterCA} from '../../../stores/user/request';
 import User from '../../../utils/user';
 
 const alert = Modal.alert;
@@ -54,7 +54,11 @@ class Login extends React.PureComponent {
             const data = res.data;
             const user = new User();
             user.login(data.access_token);
-            reqRegisterCA({password});
+            reqIsRegisterCA().then(res => {
+              if (res.data && !res.data.msg) {
+                reqRegisterCA({password});
+              }
+            });
             this.jpushLoginEvent(true, {phone});
             this.props.history.replace('/');
           } else {

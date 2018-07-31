@@ -34,6 +34,7 @@ class ForgetLoginPW extends React.PureComponent {
     } else {
       this.registerFail(data.msg)
     }
+    return res;
   };
 
   registerSuccess = (showModal) => {

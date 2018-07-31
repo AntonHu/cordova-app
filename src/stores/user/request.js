@@ -80,6 +80,18 @@ export const reqRegisterCA = async ({password}) => {
   }
 };
 
+/**
+ * 检查用户是否注册CA了
+ * @returns {Promise.<*>}
+ */
+export const reqIsRegisterCA = async () => {
+  try {
+    const response = await get(`${backendServer}/user/isUserRegister`);
+    return response;
+  } catch (err) {
+    throw err.response;
+  }
+};
 
 /**
  * 发送验证码
