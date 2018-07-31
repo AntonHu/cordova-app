@@ -96,6 +96,7 @@
     <icon height="50" src="res/icon/ios/Icon-Small-50x50@1x.png" width="50" />
     <icon height="100" src="res/icon/ios/Icon-Small-50x50@2x.png" width="100" />
     <icon height="167" src="res/icon/ios/Icon-App-83.5x83.5@2x.png" width="167" />
+    <icon height="1024" src="res/icon/ios/ItunesArtwork@2x.png" width="1024" />
     <splash height="480" src="res/screen/ios/Default~iphone.png" width="320" />
     <splash height="960" src="res/screen/ios/Default@2x~iphone.png" width="640" />
     <splash height="1024" src="res/screen/ios/Default-Portrait~ipad.png" width="768" />

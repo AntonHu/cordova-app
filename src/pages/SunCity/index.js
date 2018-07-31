@@ -571,8 +571,7 @@ class SunCity extends React.Component {
     }
   };
 
-  sliceLongName = name => {
-    const lengthLimit = 10;
+  sliceLongName = (name, lengthLimit = 10) => {
     const shortName = sliceLongString(name, lengthLimit);
     if (name === shortName) {
       return shortName;
@@ -615,6 +614,10 @@ class SunCity extends React.Component {
               <div>
                 <span>太阳积分：</span>
                 {balance.toFixed(2)}
+              </div>
+              <div>
+                <span>在路上：</span>
+                20.0
               </div>
             </div>
             <div
@@ -685,7 +688,7 @@ class SunCity extends React.Component {
                   {
                     toJS(lastTrend).map((item, index) => (
                       <div key={index} className="help-text">
-                        {`${item.nickName}收取了${item.value}个太阳积分`}
+                        {`${this.sliceLongName(item.nickName, 3)}收取了${item.value}个太阳积分`}
                       </div>
                     ))
                   }
