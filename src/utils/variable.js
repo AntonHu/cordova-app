@@ -56,9 +56,10 @@ const DEPLYMENT_KEY = {
 
 // 积分类型
 const INTEGRAL_TYPE = {
-  power: '挖宝积分',
-  login: '登录奖励',
-  transfer: '转账'
+  power: { title: '挖宝积分', icon: '\ue611' },
+  login: { title: '登陆奖励', icon: '\ue6d1' },
+  transfer: { title: '入账', icon: '\ue614' },
+  fail: { title: '失败', icon: '\ue639' }
 };
 
 export {

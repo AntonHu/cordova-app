@@ -44,17 +44,21 @@ class SunIntegral extends React.Component {
   };
 
   renderRow = (rowData, sectionID, rowID) => {
-    const icon = rowData.addWay === 'power' ? '\ue611' : '\ue6d1';
+    const icon = INTEGRAL_TYPE[rowData.addWay].icon;
+    let integralType = INTEGRAL_TYPE[rowData.addWay].title;
+    if (rowData.addWay === 'transfer' && rowData.type === 'out') {
+      integralType = '转账';
+    }
     return (
       <div key={rowData.tokenId} className="integral-item">
-        <div className={`integral-pic ${rowData.addWay}`}>
+        <div className={`integral-pic ${rowData.addWay} ${rowData.type}`}>
           <i className="iconfont">{icon}</i>
         </div>
-        <div className="integral-title">
-          <div>{INTEGRAL_TYPE[rowData.addWay]}</div>
+        <div className="integral-title-title">
+          <div>{integralType}</div>
           <div>{rowData.gmtCreate}</div>
         </div>
-        <div className="integral-number">
+        <div className={`integral-number ${rowData.type}`}>
           {rowData.solarIntegral < 0
             ? rowData.solarIntegral.toFixed(4)
             : `+${rowData.solarIntegral.toFixed(4)}`}
