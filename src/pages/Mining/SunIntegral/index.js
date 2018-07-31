@@ -58,9 +58,9 @@ class SunIntegral extends React.Component {
     return (
       <div key={rowData.tokenId} className="integral-item">
         <div className={`integral-pic ${rowData.addWay} ${rowData.type}`}>
-          <i className="iconfont">{icon}</i>
+          <i className={`iconfont iconfont-${rowData.addWay}`}>{icon}</i>
         </div>
-        <div className="integral-title-title">
+        <div className="integral-title">
           <div>{integralType}</div>
           <div>{rowData.gmtCreate}</div>
         </div>
