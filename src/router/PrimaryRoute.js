@@ -17,7 +17,8 @@ import {
   Introduction,
   Agreement,
   InviteFriends,
-  InviteDetail
+  InviteDetail,
+  NewsDetail
 } from '../pages/User';
 import MyPowerStation from '../pages/SunCity/MyPowerStation';
 import EquipmentInfo from '../pages/SunCity/EquipmentInfo';
@@ -205,6 +206,11 @@ class PrimaryRoute extends React.Component {
           exact
           path={'/user/msgDetail/:messageId'}
           component={MsgDetail}
+        />
+        <Route
+          exact
+          path={'/user/newsDetail/:id'}
+          component={NewsDetail}
         />
         <Route exact path={'/user/myData'} component={MyData}/>
         <Route exact path={'/user/myStation'} component={MyStation}/>

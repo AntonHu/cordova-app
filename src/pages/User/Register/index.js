@@ -2,7 +2,7 @@ import React from 'react';
 import {BlueBox, PeakBox, Header, ToastNoMask} from '../../../components';
 import {Modal} from 'antd-mobile';
 import {reqSendCode, reqRegister, reqExistInfo, bindInvitationCode} from '../../../stores/user/request';
-import {testInvitationCode} from '../../../utils/methods';
+import {testInvitationCode} from '../../../utils/validate';
 import BasicPhoneCodePWForm from '../component/BasicPhoneCodePWForm';
 import './style.less';
 

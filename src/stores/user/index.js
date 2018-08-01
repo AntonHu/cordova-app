@@ -1,7 +1,8 @@
 import {observable, action, runInAction, computed, toJS} from 'mobx';
-import {getOwnerInfo, getMessages, getIsInChain, getIsKycInChain, getInvitationCode} from './request';
+import {getOwnerInfo, getMessages, getIsInChain, getIsKycInChain, getInvitationCode, getNewsList} from './request';
 import {getLocalStorage, setLocalStorage, deleteLocalStorage} from '../../utils/storage';
-import {testPhoneNumber, formatPhoneWithSpace} from '../../utils/methods';
+import {formatPhoneWithSpace} from '../../utils/methods';
+import {testPhoneNumber} from '../../utils/validate';
 import {VERIFY_STATUS} from '../../utils/variable';
 import {ToastNoMask} from '../../components';
 import {Modal} from 'antd-mobile';
@@ -19,6 +20,10 @@ class UserStore {
   @observable isKycInChain = VERIFY_STATUS.UNAUTHORIZED;
   // 用户邀请码
   @observable invitationCode = '';
+  // 资讯列表
+  @observable newsList = [];
+  // 消息中心的Tab
+  @observable msgCenterTabPage = 0;
 
   @action
   onLogout = () => {
@@ -27,6 +32,7 @@ class UserStore {
     this.msgList = [];
     this.isKycInChain = VERIFY_STATUS.UNAUTHORIZED;
     this.invitationCode = '';
+    this.newsList = [];
   };
 
   /**
@@ -94,6 +100,31 @@ class UserStore {
           }
         })
       }
+      return res;
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  /**
+   * 获取资讯列表
+   * @param page
+   * @returns {Promise.<*>}
+   */
+  @action
+  fetchNewsList = async ({page}) => {
+    try {
+      const res = await getNewsList({page});
+      if (res.data && res.data.code === 200) {
+        runInAction(() => {
+          if (page === 0) {
+            this.newsList = res.data.data.list || [];
+          } else {
+            this.newsList = this.newsList.concat(res.data.data.list || []);
+          }
+        })
+      }
+      return res;
     } catch (err) {
       throw err;
     }
@@ -152,6 +183,11 @@ class UserStore {
   @action
   updateAvatar = src => {
     this.userInfo.avatar = src;
+  };
+
+  @action
+  updateMsgCenterTabPage = page => {
+    this.msgCenterTabPage = page
   };
 
   /**

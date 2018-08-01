@@ -14,6 +14,7 @@ import ForgetLoginPW from './ResetPW/ForgetLoginPW';
 import User from './User';
 import VerifyID from './VerifyID';
 import MsgDetail from './MsgCenter/Detail';
+import NewsDetail from './MsgCenter/NewsDetail';
 import Introduction from './Introduction';
 import Agreement from './Agreement';
 import InviteFriends from './InviteFriends';
@@ -39,5 +40,6 @@ export {
   Introduction,
   Agreement,
   InviteFriends,
-  InviteDetail
+  InviteDetail,
+  NewsDetail
 };

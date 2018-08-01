@@ -1,7 +1,8 @@
 import React from 'react';
 import {GreenButton, Countdown, Popup} from '../../../components';
 import {InputItem, Modal} from 'antd-mobile';
-import {clearSpace, testPhoneNumber, testCode, testPassword} from '../../../utils/methods';
+import {clearSpace} from '../../../utils/methods';
+import {testPhoneNumber, testCode, testPassword} from '../../../utils/validate';
 import PropTypes from 'prop-types';
 import './BasicPhoneCodePWForm.less';
 

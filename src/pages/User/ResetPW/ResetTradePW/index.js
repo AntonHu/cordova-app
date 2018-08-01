@@ -1,6 +1,7 @@
 import React from 'react';
 import { PageWithHeader, GreenButton, Countdown } from '../../../../components';
-import {testCode, testPhoneNumber, clearSpace, testPassword} from '../../../../utils/methods';
+import {clearSpace} from '../../../../utils/methods';
+import {testCode, testPhoneNumber, testPassword} from '../../../../utils/validate';
 import {reqSendCode, reqResetTradePassword, putUserIntoChain} from '../../../../stores/user/request';
 import { InputItem, Modal, ActivityIndicator } from 'antd-mobile';
 import {observer, inject} from 'mobx-react';

@@ -3,7 +3,7 @@ import { PageWithHeader, GreenButton } from '../../../../components';
 import { InputItem, Modal } from 'antd-mobile';
 import {modifyLoginPassword} from '../../../../stores/user/request';
 import User from '../../../../utils/user';
-import {testPassword} from '../../../../utils/methods';
+import {testPassword} from '../../../../utils/validate';
 import './style.less';
 
 const alert = Modal.alert;

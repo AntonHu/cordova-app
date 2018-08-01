@@ -1,10 +1,10 @@
 import React from 'react';
 import {PageWithHeader} from '../../../components';
-import {List} from 'antd-mobile';
+import {List, Tabs} from 'antd-mobile';
 import {getMessages} from '../../../stores/user/request';
 import {Link} from 'react-router-dom';
 import {observer, inject} from 'mobx-react';
-import './style.less';
+import './index.less';
 
 const Item = List.Item;
 
@@ -20,6 +20,11 @@ const ListData = [
   }
 ];
 
+const TabItems = [
+  { title: '通知', icon: '\ue624' },
+  { title: '资讯', icon: '\ue615' }
+];
+
 /**
  * 消息中心
  */
@@ -28,31 +33,78 @@ const ListData = [
 class MsgCenter extends React.Component {
   state = {
     list: [],
-    page: 0
+    msgPage: 0,
+    newsPage: 0
   };
 
   componentDidMount() {
-    this.props.userStore.fetchMessages({page: this.state.page});
+    if (this.props.history.action === 'PUSH') {
+      this.makeRequest();
+    }
   }
 
+  makeRequest = () => {
+    this.props.userStore.fetchMessages({page: this.state.msgPage});
+    this.props.userStore.fetchNewsList({page: this.state.newsPage});
+  };
+
+  renderMsgItem = (item) => {
+    return (
+      <div className="msg-item">
+        <div className="title">{`${item.title}：${item.content}`}</div>
+        <div className="time">{item.updatedTime.slice(0, 10)}</div>
+      </div>
+    )
+  };
+
+  renderNewsItem = (item) => {
+    return (
+      <div className="news-item">
+        <div className="title">
+          <div className="blue-dot" />
+          {item.title}
+        </div>
+        <div className="summary">{item.summary}</div>
+        <div className="time">{item.releaseDate.slice(0, 10)}</div>
+      </div>
+    )
+  };
+
+
   render() {
-    console.log(this.state.list)
+    const {msgCenterTabPage, updateMsgCenterTabPage} = this.props.userStore;
     return (
 
-        <PageWithHeader title={'消息中心'} id="page-msg-center">
-          <List>
-            {
-              this.props.userStore.msgList.map((v, i) => (
-                <Link key={i} to={`/user/msgDetail/${v.messageId}`}>
-                  <Item
-                    arrow={'horizontal'}
-                    extra={<span className="h4">{v.updatedTime.slice(0, 10)}</span>}>
-                    <span className="h3">{v.title}</span>
-                  </Item>
-                </Link>
-              ))
+        <PageWithHeader title={'消息中心'} id="page-msg-center" headerMarginBottom={0}>
+          <Tabs
+            tabs={TabItems}
+            initialPage={msgCenterTabPage}
+            renderTab={tab => <div className="msg-center-tab">
+              <i className="iconfont">{tab.icon}</i>{tab.title}
+              </div>
             }
-          </List>
+            onChange={(tab, i) => updateMsgCenterTabPage(i)}
+          >
+            <List>
+              {
+                this.props.userStore.msgList.map((v, i) => (
+                  <Link key={i} to={`/user/msgDetail/${v.messageId}`}>
+                    {this.renderMsgItem(v)}
+                  </Link>
+                ))
+              }
+            </List>
+            <List>
+              {
+                this.props.userStore.newsList.map((v, i) => (
+                  <Link key={v.id} to={`/user/newsDetail/${v.id}`}>
+                    {this.renderNewsItem(v)}
+                  </Link>
+                ))
+              }
+            </List>
+          </Tabs>
+
         </PageWithHeader>
 
     );

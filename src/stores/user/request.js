@@ -152,6 +152,19 @@ export const getMessages = async ({page}) => {
 };
 
 /**
+ * 获取资讯列表
+ * @returns {Promise.<*>}
+ */
+export const getNewsList = async ({page}) => {
+  try {
+    const response = await get(`${backendServer}/news/list`, {page, pageSize: PAGE_SIZE});
+    return response;
+  } catch (err) {
+    throw err.response;
+  }
+};
+
+/**
  * 获取用户邀请码
  * @returns {Promise.<*>}
  */
