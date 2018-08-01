@@ -428,7 +428,8 @@ module.exports.metadata =
   "jpush-phonegap-plugin": "3.3.2",
   "cordova-plugin-statusbar": "2.4.2",
   "cordova-plugin-splashscreen": "5.0.2",
-  "cordova-plugin-network-information": "2.0.1"
+  "cordova-plugin-network-information": "2.0.1",
+  "cordova-plugin-crosswalk-webview": "2.4.0"
 };
 // BOTTOM OF METADATA
 });
