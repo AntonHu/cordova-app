@@ -48,11 +48,18 @@ class MsgCenter extends React.Component {
     this.props.userStore.fetchNewsList({page: this.state.newsPage});
   };
 
+  sliceDate = (date) => {
+    if (typeof date === 'string') {
+      return date.slice(0, 10);
+    }
+    return ''
+  };
+
   renderMsgItem = (item) => {
     return (
       <div className="msg-item">
         <div className="title">{`${item.title}：${item.content}`}</div>
-        <div className="time">{item.updatedTime.slice(0, 10)}</div>
+        <div className="time">{this.sliceDate(item.updatedTime)}</div>
       </div>
     )
   };
@@ -65,7 +72,7 @@ class MsgCenter extends React.Component {
           {item.title}
         </div>
         <div className="summary">{item.summary}</div>
-        <div className="time">{item.releaseDate.slice(0, 10)}</div>
+        <div className="time">{this.sliceDate(item.releaseDate)}</div>
       </div>
     )
   };
