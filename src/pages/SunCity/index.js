@@ -2,21 +2,11 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { toJS } from 'mobx';
 import { observer, inject } from 'mobx-react';
-import {
-  Title,
-  Picture,
-  Loading,
-  ToastNoMask,
-  EquipmentItem
-} from '../../components';
+import { Title, Picture, ToastNoMask, EquipmentItem } from '../../components';
 import { NoticeBar, Icon, ActivityIndicator, Carousel } from 'antd-mobile';
 import { EQUIPMENT_DATA_TYPE } from '../../utils/variable';
 import PullToRefresh from 'pulltorefreshjs';
-import {
-  setLocalStorage,
-  getLocalStorage,
-  deleteLocalStorage
-} from '../../utils/storage';
+import { setLocalStorage, getLocalStorage } from '../../utils/storage';
 import {
   decrypt,
   sliceLongString,
@@ -31,6 +21,7 @@ import './style.less';
 const sunDistanceX = 50; // 小太阳x轴之间的距离
 const sunDistanceY = 70; // 小太阳y轴之间的距离
 const initialCoordinates = { left: 15, top: 20 };
+const toCollectNumber = 3; // 待收取小太阳的数量
 // 将小太阳区域划分为24份,放入数组
 const sunIntegralCoordinatesArr = [];
 for (let i = 0; i < 7; i++) {
@@ -50,7 +41,6 @@ class SunCity extends React.Component {
     equipmentListObj: JSON.parse(getLocalStorage('equipmentListObj')) || {},
     loading: true,
     refreshing: false,
-    emptySunCoordinateArr: [],
     sunCoordinateArr: [],
     power: 0, // 功率
     dayPower: 0, // 日发电量
@@ -64,11 +54,6 @@ class SunCity extends React.Component {
   async componentDidMount() {
     const { keyPair, userStore, history } = this.props;
     this.initPullToRefresh();
-    // 获取任意三个位置的空太阳坐标
-    const emptySunCoordinateArr = this.getSunCoordinateArr(Array(3));
-    this.setState({
-      emptySunCoordinateArr
-    });
     // 获取最新公告,条件固定
     this.props.sunCityStore.fetchSCNews({
       page: 0,
@@ -85,7 +70,9 @@ class SunCity extends React.Component {
       // 获取我的太阳积分
       this.props.miningStore.fetchBalance({ publicKey: keyPair.publicKey });
       // 获取"在路上"的积分
-      this.props.miningStore.fetchUnconfirmedToken({ publicKey: keyPair.publicKey });
+      this.props.miningStore.fetchUnconfirmedToken({
+        publicKey: keyPair.publicKey
+      });
       // 获取最新动态
       this.props.sunCityStore.fetchSCLastTrend({
         num: 5
@@ -135,16 +122,20 @@ class SunCity extends React.Component {
     });
     // 分割积分数组
     this.sunIntegralArr = [];
-    this.spliceArr(
-      toJS(this.props.sunCityStore.sunIntegral),
-      this.sunIntegralArr
-    );
+    let sunIntegral = toJS(this.props.sunCityStore.sunIntegral);
+    /*
+    * 出现一个太阳的时候 显示 出一个太阳，然后两个挖宝中，  
+    * 出现2个太阳，一个挖宝中， 出现太阳超过3个的时候，就不出现挖宝中
+    * 用空数组填充待收取
+    */
+    if (sunIntegral.length < toCollectNumber) {
+      const emptyArr = Array(toCollectNumber - sunIntegral.length);
+      sunIntegral = sunIntegral.concat(emptyArr);
+    }
+    this.spliceArr(sunIntegral, this.sunIntegralArr);
     // 获取坐标数组
     this.setState({
-      sunCoordinateArr:
-        this.sunIntegralArr.length > 0
-          ? this.getSunCoordinateArr(this.sunIntegralArr[0])
-          : []
+      sunCoordinateArr: this.getSunCoordinateArr(this.sunIntegralArr[0])
     });
     return res;
   };
@@ -189,8 +180,9 @@ class SunCity extends React.Component {
         num: 5
       });
       // 获取"在路上"的积分
-      const res8 =
-        this.props.miningStore.fetchUnconfirmedToken({ publicKey: keyPair.publicKey });
+      const res8 = this.props.miningStore.fetchUnconfirmedToken({
+        publicKey: keyPair.publicKey
+      });
 
       // 储存设备列表整理后的数据
       const equipmentListObj = await this.getEquipmentList(keyPair);
@@ -555,7 +547,10 @@ class SunCity extends React.Component {
             pickNumber += 1;
             this.selectSunNode.classList.add('remove');
             // 如果pickNumber与目前太阳总数相等
-            if (pickNumber === this.state.sunCoordinateArr.length) {
+            const sunCoordinateArrLen = this.state.sunCoordinateArr.filter(
+              item => item.info
+            ).length;
+            if (pickNumber === sunCoordinateArrLen) {
               pickNumber = 0;
               setTimeout(() => {
                 this.setState({
@@ -582,8 +577,12 @@ class SunCity extends React.Component {
   render() {
     const userInfo = toJS(this.props.userStore.userInfo);
     const { avatar, nickName } = userInfo;
-    const { balance, balanceRanking, unconfirmedToken } = this.props.miningStore;
-    const { equipmentListObj, emptySunCoordinateArr } = this.state;
+    const {
+      balance,
+      balanceRanking,
+      unconfirmedToken
+    } = this.props.miningStore;
+    const { equipmentListObj } = this.state;
     const { lastNews, lastTrend } = this.props.sunCityStore;
     const equipmentNameList = equipmentListObj && Object.keys(equipmentListObj);
     return (
@@ -614,14 +613,12 @@ class SunCity extends React.Component {
                 <span>太阳积分：</span>
                 {balance.toFixed(2)}
               </div>
-              {
-                unconfirmedToken > 0 ?
-                  <div>
-                    <span>在路上：</span>
-                    {unconfirmedToken.toFixed(2)}
-                  </div> :
-                  null
-              }
+              {unconfirmedToken > 0 ? (
+                <div>
+                  <span>在路上：</span>
+                  {unconfirmedToken.toFixed(2)}
+                </div>
+              ) : null}
             </div>
             <div
               className="powerStation"
@@ -632,73 +629,54 @@ class SunCity extends React.Component {
             </div>
           </div>
           <div className="sun-items" ref={el => (this.sunArea = el)}>
-            {this.sunIntegralArr.length > 0 ? (
+            {this.sunIntegralArr.length > 0 &&
               this.state.sunCoordinateArr.map((item, index) => {
                 return (
                   <div
-                    className="sun"
+                    className={`sun ${!item.info ? 'sun-wait' : ''}`}
                     key={index}
                     style={{
                       left: `${item.left}px`,
                       top: `${item.top}px`
                     }}
-                    ref={ele => (this.currentEle = ele)}
-                    // onClick={() => this.selectSunIntegral(item.number)}
-                    onClick={e => this.selectSunIntegral(e, item.info)}
+                    onClick={e =>
+                      item.info && this.selectSunIntegral(e, item.info)
+                    }
                   >
-                    <span className="sun-pic" />
-                    <span className="sun-number">{item.info.amount}</span>
+                    <span
+                      className={`sun-pic ${!item.info ? 'wait-pic' : ''}`}
+                    />
+                    <span className="sun-number">
+                      {(item.info && item.info.amount) || '挖宝中...'}
+                    </span>
                   </div>
                 );
-              })
-            ) : (
-              <div>
-                {emptySunCoordinateArr.map((item, index) => {
-                  return (
-                    <div
-                      key={index}
-                      style={{
-                        left: `${item.left}px`,
-                        top: `${item.top}px`
-                      }}
-                      className="sun sun-wait"
-                    >
-                      <span className="sun-pic wait-pic " />
-                      <span className="sun-number">挖宝中...</span>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
+              })}
           </div>
         </div>
         <div className="rend">
           <span className="rend-title">最新动态</span>
           <div className="rend-item-wrap">
-            {
-              lastTrend.length > 0
-              ?
-                <Carousel
-                  className="rend-item"
-                  vertical
-                  dots={false}
-                  dragging={false}
-                  swiping={false}
-                  autoplay
-                  infinite
-                  autoplayInterval={3000}
-                >
-                  {
-                    toJS(lastTrend).map((item, index) => (
-                      <div key={index} className="help-text">
-                        {`${this.sliceLongName(item.nickName, 3)}收取了${item.value}个太阳积分`}
-                      </div>
-                    ))
-                  }
-                </Carousel>
-                :
-                null
-            }
+            {lastTrend.length > 0 ? (
+              <Carousel
+                className="rend-item"
+                vertical
+                dots={false}
+                dragging={false}
+                swiping={false}
+                autoplay
+                infinite
+                autoplayInterval={3000}
+              >
+                {toJS(lastTrend).map((item, index) => (
+                  <div key={index} className="help-text">
+                    {`${this.sliceLongName(item.nickName, 3)}收取了${
+                      item.value
+                    }个太阳积分`}
+                  </div>
+                ))}
+              </Carousel>
+            ) : null}
           </div>
         </div>
         <div className="promote">
