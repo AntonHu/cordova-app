@@ -633,7 +633,7 @@ class SunCity extends React.Component {
               this.state.sunCoordinateArr.map((item, index) => {
                 return (
                   <div
-                    className={`sun ${!item.info ? 'sun-wait' : ''}`}
+                    className={`sun ${!item.info && 'sun-wait'}`}
                     key={index}
                     style={{
                       left: `${item.left}px`,
@@ -643,9 +643,7 @@ class SunCity extends React.Component {
                       item.info && this.selectSunIntegral(e, item.info)
                     }
                   >
-                    <span
-                      className={`sun-pic ${!item.info ? 'wait-pic' : ''}`}
-                    />
+                    <span className={`sun-pic ${!item.info && 'wait-pic'}`} />
                     <span className="sun-number">
                       {(item.info && item.info.amount) || '挖宝中...'}
                     </span>
