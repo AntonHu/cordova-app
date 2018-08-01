@@ -502,35 +502,39 @@ class Comp extends React.Component {
   modifyElectricityPrice = () => {
     const { keyPair } = this.props;
     const price = this.state.electricityPrice;
-    if (price.trim()) {
-      this.props.sunCityStore
-        .fetchSCModifyElectricityPrice({
-          userPubKey: keyPair.publicKey,
-          electricityFee: price.trim(),
-          city: this.state.cityId
-        })
-        .then(result => {
-          if (result.code === 200) {
-            ToastNoMask('更改成功');
-            this.setState(
-              {
-                popoverVisible: false,
+    if (keyPair.publicKey) {
+      if (price.trim()) {
+        this.props.sunCityStore
+          .fetchSCModifyElectricityPrice({
+            userPubKey: keyPair.publicKey,
+            electricityFee: price.trim(),
+            city: this.state.cityId
+          })
+          .then(result => {
+            if (result.code === 200) {
+              ToastNoMask('更改成功');
+              this.setState(
+                {
+                  popoverVisible: false,
+                  priceModalVisible: false
+                },
+                () =>
+                  this.props.sunCityStore.fetchSCGetElectricityPrice({
+                    userPubKey: keyPair.publicKey
+                  })
+              );
+            } else {
+              ToastNoMask(`更改失败${result.msg}`);
+              this.setState({
                 priceModalVisible: false
-              },
-              () =>
-                this.props.sunCityStore.fetchSCGetElectricityPrice({
-                  userPubKey: keyPair.publicKey
-                })
-            );
-          } else {
-            ToastNoMask(`更改失败${result.msg}`);
-            this.setState({
-              priceModalVisible: false
-            });
-          }
-        });
+              });
+            }
+          });
+      } else {
+        ToastNoMask('请输入电价');
+      }
     } else {
-      ToastNoMask('请输入电价');
+      ToastNoMask('该账号没有私钥,请到"我的"页面添加！');
     }
   };
   render() {
@@ -554,235 +558,235 @@ class Comp extends React.Component {
       }
     }
     return (
-        <PageWithHeader
-          title={'我的电站'}
-          id="page-powerStation-info"
-          rightComponent={
-            <i
-              className="iconfont"
-              onClick={() => this.props.history.push('/sunCity/addInverter')}
+      <PageWithHeader
+        title={'我的电站'}
+        id="page-powerStation-info"
+        rightComponent={
+          <i
+            className="iconfont"
+            onClick={() => this.props.history.push('/sunCity/addInverter')}
+          >
+            &#xe650;
+          </i>
+        }
+      >
+        <BlueBox type={'pure'}>
+          <div className="title">
+            <div className="weather" onClick={this.addressModalShow}>
+              {weatherEle}
+              {(weatherInfo && weatherInfo.type) || '晴'}
+            </div>
+            <Modal
+              transparent
+              title="坐标地址"
+              visible={this.state.addressModalVisible}
+              onClose={this.addressModalHide}
+              footer={[
+                {
+                  text: '取消',
+                  onPress: () =>
+                    this.setState({
+                      addressModalVisible: false
+                    })
+                },
+                { text: '确定', onPress: this.modifyAddress }
+              ]}
             >
-              &#xe650;
-            </i>
-          }
-        >
-          <BlueBox type={'pure'}>
-            <div className="title">
-              <div className="weather" onClick={this.addressModalShow}>
-                {weatherEle}
-                {(weatherInfo && weatherInfo.type) || '晴'}
+              <SearchBar
+                value={this.state.address}
+                placeholder="请输入地址"
+                maxLength={20}
+                onChange={this.addressChange}
+                onCancel={this.addressHandle}
+                onClear={this.addressHandle}
+              />
+              <div className="address-wrap">
+                {this.state.addressFilters.map((item, index) => {
+                  const cityDetail = `${item.district || item.city}-${
+                    item.city
+                  }`;
+                  return (
+                    <div
+                      className="address"
+                      key={index}
+                      onClick={() => {
+                        this.addressHandle(cityDetail, item.cityId);
+                      }}
+                    >
+                      {cityDetail}
+                    </div>
+                  );
+                })}
               </div>
-              <Modal
-                transparent
-                title="坐标地址"
-                visible={this.state.addressModalVisible}
-                onClose={this.addressModalHide}
-                footer={[
-                  {
-                    text: '取消',
-                    onPress: () =>
-                      this.setState({
-                        addressModalVisible: false
-                      })
-                  },
-                  { text: '确定', onPress: this.modifyAddress }
-                ]}
-              >
-                <SearchBar
-                  value={this.state.address}
-                  placeholder="请输入地址"
-                  maxLength={20}
-                  onChange={this.addressChange}
-                  onCancel={this.addressHandle}
-                  onClear={this.addressHandle}
-                />
-                <div className="address-wrap">
-                  {this.state.addressFilters.map((item, index) => {
-                    const cityDetail = `${item.district || item.city}-${
-                      item.city
-                    }`;
-                    return (
-                      <div
-                        className="address"
-                        key={index}
-                        onClick={() => {
-                          this.addressHandle(cityDetail, item.cityId);
-                        }}
-                      >
-                        {cityDetail}
-                      </div>
-                    );
-                  })}
-                </div>
-              </Modal>
-              <div className="screen" onClick={this.screenChange}>
-                {/* <div
+            </Modal>
+            <div className="screen" onClick={this.screenChange}>
+              {/* <div
                   data-class="day"
                   className={this.state.selected.day ? 'selected' : ''}
                 >
                   日
                 </div> */}
-                <div
-                  data-class="month"
-                  className={this.state.selected.month ? 'selected' : ''}
-                >
-                  月
-                </div>
-                <div
-                  data-class="year"
-                  className={this.state.selected.year ? 'selected' : ''}
-                >
-                  年
-                </div>
-                <div
-                  data-class="all"
-                  className={this.state.selected.all ? 'selected' : ''}
-                >
-                  全部
-                </div>
-              </div>
-            </div>
-            <canvas
-              id="pie-bar-chart"
-              style={equipmentNameList.length < 1 ? { zIndex: -10 } : null}
-            />
-            {equipmentNameList.length < 1 ? (
               <div
-                className="pic-wrap special-one"
-                onClick={() => this.props.history.push('/sunCity/addInverter')}
+                data-class="month"
+                className={this.state.selected.month ? 'selected' : ''}
               >
-                <Picture
-                  src={require('../../../images/transparent_inverter.png')}
-                  height={218}
-                  width={264}
-                />
-                <span>还未添加逆变器，快去添加~</span>
+                月
               </div>
-            ) : null}
-          </BlueBox>
-          <div className="type">
-            <div className="type-item power">
-              功率<i className="iconfont">&#xe643;</i>
+              <div
+                data-class="year"
+                className={this.state.selected.year ? 'selected' : ''}
+              >
+                年
+              </div>
+              <div
+                data-class="all"
+                className={this.state.selected.all ? 'selected' : ''}
+              >
+                全部
+              </div>
             </div>
-            <div className="type-item elec">
-              发电量<i className="iconfont">&#xe677;</i>
-            </div>
-            <div className="type-item profit" onClick={this.priceModalShow}>
-              收益<i className="iconfont">&#xe767;</i>
-              {this.state.popoverVisible ? (
-                <div className="bubble">填写电价计算收益</div>
-              ) : null}
-            </div>
-            <Modal
-              transparent
-              title="填写电价"
-              visible={this.state.priceModalVisible}
-              onClose={this.priceModalHide}
-              footer={[{ text: '确定', onPress: this.modifyElectricityPrice }]}
+          </div>
+          <canvas
+            id="pie-bar-chart"
+            style={equipmentNameList.length < 1 ? { zIndex: -10 } : null}
+          />
+          {equipmentNameList.length < 1 ? (
+            <div
+              className="pic-wrap special-one"
+              onClick={() => this.props.history.push('/sunCity/addInverter')}
             >
-              <InputItem
-                placeholder="请输入电价"
-                clear
-                onChange={this.priceChange}
-              >
-                电价（元/kWh）
-              </InputItem>
-            </Modal>
-          </div>
-          <div className="detail">
-            <div className="detail-row">
-              <div className="detail-item">
-                <div className="number">
-                  {`${currentStationPower}`}
-                  <span className="h5" />
-                </div>
-                <div className="detail-type">当前(W)</div>
-              </div>
-              <div className="detail-item">
-                <div className="number">
-                  {`${dayStationElectric.toFixed(2)}`}
-                  <span className="h5" />
-                </div>
-                <div className="detail-type">今日(kWh)</div>
-              </div>
-              <div className="detail-item">
-                <div className="number">
-                  {`${dayStationElectric &&
-                    (dayStationElectric * electricityPrice).toFixed(2)}`}
-                  <span className="h5" />
-                </div>
-                <div className="detail-type">今日(￥)</div>
-              </div>
+              <Picture
+                src={require('../../../images/transparent_inverter.png')}
+                height={218}
+                width={264}
+              />
+              <span>还未添加逆变器，快去添加~</span>
             </div>
-            <div className="detail-row">
-              <div className="detail-item">
-                <div className="number">
-                  0.00<span className="h5" />
-                </div>
-                <div className="detail-type">逆变器容量(kW)</div>
+          ) : null}
+        </BlueBox>
+        <div className="type">
+          <div className="type-item power">
+            功率<i className="iconfont">&#xe643;</i>
+          </div>
+          <div className="type-item elec">
+            发电量<i className="iconfont">&#xe677;</i>
+          </div>
+          <div className="type-item profit" onClick={this.priceModalShow}>
+            收益<i className="iconfont">&#xe767;</i>
+            {this.state.popoverVisible ? (
+              <div className="bubble">填写电价计算收益</div>
+            ) : null}
+          </div>
+          <Modal
+            transparent
+            title="填写电价"
+            visible={this.state.priceModalVisible}
+            onClose={this.priceModalHide}
+            footer={[{ text: '确定', onPress: this.modifyElectricityPrice }]}
+          >
+            <InputItem
+              placeholder="请输入电价"
+              clear
+              onChange={this.priceChange}
+            >
+              电价（元/kWh）
+            </InputItem>
+          </Modal>
+        </div>
+        <div className="detail">
+          <div className="detail-row">
+            <div className="detail-item">
+              <div className="number">
+                {`${currentStationPower}`}
+                <span className="h5" />
               </div>
-              <div className="detail-item">
-                <div className="number">
-                  {`${totalStationElectric && totalStationElectric.toFixed(2)}`}
-                  <span className="h5" />
-                </div>
-                <div className="detail-type">累计(kWh)</div>
+              <div className="detail-type">当前(W)</div>
+            </div>
+            <div className="detail-item">
+              <div className="number">
+                {`${dayStationElectric.toFixed(2)}`}
+                <span className="h5" />
               </div>
-              <div className="detail-item">
-                <div className="number">
-                  {`${totalStationElectric &&
-                    (totalStationElectric * electricityPrice).toFixed(2)}`}
-                  <span className="h5" />
-                </div>
-                <div className="detail-type">累计(￥)</div>
+              <div className="detail-type">今日(kWh)</div>
+            </div>
+            <div className="detail-item">
+              <div className="number">
+                {`${dayStationElectric &&
+                  (dayStationElectric * electricityPrice).toFixed(2)}`}
+                <span className="h5" />
               </div>
+              <div className="detail-type">今日(￥)</div>
             </div>
           </div>
-          <div className="equipment">
-            <Title title="太阳城蓄力装备" />
-            {equipmentNameList.length > 0 ? (
-              equipmentNameList.map((equipment, index) => {
-                return (
-                  <EquipmentItem
-                    key={index}
-                    onClick={() =>
-                      this.props.history.push(
-                        `/sunCity/equipmentInfo/${
-                          equipmentListObj[equipment].deviceNo
-                        }?source=${
-                          equipmentListObj[equipment].source
-                        }&name=${equipment}`
-                      )
-                    }
-                    equipmentName={equipment}
-                    dayElectric={equipmentListObj[equipment].dayElectric}
-                    currentPower={equipmentListObj[equipment].currentPower}
+          <div className="detail-row">
+            <div className="detail-item">
+              <div className="number">
+                0.00<span className="h5" />
+              </div>
+              <div className="detail-type">逆变器容量(kW)</div>
+            </div>
+            <div className="detail-item">
+              <div className="number">
+                {`${totalStationElectric && totalStationElectric.toFixed(2)}`}
+                <span className="h5" />
+              </div>
+              <div className="detail-type">累计(kWh)</div>
+            </div>
+            <div className="detail-item">
+              <div className="number">
+                {`${totalStationElectric &&
+                  (totalStationElectric * electricityPrice).toFixed(2)}`}
+                <span className="h5" />
+              </div>
+              <div className="detail-type">累计(￥)</div>
+            </div>
+          </div>
+        </div>
+        <div className="equipment">
+          <Title title="太阳城蓄力装备" />
+          {equipmentNameList.length > 0 ? (
+            equipmentNameList.map((equipment, index) => {
+              return (
+                <EquipmentItem
+                  key={index}
+                  onClick={() =>
+                    this.props.history.push(
+                      `/sunCity/equipmentInfo/${
+                        equipmentListObj[equipment].deviceNo
+                      }?source=${
+                        equipmentListObj[equipment].source
+                      }&name=${equipment}`
+                    )
+                  }
+                  equipmentName={equipment}
+                  dayElectric={equipmentListObj[equipment].dayElectric}
+                  currentPower={equipmentListObj[equipment].currentPower}
+                />
+              );
+            })
+          ) : (
+            <div className="loading">
+              {this.state.loading ? (
+                <ActivityIndicator text="加载中..." />
+              ) : (
+                <div
+                  className="pic-wrap"
+                  onClick={() =>
+                    this.props.history.push('/sunCity/addInverter')
+                  }
+                >
+                  <Picture
+                    src={require('../../../images/no_inverter.png')}
+                    height={218}
+                    width={264}
                   />
-                );
-              })
-            ) : (
-              <div className="loading">
-                {this.state.loading ? (
-                  <ActivityIndicator text="加载中..." />
-                ) : (
-                  <div
-                    className="pic-wrap"
-                    onClick={() =>
-                      this.props.history.push('/sunCity/addInverter')
-                    }
-                  >
-                    <Picture
-                      src={require('../../../images/no_inverter.png')}
-                      height={218}
-                      width={264}
-                    />
-                    <span>还未添加逆变器，快去添加~</span>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        </PageWithHeader>
+                  <span>还未添加逆变器，快去添加~</span>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </PageWithHeader>
     );
   }
 }
