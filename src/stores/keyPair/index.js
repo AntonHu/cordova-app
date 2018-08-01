@@ -27,7 +27,9 @@ class KeyPair {
         [
           { text: '再等等'},
           { text: '马上去', onPress: () => {
-            props.history.push('/user/myData')
+            if (props && props.history) {
+              props.history.push('/user/myData')
+            }
           }},
         ]
       )
