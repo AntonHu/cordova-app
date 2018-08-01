@@ -228,7 +228,7 @@ class VerifyID extends React.Component {
           showLoading: false
         });
         if (data.code === 200) {
-          this.props.userStore.updateIsKycInChain(VERIFY_STATUS.A);
+          this.props.userStore.updateIsKycInChain(VERIFY_STATUS.AUTHENTICATING);
           alert('成功', '您已成功验证', [{
             text: '确定', onPress: function () {
               self.props.history.goBack();

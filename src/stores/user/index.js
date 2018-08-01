@@ -33,6 +33,7 @@ class UserStore {
     this.isKycInChain = VERIFY_STATUS.UNAUTHORIZED;
     this.invitationCode = '';
     this.newsList = [];
+    this.msgCenterTabPage = 0;
   };
 
   /**
