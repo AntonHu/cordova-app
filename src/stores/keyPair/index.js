@@ -22,7 +22,7 @@ class KeyPair {
   showHasKey = (props) => {
     if (!this.hasKey) {
       alert(
-        '该账号没有私钥',
+        '该账号没有密钥',
         '这将导致app大部分功能不可用，如查看逆变器、添加逆变器、收取太阳积分、查看太阳积分等。是否现在去生成？',
         [
           { text: '再等等'},

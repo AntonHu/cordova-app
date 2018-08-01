@@ -30,7 +30,7 @@ import PullToRefresh from 'pulltorefreshjs';
  */
 @inject('sunCityStore', 'keyPair') // 如果注入多个store，用数组表示
 @observer
-class Comp extends React.Component {
+class MyPowerStation extends React.Component {
   state = {
     selected: {
       // day: true,
@@ -488,11 +488,15 @@ class Comp extends React.Component {
       priceModalVisible: false
     });
   };
+
   priceModalShow = () => {
-    this.setState({
-      priceModalVisible: true
-    });
+    if (this.props.keyPair.showHasKey(this.props)) {
+      this.setState({
+        priceModalVisible: true
+      });
+    }
   };
+
   priceChange = value => {
     this.setState({
       electricityPrice: value
@@ -502,39 +506,35 @@ class Comp extends React.Component {
   modifyElectricityPrice = () => {
     const { keyPair } = this.props;
     const price = this.state.electricityPrice;
-    if (keyPair.publicKey) {
-      if (price.trim()) {
-        this.props.sunCityStore
-          .fetchSCModifyElectricityPrice({
-            userPubKey: keyPair.publicKey,
-            electricityFee: price.trim(),
-            city: this.state.cityId
-          })
-          .then(result => {
-            if (result.code === 200) {
-              ToastNoMask('更改成功');
-              this.setState(
-                {
-                  popoverVisible: false,
-                  priceModalVisible: false
-                },
-                () =>
-                  this.props.sunCityStore.fetchSCGetElectricityPrice({
-                    userPubKey: keyPair.publicKey
-                  })
-              );
-            } else {
-              ToastNoMask(`更改失败${result.msg}`);
-              this.setState({
+    if (price.trim()) {
+      this.props.sunCityStore
+        .fetchSCModifyElectricityPrice({
+          userPubKey: keyPair.publicKey,
+          electricityFee: price.trim(),
+          city: this.state.cityId
+        })
+        .then(result => {
+          if (result.code === 200) {
+            ToastNoMask('更改成功');
+            this.setState(
+              {
+                popoverVisible: false,
                 priceModalVisible: false
-              });
-            }
-          });
-      } else {
-        ToastNoMask('请输入电价');
-      }
+              },
+              () =>
+                this.props.sunCityStore.fetchSCGetElectricityPrice({
+                  userPubKey: keyPair.publicKey
+                })
+            );
+          } else {
+            ToastNoMask(`更改失败${result.msg}`);
+            this.setState({
+              priceModalVisible: false
+            });
+          }
+        });
     } else {
-      ToastNoMask('该账号没有私钥,请到"我的"页面添加！');
+      ToastNoMask('请输入电价');
     }
   };
   render() {
@@ -791,4 +791,4 @@ class Comp extends React.Component {
   }
 }
 
-export default withRouter(Comp);
+export default withRouter(MyPowerStation);
