@@ -47,6 +47,9 @@
     },
     "cordova-plugin-network-information": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-crosswalk-webview": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     }
   },
   "dependent_plugins": {
@@ -60,9 +63,6 @@
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
     "cordova-plugin-compat": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-crosswalk-webview": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
     "cordova-plugin-jcore": {
