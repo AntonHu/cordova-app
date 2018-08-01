@@ -1,24 +1,9 @@
 import React from 'react';
 import {PageWithHeader} from '../../../components';
 import {List, Tabs} from 'antd-mobile';
-import {getMessages} from '../../../stores/user/request';
 import {Link} from 'react-router-dom';
 import {observer, inject} from 'mobx-react';
 import './index.less';
-
-const Item = List.Item;
-
-const ListData = [
-  {
-    text: '消息1'
-  },
-  {
-    text: '消息2'
-  },
-  {
-    text: '消息3'
-  }
-];
 
 const TabItems = [
   { title: '通知', icon: '\ue624' },
