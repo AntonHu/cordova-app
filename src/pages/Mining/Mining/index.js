@@ -154,11 +154,10 @@ class Mining extends React.Component {
               </div>
               <Icon type="right" />
             </div>
-            <div className="expect-item">
+            <div className="expect-item" onClick={() => this.props.history.push('/apply/earnToken')}>
               <i className="iconfont">&#xe6ee;</i>
               <div className="expect-title">
-                <div>提升算力</div>
-                <div>敬请期待</div>
+                <div>赚取积分</div>
               </div>
               <Icon type="right" />
             </div>

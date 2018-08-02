@@ -87,6 +87,8 @@ class SunCity extends React.Component {
       });
       // 获取太阳积分
       this.getSunFromRemote();
+      // 获取身份认证情况
+      this.props.userStore.checkIsKycInChain({publicKey: keyPair.publicKey});
 
       // 判断数据是否过期，储存设备列表整理后的数据
       if (isExpire(1, 'stationExpireTime')) {

@@ -1,0 +1,64 @@
+@import "../../styles/common";
+
+@arrow-size: 50 * @px;
+
+.activity-card {
+  position: relative;
+  width: 680 * @px;
+  height: 300 * @px;
+  background: @white-text-color;
+  border-radius: @border-radius;
+  color: @main-text-color;
+  display: flex;
+
+  .left-image {
+    width: 220 * @px;
+    align-self: flex-end;
+    vertical-align: bottom;
+  }
+
+  .content {
+    text-align: left;
+    margin-left: 40 * @px;
+    .title {
+      margin-top: 70 * @px;
+      font-size: @h2;
+      font-weight: 500;
+    }
+
+    .subTitle {
+      margin-top: 15 * @px;
+      color: @help-text-color;
+    }
+
+    .info {
+      margin-top: 38 * @px;
+      display: inline-block;
+      padding: 5 * @px 10 * @px;
+      border: 1px solid @grey-border-color;
+      border-radius: @border-radius / 2;
+      color: @help-text-color;
+
+      .score {
+        color: red;
+      }
+    }
+  }
+
+  .right-arrow {
+    position: absolute;
+    top: 25 * @px;
+    right: 25 * @px;
+    text-align: center;
+    width: @arrow-size;
+    height: @arrow-size;
+    line-height: @arrow-size;
+    border-radius: @arrow-size / 2;
+    background: linear-gradient(to bottom, #16cbff, #1ca4fe);
+
+    .iconfont {
+      color: @white-text-color;
+      font-size: @h1;
+    }
+  }
+}

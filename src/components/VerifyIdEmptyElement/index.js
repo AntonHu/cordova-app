@@ -9,19 +9,21 @@ class Comp extends React.PureComponent {
   static propTypes = {
     size: PropTypes.number,
     text: PropTypes.string,
-    style: PropTypes.object
+    style: PropTypes.object,
+    icon: PropTypes.string
   };
 
   static defaultProps = {
     size: 120,
-    text: '文字'
+    text: '文字',
+    icon: '\ue872'
   };
 
   render() {
-    const {text, size, style} = this.props;
+    const {text, size, style, icon} = this.props;
     return (
       <div className={'verify-id-empty-element'} style={style}>
-        <i className="iconfont">&#xe872;</i>
+        <i className="iconfont">{icon}</i>
         <div className={'text'}>{text}</div>
       </div>
     )

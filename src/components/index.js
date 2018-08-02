@@ -13,6 +13,7 @@ import ToastNoMask from './Toast';
 import Rank from './Rank';
 import Loading from './Loading';
 import EquipmentItem from './EquipmentItem';
+import ActivityCard from './ActivityCard/ActivityCard';
 
 export {
   BlueBox,
@@ -29,5 +30,6 @@ export {
   ToastNoMask,
   Rank,
   Loading,
-  EquipmentItem
+  EquipmentItem,
+  ActivityCard
 };

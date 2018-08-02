@@ -18,8 +18,12 @@ import {
   Agreement,
   InviteFriends,
   InviteDetail,
-  NewsDetail
+  NewsDetail,
+  UploadStationInfo
 } from '../pages/User';
+import  {
+  EarnToken
+} from '../pages/Apply'
 import MyPowerStation from '../pages/SunCity/MyPowerStation';
 import EquipmentInfo from '../pages/SunCity/EquipmentInfo';
 import AddInverter from '../pages/SunCity/AddInverter';
@@ -197,8 +201,10 @@ class PrimaryRoute extends React.Component {
         <Route exact path="/mining/sunIntegral" component={SunIntegral}/>
         <Route exact path="/mining/pointRule" component={PointRule}/>
 
-        {/* 用户 */}
+        {/* 应用 */}
+        <Route exact path="/apply/earnToken" component={EarnToken}/>
 
+        {/* 用户 */}
         <Route exact path={'/user/about'} component={About}/>
         <Route exact path={`/user/accountSetting`} component={AccountSetting}/>
         <Route exact path={'/user/msgCenter'} component={MsgCenter}/>
@@ -223,11 +229,13 @@ class PrimaryRoute extends React.Component {
         <Route exact path={'/user/resetPW'} component={ResetPW}/>
         <Route exact path={'/user/resetTradePW'} component={ResetTradePW}/>
         <Route exact path={'/user/resetLoginPW'} component={ResetLoginPW}/>
-        <Route exact path={'/user/verifyID/:id'} component={VerifyID}/>
+        <Route exact path={'/user/verifyID'} component={VerifyID}/>
         <Route exact path={'/user/introduction'} component={Introduction}/>
         <Route exact path={'/user/agreement'} component={Agreement}/>
         <Route exact path={'/user/inviteFriends'} component={InviteFriends}/>
         <Route exact path={'/user/inviteDetail'} component={InviteDetail}/>
+        <Route exact path={'/user/UploadStationInfo'} component={UploadStationInfo}/>
+        <Route exact path={'/user/UploadStationInfo/:id'} component={UploadStationInfo}/>
       </Switch>
     );
   }

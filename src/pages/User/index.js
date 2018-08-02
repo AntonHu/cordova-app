@@ -19,6 +19,7 @@ import Introduction from './Introduction';
 import Agreement from './Agreement';
 import InviteFriends from './InviteFriends';
 import InviteDetail from './InviteFriends/InviteDetail';
+import UploadStationInfo from './MyStation/UploadStationInfo';
 
 export {
   About,
@@ -41,5 +42,6 @@ export {
   Agreement,
   InviteFriends,
   InviteDetail,
-  NewsDetail
+  NewsDetail,
+  UploadStationInfo
 };

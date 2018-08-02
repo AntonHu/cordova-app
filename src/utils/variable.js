@@ -57,18 +57,25 @@ const DEPLYMENT_KEY = {
 // 积分类型
 const INTEGRAL_TYPE = {
   power: { title: '挖宝积分', icon: '\ue611' },
-  login: { title: '登陆奖励', icon: '\ue6d1' },
+  login: { title: '登录奖励', icon: '\ue6d1' },
   transfer: { title: '入账', icon: '\ue614' },
   invitation: { title: '推荐奖励', icon: '\ue6d1' },
   secondaryInvitation: { title: '推荐奖励-二级', icon: '\ue6d1' },
   fail: { title: '失败', icon: '\ue639' }
 };
 
-// 认证状态
+// 身份认证状态
 const VERIFY_STATUS = {
   UNAUTHORIZED: 0,
   AUTHENTICATING: 1,
   AUTHORIZED: 2
+};
+
+// 电站信息审核状态
+const STATION_VERIFY_STATUS = {
+  FAIL: 0,
+  ONGOING: 1,
+  SUCCESS: 2
 };
 
 export {
@@ -83,5 +90,6 @@ export {
   EQUIPMENT_DATA_TYPE,
   DEPLYMENT_KEY,
   INTEGRAL_TYPE,
-  VERIFY_STATUS
+  VERIFY_STATUS,
+  STATION_VERIFY_STATUS
 };

@@ -183,7 +183,7 @@ class PersonalInfo extends React.Component {
    */
   goAuthentication = () => {
     if (this.props.keyPair.showHasKey(this.props)) {
-      this.props.history.push(`/user/verifyID/${1}`)
+      this.props.history.push(`/user/verifyID`)
     }
   };
 

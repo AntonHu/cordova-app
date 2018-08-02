@@ -71,6 +71,7 @@
     "react": "^16.4.0",
     "react-dev-utils": "^5.0.1",
     "react-dom": "^16.4.0",
+    "react-mobile-imgview": "^1.0.1",
     "react-router-dom": "^4.3.1",
     "react-touch-loader": "^1.1.2",
     "resolve": "1.6.0",

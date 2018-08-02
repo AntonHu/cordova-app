@@ -15,7 +15,7 @@ const ListData = [
     unicode: '\ue68d'
   },
   {
-    text: '我的设备',
+    text: '电站资料',
     extra: '华',
     path: 'myStation',
     unicode: '\ue609'
