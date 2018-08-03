@@ -676,13 +676,33 @@ class SunCity extends React.Component {
                   </div>
                 ))}
               </Carousel>
-            ) : null}
+            ) : <div className="help-text">
+              暂无最新动态
+            </div>
+            }
           </div>
         </div>
         <div className="promote">
-          <Link to="/user/introduction">
-            <img src={require('../../images/banner_1.png')} width="100%" />
-          </Link>
+          <Carousel
+            dots={false}
+            dragging={false}
+            swiping={false}
+            autoplay
+            infinite
+            autoplayInterval={5000}
+          >
+            <Link to="/user/introduction">
+              <img src={require('../../images/banner_1.png')} width="100%" />
+            </Link>
+            <Link to="/user/msgCenter">
+              <img src={require('../../images/carousel_2.png')} width="100%" />
+            </Link>
+            <Link to="/user/inviteFriends">
+              <img src={require('../../images/carousel_3.png')} width="100%" />
+            </Link>
+
+          </Carousel>
+
         </div>
         <div className="equipment">
           <Title title="太阳城蓄力装备" />

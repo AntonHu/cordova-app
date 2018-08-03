@@ -99,7 +99,13 @@ class MyStation extends React.Component {
             </i>
           }
         >
-          <ActivityCard imageSrc={STATION.imageSrc} title={STATION.title} subTitle={STATION.subTitle} info={STATION.info}/>
+          <ActivityCard
+            imageSrc={STATION.imageSrc}
+            title={STATION.title}
+            subTitle={STATION.subTitle}
+            info={STATION.info}
+            showArrow={false}
+          />
 
           {
             stationStore.stationRecords.map((station, idx) => this.renderStationInfo(station, idx))

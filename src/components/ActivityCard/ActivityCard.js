@@ -7,11 +7,16 @@ class ActivityCard extends React.PureComponent {
     imageSrc: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     subTitle: PropTypes.string.isRequired,
-    info: PropTypes.element.isRequired
+    info: PropTypes.element.isRequired,
+    showArrow: PropTypes.bool
+  };
+
+  static defaultProps = {
+    showArrow: true
   };
 
   render() {
-    const {imageSrc, title, subTitle, info} = this.props;
+    const {imageSrc, title, subTitle, info, showArrow} = this.props;
     return (
       <div className="activity-card">
         <img src={imageSrc} className="left-image" />
@@ -20,9 +25,12 @@ class ActivityCard extends React.PureComponent {
           <div className="subTitle">{subTitle}</div>
           <div className="info">{info}</div>
         </div>
-        <div className="right-arrow">
-          <i className="iconfont">&#xe62e;</i>
-        </div>
+        {
+          showArrow &&
+          <div className="right-arrow">
+            <i className="iconfont">&#xe62e;</i>
+          </div>
+        }
       </div>
     )
   }
