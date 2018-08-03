@@ -684,9 +684,6 @@ class SunCity extends React.Component {
         </div>
         <div className="promote">
           <Carousel
-            dots={false}
-            dragging={false}
-            swiping={false}
             autoplay
             infinite
             autoplayInterval={5000}
