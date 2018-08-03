@@ -3,13 +3,12 @@ import {BlueBox, GreenButton, PageWithHeader, Picture, VerifyIdEmptyElement} fro
 import {InputItem, Modal, ActionSheet, Flex, ActivityIndicator} from 'antd-mobile';
 import {reqUploadVerifyId} from '../../../stores/user/request';
 import {FileMethods} from '../../../utils/methods';
-import {testContractorCode} from '../../../utils/validate';
+import {isIPhone} from '../../../utils/validate';
 import {VERIFY_STATUS} from '../../../utils/variable';
 import {observer, inject} from 'mobx-react';
 import IdCard from 'idcard';
 import './style.less';
 
-const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
 let wrapProps;
 if (isIPhone) {
   wrapProps = {

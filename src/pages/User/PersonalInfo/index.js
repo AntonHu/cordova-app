@@ -5,10 +5,10 @@ import {List, Picker, Icon, Modal, Button, ActionSheet} from 'antd-mobile';
 import {observer, inject} from 'mobx-react';
 import {FileMethods} from '../../../utils/methods';
 import {VERIFY_STATUS} from '../../../utils/variable';
+import {isIPhone} from '../../../utils/validate';
 import {reqUploadAvatar, reqUpdateUser} from '../../../stores/user/request';
 import './style.less';
 
-const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
 let wrapProps;
 if (isIPhone) {
   wrapProps = {

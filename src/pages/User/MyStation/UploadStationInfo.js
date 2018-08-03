@@ -1,16 +1,14 @@
 import React from 'react';
-import {BlueBox, GreenButton, PageWithHeader, Picture, VerifyIdEmptyElement} from '../../../components';
-import {InputItem, Modal, ActionSheet, Flex, ActivityIndicator} from 'antd-mobile';
+import {GreenButton, PageWithHeader, Picture, VerifyIdEmptyElement} from '../../../components';
+import {Modal, ActionSheet, ActivityIndicator} from 'antd-mobile';
 import {reqUploadStationInfo} from '../../../stores/station/request';
 import {FileMethods} from '../../../utils/methods';
-import {testContractorCode} from '../../../utils/validate';
+import {isIPhone} from '../../../utils/validate';
 import {STATION_VERIFY_STATUS} from '../../../utils/variable';
 import {observer, inject} from 'mobx-react';
 import StationVerifyMask from './StationVerifyMask';
-import IdCard from 'idcard';
 import './UploadStationInfo.less';
 
-const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
 let wrapProps;
 if (isIPhone) {
   wrapProps = {
@@ -19,7 +17,6 @@ if (isIPhone) {
 }
 
 const alert = Modal.alert;
-const PICTURE_SIZE = 320;
 
 const showError = (text) => {
   alert('错误', text, [
@@ -28,7 +25,8 @@ const showError = (text) => {
 };
 
 function onFail(message) {
-};
+  console.log(message);
+}
 
 /**
  * 把组件的setState传进来

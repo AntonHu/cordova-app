@@ -74,3 +74,5 @@ export const isHtml = (str) => {
   return reg.test(str)
 };
 
+export const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
+
