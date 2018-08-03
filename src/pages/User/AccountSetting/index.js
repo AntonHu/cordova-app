@@ -4,8 +4,7 @@ import {PageWithHeader, PlainButton} from '../../../components';
 import {List} from 'antd-mobile';
 import User from '../../../utils/user';
 import {maskIfPhone} from '../../../utils/methods';
-import {KEY_PAIR_LOCAL_STORAGE} from '../../../utils/variable';
-import {deleteLocalStorage} from '../../../utils/storage';
+import onAllStoreLogout from '../../../stores/onLogout';
 import {observer, inject} from 'mobx-react';
 import './style.less';
 
@@ -44,10 +43,7 @@ class AccountSetting extends React.Component {
     e.preventDefault();
     const user = new User();
     user.logout();
-    this.props.keyPair.clearKeyPair();
-    this.props.userStore.onLogout();
-    this.props.miningStore.onLogout();
-    this.props.sunCityStore.onLogout();
+    onAllStoreLogout();
     this.props.history.replace('/');
   };
 

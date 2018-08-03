@@ -13,6 +13,10 @@ class KeyPair {
   @observable privateKey = '';
   @observable hasKey = false;
 
+  onLogout = () => {
+    this.clearKeyPair();
+  };
+
   /**
    * 如果仅仅是检查，调keyPair.hasKey就足够了
    * 如果检查完了，还需要告知用户，调keyPair.showHasKey(props)，并且把props传进去
