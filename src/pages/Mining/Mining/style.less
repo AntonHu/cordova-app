@@ -24,7 +24,7 @@
       align-items: center;
       padding: 0 20px;
       color: @white-text-color;
-      border-bottom: 1px solid @bule-border;
+      border-bottom: 1px solid @theme-border-color;
       .my-pic {
         width: 60px;
         height: 60px;
@@ -105,13 +105,19 @@
       padding: 10px;
       font-size: @h4;
       span {
-        color: @blue-text-color;
+        color: @theme-text-color;
       }
     }
   }
   .ranking {
     padding: 0 15px;
     margin-top: 15px;
+    .am-tabs-default-bar-tab-active {
+      color: @theme-text-color;
+    }
+    .am-tabs-default-bar-underline {
+      border: 1px solid @theme-text-color;
+    }
     .ranking-list {
       background: @white-text-color;
       .ranking-item.empty {

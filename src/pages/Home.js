@@ -68,7 +68,7 @@ class Comp extends React.PureComponent {
       >
         <TabBar
           unselectedTintColor="#cdcdcd"
-          tintColor="#0082f6"
+          tintColor="#009702"
           barTintColor="white"
         >
           {TabsData.map(tab => (

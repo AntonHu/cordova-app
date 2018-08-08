@@ -318,7 +318,7 @@ class MyPowerStation extends React.Component {
     const ctx = canvas.getContext('2d');
     const grd = ctx.createLinearGradient(0, 200, 0, 0);
     grd.addColorStop(0, '#fff');
-    grd.addColorStop(1, '#0082f6');
+    grd.addColorStop(1, '#0eb084');
 
     F2.Global.setTheme({
       pixelRatio: 2

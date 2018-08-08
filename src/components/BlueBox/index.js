@@ -23,7 +23,7 @@ class Comp extends React.PureComponent {
   static defaultProps = {
     type: 'pic',
     picType: 'blue',
-    pureColor: '#0082f6'
+    pureColor: '#0eb084'
   };
 
   getClassName = () => {

@@ -8,12 +8,12 @@
   .notice {
     text-align: left;
     padding: 5px * @px 10px * @px;
-    background: @deep-blue-bg;
+    background: @deep-bg;
     color: @white-text-color;
   }
   .am-notice-bar {
     height: 35px;
-    background: @deep-blue-bg;
+    background: @deep-bg;
     color: @white-text-color;
     .am-notice-bar-content {
       text-align: left;
@@ -37,7 +37,7 @@
           margin-top: 10px;
           font-size: 12px;
           span {
-            color: @light-blue-bg;
+            color: @light-theme-bg;
           }
         }
         .person-info {
@@ -46,7 +46,7 @@
           display: flex;
           align-items: center;
           height: 30px;
-          background: @light-blue-bg;
+          background: @light-theme-bg;
           border-radius: 15px;
           color: @main-color;
           position: relative;
@@ -74,7 +74,7 @@
         font-size: 14px;
         display: flex;
         align-items: center;
-        background: @light-blue-bg;
+        background: @light-theme-bg;
         color: @main-color;
         border-top-left-radius: 16px;
         border-bottom-left-radius: 16px;
@@ -187,6 +187,15 @@
       //height: 24px;
       position: relative;
       overflow: hidden;
+      .help-text {
+        line-height: 24px;
+        margin-left: 10px;
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        color: #888;
+        //text-overflow: ellipsis;
+      }
 
       .rend-item {
         width: 100%;
@@ -194,15 +203,7 @@
         //flex-direction: column;
         position: relative;
         //animation: midToTop 10s linear 0s infinite;
-        .help-text {
-          line-height: 24px;
-          margin-left: 10px;
-          text-align: left;
-          white-space: nowrap;
-          overflow: hidden;
-          color: #888;
-          //text-overflow: ellipsis;
-        }
+
         @keyframes midToTop {
           0% {
             top: 0;
@@ -227,7 +228,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background: @light-blue-bg;
+        background: @light-theme-bg;
         border-radius: 28px;
         height: 56px;
         width: 56px;

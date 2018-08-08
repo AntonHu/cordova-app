@@ -12,7 +12,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: @main-color;
+    background: @common-bg;
     color: @white-text-color;
     .survey-item {
       width: @item-size;
@@ -29,7 +29,7 @@
     }
     #current-power-item {
       position: relative;
-      border: @pie-border-width #8de837 solid;
+      border: @pie-border-width @pie-color solid;
       border-radius: @item-size;
     }
   }
@@ -58,7 +58,7 @@
         color: @screen-text-color;
       }
       .selected {
-        background: @blue-color-bg;
+        background: @common-bg;
         color: @white-text-color;
       }
     }
