@@ -595,38 +595,31 @@ class SunCity extends React.Component {
         <div className="sun-content">
           <div className="info">
             <div className="detail">
-              <div style={{ display: 'inline-block' }}>
-                <div
-                  className="person-info"
-                  onClick={() => this.props.history.replace('/mining')}
-                >
-                  <Picture src={avatar} size={60} showBorder={true} />
-                  <span className="nick-name">
-                    {this.sliceLongName(nickName)}
-                  </span>
-                  <Icon type="right" />
+              <div className="detail-row">
+                <Picture src={avatar} size={60} showBorder={true}/>
+                <div className="ranking">
+                  <span>当前排行：</span>
+                  {balanceRanking}
                 </div>
               </div>
-              <div>
-                <span>当前排行：</span>
-                {balanceRanking}
-              </div>
-              <div>
-                <span>太阳积分：</span>
-                {balance.toFixed(2)}
-              </div>
-              {unconfirmedToken > 0 ? (
-                <div>
-                  <span>在路上：</span>
-                  {unconfirmedToken.toFixed(2)}
+              <div className="detail-row">
+                <div className="token">
+                  <span>太阳积分：</span>
+                  {balance.toFixed(2)}
                 </div>
-              ) : null}
+                {unconfirmedToken > 0 ? (
+                  <div>
+                    <span>在路上：</span>
+                    {unconfirmedToken.toFixed(2)}
+                  </div>
+                ) : null}
+              </div>
             </div>
             <div
               className="powerStation"
               onClick={() => this.props.history.push('/sunCity/powerStation')}
             >
-              <i className="iconfont powerStation-pic">&#xe60f;</i>
+              <img className="ufo-png" src={require('../../images/ufo.png')} />
               电站
             </div>
           </div>
@@ -702,7 +695,7 @@ class SunCity extends React.Component {
 
         </div>
         <div className="equipment">
-          <Title title="太阳城蓄力装备" />
+          <Title title="设备" />
           {equipmentNameList && equipmentNameList.length > 0 ? (
             equipmentNameList.map((equipment, index) => {
               return (
@@ -736,8 +729,8 @@ class SunCity extends React.Component {
                 >
                   <Picture
                     src={require('../../images/no_inverter.png')}
-                    height={218}
-                    width={264}
+                    height={239}
+                    width={303}
                   />
                   <span>还未添加逆变器，快去添加~</span>
                 </div>

@@ -657,8 +657,8 @@ class MyPowerStation extends React.Component {
             >
               <Picture
                 src={require('../../../images/transparent_inverter.png')}
-                height={218}
-                width={264}
+                height={239}
+                width={303}
               />
               <span>还未添加逆变器，快去添加~</span>
             </div>
@@ -743,7 +743,7 @@ class MyPowerStation extends React.Component {
           </div>
         </div>
         <div className="equipment">
-          <Title title="太阳城蓄力装备" />
+          <Title title="设备" />
           {equipmentNameList.length > 0 ? (
             equipmentNameList.map((equipment, index) => {
               return (
@@ -777,8 +777,8 @@ class MyPowerStation extends React.Component {
                 >
                   <Picture
                     src={require('../../../images/no_inverter.png')}
-                    height={218}
-                    width={264}
+                    height={239}
+                    width={303}
                   />
                   <span>还未添加逆变器，快去添加~</span>
                 </div>

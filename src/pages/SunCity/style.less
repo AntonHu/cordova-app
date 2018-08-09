@@ -5,6 +5,9 @@
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   position: relative;
+  .slider-decorator-0 {
+    bottom: 5px!important;
+  }
   .notice {
     text-align: left;
     padding: 5px * @px 10px * @px;
@@ -22,6 +25,7 @@
   .sun-content {
     height: 421px;
     background: url('../../images/sunBg.png');
+    background-position-y: bottom;
     background-size: cover;
     .info {
       display: flex;
@@ -33,8 +37,20 @@
         margin-top: 20px;
         text-align: left;
         color: @white-text-color;
+        .detail-row {
+          display: flex;
+          align-items: center;
+
+          .ranking {
+            margin-left: 30 * @px;
+          }
+          .token {
+            margin-left: 90 * @px;
+            margin-right: 24 * @px;
+          }
+        }
         div {
-          margin-top: 10px;
+          //margin-top: 10px;
           font-size: 12px;
           span {
             color: @light-theme-bg;
@@ -79,6 +95,12 @@
         border-top-left-radius: 16px;
         border-bottom-left-radius: 16px;
         position: relative;
+        .ufo-png {
+          width: 110 * @px;
+          margin-left: -40 * @px;
+          margin-right: 10 * @px;
+          margin-top: -20 * @px;
+        }
         .powerStation-pic {
           font-size: 40px;
           margin-right: 10px;
@@ -162,6 +184,7 @@
       text-align: left;
       background: transparent;
       margin-top: 20px;
+
     }
   }
   .rend {

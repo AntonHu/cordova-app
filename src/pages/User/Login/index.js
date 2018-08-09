@@ -104,7 +104,7 @@ class Login extends React.PureComponent {
       <div className={'page-login'}>
         <BlueBox>
           <div className={'title-box'}>
-            <img src={require('../../../images/login_title.png')} className="login-title"/>
+            <img src={require('../../../images/app_name.png')} className="login-title"/>
           </div>
         </BlueBox>
         <PeakBox showPeak={true}>
