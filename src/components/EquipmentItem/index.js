@@ -25,7 +25,7 @@ class EquipmentItem extends React.PureComponent {
           <i className="iconfont">&#xea35;</i>
         </div>
         <div className="item-detail">
-          <div className="item-name">{equipmentName}</div>
+          <div className="item-name">{equipmentName.toUpperCase()}</div>
           <div className="item-info">
             <span>{`功率：${currentPower}W`}</span>
             <span>{`日电量：${dayElectric}kWh`}</span>
