@@ -91,6 +91,10 @@
             {
               "xml": "<preference name=\"android-minSdkVersion\" value=\"16\" />",
               "count": 1
+            },
+            {
+              "xml": "<feature name=\"CropPlugin\"><param name=\"android-package\" value=\"com.jeduan.crop.CropPlugin\" /></feature>",
+              "count": 1
             }
           ],
           "/widget": [
@@ -146,7 +150,7 @@
             },
             {
               "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-              "count": 2
+              "count": 3
             },
             {
               "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
@@ -257,6 +261,10 @@
             {
               "xml": "<meta-data android:name=\"JPUSH_CHANNEL\" android:value=\"developer-default\" />",
               "count": 1
+            },
+            {
+              "xml": "<activity android:name=\"com.soundcloud.android.crop.CropImageActivity\" />",
+              "count": 1
             }
           ],
           "/manifest/application/activity[@android:name='MainActivity']": [
@@ -362,6 +370,9 @@
       "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
       "XWALK_MODE": "embedded",
       "XWALK_MULTIPLEAPK": "true",
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-crop": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     }
   },
@@ -774,6 +785,14 @@
       "clobbers": [
         "Connection"
       ]
+    },
+    {
+      "id": "cordova-plugin-crop.CropPlugin",
+      "file": "plugins/cordova-plugin-crop/www/crop.js",
+      "pluginId": "cordova-plugin-crop",
+      "clobbers": [
+        "plugins.crop"
+      ]
     }
   ],
   "plugin_metadata": {
@@ -794,6 +813,7 @@
     "cordova-plugin-statusbar": "2.4.2",
     "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-network-information": "2.0.1",
-    "cordova-plugin-crosswalk-webview": "2.4.0"
+    "cordova-plugin-crosswalk-webview": "2.4.0",
+    "cordova-plugin-crop": "0.3.1"
   }
 }

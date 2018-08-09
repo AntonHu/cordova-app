@@ -62,6 +62,9 @@
     <feature name="NetworkStatus">
         <param name="ios-package" value="CDVConnection" />
     </feature>
+    <feature name="CropPlugin">
+        <param name="ios-package" value="CTCrop" />
+    </feature>
     <feature name="Zip">
         <param name="ios-package" value="ZipPlugin" />
     </feature>

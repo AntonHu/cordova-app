@@ -50,6 +50,9 @@
     },
     "cordova-plugin-crosswalk-webview": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-crop": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     }
   },
   "dependent_plugins": {

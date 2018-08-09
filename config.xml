@@ -93,6 +93,7 @@
         <variable name="XWALK_MODE" value="embedded" />
         <variable name="XWALK_MULTIPLEAPK" value="true" />
     </plugin>
+    <plugin name="cordova-plugin-crop" spec="https://github.com/349989153/cordova-plugin-crop.git" />
     <engine name="android" spec="^6.4.0" />
     <engine name="ios" spec="^4.5.4" />
 </widget>

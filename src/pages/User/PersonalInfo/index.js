@@ -27,7 +27,8 @@ function onFail(message) {
  * 拍照上传流程：
  *
  * 拍照之后获得照片在手机中的地址imageURI
- * 然后去读取这个imageURI对应的file
+ * 然后调用window.plugins.crop，裁剪图片，得到croppedURI
+ * 然后去读取这个croppedURI对应的file
  * 把file转成blob，传给reqUploadAvatar
  * reqUploadAvatar用formData上传图像，返回oss地址
  * 调用reqUpdateUser更新昵称、头像oss地址
@@ -35,21 +36,23 @@ function onFail(message) {
  */
 async function onPhotoDataSuccess(imageURI) {
   const nickName = this.props.userStore.userInfo.nickName || '';
-  const fileEntry = await FileMethods.getFileEntryFromURL(imageURI);
+  const croppedURI = await window.plugins.crop.promise(imageURI);
+  const fileEntry = await FileMethods.getFileEntryFromURL(croppedURI);
   const file = await FileMethods.getFileFromFileEntry(fileEntry);
   const result = await FileMethods.readFileAsBuffer(file);
   const imgBlob = FileMethods.turnJpegIntoBlob(result);
 
   updateAvatar(imgBlob, nickName);
 
-  this.props.userStore.updateAvatar(imageURI);
+  this.props.userStore.updateAvatar(croppedURI);
 };
 
 /**
  * 选取相册上传流程：
  *
  * 选择之后获得照片在手机中的地址imageURI
- * 然后去读取这个imageURI对应的file
+ * 然后调用window.plugins.crop，裁剪图片，得到croppedURI
+ * 然后去读取这个croppedURI对应的file
  * 把file转成blob，传给reqUploadAvatar
  * reqUploadAvatar用formData上传图像，返回oss地址
  * 调用reqUpdateUser更新昵称、头像oss地址
@@ -57,14 +60,15 @@ async function onPhotoDataSuccess(imageURI) {
  */
 async function onPhotoURISuccess(imageURI) {
   const nickName = this.props.userStore.userInfo.nickName || '';
-  const fileEntry = await FileMethods.getFileEntryFromURL(imageURI);
+  const croppedURI = await window.plugins.crop.promise(imageURI);
+  const fileEntry = await FileMethods.getFileEntryFromURL(croppedURI);
   const file = await FileMethods.getFileFromFileEntry(fileEntry);
   const result = await FileMethods.readFileAsBuffer(file);
   const imgBlob = FileMethods.turnJpegIntoBlob(result);
 
   updateAvatar(imgBlob, nickName);
 
-  this.props.userStore.updateAvatar(imageURI);
+  this.props.userStore.updateAvatar(croppedURI);
 };
 
 /**
