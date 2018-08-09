@@ -1,7 +1,7 @@
 {
     "ImageIO.framework": 1,
     "CoreLocation.framework": 3,
-    "AVFoundation.framework": 1,
+    "AVFoundation.framework": 2,
     "AudioToolbox.framework": 1,
     "UIKit.framework": 2,
     "SystemConfiguration.framework": 3,
@@ -14,5 +14,6 @@
     "libresolv.tbd": 2,
     "libz.dylib": 1,
     "AdSupport.framework": 1,
-    "UserNotifications.framework": 1
+    "UserNotifications.framework": 1,
+    "QuartzCore.framework": 1
 }

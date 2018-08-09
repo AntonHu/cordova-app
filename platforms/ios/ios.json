@@ -89,6 +89,10 @@
             {
               "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
               "count": 1
+            },
+            {
+              "xml": "<feature name=\"CropPlugin\"><param name=\"ios-package\" value=\"CTCrop\" /></feature>",
+              "count": 1
             }
           ],
           "/widget": [
@@ -169,6 +173,9 @@
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
     "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-crop": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     }
   },
@@ -591,6 +598,14 @@
       "clobbers": [
         "Connection"
       ]
+    },
+    {
+      "id": "cordova-plugin-crop.CropPlugin",
+      "file": "plugins/cordova-plugin-crop/www/crop.js",
+      "pluginId": "cordova-plugin-crop",
+      "clobbers": [
+        "plugins.crop"
+      ]
     }
   ],
   "plugin_metadata": {
@@ -612,6 +627,7 @@
     "jpush-phonegap-plugin": "3.3.2",
     "phonegap-plugin-barcodescanner": "8.0.0",
     "cordova-plugin-splashscreen": "5.0.2",
-    "cordova-plugin-network-information": "2.0.1"
+    "cordova-plugin-network-information": "2.0.1",
+    "cordova-plugin-crop": "0.3.1"
   }
 }
