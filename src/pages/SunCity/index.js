@@ -21,7 +21,7 @@ import './style.less';
 const sunDistanceX = 50; // 小太阳x轴之间的距离
 const sunDistanceY = 70; // 小太阳y轴之间的距离
 const initialCoordinates = { left: 15, top: 20 };
-const toCollectNumber = 3; // 待收取小太阳的数量
+const toCollectNumber = 1; // 待收取小太阳的数量
 // 将小太阳区域划分为24份,放入数组
 const sunIntegralCoordinatesArr = [];
 for (let i = 0; i < 7; i++) {

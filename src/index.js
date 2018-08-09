@@ -41,10 +41,10 @@ const setStatusBar = () => {
  * app环境
  */
 const startApp = () => {
+  setStatusBar();
   ReactDOM.render(<App />, document.getElementById('root'));
   startJAnalytics();
   startJPush();
-  setStatusBar();
   // registerServiceWorker();
 };
 
