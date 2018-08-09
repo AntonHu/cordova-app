@@ -56,6 +56,9 @@
       "XWALK_MODE": "embedded",
       "XWALK_MULTIPLEAPK": "true",
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-crop": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     }
   },
   "dependent_plugins": {

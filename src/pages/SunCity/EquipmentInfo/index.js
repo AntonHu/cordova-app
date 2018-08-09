@@ -541,6 +541,7 @@ class Comp extends React.Component {
               .substring(1)
               .split('&')[1]
               .split('=')[1]
+              .toUpperCase()
           }
         >
           <div className="survey">

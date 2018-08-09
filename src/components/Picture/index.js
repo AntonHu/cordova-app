@@ -70,7 +70,7 @@ class Comp extends React.PureComponent {
     style.width = px(width || size) + 'px';
     style.height = px(height || size) + 'px';
     if (circle) {
-      style.borderRadius = px(size / 2) + 'px';
+      style.borderRadius = px(size) + 'px';
     }
     return style;
   };

@@ -417,6 +417,14 @@ module.exports = [
     "clobbers": [
       "Connection"
     ]
+  },
+  {
+    "id": "cordova-plugin-crop.CropPlugin",
+    "file": "plugins/cordova-plugin-crop/www/crop.js",
+    "pluginId": "cordova-plugin-crop",
+    "clobbers": [
+      "plugins.crop"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -440,7 +448,8 @@ module.exports.metadata =
   "jpush-phonegap-plugin": "3.3.2",
   "phonegap-plugin-barcodescanner": "8.0.0",
   "cordova-plugin-splashscreen": "5.0.2",
-  "cordova-plugin-network-information": "2.0.1"
+  "cordova-plugin-network-information": "2.0.1",
+  "cordova-plugin-crop": "0.3.1"
 };
 // BOTTOM OF METADATA
 });
