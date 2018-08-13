@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom';
 import {observer, inject} from 'mobx-react';
 import PullToRefresh from 'pulltorefreshjs';
 import './index.less';
+import Picture from "../../../components/Picture";
 
 const TabItems = [
   {title: '通知', icon: '\ue624'},
@@ -122,7 +123,11 @@ class MsgCenter extends React.Component {
                 ))
                 :
                 <div className="empty-area">
-                  <img src={require('../../../images/no_news.png')}/>
+                  <Picture
+                    src={require('../../../images/no_news.png')}
+                    height={239}
+                    width={303}
+                  />
                   <div className="empty-text">暂无通知</div>
                 </div>
             }
@@ -140,7 +145,11 @@ class MsgCenter extends React.Component {
                 ))
                 :
                 <div className="empty-area">
-                  <img src={require('../../../images/no_news.png')}/>
+                  <Picture
+                    src={require('../../../images/no_news.png')}
+                    height={239}
+                    width={303}
+                  />
                   <div className="empty-text">暂无资讯</div>
                 </div>
             }
