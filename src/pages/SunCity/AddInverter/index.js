@@ -23,8 +23,17 @@ import { fetchAddInverterAT } from '../../../stores/sunCity/request';
 import { EQUIPMENT_DATA_TYPE } from '../../../utils/variable';
 import './style.less';
 
-const AOTAI = 'at';
-const GUDEWEI = 'goodway';
+const JINLANG = 'jl';
+const JL_ACCOUNT_TYPE = [
+  {
+    value: '0',
+    label: '普通账号'
+  },
+  {
+    value: '1',
+    label: '代理商账号'
+  },
+];
 let isScanning = false;
 
 /**
@@ -39,7 +48,8 @@ class Comp extends React.Component {
     successModal: false,
     showLoading: false,
     username: '',
-    password: ''
+    password: '',
+    accountType: ''
   };
 
   evtbackButton = () => {
@@ -66,65 +76,21 @@ class Comp extends React.Component {
     });
   };
 
-  // 条形码输入
-  barcodeChange = value => {
+  accountTypeChange = value => {
     this.setState({
-      barcodeValue: value
-    });
-  };
-
-  // 扫描条形码
-  barcodeScanner = () => {
-    if (window.cordova) {
-      isScanning = true;
-      window.cordova.plugins.barcodeScanner.scan(
-        result => {
-          setTimeout(() => {
-            isScanning = false;
-          }, 200);
-          // if (result.cancelled) {
-          //   isScanning = true;
-          // }
-          this.setState({
-            barcodeValue: result.text
-          });
-        },
-        error => {
-          setTimeout(() => {
-            isScanning = false;
-          }, 200);
-          //扫码失败
-          ToastNoMask(`扫码失败${error}`);
-        },
-        {
-          preferFrontCamera: false, // iOS and Android 设置前置摄像头
-          showFlipCameraButton: true, // iOS and Android 显示旋转摄像头按钮
-          showTorchButton: true, // iOS and Android 显示打开闪光灯按钮
-          torchOn: false, // Android, launch with the torch switched on (if available)打开手电筒
-          prompt: '在扫描区域内放置二维码', // Android提示语
-          resultDisplayDuration: 500, // Android, display scanned text for X ms设置扫码时间的参数default 1500.
-          formats: 'CODE_128', // 二维码格式可设置多种类型,QR_CODE：二维码，CODE_128：条形码
-          orientation: 'portrait', // Android only (portrait|landscape),default unset so it rotates with the device在安卓上 landscape 是横屏状态
-          disableAnimations: true, // iOS     是否禁止动画
-          disableSuccessBeep: false // iOS      禁止成功后提示声音 “滴”
-        }
-      );
-    }
+      accountType: value[0]
+    })
   };
 
   onSubmit = () => {
-    if (this.state.inverterType === AOTAI || this.state.inverterType === GUDEWEI) {
-      this.addInverterAT();
-    } else {
-      this.addInverter();
-    }
+    this.addInverterAT();
   };
 
   /**
    * 添加奥泰、顾得威的逆变器
    */
   addInverterAT = () => {
-    const { username, password } = this.state;
+    const { username, password, accountType } = this.state;
     const sourceData = this.state.inverterType;
     if (this.props.keyPair.showHasKey(this.props)) {
       if (!username) {
@@ -133,7 +99,21 @@ class Comp extends React.Component {
       }
       if (!password) {
         ToastNoMask('请输入密码');
+        return;
       }
+      if (this.state.inverterType === JINLANG && !this.state.accountType) {
+        ToastNoMask('请选择账号类型');
+        return;
+      }
+
+      console.log({
+        userPubKey: this.props.keyPair.publicKey,
+        username,
+        password,
+        source: sourceData,
+        type: accountType
+      });
+
       this.setState({
         showLoading: true
       });
@@ -141,7 +121,8 @@ class Comp extends React.Component {
         userPubKey: this.props.keyPair.publicKey,
         username,
         password,
-        source: sourceData
+        source: sourceData,
+        type: accountType
       })
         .then(result => {
           this.setState({
@@ -169,57 +150,6 @@ class Comp extends React.Component {
             showLoading: false
           });
         });
-    }
-  };
-
-  // 添加逆变器
-  addInverter = () => {
-    const deviceNo = this.state.barcodeValue;
-    const sourceData = this.state.inverterType;
-    if (this.props.keyPair.showHasKey(this.props)) {
-      if (!sourceData) {
-        ToastNoMask('请选择逆变器品牌');
-        return;
-      } else if (!deviceNo) {
-        ToastNoMask('请输入逆变器条码');
-        return;
-      }
-      this.setState({
-        showLoading: true
-      });
-      this.props.sunCityStore
-        .fetchSCAddInverter({
-          userPubKey: this.props.keyPair.publicKey,
-          sourceData,
-          deviceNo
-        })
-        .then(result => {
-          this.setState({
-            showLoading: false
-          });
-          if (result.code === 200) {
-            // 添加成功后，删除缓存设备数据，重新请求所有设备数据
-            // deleteLocalStorage('stationExpireTime');
-            // deleteLocalStorage('equipmentListObj');
-            this.addInverterDetail({
-              sourceData,
-              deviceNo,
-              dateType: EQUIPMENT_DATA_TYPE.DAY
-            });
-            this.setState({
-              successModal: true
-            });
-          } else {
-            ToastNoMask(`添加逆变器失败。${result.msg || ''}`);
-          }
-        })
-        .catch(err => {
-          this.setState({
-            showLoading: false
-          });
-        });
-    } else {
-      ToastNoMask('该账号没有私钥,请到"我的"页面添加！');
     }
   };
 
@@ -296,37 +226,36 @@ class Comp extends React.Component {
             >
               <List.Item arrow="horizontal">逆变器品牌</List.Item>
             </Picker>
-            {inverterType === AOTAI || inverterType === GUDEWEI ? (
-              <div>
-                <InputItem
-                  placeholder="请输入账号"
-                  clear
-                  onChange={value => this.setState({ username: value })}
-                  value={this.state.username}
-                />
-                <InputItem
-                  placeholder="请输入密码"
-                  clear
-                  type="password"
-                  onChange={value => this.setState({ password: value })}
-                  value={this.state.password}
-                />
-              </div>
-            ) : (
-              <div>
-                <InputItem
-                  placeholder="请输入条码"
-                  clear
-                  onChange={this.barcodeChange}
-                  value={this.state.barcodeValue}
+            <div>
+              <InputItem
+                placeholder="请输入账号"
+                clear
+                onChange={value => this.setState({ username: value })}
+                value={this.state.username}
+              />
+              <InputItem
+                placeholder="请输入密码"
+                clear
+                type="password"
+                onChange={value => this.setState({ password: value })}
+                value={this.state.password}
+              />
+              {
+                inverterType === JINLANG
+                &&
+                <Picker
+                  data={JL_ACCOUNT_TYPE}
+                  cols={1}
+                  className="account-type"
+                  value={[this.state.accountType]}
+                  onChange={this.accountTypeChange}
                 >
-                  <i className="iconfont">&#xe654;</i>
-                </InputItem>
-                <div className="scan" onClick={this.barcodeScanner}>
-                  <i className="iconfont">&#xe66c;</i>切换扫描条形码
-                </div>
-              </div>
-            )}
+                  <List.Item arrow="horizontal">账号类型</List.Item>
+                </Picker>
+              }
+            </div>
+
+
 
             <GreenButton size={'big'} onClick={this.onSubmit}>
               确认
