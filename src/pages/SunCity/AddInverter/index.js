@@ -106,14 +106,6 @@ class Comp extends React.Component {
         return;
       }
 
-      console.log({
-        userPubKey: this.props.keyPair.publicKey,
-        username,
-        password,
-        source: sourceData,
-        type: accountType
-      });
-
       this.setState({
         showLoading: true
       });
