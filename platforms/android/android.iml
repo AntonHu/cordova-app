@@ -155,12 +155,13 @@
     <orderEntry type="library" name="Gradle: android.arch.lifecycle:viewmodel-1.1.0" level="project" />
     <orderEntry type="library" name="Gradle: barcodescanner-release-2.1.5:@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.stephenc.jcip:jcip-annotations:1.0-1@jar" level="project" />
-    <orderEntry type="library" name="Gradle: com.android.support:support-compat-27.1.0" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-v4-27.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:support-compat-27.1.0" level="project" />
     <orderEntry type="library" name="Gradle: net.minidev:accessors-smart:1.2@jar" level="project" />
     <orderEntry type="library" name="Gradle: __local_aars__:/Users/luyang/workspace/company/block-chain-mobile/platforms/android/libs/jpush-android-3.1.1.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.lifecycle:livedata-core-1.1.0" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-media-compat-27.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.soundcloud.android:android-crop-1.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-annotations:27.1.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-core-utils-27.1.0" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.core:common:1.1.0@jar" level="project" />

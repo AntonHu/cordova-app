@@ -25,7 +25,7 @@ import PullToRefresh from 'pulltorefreshjs';
  */
 @inject('sunCityStore', 'keyPair') // 如果注入多个store，用数组表示
 @observer
-class Comp extends React.Component {
+class EquipmentInfo extends React.Component {
   state = {
     selected: {
       day: true,
@@ -158,62 +158,6 @@ class Comp extends React.Component {
     return dayEquipmentData;
   }
 
-  pullToRefresh = async (deviceNo, sourceData) => {
-    const { keyPair, userStore, history } = this.props;
-    // this.props.sunCityStore.deleteAllCache();
-    const promiseArray = [];
-
-    // 如果有私钥
-    if (keyPair.hasKey) {
-      let dayEquipmentData = [];
-      dayEquipmentData = await this.getPowerData(
-        sourceData,
-        deviceNo,
-        EQUIPMENT_DATA_TYPE.DAY
-      );
-      dayEquipmentData.length > 0 &&
-        dayEquipmentData.map(item => {
-          item.time = getHour_Minute(item.latestTime);
-          item.number = item.totalPower;
-          return item;
-        });
-      setLocalStorage('dayEquipmentData', JSON.stringify(dayEquipmentData)); // 本地储存天设备发电数据
-      // 设备当前功率
-      let currentPower = 0;
-      // 设备日电量
-      let dayElectric = 0;
-      // 当前电站发电量
-      let maxValue = 0;
-      const equipmentData = dayEquipmentData[dayEquipmentData.length - 1];
-      currentPower =
-        equipmentData.totalPower && equipmentData.totalPower.toFixed(2);
-      dayElectric =
-        equipmentData.todayEnergy && equipmentData.todayEnergy.toFixed(2);
-      maxValue =
-        equipmentData.totalEnergy && equipmentData.totalEnergy.toFixed(2);
-      const selected = Object.assign({}, this.state.selected);
-      Object.keys(selected).forEach(item => {
-        selected[item] = false;
-      });
-      selected.day = true;
-      this.setState({
-        deviceNo,
-        sourceData,
-        dayElectric,
-        maxValue,
-        selected,
-        chartTitle: this.chartTitleObj.day,
-        currentPower
-      });
-      this.areaChart && this.areaChart.clear();
-      this.renderArea(dayEquipmentData);
-      // 本地储存设备月，年，所有数据
-      this.cacheEquipmentData(sourceData, deviceNo);
-
-      promiseArray.push(dayEquipmentData);
-    }
-    return Promise.all(promiseArray);
-  };
   /**
    * 初始化下拉刷新
    */
@@ -596,4 +540,4 @@ class Comp extends React.Component {
   }
 }
 
-export default Comp;
+export default EquipmentInfo;
