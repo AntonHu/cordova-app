@@ -41,7 +41,7 @@ let isScanning = false;
  */
 @inject('sunCityStore', 'keyPair') // 如果注入多个store，用数组表示
 @observer
-class Comp extends React.Component {
+class AddInverter extends React.Component {
   state = {
     inverterType: '',
     barcodeValue: '',
@@ -111,7 +111,7 @@ class Comp extends React.Component {
       });
       fetchAddInverterAT({
         userPubKey: this.props.keyPair.publicKey,
-        username,
+        username: username.trim(),
         password,
         source: sourceData,
         type: accountType
@@ -272,4 +272,4 @@ class Comp extends React.Component {
   }
 }
 
-export default Comp;
+export default AddInverter;

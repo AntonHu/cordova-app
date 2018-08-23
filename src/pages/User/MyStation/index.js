@@ -1,7 +1,7 @@
 import React from 'react';
-import { toJS } from 'mobx';
-import { observer, inject } from 'mobx-react';
-import { PageWithHeader, ActivityCard } from '../../../components';
+import {toJS} from 'mobx';
+import {observer, inject} from 'mobx-react';
+import {PageWithHeader, ActivityCard} from '../../../components';
 import {ACTIVITIES} from '../../Apply/constant';
 import {STATION_VERIFY_STATUS} from '../../../utils/variable';
 import StationVerifyMask from './StationVerifyMask';
@@ -45,17 +45,17 @@ class MyStation extends React.Component {
       <div className="station-item" key={station.id}>
         <div className="station-number">{`电站${idx + 1}`}</div>
         <div className="station-image" onClick={() => recordClick(station, TYPE.RECORD)}>
-          <StationVerifyMask status={station.recordStatus} text="备案资料" />
+          <StationVerifyMask status={station.recordStatus} text="备案资料"/>
           {
             station.recordImg &&
-              <img src={station.recordImg} />
+            <img src={station.recordImg}/>
           }
         </div>
         <div className="station-image" onClick={() => connectionClick(station, TYPE.CONNECTION)}>
-          <StationVerifyMask status={station.connectionStatus} text="并网成功文件" />
+          <StationVerifyMask status={station.connectionStatus} text="并网成功文件"/>
           {
             station.recordImg &&
-            <img src={station.connectionImg} />
+            <img src={station.connectionImg}/>
           }
         </div>
       </div>
@@ -64,6 +64,10 @@ class MyStation extends React.Component {
 
   toUpload = (station) => {
     this.props.history.push('/user/UploadStationInfo/' + station.id);
+  };
+
+  toUploadNew = () => {
+    this.props.history.push('/user/UploadStationInfo');
   };
 
   showImage = (station, type) => {
@@ -87,18 +91,19 @@ class MyStation extends React.Component {
     const STATION = ACTIVITIES.station;
     const {stationStore} = this.props;
     return (
-        <PageWithHeader
-          title={'电站资料'}
-          id="page-my-station"
-          rightComponent={
-            <i
-              className="iconfont"
-              onClick={() => this.props.history.push('/user/UploadStationInfo')}
-            >
-              &#xe650;
-            </i>
-          }
-        >
+      <PageWithHeader
+        title={'电站资料'}
+        id="page-my-station"
+        rightComponent={
+          <i
+            className="iconfont"
+            onClick={this.toUploadNew}
+          >
+            &#xe650;
+          </i>
+        }
+      >
+        <div onClick={this.toUploadNew}>
           <ActivityCard
             imageSrc={STATION.imageSrc}
             title={STATION.title}
@@ -106,15 +111,15 @@ class MyStation extends React.Component {
             info={STATION.info}
             showArrow={false}
           />
+        </div>
+        {
+          stationStore.stationRecords.map((station, idx) => this.renderStationInfo(station, idx))
+        }
 
-          {
-            stationStore.stationRecords.map((station, idx) => this.renderStationInfo(station, idx))
-          }
-
-          {
-            this.state.showViewer && <ImageView imagelist={this.imageList} close={this.hideViewer} />
-          }
-        </PageWithHeader>
+        {
+          this.state.showViewer && <ImageView imagelist={this.imageList} close={this.hideViewer}/>
+        }
+      </PageWithHeader>
 
     );
   }
