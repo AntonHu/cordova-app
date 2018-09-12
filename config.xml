@@ -30,7 +30,7 @@
         <splash density="port-xxxhdpi" src="res/screen/android/drawable-port-xxxhdpi-screen.png" />
         <hook src="hooks/before_build/copy-build-extras-gradle.js" type="before_prepare" />
         <allow-intent href="market:*" />
-        <preference name="CodePushDeploymentKey" value="Sr9DnzzrkbNdLixAKXUoLOqMmgdx0622c1d1-d19c-494b-a7c7-f4e4d3bc9118" />
+        <preference name="CodePushDeploymentKey" value="Oz0UJ62d7mIu8W3IY-ZgqIa78TqV0622c1d1-d19c-494b-a7c7-f4e4d3bc9118" />
     </platform>
     <platform name="ios">
         <icon height="180" src="res/icon/ios/Icon-App-60x60@3x.png" width="180" />
@@ -59,7 +59,7 @@
         <splash height="2208" src="res/screen/ios/Default-736h.png" width="1242" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
-        <preference name="CodePushDeploymentKey" value="EkPHRgDL5fQQk_lBCFIugJqAt6oA0622c1d1-d19c-494b-a7c7-f4e4d3bc9118" />
+        <preference name="CodePushDeploymentKey" value="nzYI83mZ03a1Ta1Qprtpupa-gYf50622c1d1-d19c-494b-a7c7-f4e4d3bc9118" />
         <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
             <string>扫码添加设备需要开启相机</string>
         </edit-config>
