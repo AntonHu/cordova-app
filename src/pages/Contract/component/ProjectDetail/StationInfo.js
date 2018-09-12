@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const Item = List.Item;
 
-//TODO: 电站信息组件
+// 电站信息组件
 // TODO: 缺 预期年化收益
 class StationInfo extends React.PureComponent {
   static propTypes = {

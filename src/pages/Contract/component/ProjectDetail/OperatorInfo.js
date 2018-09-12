@@ -4,7 +4,7 @@ import { List } from "antd-mobile";
 
 const Item = List.Item;
 
-//TODO：受托建造运营方信息 组件
+// 受托建造运营方信息 组件
 // TODO: 缺 企业法人
 class OperatorInfo extends React.PureComponent{
   static propTypes = {
