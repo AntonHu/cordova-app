@@ -24,6 +24,9 @@ import {
 import  {
   EarnToken
 } from '../pages/Apply'
+import {
+  NotInvolvedDetail
+} from '../pages/Contract';
 import MyPowerStation from '../pages/SunCity/MyPowerStation';
 import EquipmentInfo from '../pages/SunCity/EquipmentInfo';
 import AddInverter from '../pages/SunCity/AddInverter';
@@ -136,6 +139,9 @@ class PrimaryRoute extends React.Component {
         {/* 挖宝 */}
         <Route exact path="/mining/sunIntegral" component={SunIntegral}/>
         <Route exact path="/mining/pointRule" component={PointRule}/>
+
+        {/* 合约电站 */}
+        <Route exact path="/contract/notInvolvedDetail/:id" component={NotInvolvedDetail}/>
 
         {/* 应用 */}
         <Route exact path="/apply/earnToken" component={EarnToken}/>

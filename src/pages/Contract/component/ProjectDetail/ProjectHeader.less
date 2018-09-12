@@ -1,0 +1,107 @@
+@import '../../../../styles/common';
+
+@background-position: 0 * @px;
+
+._project-header{
+  width: @contract-item-width;
+  height: 424 * @px;
+  margin: 0 auto;
+  background: url('../../../../images/grey_bg.png');
+  background-position-y: @background-position;
+  background-size: 100%;
+  border-radius: @border-radius;
+  overflow: hidden;
+  position: relative;
+  &.active {
+    background: url('../../../../images/common_bg.png');
+    background-position-y: @background-position;
+    background-size: 100%;
+  }
+
+  .status-text {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    background: #939393;
+    padding-bottom: 20 * @px;
+    font-size: @h3;
+    color: @white-text-color;
+    position: absolute;
+    transform: rotateZ(30deg);
+    right: -230 * @px;
+    width: 500 * @px;
+    height: 300 * @px;
+    top: -210 * @px;
+    &.active {
+      background: linear-gradient(to right, @orange-gradient-start, @orange-gradient-end);
+    }
+  }
+
+  .project-name {
+    margin-top: 80 * @px;
+    color: @white-text-color;
+    font-size: @h2;
+  }
+
+  .purchase-amount {
+    color: @white-text-color;
+    font-size: @h2;
+    margin-top: 22 * @px;
+    height: 20 * @px;
+  }
+
+  .amount-box {
+    display: flex;
+    color: @white-text-color;
+    font-size: @h3;
+    height: 105 * @px;
+    margin-top: 48 * @px;
+    .amount,
+    .annual-rate{
+      flex: 1;
+    }
+    .amount {
+      border-right: 1px solid @white-text-color;
+    }
+    .annual-rate {
+      flex: 1;
+    }
+    .number {
+      margin-top: 34 * @px;
+    }
+  }
+
+  .bottom-box {
+    bottom: 0;
+    display: flex;
+    font-size: @h6;
+    height: 80 * @px;
+    align-items: center;
+    position: absolute;
+    width: @contract-item-width;
+    background: #eaeaea;
+    color: @main-text-color;
+    &.active {
+      background: #CEEEE5;
+    }
+    .bottom-item {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .iconfont {
+        margin-right: 5px;
+        font-size: @h3;
+      }
+    }
+    .time {
+      flex: 1;
+    }
+    .browser {
+      width: 100 * @px;
+    }
+    .share {
+      flex: 1;
+    }
+  }
+}
