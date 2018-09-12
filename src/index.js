@@ -11,7 +11,7 @@ const startJAnalytics = () => {
   const JAnalytics = window.JAnalytics;
   try {
     JAnalytics.init();
-    JAnalytics.setDebugMode();
+    JAnalytics.setDebugMode({'enable': false});
   } catch (err) {
     // navigator.notification.alert(err);
   }
@@ -21,7 +21,7 @@ const startJPush = () => {
   const JPush = window.JPush;
   try {
     JPush.init();
-    JPush.setDebugMode(true);
+    JPush.setDebugMode(false);
     if (device.platform !== 'Android') {
       JPush.setApplicationIconBadgeNumber(0);
     }

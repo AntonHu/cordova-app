@@ -1,5 +1,5 @@
 import React from 'react';
-import {Switch, Route, Redirect} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
 import Home from '../pages/Home';
 import {
   About,
@@ -32,7 +32,6 @@ import PointRule from '../pages/Mining/PointRule';
 import {Modal} from 'antd-mobile';
 import {observer, inject} from 'mobx-react';
 import {reqUpdateGeolocation} from '../stores/user/request';
-import {ToastNoMask} from '../components';
 import {setLocalStorage} from '../utils/storage';
 
 const alert = Modal.alert;
@@ -74,43 +73,6 @@ function onError(error) {
   // ToastNoMask('获取坐标失败');
 }
 
-function syncCallback(syncStatus) {
-  const SyncStatus = window.SyncStatus;
-  switch (syncStatus) {
-    case SyncStatus.UP_TO_DATE:
-      console.log('您的应用是最新的。');
-      break;
-    case SyncStatus.UPDATE_INSTALLED:
-      console.log('已经更新完成，重启APP生效。');
-      // alert('更新', 'app已安装更新，即将重启。', [{text: '确定', onPress: () => {
-      //   window.codePush.restartApplication();
-      // }}]);
-      break;
-    case SyncStatus.UPDATE_IGNORED:
-      console.log('您取消了更新');
-      break;
-    case SyncStatus.IN_PROGRESS:
-      console.log('正在更新，请稍候...');
-      break;
-    case SyncStatus.ERROR:
-      console.log('发生错误');
-      break;
-    case SyncStatus.CHECKING_FOR_UPDATE:
-      console.log('检查更新状态，请稍候...');
-      break;
-    case SyncStatus.AWAITING_USER_ACTION:
-      console.log('等待用户操作');
-      break;
-    case SyncStatus.DOWNLOADING_PACKAGE:
-      console.log('正在下载更新，请稍候...');
-      break;
-    case SyncStatus.INSTALLING_UPDATE:
-      console.log('正在安装更新，请稍候...');
-      break;
-  }
-}
-
-
 @inject('keyPair')
 @observer
 class PrimaryRoute extends React.Component {
@@ -139,33 +101,7 @@ class PrimaryRoute extends React.Component {
     if (this.props.keyPair.hasKey) {
       this.uploadUserLocation(this.props.keyPair.publicKey);
     }
-    this.checkCodePush();
   }
-
-  /**
-   * 判断在app内，且在wifi环境下
-   * @returns {boolean}
-   */
-  isAppUsingWifi = () => {
-    if (navigator.connection && window.Connection) {
-      if (navigator.connection.type === window.Connection.WIFI) {
-        return true;
-      }
-    }
-    return false;
-  };
-
-  /**
-   * 检查codePush更新
-   */
-  checkCodePush = () => {
-    if (window.codePush && this.isAppUsingWifi()) {
-      const InstallMode = window.InstallMode;
-      window.codePush.sync(syncCallback, {
-        installMode: InstallMode.ON_NEXT_RESUME
-      })
-    }
-  };
 
   /**
    * 每次app唤醒时，更新用户坐标
