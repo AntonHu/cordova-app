@@ -1,0 +1,72 @@
+@import "../../styles/common";
+
+.contract-project-item {
+  width: @contract-item-width;
+  height: 350 * @px;
+  background: @white-text-color;
+  padding: 40 * @px 30 * @px;
+  .progress-box {
+    display: flex;
+    font-size: @h5;
+    color: @main-text-color;
+    align-items: center;
+    .am-progress-outer {
+      width: 400 * @px;
+      margin-right: 20 * @px;
+      background-color: #DDEDE9;
+      .am-progress-bar {
+        border: 5 * @px solid @main-color;
+        border-radius: 5 * @px;
+      }
+    }
+  }
+
+  .info-box {
+    display: flex;
+    margin-top: 49 * @px;
+    .annul-box {
+      color: @annual-rate-color;
+      .title{
+        font-size: @h7;
+      }
+      .number {
+        font-size: 54 * @px;
+        font-weight: 500;
+        margin-top: 25 * @px;
+      }
+    }
+    .name-box {
+      margin-left: 73 * @px;
+      color: @main-text-color;
+      .project-name {
+        font-size: @h2;
+      }
+      .capacity {
+        margin-top: 30 * @px;
+        font-size: @h5;
+      }
+    }
+  }
+
+
+
+  .bottom-box {
+    display: flex;
+    width: 650 * @px;
+    height: 62 * @px;
+    justify-content: space-between;
+    align-items: center;
+    color: @main-text-color;
+    font-size: @h4;
+    padding: 22 * @px;
+    background: @white-grey;
+    margin-top: 46 * @px;
+    .enterprise-name {
+
+    }
+    .created-at {
+
+    }
+  }
+
+}

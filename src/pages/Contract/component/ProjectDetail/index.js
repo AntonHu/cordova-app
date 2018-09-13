@@ -1,10 +1,5 @@
 import React from 'react';
-import { withRouter, Link } from 'react-router-dom';
-import { observer, inject } from 'mobx-react';
 import { Icon, Tabs, WhiteSpace } from 'antd-mobile';
-// import PullToRefresh from 'rmc-pull-to-refresh';
-import Tloader from 'react-touch-loader';
-import PullToRefresh from 'pulltorefreshjs';
 import ProjectHeader from './ProjectHeader';
 import ProjectIntro from './ProjectIntro';
 import StationInfo from './StationInfo';
@@ -19,10 +14,8 @@ const tabs = [
   { title: '历史项目' },
 ];
 
-// TODO: 项目详情组件
-// TODO: 详情页的必有组件：头部、项目简介、电站信息、受托建造运营方信息、历史项目
-// TODO：橙色渐变的Button，可以选渐变方向
-// TODO: tab里的 list 的样式
+// 项目详情组件
+// 详情页的必有组件：头部、项目简介、电站信息、受托建造运营方信息、历史项目
 class ProjectDetail extends React.PureComponent {
   static propTypes = {
     projectDetail: PropTypes.object.isRequired
@@ -35,7 +28,7 @@ class ProjectDetail extends React.PureComponent {
         <ProjectHeader projectDetail={ projectDetail }/>
         <ProjectIntro projectDetail={ projectDetail }/>
         <div className="tabs-container">
-          <Tabs tabs={ tabs } initialPage={ 0 }>
+          <Tabs tabs={ tabs } initialPage={ 2 }>
             <StationInfo projectDetail={ projectDetail }/>
             <OperatorInfo projectDetail={ projectDetail }/>
             <HistoryProject projectDetail={ projectDetail }/>

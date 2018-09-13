@@ -6,6 +6,7 @@ const Item = List.Item;
 
 // 受托建造运营方信息 组件
 // TODO: 缺 企业法人
+// TODO: 营业执照 展开
 class OperatorInfo extends React.PureComponent{
   static propTypes = {
     projectDetail: PropTypes.object.isRequired

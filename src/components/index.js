@@ -14,6 +14,8 @@ import Rank from './Rank';
 import Loading from './Loading';
 import EquipmentItem from './EquipmentItem';
 import ActivityCard from './ActivityCard/ActivityCard';
+import ContractProjectItem from './ContractProjectItem';
+import OrangeGradientBtn from './OrangeGradientBtn';
 
 export {
   BlueBox,
@@ -31,5 +33,7 @@ export {
   Rank,
   Loading,
   EquipmentItem,
-  ActivityCard
+  ActivityCard,
+  ContractProjectItem,
+  OrangeGradientBtn
 };

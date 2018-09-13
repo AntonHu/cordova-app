@@ -74,5 +74,34 @@ export const mockDetail = {
       "ossPath": "https://www.thundersdata.com/static/common/logo.png"
     }
   ],
+  "historyProject": [
+    {
+      "projectName": "项目1",
+      "availableShare": 2,
+      "soldShare": 1,
+      "enterpriseName": "企业1",
+      "annualRate": 10,
+      "powerStationCapacity": 999,
+      "created_at": "2018-09-11"
+    },
+    {
+      "projectName": "项目2",
+      "availableShare": 0,
+      "soldShare": 8,
+      "enterpriseName": "企业1",
+      "annualRate": 9,
+      "powerStationCapacity": 999,
+      "created_at": "2018-09-11"
+    },
+    {
+      "projectName": "项目3",
+      "availableShare": 2,
+      "soldShare": 0,
+      "enterpriseName": "企业1",
+      "annualRate": 8,
+      "powerStationCapacity": 999,
+      "created_at": "2018-09-11"
+    },
+  ],
   "totalShare": 10
 };

@@ -6,6 +6,10 @@ const Item = List.Item;
 
 // 电站信息组件
 // TODO: 缺 预期年化收益
+// TODO: 材料计划 跳转
+// TODO: 电站设计图 跳转
+// TODO: 房屋租赁协议 展开
+// TODO: 投资协议 跳转
 class StationInfo extends React.PureComponent {
   static propTypes = {
     projectDetail: PropTypes.object.isRequired
