@@ -15,7 +15,7 @@ class PageWithHeader extends React.PureComponent {
     leftComponent: PropTypes.element,
     rightComponent: PropTypes.element,
     headerMarginBottom: PropTypes.number,
-    id: PropTypes.string
+    id: PropTypes.string.isRequired
   };
 
   static defaultProps = {
