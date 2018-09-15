@@ -1,0 +1,77 @@
+@import '../../../styles/common';
+
+#page-appeal {
+  color: @main-text-color;
+  .input-box {
+    width: @contract-item-width;
+    height: 311 * @px;
+    color: @screen-text-color;
+    margin: 0 auto;
+    background: @white-text-color;
+    padding: 30 * @px;
+    box-sizing: border-box;
+    .am-textarea-item {
+      padding-left: 0;
+      height: 100%;
+      .am-textarea-control {
+        height: 100%;
+        textarea {
+          font-size: @h4!important;
+          height: 100%;
+        }
+      }
+    }
+
+  }
+
+  .pic-wrap {
+    width: @contract-item-width;
+    height: 398 * @px;
+    margin: 20 * @px auto 0 auto;
+    background: @white-text-color;
+    padding: 30 * @px;
+    box-sizing: border-box;
+    text-align: left;
+    .pic-title {
+      margin-bottom: 35 * @px;
+    }
+    .pic-box {
+      display: flex;
+      .pic-item {
+        width: 206 * @px;
+        height: 256 * @px;
+        &:not:first-child {
+          margin-left: 10 * @px;
+        }
+      }
+      .upload-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .iconfont {
+          font-size: 60 * @px;
+          color: @screen-text-color;
+        }
+      }
+    }
+  }
+
+  .btn-wrap {
+    width: 100vw;
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    .am-button {
+      flex: 1;
+      height: 100 * @px;
+      border-radius: 0;
+      &::before {
+        border-radius: 0!important;
+      }
+      &.orange-gradient-button {
+        flex: 3;
+      }
+
+    }
+  }
+}

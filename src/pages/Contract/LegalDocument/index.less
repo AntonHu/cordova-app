@@ -1,0 +1,39 @@
+@import '../../../styles/common';
+
+#page-legal-document {
+  color: @main-text-color;
+  .doc-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 30 * @px 30 * @px 0;
+  }
+  .doc-item {
+    line-height: inherit;
+    width: 325 * @px;
+    height: 398 * @px;
+    position: relative;
+    .doc-name {
+      font-size: @h4;
+      margin-top: 70 * @px;
+    }
+
+    .doc-time {
+      color: @screen-text-color;
+      font-size: @h5;
+      margin-top: 22 * @px;
+    }
+
+    .stamp {
+      width: 116 * @px;
+      height: 69 * @px;
+      position: absolute;
+      top: 201 * @px;
+      right: 29 * @px;
+    }
+
+    .customer-name {
+      font-size: @h4;
+      margin-top: 170 * @px;
+    }
+  }
+}

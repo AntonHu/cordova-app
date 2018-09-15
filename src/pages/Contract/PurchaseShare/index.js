@@ -2,16 +2,29 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import { Title, PageWithHeader, Picture, Rank, OrangeGradientBtn } from '../../../components';
-import { Icon, Tabs, WhiteSpace } from 'antd-mobile';
+import { Icon, Tabs, WhiteSpace, Toast } from 'antd-mobile';
 import { getLocalStorage } from '../../../utils/storage';
 // import PullToRefresh from 'rmc-pull-to-refresh';
 import Tloader from 'react-touch-loader';
 import PullToRefresh from 'pulltorefreshjs';
 import './index.less';
 
-// TODO: 申购份额页面
+// 申购份额页面
 class PurchaseShare extends React.PureComponent{
+  state = {
+    isAccept: false
+  };
+
+  onConfirm = () => {
+    console.log(this.state.isAccept)
+    if (!this.state.isAccept) {
+      Toast.info('您尚未同意《电站建造登记运营代收电费授权书》');
+      return;
+    }
+  };
+
   render() {
+    const {isAccept } = this.state;
     return (
       <PageWithHeader title="投资份额确认书" id="page-purchase-share">
         <div className="content-wrap">
@@ -35,12 +48,18 @@ class PurchaseShare extends React.PureComponent{
           </div>
 
           <div className="agreement-box">
-            <div className="agree-action">同意</div>
+
+            <div
+              className={`agree-action ${isAccept ? 'accept' : ''}`}
+              onClick={() => this.setState({ isAccept: !isAccept })}
+            >
+              <i className="iconfont">&#xe61d;</i>同意
+            </div>
             <div className="agreement">《电站建造登记运营代收电费授权书》</div>
           </div>
         </div>
 
-        <OrangeGradientBtn onClick={() => {}}>
+        <OrangeGradientBtn onClick={this.onConfirm}>
           确认
         </OrangeGradientBtn>
       </PageWithHeader>

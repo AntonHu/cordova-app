@@ -14,10 +14,17 @@ class OrangeGradientBtn extends React.PureComponent {
     gradientDirection: 'h'
   };
 
+  _onClick = (e) => {
+    e.preventDefault();
+    if (this.props.onClick) {
+      this.props.onClick(e)
+    }
+  };
+
   render() {
     const { onClick, gradientDirection } = this.props;
     return (
-      <Button className={`orange-gradient-button ${gradientDirection}`} onClick={onClick}>
+      <Button className={`orange-gradient-button ${gradientDirection}`} onClick={this._onClick}>
         {this.props.children}
       </Button>
     )
