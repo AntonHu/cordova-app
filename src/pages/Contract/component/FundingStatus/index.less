@@ -1,0 +1,70 @@
+@import '../../../../styles/common';
+
+@dot-size: 14 * @px;
+
+.funding-status {
+  width: @contract-item-width;
+  margin: 0 auto;
+  background: @white-text-color;
+  border-radius: @border-radius;
+  color: @main-text-color;
+  padding-top: 70 * @px;
+  padding-bottom: 80 * @px;
+  .main-info {
+    font-size: 42 * @px;
+
+  }
+
+  .sub-info {
+    font-size: @h3;
+    margin-top: 22 * @px;
+  }
+
+  .share-list {
+    margin-top: 85 * @px;
+    .share-wrap {
+      display: flex;
+      text-align: left;
+      margin-left: 70 * @px;
+      height: 126 * @px;
+      border-left: 1px solid @icon-color;
+      padding-left: 53 * @px;
+      position: relative;
+      &::before {
+        content: '';
+        display: block;
+        width: @dot-size;
+        height: @dot-size;
+        border-radius: @dot-size;
+        position: absolute;
+        top: -(@dot-size / 2);
+        left: -(@dot-size / 2 + 1 * @px);
+        background: @icon-color;
+      }
+
+
+      .buyer,
+      .buy-amount{
+        font-size: 30 * @px;
+        margin-left: 49 * @px;
+      }
+
+      .buy-time,
+      .buy-share
+      {
+        color: @screen-text-color;
+        font-size: @h4;
+        margin-top: 25 * @px;
+        margin-left: 49 * @px;
+      }
+
+      .buy-amount {
+        margin-left: 60 * @px;
+      }
+
+      .buy-share {
+        margin-left: 60 * @px;
+      }
+    }
+  }
+}

@@ -5,6 +5,7 @@ import ShareConfirm from './ShareConfirm';
 import InvestAgreement from './InvestAgreement'
 import Appeal from './Appeal';
 import LegalDocument from './LegalDocument';
+import InvolvedDetail from './InvolvedDetail';
 
 export {
   NotInvolvedDetail,
@@ -13,5 +14,6 @@ export {
   ShareConfirm,
   InvestAgreement,
   Appeal,
-  LegalDocument
+  LegalDocument,
+  InvolvedDetail
 }

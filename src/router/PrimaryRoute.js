@@ -31,7 +31,8 @@ import {
   ShareConfirm,
   InvestAgreement,
   Appeal,
-  LegalDocument
+  LegalDocument,
+  InvolvedDetail
 } from '../pages/Contract';
 import MyPowerStation from '../pages/SunCity/MyPowerStation';
 import EquipmentInfo from '../pages/SunCity/EquipmentInfo';
@@ -148,6 +149,7 @@ class PrimaryRoute extends React.Component {
 
         {/* 合约电站 */}
         <Route exact path="/contract/notInvolvedDetail/:id" component={NotInvolvedDetail}/>
+        <Route exact path="/contract/involvedDetail/:id" component={InvolvedDetail}/>
         <Route exact path="/contract/addBankCard" component={BankCard}/>
         <Route exact path="/contract/purchaseShare" component={PurchaseShare}/>
         <Route exact path="/contract/shareConfirm" component={ShareConfirm}/>
