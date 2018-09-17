@@ -32,7 +32,8 @@ import {
   InvestAgreement,
   Appeal,
   LegalDocument,
-  InvolvedDetail
+  InvolvedDetail,
+  ComponentTrace
 } from '../pages/Contract';
 import MyPowerStation from '../pages/SunCity/MyPowerStation';
 import EquipmentInfo from '../pages/SunCity/EquipmentInfo';
@@ -156,6 +157,7 @@ class PrimaryRoute extends React.Component {
         <Route exact path="/contract/investAgreement" component={InvestAgreement}/>
         <Route exact path="/contract/appeal" component={Appeal}/>
         <Route exact path="/contract/legalDocument" component={LegalDocument}/>
+        <Route exact path="/contract/componentTrace" component={ComponentTrace}/>
 
         {/* 应用 */}
         <Route exact path="/apply/earnToken" component={EarnToken}/>

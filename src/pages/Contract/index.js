@@ -6,6 +6,7 @@ import InvestAgreement from './InvestAgreement'
 import Appeal from './Appeal';
 import LegalDocument from './LegalDocument';
 import InvolvedDetail from './InvolvedDetail';
+import ComponentTrace from './ComponentTrace';
 
 export {
   NotInvolvedDetail,
@@ -15,5 +16,6 @@ export {
   InvestAgreement,
   Appeal,
   LegalDocument,
-  InvolvedDetail
+  InvolvedDetail,
+  ComponentTrace
 }
