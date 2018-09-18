@@ -4,6 +4,12 @@ import { getLocalStorage } from './storage';
 
 export const TIME_OUT = 10000;
 export const LONG_TIME_OUT = 15000;
+export const ERR_CODE = {
+  timeout: -TIME_OUT,
+  notFound: 404,
+  networkError: 500
+};
+
 /*
   请求头为application/json
 */
@@ -38,18 +44,50 @@ const postInstance = axios.create({
 
 // 重新包装一下，使得超时的err有response
 const errHandler = err => {
+  console.dir(err);
   if (err.message === `timeout of ${TIME_OUT}ms exceeded`) {
     throw {
-      response: {
-        data: {
-          code: 0,
-          msg: '请求超时'
-        }
-      }
+      success: false,
+      code: ERR_CODE.timeout,
+      msg: '请求超时'
+    }
+  }
+  if (err.message === 'Request failed with status code 404') {
+    throw {
+      success: false,
+      code: ERR_CODE.notFound,
+      msg: '接口404'
+    }
+  }
+  if (err.message === 'Network Error') {
+    throw {
+      success: false,
+      code: ERR_CODE.networkError,
+      msg: '网络错误'
     }
   }
   throw err
 };
+
+/**
+ * 把err用接口名包装一下
+ * @param err
+ * @param name  接口名字
+ * @returns {*}
+ */
+export const errorWrap = (err, name) => {
+  if (err.code !== undefined && err.msg) {
+    err.msg = name + ' ' + err.msg
+  } else {
+    err = {
+      success: false,
+      code: -1,
+      msg: name + ' 接口错误'
+    }
+  }
+  return err;
+};
+
 
 /*
   get请求，参数：params

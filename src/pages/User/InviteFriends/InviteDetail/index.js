@@ -43,7 +43,7 @@ class InviteDetail extends React.Component {
             <img src={require('../../../../images/qrcode.png')} className="qrcode-png"/>
             <div className="qrcode-info">
               <p>真 壕 友 ， 一 起 玩</p>
-              <p>扫 码 立 即 下 载 能 量 星 球 A P P</p>
+              <p>扫 码 立 即 下 载 能 源 星 球 A P P</p>
             </div>
           </div>
 
