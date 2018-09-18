@@ -75,7 +75,7 @@ const errHandler = err => {
  * @param name  接口名字
  * @returns {*}
  */
-export const errorWrap = (err, name) => {
+export const requestError = (err, name) => {
   if (err.code !== undefined && err.msg) {
     err.msg = name + ' ' + err.msg
   } else {

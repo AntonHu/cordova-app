@@ -1,5 +1,6 @@
 import { observable, action, runInAction, computed } from 'mobx';
 import { fetchUploadAppeal } from "../request";
+import { ToastError } from "../../ToastError";
 
 // 申诉
 class Appeal {
@@ -13,8 +14,15 @@ class Appeal {
   };
 
   uploadAppeal = async ({ projectId, purchaseId }) => {
-    const result = await fetchUploadAppeal({ projectId, purchaseId, content: this.content, fileList: this.fileList });
-    return result;
+    try {
+      const result = await fetchUploadAppeal({ projectId, purchaseId, content: this.content, fileList: this.fileList });
+      if (!result.success) {
+        throw result
+      }
+      return result;
+    } catch (e) {
+      ToastError(e)
+    }
   };
 
   @action
@@ -26,7 +34,6 @@ class Appeal {
   updateFileList = (val) => {
     this.fileList = val;
   };
-
 
 }
 

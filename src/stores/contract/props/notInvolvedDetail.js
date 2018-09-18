@@ -1,4 +1,4 @@
-import { action, computed, observable } from 'mobx';
+import { action, computed, observable, runInAction } from 'mobx';
 import {
   fetchConfirmPayment,
   fetchHistoryProjectList,
@@ -7,6 +7,8 @@ import {
   fetchShareConfirmDoc,
   fetchInvestAgreement, fetchCancelPurchase
 } from "../request";
+import { Toast } from 'antd-mobile';
+import { ToastError } from "../../ToastError";
 
 // 未参与的合约项目详情（包含申购）
 class NotInvolvedDetail {
@@ -56,50 +58,71 @@ class NotInvolvedDetail {
   // 项目详情
   @action
   loadDetail = async (id) => {
-    this.isDetailLoading = true;
-    const result = await fetchProjectDetail({ id });
-    this.isDetailLoading = false;
-    if (result.success) {
-      const data = result.data || {};
-      this.projectDetail = data.projectDetail || {};
-    } else {
-
+    try {
+      this.isDetailLoading = true;
+      const result = await fetchProjectDetail({ id });
+      runInAction(() => {
+        this.isDetailLoading = false;
+        if (result.success) {
+          const data = result.data || {};
+          this.projectDetail = data.projectDetail || {};
+        } else {
+          throw result;
+        }
+      });
+      return result;
+    } catch (e) {
+      ToastError(e);
     }
-    return result;
   };
 
   // 历史项目列表
   @action
   loadHistory = async ({ enterpriseId, onlyBaseInfo, currentProjectId }) => {
-    this.isHistoryLoading = true;
-    const result = await fetchHistoryProjectList({ enterpriseId, onlyBaseInfo, currentProjectId });
-    this.isHistoryLoading = false;
-    if (result.success) {
-      const data = result.data || {};
-      this.historyList = data.list || [];
-    } else {
+    try {
+      this.isHistoryLoading = true;
+      const result = await fetchHistoryProjectList({ enterpriseId, onlyBaseInfo, currentProjectId });
+      runInAction(() => {
+        this.isHistoryLoading = false;
+        if (result.success) {
+          const data = result.data || {};
+          this.historyList = data.list || [];
+        } else {
+          throw result;
+        }
+      });
 
+      return result;
+    } catch (e) {
+      ToastError(e);
     }
-    return result;
   };
 
   // 调申购方法
   @action
   onPurchase = async () => {
-    const result = await fetchPurchaseProject({
-      projectId: this.projectDetail.projectId,
-      purchaseNumber: this.purchaseCount
-    });
-    if (result.success) {
-      const data = result.data || {};
-      this.purchaseId = data.purchaseId + '' || '';
-    } else {
+    try {
+      const result = await fetchPurchaseProject({
+        projectId: this.projectDetail.projectId,
+        purchaseNumber: this.purchaseCount
+      });
+      runInAction(() => {
+        if (result.success) {
+          const data = result.data || {};
+          this.purchaseId = data.purchaseId + '' || '';
+        } else {
+          throw result;
+        }
+      });
 
+      return result;
+    } catch (e) {
+      ToastError(e);
     }
-    return result;
   };
 
   // "确认已付款"
+  // TODO: 从store里去掉
   onConfirmPay = async () => {
     const result = await fetchConfirmPayment({
       projectId: this.projectDetail.projectId,
@@ -109,6 +132,7 @@ class NotInvolvedDetail {
   };
 
   // 取消申购
+  // TODO: 从store里去掉
   onCancelPurchase = async () => {
     const result = await fetchCancelPurchase({
       projectId: this.projectDetail.projectId,
@@ -118,6 +142,7 @@ class NotInvolvedDetail {
   };
 
   // 获取投资份额确认书
+  // todo: store里加一下
   getShareConfirmDoc = async ({ type }) => {
     const result = await fetchShareConfirmDoc({
       type,
@@ -128,6 +153,7 @@ class NotInvolvedDetail {
   };
 
   // 获取投资协议
+  // todo: store里加一下
   getInvestAgreement = async ({ type }) => {
     const result = await fetchInvestAgreement({
       type,

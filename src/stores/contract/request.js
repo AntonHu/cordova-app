@@ -1,4 +1,4 @@
-import { get, post, errorWrap } from '../../utils/fetch';
+import { get, post, requestError } from '../../utils/fetch';
 import { backendServer, PAGE_SIZE } from '../../utils/variable';
 
 const serverUrl = backendServer + '/app';
@@ -8,7 +8,7 @@ export const fetchProjectList = async ({ page }) => {
     const response = await get(`${serverUrl}/project/list`, { page, pageSize: PAGE_SIZE });
     return response;
   } catch (err) {
-    return errorWrap(err, '合约项目列表');
+    throw requestError(err, '合约项目列表');
   }
 };
 
@@ -17,7 +17,7 @@ export const fetchProjectDetail = async ({ id }) => {
     const response = await get(`${serverUrl}/project/detail`, { id });
     return response;
   } catch (err) {
-    return errorWrap(err, '合约详情');
+    throw requestError(err, '合约详情');
   }
 };
 
@@ -27,7 +27,7 @@ export const fetchShareConfirmDoc = async ({ type, projectId, purchaseNumber }) 
     const response = await get(`${serverUrl}/app/project/legalFile`, { type, projectId, purchaseNumber });
     return response;
   } catch (err) {
-    return errorWrap(err, '份额确认书');
+    throw requestError(err, '份额确认书');
   }
 };
 
@@ -37,7 +37,7 @@ export const fetchInvestAgreement = async ({ type, projectId, purchaseNumber }) 
     const response = await get(`${serverUrl}/app/project/legalFile`, { type, projectId, purchaseNumber });
     return response;
   } catch (err) {
-    return errorWrap(err, '投资协议');
+    throw requestError(err, '投资协议');
   }
 };
 
@@ -52,7 +52,7 @@ export const fetchPurchaseProject = async ({ projectId, purchaseNumber }) => {
     const response = await post(`${serverUrl}/project/purchase`, { projectId, purchaseNumber });
     return response;
   } catch (err) {
-    return errorWrap(err, '申购项目');
+    throw requestError(err, '申购项目');
   }
 };
 
@@ -67,7 +67,7 @@ export const fetchCancelPurchase = async ({ projectId, purchaseId }) => {
     const response = await post(`${serverUrl}/project/cancel`, { projectId, purchaseId });
     return response;
   } catch (err) {
-    return errorWrap(err, '取消申购');
+    throw requestError(err, '取消申购');
   }
 };
 
@@ -82,7 +82,7 @@ export const fetchConfirmPayment = async ({ projectId, purchaseId }) => {
     const response = await post(`${serverUrl}/project/confirmPayment`, { projectId, purchaseId });
     return response;
   } catch (err) {
-    return errorWrap(err, '确认付款');
+    throw requestError(err, '确认付款');
   }
 };
 
@@ -99,7 +99,7 @@ export const fetchUploadAppeal = async ({ projectId, purchaseId, content, fileLi
     const response = await post(`${serverUrl}/project/appeal`, { projectId, purchaseId, content, fileList });
     return response;
   } catch (err) {
-    return errorWrap(err, '申诉');
+    throw requestError(err, '申诉');
   }
 };
 
@@ -115,7 +115,7 @@ export const fetchHistoryProjectList = async ({ enterpriseId, onlyBaseInfo, curr
     const response = await get(`${serverUrl}/project/listAll`, { enterpriseId, onlyBaseInfo, currentProjectId });
     return response;
   } catch (err) {
-    return errorWrap(err, '历史项目列表');
+    throw requestError(err, '历史项目列表');
   }
 };
 
@@ -129,7 +129,7 @@ export const fetchUserProjectList = async ({ page }) => {
     const response = await get(`${serverUrl}/user/project/list`, { page, pageSize: PAGE_SIZE });
     return response;
   } catch (err) {
-    return errorWrap(err, '我的合约电站');
+    throw requestError(err, '我的合约电站');
   }
 };
 
@@ -143,7 +143,7 @@ export const fetchProjectGroupInformation = async ({ projectId }) => {
     const response = await get(`${serverUrl}/project/groupInformation`, { projectId });
     return response;
   } catch (err) {
-    return errorWrap(err, '项目成团信息');
+    throw requestError(err, '项目成团信息');
   }
 };
 
@@ -157,7 +157,7 @@ export const fetchProjectSiteInformation = async ({ projectId }) => {
     const response = await get(`${serverUrl}/project/siteInformation`, { projectId });
     return response;
   } catch (err) {
-    return errorWrap(err, '建站信息');
+    throw requestError(err, '建站信息');
   }
 };
 
@@ -171,7 +171,7 @@ export const fetchComponentTrace = async ({moduleId}) => {
     const response = await get(`https://api.thundersdata.com/operation-data/v1/project/moduleinfo/${moduleId}`);
     return response;
   } catch (e) {
-    return errorWrap(e, '组件溯源')
+    throw requestError(e, '组件溯源')
   }
 };
 
@@ -186,7 +186,7 @@ export const fetchProjectLegalFile = async ({ projectId, purchaseId }) => {
     const response = await get(`${serverUrl}/project/legalFile/list`, { projectId, purchaseId });
     return response;
   } catch (err) {
-    return errorWrap(err, '项目法律文书');
+    throw requestError(err, '项目法律文书');
   }
 };
 
@@ -201,7 +201,7 @@ export const fetchRejectInfo = async ({ projectId, purchaseId }) => {
     const response = await get(`${serverUrl}/project/reject/info`, { projectId, purchaseId });
     return response;
   } catch (err) {
-    return errorWrap(err, '驳回信息');
+    throw requestError(err, '驳回信息');
   }
 };
 

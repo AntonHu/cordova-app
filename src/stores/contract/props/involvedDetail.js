@@ -2,9 +2,13 @@ import { observable, action, runInAction, computed } from 'mobx';
 import {
   fetchHistoryProjectList,
   fetchProjectDetail,
-  fetchProjectGroupInformation, fetchProjectLegalFile,
-  fetchProjectSiteInformation, fetchRejectInfo
+  fetchProjectGroupInformation,
+  fetchProjectLegalFile,
+  fetchProjectSiteInformation,
+  fetchRejectInfo
 } from "../request";
+import { Toast } from 'antd-mobile';
+import { ToastError } from "../../ToastError";
 
 // 已参与的合约项目详情
 class InvolvedDetail {
@@ -37,6 +41,7 @@ class InvolvedDetail {
   @observable isDocListLoading = false;
 
   // goBack的时候，重置store
+  @action
   reset = () => {
     this.projectDetail = {};
     this.isDetailLoading = false;
@@ -80,61 +85,91 @@ class InvolvedDetail {
   // 项目详情
   @action
   loadDetail = async (id) => {
-    this.isDetailLoading = true;
-    const result = await fetchProjectDetail({ id });
-    this.isDetailLoading = false;
-    if (result.success) {
-      const data = result.data || {};
-      this.projectDetail = data.projectDetail || {};
-    } else {
+    try {
+      this.isDetailLoading = true;
+      const result = await fetchProjectDetail({ id });
+      runInAction(() => {
+        this.isDetailLoading = false;
+        if (result.success) {
+          const data = result.data || {};
+          this.projectDetail = data.projectDetail || {};
+        } else {
+          throw result;
+        }
+      });
 
+      return result;
+    } catch (e) {
+      ToastError(e);
     }
-    return result;
+
   };
 
   // 历史项目列表
   @action
   loadHistory = async ({ enterpriseId, onlyBaseInfo, currentProjectId }) => {
-    this.isHistoryLoading = true;
-    const result = await fetchHistoryProjectList({ enterpriseId, onlyBaseInfo, currentProjectId });
-    this.isHistoryLoading = false;
-    if (result.success) {
-      const data = result.data || {};
-      this.historyList = data.list || [];
-    } else {
+    try {
+      this.isHistoryLoading = true;
+      const result = await fetchHistoryProjectList({ enterpriseId, onlyBaseInfo, currentProjectId });
+      runInAction(() => {
+        this.isHistoryLoading = false;
+        if (result.success) {
+          const data = result.data || {};
+          this.historyList = data.list || [];
+        } else {
+          throw result;
+        }
+      });
 
+      return result;
+    } catch (e) {
+      ToastError(e);
     }
-    return result;
+
   };
 
   // 项目成团
   @action
   loadGroupInfo = async (projectId) => {
-    this.isGroupInfoLoading = true;
-    const result = await fetchProjectGroupInformation({ projectId });
-    this.isGroupInfoLoading = false;
-    if (result.success) {
-      const data = result.data || {};
-      this.groupInfo = data.groupInfo || {};
-    } else {
+    try {
+      this.isGroupInfoLoading = true;
+      const result = await fetchProjectGroupInformation({ projectId });
+      runInAction(() => {
+        this.isGroupInfoLoading = false;
+        if (result.success) {
+          const data = result.data || {};
+          this.groupInfo = data.groupInfo || {};
+        } else {
+          throw result;
+        }
+      });
 
+      return result;
+    } catch (e) {
+      ToastError(e);
     }
-    return result;
   };
 
   // 电站建设
   @action
   loadSiteInfo = async (projectId) => {
-    this.isSiteInfoLoading = true;
-    const result = await fetchProjectSiteInformation({ projectId });
-    this.isSiteInfoLoading = false;
-    if (result.success) {
-      const data = result.data || {};
-      this.siteInfo = data.siteInfo || {};
-    } else {
+    try {
+      this.isSiteInfoLoading = true;
+      const result = await fetchProjectSiteInformation({ projectId });
+      runInAction(() => {
+        this.isSiteInfoLoading = false;
+        if (result.success) {
+          const data = result.data || {};
+          this.siteInfo = data.siteInfo || {};
+        } else {
+          throw result;
+        }
+      });
 
+      return result;
+    } catch (e) {
+      ToastError(e);
     }
-    return result;
   };
 
   // 发电收益
@@ -146,28 +181,44 @@ class InvolvedDetail {
   // 驳回内容
   @action
   loadRejectInfo = async ({purchaseId, projectId}) => {
-    this.isRejectInfoLoading = true;
-    const result = await fetchRejectInfo({purchaseId, projectId});
-    this.isRejectInfoLoading = false;
-    if (result.success) {
-      this.rejectInfo = result.data || {};
-    } else {
+    try {
+      this.isRejectInfoLoading = true;
+      const result = await fetchRejectInfo({purchaseId, projectId});
+      runInAction(() => {
+        this.isRejectInfoLoading = false;
+        if (result.success) {
+          this.rejectInfo = result.data || {};
+        } else {
+          throw result;
+        }
+      });
 
+      return result;
+    } catch (e) {
+      ToastError(e);
     }
   };
 
   // 4份法律文书
   @action
   loadDocList = async ({ projectId, purchaseId }) => {
-    this.isDocListLoading = true;
-    const result = await fetchProjectLegalFile({ projectId, purchaseId });
-    this.isDocListLoading = false;
-    if (result.success) {
-      this.docList = result.data || [];
-    } else {
+    try {
+      this.isDocListLoading = true;
+      const result = await fetchProjectLegalFile({ projectId, purchaseId });
+      runInAction(() => {
+        this.isDocListLoading = false;
+        if (result.success) {
+          this.docList = result.data || [];
+        } else {
+          throw result;
+        }
+      });
 
+      return result;
+    } catch (e) {
+      ToastError(e);
     }
-    return result;
+
   };
 
 

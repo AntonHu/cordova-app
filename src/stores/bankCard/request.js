@@ -1,4 +1,4 @@
-import { errorWrap, get, post } from "../../utils/fetch";
+import { requestError, get, post } from "../../utils/fetch";
 import { backendServer } from "../../utils/variable";
 
 const serverUrl = backendServer + '/app';
@@ -12,7 +12,7 @@ export const fetchLatestBankCard = async () => {
     const response = await get(`${serverUrl}/bankCard/latest`);
     return response;
   } catch (err) {
-    return errorWrap(err, '最近使用银行卡');
+    throw requestError(err, '最近使用银行卡');
   }
 };
 
@@ -25,7 +25,7 @@ export const fetchBindBankCard = async ({ bank, name, bankCardNumber }) => {
     const response = await post(`${serverUrl}/bankCard/bind`, { bank, name, bankCardNumber });
     return response;
   } catch (err) {
-    return errorWrap(err, '绑定银行卡');
+    throw requestError(err, '绑定银行卡');
   }
 };
 
