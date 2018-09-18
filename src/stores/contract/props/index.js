@@ -3,7 +3,7 @@ import InvolvedDetail from './involvedDetail';
 import NotInvolvedDetail from './notInvolvedDetail';
 import ProjectList from './projectList';
 import MyProjectList from './myProjectList';
-import Appeal from 'appeal';
+import Appeal from './appeal';
 
 export {
   ComponentTrace,

@@ -57,7 +57,7 @@ class InvolvedDetail {
   // didMount且不是goBack过来的时候，获取项目详情
   // 获取项目详情之后，再获取历史项目列表、法律文书
   // TODO: 根据状态再获取项目成团、电站建设、电站收益、驳回内容等
-  loadData = () => {
+  loadData = (id) => {
     if (this.isDetailLoading) {
       return;
     }
@@ -147,7 +147,7 @@ class InvolvedDetail {
   @action
   loadRejectInfo = async ({purchaseId, projectId}) => {
     this.isRejectInfoLoading = true;
-    const reuslt = await fetchRejectInfo({purchaseId, projectId});
+    const result = await fetchRejectInfo({purchaseId, projectId});
     this.isRejectInfoLoading = false;
     if (result.success) {
       this.rejectInfo = result.data || {};
