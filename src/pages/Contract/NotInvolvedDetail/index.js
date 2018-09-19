@@ -89,9 +89,9 @@ class NotInvolvedDetail extends React.Component {
   };
 
   /**
-   * 去投资份额确认
+   * 去 投资份额确认 页
    */
-  toShareConfirm = async() => {
+  toShareConfirm = () => {
     this.closeModal();
     const { notInvolvedDetail } = this.props.contractStore;
     const projectId = notInvolvedDetail.projectDetail.id;
@@ -110,6 +110,7 @@ class NotInvolvedDetail extends React.Component {
   render() {
     const { notInvolvedDetail } = this.props.contractStore;
     const { projectDetail, historyList, purchaseCount, purchaseAmount } = notInvolvedDetail;
+    const { loadingText, loading, isModalVisible } = this.state;
     return (
       <PageWithHeader title={ '合约电站' } id="page-not-involved-detail">
         <ProjectDetail projectDetail={ projectDetail } historyList={ toJS(historyList) }/>
@@ -118,12 +119,12 @@ class NotInvolvedDetail extends React.Component {
         </OrangeGradientBtn>
         <ActivityIndicator
           toast
-          text={ this.state.loadingText }
-          animating={ this.state.loading }
+          text={ loadingText }
+          animating={ loading }
         />
         <Modal
           popup
-          visible={ this.state.isModalVisible }
+          visible={ isModalVisible }
           onClose={ this.closeModal }
           animationType="slide-up"
         >

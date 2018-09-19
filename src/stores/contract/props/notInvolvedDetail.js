@@ -4,10 +4,8 @@ import {
   fetchHistoryProjectList,
   fetchProjectDetail,
   fetchPurchaseProject,
-  fetchPurchaseLegalFile,
   fetchInvestAgreement, fetchCancelPurchase
 } from "../request";
-import { Toast } from 'antd-mobile';
 import { ToastError } from "../../ToastError";
 
 // 未参与的合约项目详情（包含申购）

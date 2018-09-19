@@ -22,6 +22,7 @@ export const fetchProjectDetail = async ({ id }) => {
 };
 
 /**
+ * todo: 废弃
  * 申购后获取份额确认书或投资协议
  * @param type 0=份额确认书 1=投资协议
  * @param projectId
