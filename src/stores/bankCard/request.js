@@ -1,7 +1,7 @@
 import { requestError, get, post } from "../../utils/fetch";
-import { backendServer } from "../../utils/variable";
+import { contractServer } from "../../utils/variable";
 
-const serverUrl = backendServer + '/app';
+const serverUrl = contractServer + '/app';
 
 /**
  * 最近使用银行卡

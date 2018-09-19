@@ -1,5 +1,6 @@
 // const backendServer = 'http://47.97.160.168:30089/blockchain/ledger-proxy';
 const backendServer = 'https://api.thundersdata.com/ebcapp';
+const contractServer = 'https://api.thundersdata.com/contractPlant';
 // const userServer = 'https://auths.thundersdata.com';
 // const backendServer = 'http://47.96.158.229:30135';
 const userServer = 'https://api.thundersdata.com';
@@ -81,6 +82,7 @@ const STATION_VERIFY_STATUS = {
 export {
   backendServer,
   userServer,
+  contractServer,
   PAGE_SIZE,
   TEST_PUBLIC_KEY,
   POWER_TYPE,

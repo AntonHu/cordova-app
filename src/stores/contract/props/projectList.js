@@ -1,4 +1,4 @@
-import { observable, action, runInAction, computed } from 'mobx';
+import { observable, action, runInAction, computed, toJS } from 'mobx';
 import { fetchProjectList } from "../request";
 import { Toast } from 'antd-mobile';
 import { ToastError } from "../../ToastError";
@@ -38,6 +38,7 @@ class ProjectList {
           } else {
             this.list = this.list.concat(list)
           }
+          console.log(toJS(this.list))
 
         } else {
           throw result;

@@ -1,12 +1,12 @@
 import { get, post, requestError } from '../../utils/fetch';
-import { backendServer, PAGE_SIZE } from '../../utils/variable';
+import { contractServer, PAGE_SIZE } from '../../utils/variable';
 
-const serverUrl = backendServer + '/app';
+const serverUrl = contractServer + '/app';
 
 export const fetchProjectList = async ({ page }) => {
   try {
     const response = await get(`${serverUrl}/project/list`, { page, pageSize: PAGE_SIZE });
-    return response;
+    return response.data;
   } catch (err) {
     throw requestError(err, '合约项目列表');
   }
@@ -15,7 +15,7 @@ export const fetchProjectList = async ({ page }) => {
 export const fetchProjectDetail = async ({ id }) => {
   try {
     const response = await get(`${serverUrl}/project/detail`, { id });
-    return response;
+    return response.data;
   } catch (err) {
     throw requestError(err, '合约详情');
   }
@@ -25,7 +25,7 @@ export const fetchProjectDetail = async ({ id }) => {
 export const fetchShareConfirmDoc = async ({ type, projectId, purchaseNumber }) => {
   try {
     const response = await get(`${serverUrl}/app/project/legalFile`, { type, projectId, purchaseNumber });
-    return response;
+    return response.data;
   } catch (err) {
     throw requestError(err, '份额确认书');
   }
@@ -35,7 +35,7 @@ export const fetchShareConfirmDoc = async ({ type, projectId, purchaseNumber }) 
 export const fetchInvestAgreement = async ({ type, projectId, purchaseNumber }) => {
   try {
     const response = await get(`${serverUrl}/app/project/legalFile`, { type, projectId, purchaseNumber });
-    return response;
+    return response.data;
   } catch (err) {
     throw requestError(err, '投资协议');
   }
@@ -50,7 +50,7 @@ export const fetchInvestAgreement = async ({ type, projectId, purchaseNumber }) 
 export const fetchPurchaseProject = async ({ projectId, purchaseNumber }) => {
   try {
     const response = await post(`${serverUrl}/project/purchase`, { projectId, purchaseNumber });
-    return response;
+    return response.data;
   } catch (err) {
     throw requestError(err, '申购项目');
   }
@@ -65,7 +65,7 @@ export const fetchPurchaseProject = async ({ projectId, purchaseNumber }) => {
 export const fetchCancelPurchase = async ({ projectId, purchaseId }) => {
   try {
     const response = await post(`${serverUrl}/project/cancel`, { projectId, purchaseId });
-    return response;
+    return response.data;
   } catch (err) {
     throw requestError(err, '取消申购');
   }
@@ -80,7 +80,7 @@ export const fetchCancelPurchase = async ({ projectId, purchaseId }) => {
 export const fetchConfirmPayment = async ({ projectId, purchaseId }) => {
   try {
     const response = await post(`${serverUrl}/project/confirmPayment`, { projectId, purchaseId });
-    return response;
+    return response.data;
   } catch (err) {
     throw requestError(err, '确认付款');
   }
@@ -97,7 +97,7 @@ export const fetchConfirmPayment = async ({ projectId, purchaseId }) => {
 export const fetchUploadAppeal = async ({ projectId, purchaseId, content, fileList }) => {
   try {
     const response = await post(`${serverUrl}/project/appeal`, { projectId, purchaseId, content, fileList });
-    return response;
+    return response.data;
   } catch (err) {
     throw requestError(err, '申诉');
   }
@@ -113,7 +113,7 @@ export const fetchUploadAppeal = async ({ projectId, purchaseId, content, fileLi
 export const fetchHistoryProjectList = async ({ enterpriseId, onlyBaseInfo, currentProjectId }) => {
   try {
     const response = await get(`${serverUrl}/project/listAll`, { enterpriseId, onlyBaseInfo, currentProjectId });
-    return response;
+    return response.data;
   } catch (err) {
     throw requestError(err, '历史项目列表');
   }
@@ -127,7 +127,7 @@ export const fetchHistoryProjectList = async ({ enterpriseId, onlyBaseInfo, curr
 export const fetchUserProjectList = async ({ page }) => {
   try {
     const response = await get(`${serverUrl}/user/project/list`, { page, pageSize: PAGE_SIZE });
-    return response;
+    return response.data;
   } catch (err) {
     throw requestError(err, '我的合约电站');
   }
@@ -141,7 +141,7 @@ export const fetchUserProjectList = async ({ page }) => {
 export const fetchProjectGroupInformation = async ({ projectId }) => {
   try {
     const response = await get(`${serverUrl}/project/groupInformation`, { projectId });
-    return response;
+    return response.data;
   } catch (err) {
     throw requestError(err, '项目成团信息');
   }
@@ -155,7 +155,7 @@ export const fetchProjectGroupInformation = async ({ projectId }) => {
 export const fetchProjectSiteInformation = async ({ projectId }) => {
   try {
     const response = await get(`${serverUrl}/project/siteInformation`, { projectId });
-    return response;
+    return response.data;
   } catch (err) {
     throw requestError(err, '建站信息');
   }
@@ -169,7 +169,7 @@ export const fetchProjectSiteInformation = async ({ projectId }) => {
 export const fetchComponentTrace = async ({moduleId}) => {
   try {
     const response = await get(`https://api.thundersdata.com/operation-data/v1/project/moduleinfo/${moduleId}`);
-    return response;
+    return response.data;
   } catch (e) {
     throw requestError(e, '组件溯源')
   }
@@ -184,7 +184,7 @@ export const fetchComponentTrace = async ({moduleId}) => {
 export const fetchProjectLegalFile = async ({ projectId, purchaseId }) => {
   try {
     const response = await get(`${serverUrl}/project/legalFile/list`, { projectId, purchaseId });
-    return response;
+    return response.data;
   } catch (err) {
     throw requestError(err, '项目法律文书');
   }
@@ -199,7 +199,7 @@ export const fetchProjectLegalFile = async ({ projectId, purchaseId }) => {
 export const fetchRejectInfo = async ({ projectId, purchaseId }) => {
   try {
     const response = await get(`${serverUrl}/project/reject/info`, { projectId, purchaseId });
-    return response;
+    return response.data;
   } catch (err) {
     throw requestError(err, '驳回信息');
   }

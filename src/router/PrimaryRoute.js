@@ -135,6 +135,7 @@ class PrimaryRoute extends React.Component {
         <Route exact path={'/mining'} component={Home}/>
         <Route exact path={'/user'} component={Home}/>
         <Route exact path={'/apply'} component={Home}/>
+        <Route exact path={'/contract'} component={Home}/>
         {/* 太阳城 */}
         <Route exact path="/sunCity/powerStation" component={MyPowerStation}/>
         <Route

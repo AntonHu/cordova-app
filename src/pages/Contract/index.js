@@ -7,6 +7,7 @@ import Appeal from './Appeal';
 import LegalDocument from './LegalDocument';
 import InvolvedDetail from './InvolvedDetail';
 import ComponentTrace from './ComponentTrace';
+import Contract from './Contract';
 
 export {
   NotInvolvedDetail,
@@ -17,5 +18,6 @@ export {
   Appeal,
   LegalDocument,
   InvolvedDetail,
-  ComponentTrace
+  ComponentTrace,
+  Contract
 }

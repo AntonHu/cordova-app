@@ -3,6 +3,7 @@ import { Apply } from './Apply';
 import SunCity from './SunCity/index';
 import Mining from './Mining/Mining';
 import { User } from './User';
+import { Contract } from './Contract';
 import { TabBar } from 'antd-mobile';
 import './Home.less';
 
@@ -20,6 +21,13 @@ const TabsData = [
     unicode: '\ue611',
     selectedUnicode: '\ue60d',
     content: (props) => <Mining {...props} />
+  },
+  {
+    title: '合约电站',
+    key: 'contract',
+    unicode: '\ue619',
+    selectedUnicode: '\ue619',
+    content: (props) => <Contract {...props} />
   },
   {
     title: '应用',
