@@ -34,17 +34,10 @@ class ShareConfirm extends React.Component {
   purchaseLoading = reaction(
     () => this.props.contractStore.notInvolvedDetail.isPurchasing,
     (loading) => {
-      if (loading) {
-        this.setState({
-          loading: true,
-          loadingText: '正在发送申购请求...'
-        });
-      } else {
-        this.setState({
-          loading: false,
-          loadingText: ''
-        });
-      }
+      this.setState({
+        loading: loading,
+        loadingText: loading ? '正在发送申购请求...' : ''
+      });
     }
   );
 

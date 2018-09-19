@@ -39,17 +39,10 @@ class NotInvolvedDetail extends React.Component {
   bankCardLoading = reaction(
     () => this.props.bankCardStore.loadingBankCard,
     (loading) => {
-      if (loading) {
-        this.setState({
-          loading: true,
-          loadingText: '正在查询银行卡...'
-        });
-      } else {
-        this.setState({
-          loading: false,
-          loadingText: ''
-        });
-      }
+      this.setState({
+        loading: loading,
+        loadingText: loading ? '正在查询银行卡...' : ''
+      });
     }
   );
 
