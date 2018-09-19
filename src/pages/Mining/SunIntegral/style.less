@@ -1,28 +1,96 @@
 @import '../../../styles/common';
 
-.page-sun-integral {
+#page-sun-integral {
+  height: auto;
+  #body_of_pageWithHeader {
+    overflow-y: visible;
+  }
   .integral {
-    margin-top: 10px;
-    padding: 15px;
+    padding: 15px 15px 0 15px;
     background: @white-text-color;
 
     .integral-survey {
       text-align: left;
       .number {
         margin-top: 10px;
-        font-size: 24px;
-        color: @blue-text-color;
+        font-size: 32px;
+        font-weight: 500;
+        color: @theme-text-color;
       }
     }
     .integral-list {
-      margin-top: 20px;
+      margin-top: 35px;
       text-align: left;
-      color: @light-text-color;
+      color: @main-text-color;
+
+      .title {
+        margin-bottom: 20 * @px;
+      }
+
+      .am-list-body::after,
+      .am-list-body::before {
+        background-color: transparent !important;
+      }
 
       .integral-item {
         display: flex;
-        justify-content: space-between;
-        margin-top: 10px;
+        align-items: center;
+        height: 180 * @px;
+        border-bottom: 1px solid @white-grey;
+        .integral-pic {
+          height: 100 * @px;
+          width: 100 * @px;
+          margin-left: 20 * @px;
+          border-radius: 50 * @px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          .iconfont {
+            font-size: 28px;
+            color: @white-text-color;
+            &.iconfont-power {
+              margin-top: 8 * @px;
+            }
+          }
+        }
+        .power {
+          background: @power-color;
+        }
+        .login,
+        .invitation,
+        .secondaryInvitation {
+          background: @recommend-color;
+        }
+        .transfer {
+          &.in {
+            background: @admission-color;
+          }
+        }
+        .transfer.out,
+        .fail {
+          background: @transfer-color;
+        }
+        .integral-title {
+          width: 50%;
+          margin-left: 30 * @px;
+          font-size: 12px;
+          div {
+            &:nth-child(2) {
+              margin-top: 20 * @px;
+            }
+          }
+        }
+        .integral-number {
+          font-size: 16px;
+          margin-right: 20 * @px;
+          text-align: right;
+          width: 25%;
+        }
+        .integral-number {
+          &.out {
+            color: @pink-color;
+          }
+        }
       }
     }
   }

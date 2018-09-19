@@ -1,0 +1,94 @@
+@import "../../../styles/common";
+
+@dot-size: 8px;
+
+#page-msg-center {
+  .am-tabs-default-bar-underline {
+    border: 1px solid @theme-text-color;
+  }
+  .msg-item {
+    background: @white-text-color;
+    color: @main-text-color;
+    text-align: left;
+    padding: 20px;
+    margin: 10px;
+    border-radius: @border-radius;
+    .title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 32 * @px;
+      margin-bottom: 10px;
+    }
+    .time {
+      color: @help-text-color;
+      font-size: @h3;
+    }
+  }
+
+  .news-item {
+    background: @white-text-color;
+    color: @main-text-color;
+    text-align: left;
+    padding: 20px;
+    margin: 10px;
+    //border-radius: @border-radius;
+    .title {
+      display: flex;
+      align-items: center;
+      .blue-dot {
+        background: @main-color;
+        width: @dot-size;
+        height: @dot-size;
+        border-radius: @dot-size;
+        margin-right: @dot-size;
+      }
+    }
+    .summary,
+    .time {
+      color: @help-text-color;
+      font-size: @h3;
+      margin-top: 10px;
+    }
+  }
+
+  .empty-area {
+    margin-top: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: 250 * @px;
+    }
+
+  }
+
+  .am-tabs-default-bar-tab {
+    color: @help-text-color;
+    .msg-center-tab {
+      width: 100%;
+      font-size: @h3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .iconfont {
+        font-size: 50 * @px;
+      }
+    }
+  }
+
+  .am-tabs-default-bar-tab-active {
+    color: @main-color;
+  }
+
+  .am-list {
+    .am-list-body {
+      background: transparent;
+    }
+    .am-list-body:before,
+    .am-list-body:after{
+      background: transparent!important;
+    }
+  }
+}

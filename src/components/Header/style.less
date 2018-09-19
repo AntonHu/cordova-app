@@ -1,7 +1,7 @@
 @import "../../styles/common";
 
 .block-chain-header{
-  height: 90 * @px;
+  height: @header-height;
   width: 100%;
   color: @main-text-color;
   display: flex;
@@ -10,14 +10,20 @@
   background: #ffffff;
   font-size: @h2;
   .left{
-    width: 100 * @px
+    width: 200 * @px;
   }
   .center{
-    flex: 1
+    flex: 1;
   }
   .right {
-    width: 100 * @px
+    width: 200 * @px;
   }
+}
+
+.block-chain-header.fixed {
+  //top: 0;
+  position: fixed;
+  z-index: 100;
 }
 
 .block-chain-header.transparent {
@@ -41,6 +47,10 @@
   display: flex;
   align-items: center;
   height: 90 * @px;
+  .am-icon {
+    //margin-top: 24 * @px;
+    margin-left: 20 * @px;
+  }
 }
 .header-back::before {
   border: none !important;

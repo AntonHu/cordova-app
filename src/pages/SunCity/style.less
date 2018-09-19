@@ -1,51 +1,80 @@
 @import '../../styles/common';
 .page-sunCity-info {
+  overflow-x: hidden;
+  height: 100%;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+  .slider-decorator-0 {
+    bottom: 5px!important;
+  }
   .notice {
     text-align: left;
     padding: 5px * @px 10px * @px;
-    background: @deep-blue-bg;
+    background: @deep-bg;
     color: @white-text-color;
   }
   .am-notice-bar {
-    background: @deep-blue-bg;
+    height: 35px;
+    background: @deep-bg;
     color: @white-text-color;
+    .am-notice-bar-content {
+      text-align: left;
+    }
   }
   .sun-content {
     height: 421px;
     background: url('../../images/sunBg.png');
-    background-size: 100%;
+    background-position-y: bottom;
+    background-size: cover;
     .info {
       display: flex;
-      height: 90px;
+      height: 100px;
       justify-content: space-between;
-      align-items: center;
       padding-left: 20px;
       .detail {
+        min-width: 106px;
+        margin-top: 20px;
         text-align: left;
         color: @white-text-color;
+        .detail-row {
+          display: flex;
+          align-items: center;
+
+          .ranking {
+            margin-left: 30 * @px;
+          }
+          .token {
+            margin-left: 90 * @px;
+            margin-right: 24 * @px;
+          }
+        }
         div {
-          margin-top: 8px;
+          //margin-top: 10px;
           font-size: 12px;
           span {
-            color: @light-blue-bg;
+            color: @light-theme-bg;
           }
         }
         .person-info {
-          font-weight: bold;
+          font-size: 14px;
+          margin-top: 0;
           display: flex;
           align-items: center;
-          height: 25px;
-          padding: 0 5px 0 30px;
-          background: @light-blue-bg;
+          height: 30px;
+          background: @light-theme-bg;
           border-radius: 15px;
           color: @main-color;
           position: relative;
-          .person-pic {
-            height: 25px;
-            width: 25px;
-            border-radius: 15px;
-            position: absolute;
-            left: 0;
+          .nick-name {
+            //min-width: 50px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-left: 5px;
+            min-height: 10px;
+            padding: 0 5px;
+            color: @main-color;
           }
           .am-icon-md {
             width: 18px;
@@ -54,33 +83,53 @@
         }
       }
       .powerStation {
-        height: 25px;
-        padding: 0 10px 0 30px;
-        font-size: 12px;
+        width: 80px;
+        margin-top: 65px;
+        height: 30px;
+        //padding: 0 10px 0 0px;
+        font-size: 14px;
         display: flex;
         align-items: center;
-        background: @light-blue-bg;
+        background: @light-theme-bg;
         color: @main-color;
-        border-radius: 12px;
+        border-top-left-radius: 16px;
+        border-bottom-left-radius: 16px;
         position: relative;
+        .ufo-png {
+          width: 110 * @px;
+          margin-left: -40 * @px;
+          margin-right: 10 * @px;
+          margin-top: -20 * @px;
+        }
         .powerStation-pic {
           font-size: 40px;
-          position: absolute;
-          left: -8px;
-          top: -8px;
+          margin-right: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 28px;
+          height: 28px;
+          border-radius: 14px;
+          background: @white-text-color;
           color: @pink-color;
         }
       }
     }
     .sun-items {
-      height: calc(100% - 90px);
+      height: calc(100% - 100px);
       position: relative;
       @keyframes slidein {
-        from {
-          margin-top: 0;
+        0% {
+          //margin-top: 0;
+          transform: translate3d(0px, 0px, 0px);
         }
-        to {
-          margin-top: 6px;
+        50% {
+          //margin-top: 6px;
+          transform: translate3d(0px, 6px, 0px);
+        }
+        100% {
+          //margin-top: 0;
+          transform: translate3d(0px, 0px, 0px);
         }
       }
       .sun {
@@ -91,6 +140,7 @@
         animation-duration: 2s;
         animation-name: slidein;
         animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
         .sun-pic {
           display: inline-block;
           height: 40px;
@@ -109,83 +159,137 @@
           opacity: 1;
         }
         to {
-          top: 0;
+          top: -100px;
           opacity: 0;
         }
       }
+      .sun-wait {
+        .wait-pic {
+          background: url('../../images/sun-wait.png');
+          background-size: 100%;
+        }
+      }
       .remove {
-        animation-duration: 2s;
+        animation-duration: 1s;
         animation-name: disappear;
         animation-iteration-count: 1;
         animation-fill-mode: forwards;
       }
     }
-    .news {
-      width: 80%;
-      background: @white-text-color;
-      margin: 0 auto;
-      margin-top: -10px;
-      padding: 10px;
-      border-radius: 5px;
-      text-align: left;
-      box-shadow: 0 5px 20px @shadow-color;
-      span {
-        background: @main-color;
-        padding: 3px 5px;
-        color: @white-text-color;
-        margin-right: 5px;
-        border-radius: 5px;
-      }
-    }
+
     .promote {
-      padding: 10px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
       text-align: left;
-      background: @white-text-color;
-      height: 70px;
+      background: transparent;
       margin-top: 20px;
-      div {
-        &:nth-child(2) {
-          font-size: 18px;
-          span {
-            color: #f00;
+
+    }
+  }
+  .rend {
+    width: 90%;
+    height: 44px;
+    background: @white-text-color;
+    margin: -10px auto 20px auto;
+    //margin-top: -10px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    border-radius: 5px;
+    box-shadow: 0 5px 20px @shadow-color;
+    .rend-title {
+      background: url('../../images/news.png');
+      background-size: cover;
+      padding: 5px 20px 5px 5px;
+      color: @white-text-color;
+      margin-right: 5px;
+    }
+    .rend-item-wrap {
+      width: 70%;
+      //height: 24px;
+      position: relative;
+      overflow: hidden;
+      .help-text {
+        line-height: 24px;
+        margin-left: 10px;
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        color: #888;
+        //text-overflow: ellipsis;
+      }
+
+      .rend-item {
+        width: 100%;
+        //display: flex;
+        //flex-direction: column;
+        position: relative;
+        //animation: midToTop 10s linear 0s infinite;
+
+        @keyframes midToTop {
+          0% {
+            top: 0;
+          }
+          100% {
+            top: -120px;
           }
         }
       }
     }
-    .equipment {
-      .item {
-        background: @white-text-color;
-        margin-bottom: 10px;
+  }
+  .equipment {
+    .item {
+      background: @white-text-color;
+      margin: 0 10px 10px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 15px 15px 25px;
+      border-radius: @border-radius;
+      .item-pic {
         display: flex;
+        justify-content: center;
         align-items: center;
-        justify-content: space-between;
-        padding: 10px;
-        .item-pic {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background: @light-blue-bg;
-          border-radius: 25px;
-          height: 50px;
-          width: 50px;
-          .iconfont {
-            margin-top: 6px;
-            color: @white-text-color;
-            font-size: 40px;
-          }
-          .icon-shebeiguanli {
-            font-size: 28px;
-          }
+        background: @light-theme-bg;
+        border-radius: 28px;
+        height: 56px;
+        width: 56px;
+        .iconfont {
+          margin-left: 2px;
+          margin-top: 3px;
+          color: @white-text-color;
+          font-size: 40px;
         }
-        .item-detail {
-          text-align: left;
-          .item-info {
-            margin-top: 5px;
-            color: @light-text-color;
-          }
+        .icon-shebeiguanli {
+          font-size: 28px;
         }
-        .am-icon-right {
-          color: @light-text-color;
+      }
+      .item-detail {
+        width: 65%;
+        text-align: left;
+        .item-info {
+          margin-top: 5px;
+          color: @help-text-color;
+        }
+      }
+      .am-icon-right {
+        color: @help-text-color;
+      }
+    }
+    .loading {
+      height: 200px;
+      background: @white-text-color;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .pic-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        span {
+          margin-top: 8px;
+          color: @help-text-color;
         }
       }
     }

@@ -1,0 +1,77 @@
+@import '../../../../styles/common';
+
+@dot-size: 14 * @px;
+
+.station-build-progress {
+  padding-bottom: 130 * @px;
+  .panel {
+    width: @contract-item-width;
+    margin: 20 * @px auto 0;
+    background: @white-text-color;
+    border-radius: @border-radius;
+    color: @main-text-color;
+    padding-top: 60 * @px;
+    text-align: left;
+    .panel-name {
+      font-size: 30 * @px;
+      margin-left: 44 * @px;
+      margin-bottom: 60 * @px;
+    }
+    .detail-wrap {
+      margin-left: 70 * @px;
+      box-sizing: border-box;
+      position: relative;
+      border-left: 1px solid @icon-color;
+      padding-left: 55 * @px;
+      &::before {
+        content: '';
+        display: block;
+        width: @dot-size;
+        height: @dot-size;
+        border-radius: @dot-size;
+        position: absolute;
+        top: -(@dot-size / 2);
+        left: -(@dot-size / 2 + 1 * @px);
+        background: @icon-color;
+      }
+
+      .am-accordion {
+        &::before {
+          background-color: transparent!important;
+        }
+        .am-accordion-item {
+          .am-accordion-header {
+            line-height: inherit;
+            height: auto;
+            &::after {
+              background-color: transparent!important;
+            }
+          }
+          .am-accordion-content .am-accordion-content-box::after {
+            background-color: transparent!important;
+          }
+        }
+      }
+
+      .accordion-header {
+        display: flex;
+        justify-content: space-between;
+        margin-right: 50 * @px;
+        padding-bottom: 70 * @px;
+        .h-name {
+          font-size: @h3;
+        }
+        .h-time {
+          font-size: @h4;
+          color: @screen-text-color;
+          margin-top: 22 * @px;
+
+        }
+        .h-amount {
+          font-size: @h3;
+        }
+      }
+    }
+  }
+
+}

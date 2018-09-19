@@ -1,14 +1,19 @@
 @import '../../../styles/common';
 
-.page-personal-info {
+#page-personal-info {
+  .blue-box.blue-pic,
+  .blue-box.grey-pic{
+    background-position-y: -84 * @px;
+  }
   .blue-box {
     position: relative;
     margin: 30 * @px;
     width: auto;
+    height: 340 * @px;
     border-radius: @border-radius;
     // justify-content: center;
     color: @white-text-color;
-    padding: 40px 15%;
+    padding: 40px 10%;
     box-sizing: border-box;
     .personal-info {
       display: flex;
@@ -20,21 +25,24 @@
         margin-right: 10px;
       }
       .personal-prompt {
-        font-size: 16px;
+        margin-left: @h1;
+        line-height: @h2 * 1.8;
+        font-size: @h2;
       }
     }
     .personal-name,
     .personal-id {
-      margin-top: 10px;
+      margin-top: 40 * @px;
       text-align: left;
     }
     .go-authentication {
       display: flex;
       align-items: center;
       position: absolute;
-      right: 0;
+      right: 40 * @px;
       bottom: 20px;
       color: @white-text-color;
+      font-size: @h3;
     }
   }
   .personal-list {
@@ -42,8 +50,10 @@
       background: @white-text-color;
       display: flex;
       justify-content: space-between;
-      padding: 15px 15px;
-      border-bottom: 1px solid @light-text-color;
+      align-items: center;
+      padding: 0 15px;
+      border-bottom: 1px solid @white-grey;
+      height: 106 * @px;
     }
     .am-list-arrow {
       display: none;

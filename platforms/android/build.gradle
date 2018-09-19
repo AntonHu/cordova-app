@@ -93,6 +93,8 @@ ext {
 
 // PLUGIN GRADLE EXTENSIONS START
 apply from: "cordova-plugin-code-push/blockChainMobile-build-extras.gradle"
+apply from: "phonegap-plugin-barcodescanner/blockChainMobile-barcodescanner.gradle"
+apply from: "cordova-plugin-crosswalk-webview/blockChainMobile-xwalk.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras = file('build-extras.gradle').exists()
@@ -155,6 +157,7 @@ task cdvPrintProps << {
 }
 
 android {
+    flavorDimensions "default"
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -253,6 +256,9 @@ dependencies {
     implementation fileTree(dir: 'libs', include: '*.jar')
     // SUB-PROJECT DEPENDENCIES START
     implementation(project(path: "CordovaLib"))
+    compile "com.android.support:support-v4:24.1.1+"
+    compile "com.android.support:support-v4:27.+"
+    compile "com.soundcloud.android:android-crop:1.0.0@aar"
     // SUB-PROJECT DEPENDENCIES END
 }
 

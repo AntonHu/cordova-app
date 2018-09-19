@@ -1,11 +1,16 @@
 @import '../../../styles/common';
 
-.page-apply {
+@apply-list-icon-size: 100 * @px;
+
+#page-apply {
   .apply-survey {
-    height: 200px;
+    height: 340 * @px;
     margin: 15px;
     background: @main-color;
     border-radius: @border-radius;
+    img {
+      border-radius: @border-radius;
+    }
   }
   .apply {
     .apply-list {
@@ -13,14 +18,24 @@
       flex-wrap: wrap;
       padding: 20px;
       background: @white-text-color;
+      .iconfont {
+        color: @main-color;
+        font-size: @apply-list-icon-size / 2;
+        background: @more-light-theme-bg;
+        height: @apply-list-icon-size;
+        width: @apply-list-icon-size;
+        border-radius: @apply-list-icon-size / 2;
+        line-height: @apply-list-icon-size;
+
+      }
       .apply-item {
         padding: 10px;
         width: 33.3%;
-
-        .apply-pic {
-          height: 50px;
-          border-radius: 25px;
-          margin-bottom: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .apply-item-text {
+          margin: 5px 0;
         }
       }
     }
@@ -35,12 +50,15 @@
         padding: 5px;
         width: 33.3%;
 
-        .recommend-pic {
-          margin-bottom: 10px;
-          border-radius: 5px;
-          height: 100px;
-          background: #ccc;
+        .picture-empty-element {
+          background: @shadow-color;
         }
+
+        .recommend-name {
+          margin-top: 24 * @px;
+          margin-bottom: 12 * @px;
+        }
+
         .recommend-price {
           text-align: left;
           margin-left: 5px;
@@ -51,7 +69,9 @@
     }
   }
   .admission {
-    height: 150px;
-    background: #ccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 10px;
   }
 }

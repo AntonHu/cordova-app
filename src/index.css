@@ -1,22 +1,60 @@
-@import '//at.alicdn.com/t/font_711696_ef2ttejw5z7.css';
+/*@import '//at.alicdn.com/t/font_711696_6hytdc81mer.css';*/
 @font-face {
-  font-family: 'iconfont';
-  /* project id 711696 */
-  src: url('//at.alicdn.com/t/font_711696_m7dvmq8kto.eot');
-  src: url('//at.alicdn.com/t/font_711696_m7dvmq8kto.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_711696_m7dvmq8kto.woff') format('woff'), url('//at.alicdn.com/t/font_711696_m7dvmq8kto.ttf') format('truetype'), url('//at.alicdn.com/t/font_711696_m7dvmq8kto.svg#iconfont') format('svg');
+    font-family: "iconfont";
+    src: url('iconfont/iconfont.eot'); /* IE9*/
+    src: url('iconfont/iconfont.eot#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('iconfont/iconfont.woff') format('woff'), /* chrome, firefox */ url('iconfont/iconfont.eot') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/ url('iconfont/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
-  font-family: "iconfont" !important;
-  font-size: 16px;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -webkit-text-stroke-width: 0.2px;
-  -moz-osx-font-smoothing: grayscale;
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+/**
+ 预加载本地图片
+ cordova读APP里自带图片还要有延迟，真是莫名其妙
+ */
+#_pre_load {
+    height: 0;
+    width: 0;
+    background-image: url("./images/1.png"),
+    url("./images/2.png"),
+    url("./images/3.png"),
+    url("./images/activity_invitation.png"),
+    url("./images/activity_station.png"),
+    url("./images/activity_verify.png"),
+    url("./images/app_name.png"),
+    url("./images/banner_1.png"),
+    url("./images/banner_2.png"),
+    url("./images/banner_3.png"),
+    url("images/common_bg.png"),
+    url("./images/carousel_2.png"),
+    url("./images/carousel_3.png"),
+    url("./images/default_avatar.png"),
+    url("./images/earn_token_bg.png"),
+    url("./images/grey_bg.png"),
+    url("./images/icon.png"),
+    url("./images/introduction.png"),
+    url("./images/invite_bg.png"),
+    url("./images/loading.gif"),
+    url("./images/mining_bg.png"),
+    url("./images/news.png"),
+    url("./images/no_inverter.png"),
+    url("./images/point_rule_bg.png"),
+    url("./images/qrcode.png"),
+    url("./images/sun.png"),
+    url("./images/sun-wait.png"),
+    url("./images/sunBg.png"),
+    url("./images/transparent_inverter.png"),
+    url("./images/no_news.png");
 }

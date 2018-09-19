@@ -1,26 +1,45 @@
 @import '../../../styles/common';
 
-.page-equipment-info {
+@item-size: 200 * @px;
+@pie-border-width: 15px;
+
+#page-equipment-info {
+  //height: 100%;
+  //overflow-y: scroll;
   .survey {
     height: 200px;
     padding: 0 20px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    background: @main-color;
+    background: @common-bg;
     color: @white-text-color;
-    .survey-item-number {
-      font-size: 16px;
-      margin-bottom: 5px;
+    .survey-item {
+      width: @item-size;
+      height: @item-size;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .survey-item-number {
+        font-weight: bold;
+        font-size: 20px;
+        margin-bottom: 5px;
+      }
+    }
+    #current-power-item {
+      position: relative;
+      border: @pie-border-width @pie-color solid;
+      border-radius: @item-size;
     }
   }
   .equipment-content {
-    height: 300px;
+    height: 270px;
     padding: 20px 10px;
     width: 90%;
     margin: 0 auto;
     border-radius: 5px;
-    margin-top: -10px;
+    margin-top: -15px;
     position: relative;
     z-index: 10;
     background: @white-text-color;
@@ -28,23 +47,29 @@
       display: flex;
       justify-content: space-around;
       div {
-        padding: 7px;
+        height: 34px;
+        width: 34px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         margin-left: 10px;
-        border-radius: 15px;
-        background: @light-text-color;
-        color: @main-text-color;
+        border-radius: 17px;
+        background: @default-bg;
+        color: @screen-text-color;
       }
       .selected {
-        background: @blue-color-bg;
+        background: @common-bg;
         color: @white-text-color;
       }
     }
     .curve-chart-title {
-      margin-top: 20px;
+      margin-top: 30px;
+      margin-bottom: 10px;
       text-align: left;
     }
     #curve-chart {
       width: 100%;
+      height: 180px;
     }
     .curve-chart-info {
       margin-top: 10px;
@@ -62,7 +87,7 @@
   }
   #pie-bar-chart {
     position: relative;
-    //width: 320 * @px;
-    //height: 320 * @px;
+    width: 360 * @px;
+    height: 360 * @px;
   }
 }

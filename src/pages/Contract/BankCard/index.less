@@ -1,0 +1,43 @@
+@import '../../../styles/common';
+
+#page-add-bankcard {
+  #body_of_pageWithHeader {
+    display: flex;
+    flex-direction: column;
+
+    .tips {
+      color: @screen-text-color;
+      font-size: @h5;
+      text-align: left;
+      margin: 30 * @px 45 * @px;
+    }
+    .form-box {
+      width: @contract-item-width;
+      margin: 0 auto;
+      padding: 40 * @px 45 * @px;
+      box-sizing: border-box;
+      border-top-left-radius: @border-radius;
+      border-top-right-radius: @border-radius;
+      flex: 1;
+      background: @white-text-color;
+      .card-info {
+        color: @main-text-color;
+        font-size: @h4;
+        text-align: left;
+      }
+      .am-input-item {
+        border-bottom: 0.5px solid @icon-color;
+      }
+      .am-input-label {
+        font-size: @h4;
+        color: @screen-text-color;
+        margin-left: 10 * @px;
+      }
+      .am-list-line::after {
+        background-color: transparent!important;
+      }
+
+    }
+  }
+
+}

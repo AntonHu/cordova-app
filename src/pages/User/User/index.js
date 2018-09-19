@@ -1,8 +1,8 @@
 import React from 'react';
-import { PageWithHeader } from '../../../components';
+import { PageWithHeader, Picture } from '../../../components';
 import { List, Icon } from 'antd-mobile';
 import { Link } from 'react-router-dom';
-import {getOwnerInfo} from '../../../stores/user/request';
+import { observer, inject } from 'mobx-react';
 import './style.less';
 
 const Item = List.Item;
@@ -15,11 +15,18 @@ const ListData = [
     unicode: '\ue68d'
   },
   {
-    text: '我的电站',
+    text: '电站资料',
     extra: '华',
     path: 'myStation',
     unicode: '\ue609'
   },
+  {
+    text: '邀请好友',
+    horizontal: true,
+    path: 'inviteFriends',
+    unicode: '\ue6b8'
+  },
+
   {
     text: '消息中心',
     extra: '女',
@@ -37,27 +44,45 @@ const ListData = [
 /**
  * 我的
  */
-class Comp extends React.PureComponent {
+@inject('userStore', 'keyPair') // 如果注入多个store，用数组表示
+@observer
+class User extends React.Component {
 
   componentDidMount() {
-    getOwnerInfo()
+    this.makeRequest();
   }
 
+  makeRequest = () => {
+    const {keyPair, userStore, history} = this.props;
+    this.props.userStore.fetchUserInfo({keyPair, userStore, history});
+    this.props.userStore.fetchInvitationCode();
+    if (keyPair.hasKey) {
+      this.props.userStore.checkIsKycInChain({publicKey: keyPair.publicKey});
+    }
+  };
+
+  sliceLongName = (name) => {
+    const MAX_LENGTH = 20;
+    if (name.length > MAX_LENGTH) {
+      return name.slice(0, MAX_LENGTH) + '...'
+    }
+    return name;
+  };
+
   render() {
+    const {userInfo} = this.props.userStore;
+    const {username, avatar, nickName} = userInfo;
     return (
-      <div className={'page-user'}>
-        <PageWithHeader leftComponent={null} title={'个人中心'}>
+
+        <PageWithHeader leftComponent={null} title={'我的'} id="page-user">
           {/* <BlueBox>
 
           </BlueBox> */}
           <div className="user-wrap">
             <div className="user-info">
-              <img
-                className="user-pic"
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR72yqdE9opUl3aiimoZ-MilU5QdxFkK8AaAN6zUY1yrC2SuDWq"
-                alt=""
-              />
-              <div className="user-name">test</div>
+              <Picture size={120} src={avatar} showBorder={true} />
+
+              <div className="user-name">{this.sliceLongName(nickName || username || '未知')}</div>
             </div>
             <div className="to-detial">
               <Link to="/user/personalInfo">
@@ -77,9 +102,9 @@ class Comp extends React.PureComponent {
             ))}
           </List>
         </PageWithHeader>
-      </div>
+
     );
   }
 }
 
-export default Comp;
+export default User;

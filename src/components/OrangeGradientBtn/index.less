@@ -1,0 +1,17 @@
+@import "../../styles/common";
+
+.orange-gradient-button {
+  height: 100 * @px;
+  color: @white-text-color;
+  font-size: @h1;
+  border-radius: 0;
+  &::before {
+    border-radius: 0!important;
+  }
+  &.h {
+    background: linear-gradient(to left, @orange-gradient-start, @orange-gradient-end);
+  }
+  &.s {
+    background: linear-gradient(to bottom, @orange-gradient-start, @orange-gradient-end);
+  }
+}

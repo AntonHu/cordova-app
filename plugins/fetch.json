@@ -58,7 +58,7 @@
   "cordova-plugin-file-transfer": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-file-transfer@1.6.3"
+      "id": "cordova-plugin-file-transfer@^1.6.3"
     },
     "is_top_level": true,
     "variables": {}
@@ -89,6 +89,30 @@
     "is_top_level": false,
     "variables": {}
   },
+  "cordova-plugin-camera": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-camera@4.0.3"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-geolocation": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-geolocation@^4.0.1"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "phonegap-plugin-barcodescanner": {
+    "source": {
+      "type": "registry",
+      "id": "phonegap-plugin-barcodescanner@8.0.0"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
   "jpush-phonegap-plugin": {
     "source": {
       "type": "registry",
@@ -98,5 +122,51 @@
     "variables": {
       "APP_KEY": "fd96956cb315ba658d256156"
     }
+  },
+  "cordova-plugin-statusbar": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-statusbar@2.4.2"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-splashscreen": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-splashscreen@^5.0.2"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-network-information": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-network-information"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-crosswalk-webview": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-crosswalk-webview@~2.4.0"
+    },
+    "is_top_level": true,
+    "variables": {
+      "XWALK_VERSION": "23+",
+      "XWALK_LITEVERSION": "xwalk_core_library_canary:17+",
+      "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
+      "XWALK_MODE": "embedded",
+      "XWALK_MULTIPLEAPK": "true"
+    }
+  },
+  "cordova-plugin-crop": {
+    "source": {
+      "type": "registry",
+      "id": "https://github.com/349989153/cordova-plugin-crop.git"
+    },
+    "is_top_level": true,
+    "variables": {}
   }
 }

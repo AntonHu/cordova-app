@@ -1,11 +1,11 @@
 @import "../../styles/common";
 
-@peak-height: 20 * @px;
+@peak-height: 10px;
 @peak-border-radius: 20px;
 
 .peak-box {
   background: #fff;
-  padding: 20 * @px;
+  padding: @peak-height 0;
   z-index: 100;
   border-top-left-radius: @peak-border-radius;
   border-top-right-radius: @peak-border-radius;
@@ -16,6 +16,12 @@
   left: 0;
   right: 0;
   bottom: 0;
+
+  .white-body {
+    margin-top: @peak-height;
+    background-color: @white-text-color;
+    width: 100%;
+  }
 }
 
 .peak-box.show-peak::before {
@@ -23,8 +29,8 @@
   width: 0;
   height: 0;
   border-bottom: @peak-height solid white;
-  border-left: 10 * @px solid transparent;
-  border-right: 10 * @px solid transparent;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
   position: absolute;
   top:-@peak-height;
   z-index: 100;

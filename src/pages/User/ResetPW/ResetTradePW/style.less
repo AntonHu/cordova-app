@@ -1,14 +1,19 @@
 @import '../../../../styles/common';
 
-.page-reset-trade-pw {
+#page-reset-trade-pw {
+  .page-with-header {
+    min-height: 100vh;
+    background: @white-text-color;
+  }
   .progress-prompt {
+    background: @default-bg;
     height: 140px;
     display: flex;
     justify-content: center;
     align-items: center;
     .line {
-      width: 80px;
-      border-bottom: 1px solid @light-text-color;
+      width: 200 * @px;
+      border-bottom: 1px dashed @light-text-color;
       margin-top: -16px;
       margin-left: -5px;
     }
@@ -19,7 +24,7 @@
         border-radius: 25px;
         color: @white-text-color;
         font-size: 24px;
-        margin-bottom: 5px;
+        margin-bottom: 8px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -34,7 +39,10 @@
     }
   }
   .green-button {
-    margin-top: 50px;
+    margin-top: 220 * @px;
+  }
+  .step-show {
+    padding-top: 40 * @px;
   }
   .step-hide {
     display: none;

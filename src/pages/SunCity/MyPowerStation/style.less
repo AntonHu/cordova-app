@@ -1,31 +1,47 @@
 @import '../../../styles/common';
 
-.page-powerStation-info {
+#page-powerStation-info {
   .blue-box {
     height: 400px;
+    position: relative;
+  }
+  .block-chain-header {
+    .right {
+      padding-right: 10px;
+      text-align: right;
+    }
   }
   .title {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px 0 20px;
+    padding: 20px 20px 0 20px;
     color: @white-text-color;
     height: 40px;
     .weather {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      .weather-pic {
+        height: 25px;
+        margin-right: 5px;
+      }
       .iconfont {
-        font-size: 34px;
+        font-size: 28px;
+        margin-right: 6px;
       }
     }
     .screen {
       display: flex;
       div {
-        padding: 7px;
+        height: 34px;
+        width: 34px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         margin-left: 10px;
-        background: @blue-color-bg;
-        border-radius: 15px;
+        background: @common-bg;
+        border-radius: 17px;
       }
 
       .selected {
@@ -33,89 +49,163 @@
       }
     }
   }
+  .pic-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    span {
+      margin-top: 8px;
+      color: @help-text-color;
+    }
+  }
+  .special-one {
+    position: absolute;
+    top: 125px;
+    width: 50%;
+    margin-left: 25%;
+    span {
+      color: @white-text-color;
+    }
+  }
   #pie-bar-chart {
     width: 94%;
-    margin: 0 auto;
-    height: 300px;
+    position: absolute;
+    top: 60px;
+    margin: 0 3%;
+    height: 280px;
   }
   .type {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: space-around;
     background: @white-text-color;
-    width: 90%;
+    width: 680 * @px;
+    height: 147 * @px;
     margin: 0 auto;
-    margin-top: -30px;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 5px 20px @shadow-color;
+    margin-top: -50px;
+    border: 1px solid @grey-border-color;
+    border-radius: @border-radius;
+    box-shadow: 0 5px 20px @grey-border-color;
+    position: relative;
     .type-item {
-      width: 25%;
-      padding: 10px;
-      background: #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 200 * @px;
       border-radius: 5px;
+      color: @white-text-color;
+      .iconfont {
+        font-size: 30px;
+        margin-left: 10px;
+      }
+    }
+    .power {
+      height: 73 * @px;
+      background: linear-gradient(to bottom, #ffe31f, #fba316);
+    }
+    .elec {
+      height: 73 * @px;
+      background: linear-gradient(to bottom, #16cbff, #1ca4fe);
+    }
+    .profit {
+      position: relative;
+      height: 73 * @px;
+      background: linear-gradient(to bottom, #fb7ba3, #f44c78);
+      .bubble {
+        font-size: 12px;
+        width: 110px;
+        line-height: 28px;
+        position: absolute;
+        background: linear-gradient(to bottom, #fb7ba3, #f44c78);
+        top: -95%;
+        border-radius: @border-radius / 2;
+        &:before {
+          content: '';
+          position: absolute;
+          top: 100%;
+          left: 15px;
+          width: 0;
+          height: 0;
+          border-width: 6px;
+          border-style: solid;
+          border-color: transparent;
+          border-top-width: 6px;
+          border-top-color: @pink-color;
+          color: @pink-color;
+        }
+      }
     }
   }
   .detail {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    flex-wrap: wrap;
-    width: 90%;
+    width: 680 * @px;
+    height: 275 * @px;
     margin: 0 auto;
     background: @white-text-color;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 5px 20px @shadow-color;
+    //padding: 10px;
+    box-sizing: border-box;
+    border-radius: @border-radius;
+    border: 1px solid @grey-border-color;
+    box-shadow: 0 5px 20px @grey-border-color;
+    .detail-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
     .detail-item {
-      width: 25%;
-      padding: 5px 10px;
+      width: 200 * @px;
+      padding: 10px 0 10px 10px;
 
       .number {
-        font-size: 16px;
+        font-size: 40 * @px;
         color: @main-color;
         font-weight: bold;
+        text-align: left;
       }
       .detail-type {
         margin-top: 5px;
-        color: @light-text-color;
-        font-size: 12px;
+        color: @help-text-color;
+        font-size: @h5;
+        text-align: left;
       }
     }
   }
   .equipment {
     margin-top: 10px;
-    .item {
+    .loading {
+      height: 200px;
       background: @white-text-color;
-      margin-bottom: 10px;
       display: flex;
+      justify-content: center;
       align-items: center;
-      justify-content: space-between;
-      padding: 10px;
-      .item-pic {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: @light-blue-bg;
-        border-radius: 25px;
-        height: 50px;
-        width: 50px;
-        .iconfont {
-          margin-top: 6px;
-          color: @white-text-color;
-          font-size: 40px;
-        }
-        .icon-shebeiguanli {
-          font-size: 28px;
-        }
+    }
+  }
+}
+
+.am-modal {
+  .am-modal-body {
+    .am-list-item {
+      padding-left: 0;
+      .am-input-label {
+        font-size: 12px;
+        width: 90px;
       }
-      .item-detail {
+      input {
+        color: @main-color;
+        font-size: 16px;
+      }
+    }
+    .address-wrap {
+      border-radius: @border-radius;
+      max-height: 210px;
+      overflow-y: scroll;
+      .address {
+        line-height: 30px;
         text-align: left;
-        .item-info {
-          margin-top: 5px;
-          color: @light-text-color;
-        }
-      }
-      .am-icon-right {
-        color: @light-text-color;
+        padding-left: 10px;
+        background: @default-bg;
       }
     }
   }

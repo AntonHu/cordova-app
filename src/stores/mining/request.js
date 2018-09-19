@@ -1,36 +1,18 @@
-import {get, post} from '../../utils/fetch';
-import {backendServer} from '../../utils/variable';
-
-const defaultPublicKey = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCQFJmSxkkIOvFnyhTqxz5NeWI93tMkgT3CIUJ40ypifONF21QRB067c4gNOkfLnvwX2IqWNjBjvizD7KxxoHnGezLwJFAnJjmAmqLK2+QXeyz82xnsHczbl+GUIAy18my2+lcmnDMdgfcaksamnQUDB+tTDwnkV7fMvrC13nNcYQIDAQAB';
-
-/**
- * 获取挖宝数据
- * @param params
- * @returns {Promise.<void>}
- */
-export const getWalletData = async ({publicKey}) => {
-  const response = await get(`${backendServer}/wallet/getWalletData`, {publicKey: defaultPublicKey});
-  return response.success
-};
-
-/**
- * 收取token
- * @param params
- * @returns {Promise.<void>}
- */
-export const gainTokens = async ({publicKey, tokenId, value}) => {
-  const response = await get(`${backendServer}/wallet/gainTokens`, {publicKey: defaultPublicKey, tokenId, value});
-  return response.success
-};
+import { get, post } from '../../utils/fetch';
+import { backendServer, PAGE_SIZE } from '../../utils/variable';
 
 /**
  * 获取挖宝总排行榜
  * @param params
  * @returns {Promise.<void>}
  */
-export const getWalletTopRank = async params => {
-  const response = await get(`${backendServer}/wallet/getWalletTopRank`, params);
-  return response.success
+export const getAllRanking = async params => {
+  try {
+    const response = await get(`${backendServer}/wallet/getAllRanking`, params);
+    return response;
+  } catch (err) {
+    return err.response;
+  }
 };
 
 /**
@@ -38,18 +20,109 @@ export const getWalletTopRank = async params => {
  * @param params
  * @returns {Promise.<void>}
  */
-export const getNearbyWalletTopRank = async params => {
-  const response = await get(`${backendServer}/wallet/getNearbyWalletTopRank`, params);
-  return response.success
+export const getNearbyWalletTopRank = async ({ publicKey }) => {
+  try {
+    const response = await get(
+      `${backendServer}/wallet/getNearbyWalletTopRank`,
+      { publicKey }
+    );
+    return response;
+  } catch (err) {
+    return err.response;
+  }
 };
 
 /**
- * 获取积分记录
+ * 获取积分记录(获取太阳积分)
  * @param params
  * @returns {Promise.<void>}
  */
-export const getTokenRecords = async params => {
-  const response = await get(`${backendServer}/wallet/getTokenRecords`, params);
-  return response.success
+export const getTokenRecords = async ({ publicKey, page }) => {
+  try {
+    const response = await get(`${backendServer}/wallet/getTokenRecords`, {
+      publicKey,
+      page,
+      pageSize: PAGE_SIZE
+    });
+    return response;
+  } catch (err) {
+    return err.response;
+  }
 };
 
+/**
+ * 用户的"当前积分"
+ * @param publicKey
+ * @returns {Promise.<*>}
+ */
+export const getTokenBalance = async ({ publicKey }) => {
+  try {
+    const response = await get(`${backendServer}/wallet/tokenBalance`, {
+      publicKey
+    });
+    return response;
+  } catch (err) {
+    return err.response;
+  }
+};
+
+/**
+ * "在路上"的积分
+ * @param publicKey
+ * @returns {Promise.<*>}
+ */
+export const geUnconfirmedToken = async ({ publicKey }) => {
+  try {
+    const response = await get(`${backendServer}/wallet/geUnconfirmedToken`, {
+      publicKey
+    });
+    return response;
+  } catch (err) {
+    return err.response;
+  }
+};
+
+/**
+ * 用户的"当前排行"
+ * @param publicKey
+ * @returns {Promise.<*>}
+ */
+export const getTokenBalanceRanking = async ({ publicKey }) => {
+  try {
+    const response = await get(`${backendServer}/wallet/tokenBalanceRanking`, {
+      publicKey
+    });
+    return response;
+  } catch (err) {
+    return err.response;
+  }
+};
+
+/**
+ * 挖宝数据-今日全民累计挖宝次数、累计全民挖宝次数
+ * @returns {Promise.<void>}
+ */
+export const getDigTimes = async () => {
+  try {
+    const response = await get(`${backendServer}/wallet/digTimes`);
+    return response;
+  } catch (err) {
+    return err.response;
+  }
+};
+
+/**
+ * 用户的"今日太阳积分"
+ * @param publicKey
+ * @returns {Promise.<*>}
+ */
+export const getTodayIntegral = async ({ publicKey }) => {
+  try {
+    const response = await get(`${backendServer}/wallet/tokenTotalToday`, {
+      publicKey
+    });
+    return response;
+  } catch (err) {
+    return err.response;
+  }
+};

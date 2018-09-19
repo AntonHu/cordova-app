@@ -1,0 +1,43 @@
+@import '../../../../styles/common';
+
+.project-detail {
+  ._project-intro {
+    margin-top: 20 * @px;
+  }
+  .tabs-container {
+    width: @contract-item-width;
+    margin: 20 * @px auto;
+  }
+
+  .am-tabs-default-bar-tab {
+    height: auto;
+    line-height: inherit;
+  }
+
+  .am-tabs-default-bar-underline {
+    border: 1px solid @theme-text-color;
+  }
+  .am-tabs-default-bar-tab-active {
+    color: @main-color;
+  }
+
+  //  电站信息 和 受托建造运营方 里的 list 的样式
+  .info-list {
+    .am-list-line::after{
+      background-color: transparent!important;
+    }
+    .am-list-item {
+      .am-list-line {
+        .am-list-content {
+          font-size: @h4;
+          color: @main-text-color;
+        }
+        .am-list-extra {
+          font-size: @h4;
+          color: @screen-text-color;
+        }
+      }
+    }
+
+  }
+}

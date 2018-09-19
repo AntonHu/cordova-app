@@ -1,12 +1,20 @@
 import axios from 'axios';
 import qs from 'qs';
-import { getSessionStorage } from './storage';
+import { getLocalStorage } from './storage';
+
+export const TIME_OUT = 10000;
+export const LONG_TIME_OUT = 15000;
+export const ERR_CODE = {
+  timeout: -TIME_OUT,
+  notFound: 404,
+  networkError: 500
+};
 
 /*
   请求头为application/json
 */
-const JSONInstance = axios.create({
-  timeout: 60000,
+export const JSONInstance = axios.create({
+  timeout: TIME_OUT,
   headers: {
     'Content-Type': 'application/json'
   },
@@ -22,7 +30,7 @@ const JSONInstance = axios.create({
   post请求
 */
 const postInstance = axios.create({
-  timeout: 60000,
+  timeout: TIME_OUT,
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded'
   },
@@ -34,11 +42,58 @@ const postInstance = axios.create({
   ]
 });
 
+// 重新包装一下，使得超时的err有response
+const errHandler = err => {
+  console.dir(err);
+  if (err.message === `timeout of ${TIME_OUT}ms exceeded`) {
+    throw {
+      success: false,
+      code: ERR_CODE.timeout,
+      msg: '请求超时'
+    }
+  }
+  if (err.message === 'Request failed with status code 404') {
+    throw {
+      success: false,
+      code: ERR_CODE.notFound,
+      msg: '接口404'
+    }
+  }
+  if (err.message === 'Network Error') {
+    throw {
+      success: false,
+      code: ERR_CODE.networkError,
+      msg: '网络错误'
+    }
+  }
+  throw err
+};
+
+/**
+ * 把err用接口名包装一下
+ * @param err
+ * @param name  接口名字
+ * @returns {*}
+ */
+export const requestError = (err, name) => {
+  if (err.code !== undefined && err.msg) {
+    err.msg = name + ' ' + err.msg
+  } else {
+    err = {
+      success: false,
+      code: -1,
+      msg: name + ' 接口错误'
+    }
+  }
+  return err;
+};
+
+
 /*
   get请求，参数：params
 */
 export const get = (url, params) => {
-  const token = getSessionStorage('token');
+  const token = getLocalStorage('token');
   let urlStr = url;
   if (params && Object.keys(params).length > 0) {
     urlStr += `?access_token=${token}&`;
@@ -46,26 +101,26 @@ export const get = (url, params) => {
   } else {
     urlStr += `?access_token=${token}`;
   }
-  return JSONInstance.get(urlStr);
+  return JSONInstance.get(urlStr).catch(errHandler);
 };
 
 /*
   post请求
 */
 export const post = (url, params) => {
-  const token = getSessionStorage('token');
+  const token = getLocalStorage('token');
   const urlStr = `${url}?access_token=${token}`;
-  return postInstance.post(urlStr, qs.stringify(params));
+  return postInstance.post(urlStr, qs.stringify(params)).catch(errHandler);
 };
 
 /*
   登录post请求
 */
 export const authPost = (url, params) => {
-  return postInstance.post(url, qs.stringify(params));
+  return postInstance.post(url, qs.stringify(params)).catch(errHandler);
 };
 /*
   请求头为application/json的post请求
 */
 export const jsonPost = (url, params) =>
-  postInstance.post(url, JSON.stringify(params));
+  postInstance.post(url, JSON.stringify(params)).catch(errHandler);

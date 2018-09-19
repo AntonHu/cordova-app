@@ -1,0 +1,53 @@
+@import '../../../../styles/common';
+
+@trace-card-color: #0EAC81;
+@icon-size: 30 * @px;
+@border-color: #e7e7e7;
+@trace-meta-color: #545454;
+
+.trace-card {
+  position: relative;
+  text-align: left;
+  border-left: 1px solid @border-color;
+  padding-bottom: 20 * @px;
+  padding-left: 35 * @px;
+  .trace-card-icon {
+    color: @white-text-color;
+    background: @trace-card-color;
+    width: @icon-size;
+    height: @icon-size;
+    border-radius: @icon-size;
+    font-size: @icon-size;
+    position: absolute;
+    left: -(@icon-size / 2);
+    top: 0;
+
+  }
+  .trace-card-title {
+    color: @trace-card-color;
+    font-size: @h3;
+  }
+  ._trace-box {
+    border-bottom: 1px dashed @border-color;
+    padding-bottom: 20 * @px;
+    //display: flex;
+    ._trace-column {
+      flex: 1;
+    }
+    ._trace-row {
+      display: flex;
+      ._trace-item {
+        flex: 1;
+      }
+    }
+  }
+}
+
+._trace-item {
+  color: @trace-meta-color;
+  //display: inline-block;
+  //width: 50%;
+  font-size: 18 * @px;
+  line-height: 40 * @px;
+  word-break: break-all;
+}

@@ -32,3 +32,6 @@ plugins/*
 local.properties
 /platforms/android/app/build
 /platforms/android/CordovaLib/build
+/platforms/android/assets/cdvasset.manifest
+/platforms/ios/blockChainMobile.xcworkspace/xcuserdata/luyang.xcuserdatad/UserInterfaceState.xcuserstate
+/platforms/android/release-signing.properties

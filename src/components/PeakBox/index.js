@@ -27,7 +27,9 @@ class Comp extends React.PureComponent {
           top: (top * getDeviceWidth() / UI_PAGE_WIDTH) + 'px'
         }}
       >
-        {this.props.children}
+        <div className="white-body">
+          {this.props.children}
+        </div>
       </div>
     )
   }

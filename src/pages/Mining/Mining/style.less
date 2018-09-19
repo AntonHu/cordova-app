@@ -1,10 +1,22 @@
 @import '../../../styles/common';
 
-.page-mining {
+#page-mining {
+  #mining-refresh {
+    //-webkit-overflow-scrolling: touch;
+  }
+  .block-chain-header {
+    .right {
+      text-align: right;
+      padding-right: 10px;
+    }
+  }
   .sun-info {
     height: 190px;
     padding: 10px;
-    background: @main-color;
+    background: url('../../../images/mining_bg.png');
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size: 100%;
     .my-sun {
       height: 90px;
       display: flex;
@@ -12,30 +24,37 @@
       align-items: center;
       padding: 0 20px;
       color: @white-text-color;
-      border-bottom: 1px solid @bule-border;
+      border-bottom: 1px solid @theme-border-color;
       .my-pic {
         width: 60px;
         height: 60px;
         border-radius: 40px;
       }
       .sun-type {
-        color: @light-text-color;
+        color: @white-text-color;
+        font-size: @h4;
+        font-weight: 100;
       }
       .rank {
-        font-size: 24px;
+        font-size: 64 * @px;
         margin-top: 5px;
       }
     }
     .my-profit {
       height: 80px;
-      padding: 0 20px;
+      padding:  20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       color: @white-text-color;
       .profit-title {
-        margin-bottom: 5px;
-        color: @light-text-color;
+        margin-bottom: 22 * @px;
+        color: @white-text-color;
+        font-weight: 100;
+        font-size: @h4;
+      }
+      .profit-number {
+        font-size: @h4;
       }
     }
   }
@@ -49,22 +68,24 @@
       display: flex;
       align-items: center;
       justify-content: space-around;
-      width: 47%;
-      height: 60px;
+      width: 330 * @px;
+      height: 142 * @px;
       background: @white-text-color;
 
       .iconfont {
-        font-size: 28px;
+        margin-left: 20 * @px;
+        font-size: 40px;
         color: @main-color;
       }
       .expect-title {
         div {
           &:nth-child(1) {
-            font-weight: bold;
+            //font-weight: bold;
           }
           &:nth-child(2) {
             color: @light-text-color;
             margin-top: 3px;
+            font-size: @h5;
           }
         }
       }
@@ -82,27 +103,39 @@
       align-items: center;
       justify-content: space-between;
       padding: 10px;
+      font-size: @h4;
       span {
-        color: @blue-text-color;
+        color: @theme-text-color;
       }
     }
   }
   .ranking {
     padding: 0 15px;
     margin-top: 15px;
+    .am-tabs-default-bar-tab-active {
+      color: @theme-text-color;
+    }
+    .am-tabs-default-bar-underline {
+      border: 1px solid @theme-text-color;
+    }
     .ranking-list {
       background: @white-text-color;
+      .ranking-item.empty {
+        background: transparent;
+      }
       .ranking-item {
+        height: 46px;
+        box-sizing: border-box;
         background: @white-text-color;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 10px;
+        padding: 10px 20px 10px 10px;
         .ranking-title {
           display: flex;
           align-items: center;
-          span {
-            margin-right: 10px;
+          .rank-item {
+            margin: 5px 20px 5px 10px;
           }
         }
       }

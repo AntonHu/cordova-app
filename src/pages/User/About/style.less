@@ -1,7 +1,25 @@
 @import "../../../styles/common";
 
-.page-about {
+#page-about {
   .blue-box {
     justify-content: center;
+  }
+  .banner {
+    margin-bottom: 7px;
+  }
+  .am-list-item {
+    height: @list-item-height;
+    line-height: @list-item-height;
+    border-bottom: 1px solid @white-grey;
+
+    .am-list-line::after {
+      background-color: transparent !important;
+    }
+
+    .am-list-line {
+      .am-list-content {
+        font-size: @h3;
+      }
+    }
   }
 }

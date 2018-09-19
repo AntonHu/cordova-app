@@ -7,12 +7,13 @@ import './style.less';
 /**
  * Header组件，包含后退按钮
  */
-class Comp extends React.PureComponent {
+class Header extends React.PureComponent {
   static propTypes = {
     title: PropTypes.string.isRequired,
     leftComponent: PropTypes.element,
     rightComponent: PropTypes.element,
-    transparent: PropTypes.bool
+    transparent: PropTypes.bool,
+    fixed: PropTypes.bool
   };
 
   static defaultProps = {
@@ -23,13 +24,14 @@ class Comp extends React.PureComponent {
       </Button>
     ),
     rightComponent: null,
-    transparent: false
+    transparent: false,
+    fixed: false
   };
 
   render() {
-    const { title, leftComponent, rightComponent, transparent } = this.props;
+    const { title, leftComponent, rightComponent, transparent, fixed } = this.props;
     return (
-      <div className={`block-chain-header ${transparent && 'transparent'}`}>
+      <div className={`block-chain-header ${transparent ? 'transparent' : ''}`}>
         <div onClick={() => this.props.history.goBack()} className={'left'}>
           {leftComponent}
         </div>
@@ -40,4 +42,4 @@ class Comp extends React.PureComponent {
   }
 }
 
-export default withRouter(Comp);
+export default withRouter(Header);

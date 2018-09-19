@@ -3,8 +3,8 @@
  * @param name
  * @param value
  */
-export const setSessionStorage = (name, value) => {
-  sessionStorage.setItem(name, value);
+export const setLocalStorage = (name, value) => {
+  localStorage.setItem(name, value);
 };
 
 /**
@@ -12,8 +12,8 @@ export const setSessionStorage = (name, value) => {
  * @param name
  * @param value
  */
-export const getSessionStorage = name => {
-  return sessionStorage.getItem(name);
+export const getLocalStorage = name => {
+  return localStorage.getItem(name);
 };
 
 /**
@@ -21,6 +21,6 @@ export const getSessionStorage = name => {
  * @param name
  * @param value
  */
-export const deleteSessionStorage = name => {
-  sessionStorage.removeItem(name);
+export const deleteLocalStorage = name => {
+  localStorage.removeItem(name);
 };

@@ -1,0 +1,34 @@
+@import '../../../styles/common';
+
+@trace-meta-color: #545454;
+@info-meta-color: #666666;
+
+#page-component-trace {
+  color: @main-text-color;
+  .component-wrap {
+    color: @info-meta-color;
+    padding: 42 * @px 60 * @px;
+    text-align: left;
+    background-color: @white-text-color;
+    box-sizing: border-box;
+    .component-info-item {
+      font-size: @h4;
+      line-height: 1;
+      margin-bottom: 30 * @px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .trace-wrap {
+    margin-top: 20 * @px;
+    color: @info-meta-color;
+    padding-left: 30 * @px;
+    padding-top: 38 * @px;
+    padding-bottom: 38 * @px;
+    text-align: left;
+    background-color: @white-text-color;
+    box-sizing: border-box;
+  }
+}

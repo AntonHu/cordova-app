@@ -1,16 +1,45 @@
 @import "../../../styles/common";
 
-.page-verifyID {
+#page-verifyID {
   .blue-box {
     height: 220 * @px;
-    margin-top: 24 * @px;
     justify-content: center;
+  }
+  .blue-box.blue-pic{
+    background-position-y: -178 * @px;
   }
 
   .green-button {
-    margin-top: 260 * @px;
+    margin-top: 80 * @px;
+    margin-bottom: 80 * @px;
   }
 
   .title-of-blue {
+  }
+
+  .click-picture {
+    margin-top: 20 * @px;
+    width: 320 * @px;
+  }
+  .click-picture.first {
+    margin-right: 40 * @px;
+  }
+
+  .white-area {
+    background: @white-text-color;
+    padding-bottom: 30px;
+  }
+
+  .tips-box {
+    background: @white-grey;
+    color: @help-text-color;
+    text-align: left;
+    padding: 21px 10px;
+    line-height: @h2;
+    .title {
+      font-size: @h5;
+      margin-bottom: 10px;
+    }
+    font-size: @h7;
   }
 }

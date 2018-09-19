@@ -1,18 +1,54 @@
 @import "../../../styles/common";
 
+@register-btn-height: 100 * @px;
+
 .page-login {
-  .title {
-    padding-top: 160 * @px;
+  .blue-box.blue-pic {
+    background-position-y: -70 * @px;
   }
 
   .body {
     width: 620 * @px;
     margin-left: auto;
     margin-right: auto;
-    padding-top: 140 * @px;
+    padding-top: 100 * @px;
+    .am-list-item.am-input-item {
+      padding-left: 0;
+      height: 95 * @px;
+    }
+    .am-list-item {
+      border-bottom: 1px solid @grey-border-color;
+      .am-list-line::after {
+        background-color: transparent !important;
+      }
+    }
+  }
+
+  .login-title {
+    width: 240 * @px;
+  }
+
+  .title-box {
+    display: flex;
+    padding-top: 160 * @px;
+    align-items: center;
+    justify-content: center;
   }
 
   .green-button {
     margin-top: 150 * @px;
+  }
+
+  .register-btn,
+  .forget-btn
+  {
+    text-align: right;
+    color: @theme-text-color;
+    line-height: @register-btn-height;
+    height: @register-btn-height;
+  }
+  .forget-btn {
+    text-align: left;
+    color: @help-text-color;
   }
 }
