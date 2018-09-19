@@ -1,0 +1,60 @@
+@import '../../../../styles/common';
+
+.bottom-action {
+  position: absolute;
+  bottom: 0;
+  background-color: #efefef;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 99;
+  .sheet-content {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff;
+    .total-money-container {
+      margin: 30 * @px 66 * @px 0 66 * @px;
+      .money-row {
+        display: flex;
+        justify-content: space-between;
+      }
+      .money-row-two {
+        text-align: left;
+        font-size: 26 * @px;
+        font-family: PingFang-SC-Medium;
+        font-weight: 500;
+        color: #888;
+      }
+      .total-money {
+        font-size: 54 * @px;
+        color: #eb2525;
+        font-family: PingFang-SC-Medium;
+        font-weight: 500;
+      }
+    }
+    .stepper-container {
+      display: flex;
+      justify-content: space-between;
+      vertical-align: middle;
+      height: 80 * @px;
+      line-height: 80 * @px;
+      margin: 30 * @px 66 * @px 0 66 * @px;
+      .stepper-left {
+        color: #333333;
+        font-size: 34 * @px;
+        font-family: PingFang-SC-Medium;
+        font-weight: 600;
+      }
+    }
+    .has-agree {
+      height: 100 * @px;
+      line-height: 100 * @px;
+    }
+    .buy-btn {
+      background: linear-gradient(to right, #f38202, #fdc31b);
+      font-size: 40 * @px;
+      font-family: PingFang-SC-Bold;
+      font-weight: bold;
+      color: #fff;
+    }
+  }
+}

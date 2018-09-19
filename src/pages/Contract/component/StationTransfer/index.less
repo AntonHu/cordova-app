@@ -1,0 +1,49 @@
+@import '../../../../styles/common';
+
+.station-transfer-item {
+  margin: 20 * @px 20 * @px;
+  background-color: #fff;
+  overflow: hidden;
+  .station-row {
+    display: flex;
+    justify-content: space-evenly;
+    position: relative;
+    margin: 38 * @px 0 0 0;
+    .money-font {
+      color: rgba(235, 45, 45, 1);
+      font-family: PingFang-SC-Medium;
+    }
+    .money {
+      font-size: 54 * @px;
+      font-family: PingFang-SC-Medium;
+      color: rgba(235, 45, 45, 1);
+    }
+    .project-name {
+      font-size: 34 * @px;
+      font-family: PingFang-SC-Medium;
+      color: #333333;
+      line-height: 54 * @px;
+    }
+  }
+  .station-row-two {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin: 38 * @px 30 * @px;
+    background-color: #f7f7f7;
+    .row-two-font {
+      font-size: 24 * @px;
+      font-family: PingFang-SC-Regular;
+      font-weight: 400;
+      color: #333333;
+      line-height: 62 * @px;
+      height: 62 * @px;
+    }
+    .capacity {
+      margin-left: 20 * @px;
+    }
+    .profit {
+      margin-right: 20 * @px;
+    }
+  }
+}
