@@ -2,7 +2,8 @@ import axios from 'axios';
 import qs from 'qs';
 import { getLocalStorage } from './storage';
 
-export const TIME_OUT = 10000;
+// export const TIME_OUT = 10000;
+export const TIME_OUT = 99999999999;
 export const LONG_TIME_OUT = 15000;
 export const ERR_CODE = {
   timeout: -TIME_OUT,
@@ -102,6 +103,24 @@ export const get = (url, params) => {
     urlStr += `?access_token=${token}`;
   }
   return JSONInstance.get(urlStr).catch(errHandler);
+};
+
+export const getFile = (url, params) => {
+  const token = getLocalStorage('token');
+  let urlStr = url;
+  if (params && Object.keys(params).length > 0) {
+    urlStr += `?access_token=${token}&`;
+    urlStr += qs.stringify(params);
+  } else {
+    urlStr += `?access_token=${token}`;
+  }
+  return axios.create({
+    timeout: TIME_OUT,
+    headers: {
+      // 'Content-Type': 'application/octet-stream'
+      'Content-Type': 'application/pdf'
+    }
+  }).get(urlStr).catch(errHandler);
 };
 
 /*

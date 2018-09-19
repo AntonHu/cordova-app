@@ -33,7 +33,8 @@ import {
   Appeal,
   LegalDocument,
   InvolvedDetail,
-  ComponentTrace
+  ComponentTrace,
+  AuthorizeDocument
 } from '../pages/Contract';
 import MyPowerStation from '../pages/SunCity/MyPowerStation';
 import EquipmentInfo from '../pages/SunCity/EquipmentInfo';
@@ -154,8 +155,9 @@ class PrimaryRoute extends React.Component {
         <Route exact path="/contract/involvedDetail/:id" component={InvolvedDetail}/>
         <Route exact path="/contract/addBankCard" component={BankCard}/>
         <Route exact path="/contract/purchaseShare" component={PurchaseShare}/>
-        <Route exact path="/contract/shareConfirm" component={ShareConfirm}/>
-        <Route exact path="/contract/investAgreement" component={InvestAgreement}/>
+        <Route exact path="/contract/shareConfirm/:projectId/purchaseNumber/:purchaseNumber" component={ShareConfirm}/>
+        <Route exact path="/contract/investAgreement/:projectId/purchaseNumber/:purchaseNumber" component={InvestAgreement}/>
+        <Route exact path="/contract/authorizeDocument/:projectId/purchaseNumber/:purchaseNumber" component={AuthorizeDocument}/>
         <Route exact path="/contract/appeal" component={Appeal}/>
         <Route exact path="/contract/legalDocument" component={LegalDocument}/>
         <Route exact path="/contract/componentTrace" component={ComponentTrace}/>

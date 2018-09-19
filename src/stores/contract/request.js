@@ -1,4 +1,4 @@
-import { get, post, requestError } from '../../utils/fetch';
+import { get, getFile, post, requestError } from '../../utils/fetch';
 import { contractServer, PAGE_SIZE } from '../../utils/variable';
 
 const serverUrl = contractServer + '/app';
@@ -21,23 +21,21 @@ export const fetchProjectDetail = async ({ id }) => {
   }
 };
 
-//todo: 获取用户当前项目的份额确认书  还没好
-export const fetchShareConfirmDoc = async ({ type, projectId, purchaseNumber }) => {
+/**
+ * 申购后获取份额确认书或投资协议
+ * @param type 0=份额确认书 1=投资协议
+ * @param projectId
+ * @param purchaseNumber
+ * @returns {Promise<*>}
+ */
+export const fetchPurchaseLegalFile = async ({ type, projectId, purchaseNumber }) => {
   try {
-    const response = await get(`${serverUrl}/app/project/legalFile`, { type, projectId, purchaseNumber });
-    return response.data;
+    // const response = await get(`${serverUrl}/project/legalFile`, { type, projectId, purchaseNumber });
+    const response = await getFile(`http://192.168.1.161:8080/app/project/legalFile`, { type, projectId, purchaseNumber });
+    console.log(response)
+    return response;
   } catch (err) {
-    throw requestError(err, '份额确认书');
-  }
-};
-
-//todo: 获取用户当前项目的投资协议  还没好
-export const fetchInvestAgreement = async ({ type, projectId, purchaseNumber }) => {
-  try {
-    const response = await get(`${serverUrl}/app/project/legalFile`, { type, projectId, purchaseNumber });
-    return response.data;
-  } catch (err) {
-    throw requestError(err, '投资协议');
+    throw requestError(err, type === 0 ? '份额确认书' : '投资协议');
   }
 };
 
@@ -166,7 +164,7 @@ export const fetchProjectSiteInformation = async ({ projectId }) => {
  * @param moduleId
  * @returns {Promise<*>}
  */
-export const fetchComponentTrace = async ({moduleId}) => {
+export const fetchComponentTrace = async ({ moduleId }) => {
   try {
     const response = await get(`https://api.thundersdata.com/operation-data/v1/project/moduleinfo/${moduleId}`);
     return response.data;

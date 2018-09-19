@@ -12,7 +12,7 @@ import { contractServer } from "../../../utils/variable";
 import { Document, Page } from "react-pdf";
 
 // 投资协议页面
-class InvestAgreement extends React.PureComponent{
+class AuthorizeDocument extends React.PureComponent{
 
   state = {
     totalPage: []
@@ -34,7 +34,7 @@ class InvestAgreement extends React.PureComponent{
 
   render() {
     return (
-      <PageWithHeader title="投资协议" id="page-invest-agreement">
+      <PageWithHeader title="代收电费授权书" id="page-authorize-document">
         <div className="content-wrap">
           <Document
             file={ { url: this.getPDFUrl() } }
@@ -55,4 +55,4 @@ class InvestAgreement extends React.PureComponent{
   }
 }
 
-export default InvestAgreement;
+export default AuthorizeDocument;

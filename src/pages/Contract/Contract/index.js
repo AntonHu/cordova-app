@@ -32,6 +32,9 @@ class Contract extends React.Component {
   componentDidMount() {
     this.initPullToRefresh();
     const { projectList } = this.props.contractStore;
+    if (this.props.history.action !== 'POP') {
+
+    }
     projectList.initLoad();
   }
 
@@ -62,7 +65,10 @@ class Contract extends React.Component {
 
   renderRow = (rowData) => {
     const item = rowData;
-    return <ContractProjectItem
+    // TODO: click之前，reset掉notInvolvedDetail
+    return(
+      <Link to={`/contract/notInvolvedDetail/${item.id}`}>
+    <ContractProjectItem
       key={ item.id }
       enterpriseName={ item.enterpriseName }
       annualRate={ item.estimatedAnnualizedIncome }
@@ -72,6 +78,8 @@ class Contract extends React.Component {
       projectName={ item.projectName }
       soldShare={ item.soldShare }
     />
+    </Link>
+    )
   };
 
   updateDataSource = reaction(

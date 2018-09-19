@@ -1,40 +1,109 @@
 @import '../../../styles/common';
 
 #page-purchase-share {
+  color: @main-text-color;
+  #body_of_pageWithHeader {
+    //display: flex;
+    //flex-direction: column;
+    position: relative;
+  }
 
-  .content-text {
-    width: @contract-item-width;
-    background: @white-text-color;
-    color: @main-text-color;
+  .back-to-contract {
     font-size: @h4;
-    border-radius: @border-radius;
-    line-height: 40 * @px;
-    padding: 30 * @px;
-    box-sizing: border-box;
-    text-align: left;
+    color: @screen-text-color;
+    &::before {
+      border: none;
+    }
+  }
+
+  .count-down-wrap {
+    width: @contract-item-width;
+    height: 416 * @px;
     margin: 0 auto;
+    background: @white-text-color;
+    text-align: left;
+    border-radius: @border-radius;
+    box-sizing: border-box;
+    padding: 50 * @px 30 * @px;
+    .title {
+      font-size: 42 * @px;
+
+    }
+    .title:first-child {
+      margin-bottom: 20 * @px;
+    }
+
+    .count-down-box {
+      font-size: @h5;
+      margin-top: 52 * @px;
+      .count-down-num {
+        display: inline-block;
+        background: @annual-rate-color;
+        color: white;
+        width: 30 * @px;
+        height: 42 * @px;
+        font-size: @h2;
+        line-height: 42 * @px;
+        text-align: center;
+        &.even {
+          margin-left: 5 * @px;
+        }
+        &.odd {
+          margin: 0 5 * @px;
+        }
+      }
+    }
+
+    .warn {
+      font-size: @h5;
+      color: @annual-rate-color;
+      margin-top: 37 * @px;
+      line-height: 40 * @px;
+    }
   }
 
-  .agreement-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 124 * @px;
-    margin-bottom: 73 * @px;
-    .agreement {
-      color: @theme-text-color;
+  .pay-wrap {
+    width: @contract-item-width;
+    height: 349 * @px;
+    margin: 20 * @px auto 0 auto;
+    background: @white-text-color;
+    text-align: left;
+    border-radius: @border-radius;
+    box-sizing: border-box;
+    padding: 50 * @px 30 * @px;
+    .info-title {
+      font-size: @h4;
+      margin-bottom: 41 * @px;
     }
-    .agree-action {
+
+    .info-item {
+      font-size: @h3;
       color: @screen-text-color;
-      padding: 0 10 * @px;
-      &.accept {
-        color: @theme-text-color;
-      }
-
-      .iconfont {
-        margin-right: 5 * @px;
-      }
+      margin-bottom: 20 * @px;
     }
   }
+
+  .pay-tip {
+    font-size: @h5;
+    margin-top: 33 * @px;
+    margin-bottom: 344 * @px;
+  }
+
+  .btn-wrap {
+    width: 100vw;
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    .am-button {
+      flex: 1;
+      height: 100 * @px;
+      border-radius: 0;
+      &::before {
+        border-radius: 0!important;
+      }
+
+    }
+  }
+
 
 }

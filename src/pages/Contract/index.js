@@ -8,6 +8,7 @@ import LegalDocument from './LegalDocument';
 import InvolvedDetail from './InvolvedDetail';
 import ComponentTrace from './ComponentTrace';
 import Contract from './Contract';
+import AuthorizeDocument from './AuthorizeDocument';
 
 export {
   NotInvolvedDetail,
@@ -19,5 +20,6 @@ export {
   LegalDocument,
   InvolvedDetail,
   ComponentTrace,
-  Contract
+  Contract,
+  AuthorizeDocument
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import { Title, PageWithHeader, Picture, Rank, OrangeGradientBtn } from '../../../components';
-import { Icon, Tabs, WhiteSpace, InputItem } from 'antd-mobile';
+import { Icon, Tabs, WhiteSpace, InputItem, Toast } from 'antd-mobile';
 import { getLocalStorage } from '../../../utils/storage';
 // import PullToRefresh from 'rmc-pull-to-refresh';
 import Tloader from 'react-touch-loader';
@@ -11,11 +11,52 @@ import './index.less';
 
 
 // 填写银行卡页面
-class BankCard extends React.PureComponent {
+@inject('contractStore', 'bankCardStore')
+@observer
+class BankCard extends React.Component {
   state = {
     name: '',
     cardNumber: '',
     bank: ''
+  };
+
+  onSubmit = async () => {
+    if (this.validateBeforeSubmit()) {
+      const { name, bank, cardNumber } = this.state;
+      this.props.bankCardStore.setBankCard({
+        bankCardNumber: cardNumber,
+        bank,
+        name
+      })
+        .then(async result => {
+          if (result.success) {
+            Toast.info('添加银行卡成功');
+            await this.props.bankCardStore.getBankCard();
+            this.props.history.goBack();
+          }
+        })
+        .catch(err => {
+          if (err.msg) {
+            Toast.info(err.msg);
+          }
+        })
+    }
+  };
+
+  validateBeforeSubmit = () => {
+    if (!this.state.name) {
+      Toast.info('请输入姓名');
+      return false;
+    }
+    if (!this.state.cardNumber) {
+      Toast.info('请输入卡号');
+      return false;
+    }
+    if (!this.state.bank) {
+      Toast.info('请输入开户行');
+      return false;
+    }
+    return true;
   };
 
   render() {
@@ -53,8 +94,7 @@ class BankCard extends React.PureComponent {
 
         </div>
         <OrangeGradientBtn
-          onClick={ () => {
-          } }
+          onClick={ this.onSubmit }
         >
           确认
         </OrangeGradientBtn>

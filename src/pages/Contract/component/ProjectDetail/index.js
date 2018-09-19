@@ -18,20 +18,21 @@ const tabs = [
 // 详情页的必有组件：头部、项目简介、电站信息、受托建造运营方信息、历史项目
 class ProjectDetail extends React.PureComponent {
   static propTypes = {
-    projectDetail: PropTypes.object.isRequired
+    projectDetail: PropTypes.object.isRequired,
+    historyList: PropTypes.array.isRequired
   };
 
   render() {
-    const { projectDetail } = this.props;
+    const { projectDetail, historyList } = this.props;
     return (
       <div className="project-detail">
         <ProjectHeader projectDetail={ projectDetail }/>
         <ProjectIntro projectDetail={ projectDetail }/>
         <div className="tabs-container">
-          <Tabs tabs={ tabs } initialPage={ 2 }>
+          <Tabs tabs={ tabs } initialPage={ 0 }>
             <StationInfo projectDetail={ projectDetail }/>
             <OperatorInfo projectDetail={ projectDetail }/>
-            <HistoryProject projectDetail={ projectDetail }/>
+            <HistoryProject historyList={ historyList }/>
           </Tabs>
         </div>
       </div>

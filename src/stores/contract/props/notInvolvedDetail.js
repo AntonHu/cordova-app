@@ -4,7 +4,7 @@ import {
   fetchHistoryProjectList,
   fetchProjectDetail,
   fetchPurchaseProject,
-  fetchShareConfirmDoc,
+  fetchPurchaseLegalFile,
   fetchInvestAgreement, fetchCancelPurchase
 } from "../request";
 import { Toast } from 'antd-mobile';
@@ -26,6 +26,9 @@ class NotInvolvedDetail {
   // 申购Id，申购后返回，用于确认付款
   @observable purchaseId = '';
 
+  // loading状态
+  @observable isPurchasing = false;
+
   // goBack的时候，重置store
   @action
   reset = () => {
@@ -35,6 +38,7 @@ class NotInvolvedDetail {
     this.isHistoryLoading = false;
     this.purchaseCount = 1;
     this.purchaseId = '';
+    this.isPurchasing = false;
   };
 
   // didMount且不是goBack过来的时候，获取项目详情
@@ -65,7 +69,7 @@ class NotInvolvedDetail {
         this.isDetailLoading = false;
         if (result.success) {
           const data = result.data || {};
-          this.projectDetail = data.projectDetail || {};
+          this.projectDetail = data || {};
         } else {
           throw result;
         }
@@ -73,6 +77,7 @@ class NotInvolvedDetail {
       return result;
     } catch (e) {
       ToastError(e);
+      return e;
     }
   };
 
@@ -95,72 +100,62 @@ class NotInvolvedDetail {
       return result;
     } catch (e) {
       ToastError(e);
+      return e;
     }
   };
 
   // 调申购方法
   @action
-  onPurchase = async () => {
+  onPurchase = async ({projectId, purchaseNumber}) => {
     try {
+      this.isPurchasing = true;
       const result = await fetchPurchaseProject({
-        projectId: this.projectDetail.projectId,
-        purchaseNumber: this.purchaseCount
+        projectId,
+        purchaseNumber
       });
-      runInAction(() => {
+      this.isPurchasing = false;
+
         if (result.success) {
           const data = result.data || {};
           this.purchaseId = data.purchaseId + '' || '';
         } else {
           throw result;
         }
-      });
+
 
       return result;
     } catch (e) {
       ToastError(e);
+      return e
     }
   };
 
   // "确认已付款"
-  // TODO: 从store里去掉
-  onConfirmPay = async () => {
-    const result = await fetchConfirmPayment({
-      projectId: this.projectDetail.projectId,
-      purchaseId: this.purchaseId
-    });
-    return result;
+  onConfirmPay = async ({projectId, purchaseId}) => {
+    try {
+      const result = await fetchConfirmPayment({
+        projectId: this.projectDetail.projectId,
+        purchaseId: this.purchaseId
+      });
+      return result;
+    } catch (e) {
+      ToastError(e);
+      return e;
+    }
   };
 
   // 取消申购
-  // TODO: 从store里去掉
-  onCancelPurchase = async () => {
-    const result = await fetchCancelPurchase({
-      projectId: this.projectDetail.projectId,
-      purchaseId: this.purchaseId
-    });
-    return result;
-  };
-
-  // 获取投资份额确认书
-  // todo: store里加一下
-  getShareConfirmDoc = async ({ type }) => {
-    const result = await fetchShareConfirmDoc({
-      type,
-      projectId: this.projectDetail.projectId,
-      purchaseNumber: this.purchaseCount
-    });
-    return result;
-  };
-
-  // 获取投资协议
-  // todo: store里加一下
-  getInvestAgreement = async ({ type }) => {
-    const result = await fetchInvestAgreement({
-      type,
-      projectId: this.projectDetail.projectId,
-      purchaseNumber: this.purchaseCount
-    });
-    return result;
+  onCancelPurchase = async ({projectId, purchaseId}) => {
+    try {
+      const result = await fetchCancelPurchase({
+        projectId,
+        purchaseId
+      });
+      return result;
+    } catch (e) {
+      ToastError(e);
+      return e;
+    }
   };
 
   // 点击申购的时候，输入申购份数
@@ -172,7 +167,7 @@ class NotInvolvedDetail {
   // 申购总金额(computed)
   @computed
   get purchaseAmount() {
-    return this.projectDetail * this.purchaseCount;
+    return (this.projectDetail.minInvestmentAmount || 0) * this.purchaseCount;
   }
 
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import { Title, PageWithHeader, Picture, Rank, OrangeGradientBtn } from '../../../components';
-import { Icon, Tabs, WhiteSpace, Toast } from 'antd-mobile';
+import { Icon, Tabs, WhiteSpace, Toast, Button, Modal } from 'antd-mobile';
 import { getLocalStorage } from '../../../utils/storage';
 // import PullToRefresh from 'rmc-pull-to-refresh';
 import Tloader from 'react-touch-loader';
@@ -10,61 +10,128 @@ import PullToRefresh from 'pulltorefreshjs';
 import './index.less';
 
 // 申购份额页面
-class PurchaseShare extends React.PureComponent{
+@inject('contractStore', 'bankCardStore')
+@observer
+class PurchaseShare extends React.Component {
   state = {
-    isAccept: false
+    countDown: [0, 0, 1, 4, 3, 5]
   };
 
-  onConfirm = () => {
-    console.log(this.state.isAccept)
-    if (!this.state.isAccept) {
-      Toast.info('您尚未同意《电站建造登记运营代收电费授权书》');
-      return;
+  onCancel = () => {
+    Modal.alert('取消申购', '您确定要取消申购？', [{ text: '再想想' }, {
+      text: '是的', onPress: () => {
+        this.sendCancelReq();
+      }
+    }])
+  };
+
+  onPaid = () => {
+    Modal.alert('已支付', '您确认已经支付？', [{ text: '没有' }, {
+      text: '确实付了', onPress: () => {
+        this.sendConfirmReq();
+      }
+    }])
+  };
+
+  // todo: 还没调
+  sendCancelReq = async () => {
+    const { notInvolvedDetail } = this.props.contractStore;
+    const result = await notInvolvedDetail.onCancelPurchase({
+      projectId: notInvolvedDetail.projectDetail.id,
+      purchaseId: notInvolvedDetail.purchaseId
+    });
+    if (result.success) {
+      Modal.alert('取消', '您已确认支付，即将返回首页', [{
+        text: '好的', onPress: () => {
+          this.backToContract();
+        }
+      }])
+    } else {
+      Toast.info(result.msg);
     }
   };
 
+  // todo: 还没调
+  sendConfirmReq = async () => {
+    const { notInvolvedDetail } = this.props.contractStore;
+    const result = await notInvolvedDetail.onConfirmPay({
+      projectId: notInvolvedDetail.projectDetail.id,
+      purchaseId: notInvolvedDetail.purchaseId
+    });
+
+    if (result.success) {
+      Modal.alert('已支付', '您已确认支付，即将返回首页', [{
+        text: '好的', onPress: () => {
+          this.backToContract();
+        }
+      }])
+    } else {
+      Toast.info(result.msg);
+    }
+
+  };
+
+  // 回到合约电站首页
+  backToContract = () => {
+    const { notInvolvedDetail } = this.props.contractStore;
+    notInvolvedDetail.reset();
+    this.props.history.go(-3)
+  };
+
+  // TODO：倒计时函数，传入倒计时的min。
+  startCountdown = (min) => {
+  };
+
   render() {
-    const {isAccept } = this.state;
+    const { countDown } = this.state;
+    const { bankCard } = this.props.bankCardStore;
     return (
-      <PageWithHeader title="投资份额确认书" id="page-purchase-share">
-        <div className="content-wrap">
-          <div className="content-text">
-            甲方权利义务
-            甲方有权了解委托资产的管理、使用及收支情况，但在行使该权利以不影响乙方正常管理和运作委托资产为限。甲方应保证其对委托资产，有完全的权利进行处理，且委托资产投入本合同约定的投资领域并不会导致任何法律纠纷。对乙方以及处理资产管理事务的情况和资料负有依法保密义务，未经乙方同意，不得向任何人透露。
-            乙方权利义务
-            乙方在符合有关法律规定的基础上，有权依据本协议约定可以对委托资产进行经营管理，并保障其以诚实信用、谨慎勤勉的原则管理和运用委托资产，保证资金安全。乙方承诺将受委托管理资产定向投资于公司合作的指定项目。
-            收益与分配
-            1、本协议自甲方全额出资的第二个月起，乙方需每月按照 投资总额/24 在扣除相应手续费后支付给甲方指定账户。
-            2、本协议24个月之后甲方享受乙方公司纯利润40 %分红，直至乙方经营关闭为止。 税费的承担
-            本协议项下的委托资产承担相应的税费，按照法律、行政法规和国家有关部门的规定办理。
-            退出及清算
-            甲方出资后，不得要求退回出资，除有下列情况之一出现：乙方决定终止委托经营；经甲、乙双方协商一致同意；因行政机关、司法机关或其他国家机关的法律行为，导致本委托资产管理不能正常运营。委托资产的清算人由乙方担任，清算人在本协议终止后，开始进行清算活动，出具清算报告，对委托财产收益进行分配。
-            争议解决方式
-            因本协议而产生或与本协议有关的一切争议，如经友好协商未能解决的，应向乙方所在地人民法院提起诉讼。
-            其他
-            本协议一式两份，甲乙双方各执一份。本协议自甲方投资全部划入乙方开设的指定账户之日起生效。有效期自———年——月——日至————年——月——日止。
-            本协议未尽事宜，由甲乙双方协商解决
-            ，也可以签订补充协议作为本协议的组成部分，
-          </div>
+      <PageWithHeader
+        title="申购份额"
+        id="page-purchase-share"
+        leftComponent={ null }
+        rightComponent={ <Button className="back-to-contract" onClick={ this.backToContract }>返回首页</Button> }
+      >
 
-          <div className="agreement-box">
-
-            <div
-              className={`agree-action ${isAccept ? 'accept' : ''}`}
-              onClick={() => this.setState({ isAccept: !isAccept })}
-            >
-              <i className="iconfont">&#xe61d;</i>同意
-            </div>
-            <div className="agreement">《电站建造登记运营代收电费授权书》</div>
+        <div className="count-down-wrap">
+          <div className="title">恭喜申购8000元 已锁定！</div>
+          <div className="title">请尽快支付</div>
+          <div className="count-down-box">
+            <span className="count-down-num even">{ countDown[0] }</span>
+            <span className="count-down-num odd">{ countDown[1] }</span>时
+            <span className="count-down-num even">{ countDown[2] }</span>
+            <span className="count-down-num odd">{ countDown[3] }</span>分
+            <span className="count-down-num even">{ countDown[4] }</span>
+            <span className="count-down-num odd">{ countDown[5] }</span>秒
           </div>
+          <div className="warn">请于30分钟内支付受托运营方申购金额，付款完成点击已支付，超期未支付自动取消申购</div>
         </div>
 
-        <OrangeGradientBtn onClick={this.onConfirm}>
-          确认
-        </OrangeGradientBtn>
+        <div className="pay-wrap">
+          { /* todo: 待确认：不是付款信息，是代收卡信息 */ }
+          <div className="info-title">代收卡信息：</div>
+          <div className="info-item">支付账号：{ bankCard.bankCardNumber || '无' }</div>
+          <div className="info-item">开户行：{ bankCard.bank || '无' }</div>
+          <div className="info-item">联系人：{ bankCard.name || '无' }</div>
+          { /*<div className="info-item">联系电话：</div>*/ }
+        </div>
+
+        <div className="pay-tip">
+          支付完成后，企业电站运营方将会验证通过你的申购申请
+        </div>
+
+        <div className="btn-wrap">
+          <Button onClick={ this.onCancel }>
+            取消申购
+          </Button>
+          <OrangeGradientBtn onClick={ this.onPaid }>
+            已支付
+          </OrangeGradientBtn>
+        </div>
       </PageWithHeader>
     )
   }
+
 }
 
 export default PurchaseShare;

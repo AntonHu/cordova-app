@@ -12,14 +12,13 @@ class ProjectHeader extends React.PureComponent {
   };
 
   static defaultProps = {
-    statusText: '待确认打款',
+    statusText: '',
     isActive: true
   };
 
   render() {
     const { projectDetail, isActive, statusText } = this.props;
     const activeClass = isActive ? 'active' : '';
-    // TODO: projectDetail缺预期年化收益率、浏览次数
     return(
       <div className={`_project-header ${activeClass}`}>
         {
@@ -41,22 +40,22 @@ class ProjectHeader extends React.PureComponent {
           </div>
           <div className="annual-rate">
             预期年化收益
-            <div className="number">{projectDetail.minInvestmentAmount || 0}%</div>
+            <div className="number">{projectDetail.estimatedAnnualizedIncome || 0}%</div>
           </div>
         </div>
 
         <div className={`bottom-box ${activeClass}`}>
           <div className="time bottom-item">
             <i className="iconfont">&#xe629;</i>
-            {projectDetail.estimatedRevenueStartTime}
+            {projectDetail.createdAt || ''}
           </div>
           <div className="browser bottom-item">
             <i className="iconfont">&#xe693;</i>
-            {projectDetail.otherCosts}
+            {projectDetail.views || 0}
           </div>
           <div className="share bottom-item">
             <i className="iconfont">&#xe61c;</i>
-            已购{projectDetail.soldShare}份，还剩{projectDetail.availableShare}份
+            已购{projectDetail.soldShare || 0}份，还剩{projectDetail.availableShare || 0}份
           </div>
 
         </div>

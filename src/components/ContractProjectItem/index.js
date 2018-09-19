@@ -30,7 +30,7 @@ class ContractProjectItem extends React.PureComponent {
   percent = (soldShare, availableShare) => {
     soldShare = soldShare || 0;
     availableShare = availableShare || 0;
-    if (soldShare === 0 || availableShare === 0) {
+    if (soldShare === 0 || (soldShare + availableShare) === 0) {
       return 0
     }
     return soldShare / (soldShare + availableShare) * 100

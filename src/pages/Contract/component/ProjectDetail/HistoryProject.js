@@ -7,18 +7,17 @@ import './HistoryProject.less';
 // 历史项目 组件
 class HistoryProject extends React.PureComponent{
   static propTypes = {
-    projectDetail: PropTypes.object.isRequired
+    historyList: PropTypes.array.isRequired
   };
 
   render() {
-    const { projectDetail } = this.props;
-    const historyProjects = projectDetail.historyProject || [];
+    const { historyList } = this.props;
     return (
       <div className="history-project">
         {
-          historyProjects.length > 0
+          historyList.length > 0
           ?
-            historyProjects.map((item, idx) => (
+            historyList.map((item, idx) => (
               <ContractProjectItem
                 key={idx}
                 enterpriseName={item.enterpriseName}
@@ -31,7 +30,7 @@ class HistoryProject extends React.PureComponent{
               />
             ))
             :
-            <div>暂无项目</div>
+            <div className="empty">暂无项目</div>
         }
       </div>
     )

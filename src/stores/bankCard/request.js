@@ -10,7 +10,7 @@ const serverUrl = contractServer + '/app';
 export const fetchLatestBankCard = async () => {
   try {
     const response = await get(`${serverUrl}/bankCard/latest`);
-    return response;
+    return response.data;
   } catch (err) {
     throw requestError(err, '最近使用银行卡');
   }
@@ -23,7 +23,7 @@ export const fetchLatestBankCard = async () => {
 export const fetchBindBankCard = async ({ bank, name, bankCardNumber }) => {
   try {
     const response = await post(`${serverUrl}/bankCard/bind`, { bank, name, bankCardNumber });
-    return response;
+    return response.data;
   } catch (err) {
     throw requestError(err, '绑定银行卡');
   }

@@ -2,65 +2,143 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import { Title, PageWithHeader, Picture, Rank, OrangeGradientBtn } from '../../../components';
-import { Icon, Tabs, WhiteSpace, Button } from 'antd-mobile';
+import { Icon, Tabs, WhiteSpace, Button, Toast, ActivityIndicator, Modal } from 'antd-mobile';
 import { getLocalStorage } from '../../../utils/storage';
 import Tloader from 'react-touch-loader';
 import PullToRefresh from 'pulltorefreshjs';
+import { Document, Page, Outline } from 'react-pdf';
 import './index.less';
+import { contractServer } from "../../../utils/variable";
+import { reaction } from "mobx";
 
 // 投资份额确认书
-class ShareConfirm extends React.PureComponent{
+@inject('contractStore')
+@observer
+class ShareConfirm extends React.Component {
 
   state = {
-    countDown: [0, 0, 1, 4, 3, 5]
+    isAccept: false,
+    totalPage: [],
+    loading: false,
+    loadingText: ''
   };
 
-  onCancel = () => {};
+  componentDidMount() {
+    // this.makeRequest();
+  }
 
-  onPaid = () => {};
+  componentWillUnmount() {
+    this.purchaseLoading();
+  }
 
-  // TODO：倒计时函数，传入倒计时的min。
-  startCountdown = (min) => {};
+  purchaseLoading = reaction(
+    () => this.props.contractStore.notInvolvedDetail.isPurchasing,
+    (loading) => {
+      if (loading) {
+        this.setState({
+          loading: true,
+          loadingText: '正在发送申购请求...'
+        });
+      } else {
+        this.setState({
+          loading: false,
+          loadingText: ''
+        });
+      }
+    }
+  );
+
+
+  onConfirm = () => {
+    console.log(this.state.isAccept);
+    if (!this.state.isAccept) {
+      Modal.alert('未同意', '您尚未点击同意按钮', [{text:'知道了'}]);
+      return;
+    } else {
+      this.sendPurchaseReq();
+    }
+  };
+
+  /**
+   * 发送申购请求
+   */
+  sendPurchaseReq = async() => {
+    const { notInvolvedDetail } = this.props.contractStore;
+    const projectId = notInvolvedDetail.projectDetail.id;
+    const purchaseNumber = notInvolvedDetail.purchaseCount;
+    const result = await notInvolvedDetail.onPurchase({
+      projectId,
+      purchaseNumber
+    });
+    if (result.success) {
+      Toast.info('您已申购成功', 3, () => {
+        this.props.history.push('/contract/purchaseShare')
+      })
+    } else {
+      Toast.info(result.msg)
+    }
+  };
+
+  onDocumentLoad = (data) => {
+    console.log(data.pdfInfo);
+    this.setState({
+      totalPage: new Array(data.pdfInfo.numPages).fill(1)
+    })
+  };
+
+  getPDFUrl = () => {
+    const token = getLocalStorage('token');
+    const { projectId, purchaseNumber } = this.props.match.params;
+
+    return `${contractServer}/app/project/legalFile?access_token=${token}&type=0&projectId=${projectId}&purchaseNumber=${purchaseNumber}`
+  };
 
   render() {
-    const { countDown } = this.state;
+    const { isAccept } = this.state;
+    const { projectId, purchaseNumber } = this.props.match.params;
     return (
-      <PageWithHeader title="申购份额" id="page-share-confirm">
+      <PageWithHeader title="投资份额确认书" id="page-share-confirm">
+        <div className="content-wrap">
+          <Document
+            file={ { url: this.getPDFUrl() } }
+            onLoadSuccess={ this.onDocumentLoad }
+          >
+            {
+              this.state.totalPage.map((v, idx) =>
+                <Page pageNumber={ idx + 1 } />
+              )
+            }
 
-        <div className="count-down-wrap">
-          <div className="title">恭喜申购8000元 已锁定！</div>
-          <div className="title">请尽快支付</div>
-          <div className="count-down-box">
-            <span className="count-down-num even">{countDown[0]}</span>
-            <span className="count-down-num odd">{countDown[1]}</span>时
-            <span className="count-down-num even">{countDown[2]}</span>
-            <span className="count-down-num odd">{countDown[3]}</span>分
-            <span className="count-down-num even">{countDown[4]}</span>
-            <span className="count-down-num odd">{countDown[5]}</span>秒
+          </Document>
+
+          <div className="agreement-box">
+
+            <div
+              className={ `agree-action ${isAccept ? 'accept' : ''}` }
+              onClick={ () => this.setState({ isAccept: !isAccept }) }
+            >
+              <i className="iconfont">&#xe61d;</i>同意
+            </div>
+            <div className="agreement">《投资份额确认书》</div>
+            <div className="agreement">
+              <Link to={`/contract/authorizeDocument/${projectId}/purchaseNumber/${purchaseNumber}`}>
+              《电站建造登记运营代收电费授权书》
+              </Link>
+            </div>
+            <div className="agreement">
+              <Link to={`/contract/investAgreement/${projectId}/purchaseNumber/${purchaseNumber}`}>《投资协议》</Link>
+            </div>
           </div>
-          <div className="warn">请于30分钟内支付受托运营方申购金额，付款完成点击已支付，超期未支付自动取消申购</div>
         </div>
 
-        <div className="pay-wrap">
-          <div className="info-title">付款信息：</div>
-          <div className="info-item">支付账号：</div>
-          <div className="info-item">开户行：</div>
-          <div className="info-item">联系人：</div>
-          <div className="info-item">联系电话：</div>
-        </div>
-
-        <div className="pay-tip">
-          支付完成后，企业电站运营方将会验证通过你的申购申请
-        </div>
-
-        <div className="btn-wrap">
-          <Button onClick={this.onCancel}>
-            取消申购
-          </Button>
-          <OrangeGradientBtn onClick={this.onPaid}>
-            已支付
-          </OrangeGradientBtn>
-        </div>
+        <OrangeGradientBtn onClick={ this.onConfirm }>
+          确认
+        </OrangeGradientBtn>
+        <ActivityIndicator
+          toast
+          text={ this.state.loadingText }
+          animating={ this.state.loading }
+        />
       </PageWithHeader>
     )
   }
