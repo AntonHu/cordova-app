@@ -36,8 +36,8 @@ class NotInvolvedDetail extends React.PureComponent {
     this.setState({ isShow: false });
   };
   //点击底部确认
-  onConfirm = e => {
-    console.log(e);
+  onConfirm = (e, resultJson) => {
+    console.log(e, resultJson);
   };
   render() {
     const detail = mockDetail;
@@ -58,6 +58,7 @@ class NotInvolvedDetail extends React.PureComponent {
           onShow={this.onShow}
           onClose={this.onClose}
           onConfirm={this.onConfirm}
+          perCountMoney={3000}
         />
       </PageWithHeader>
     );

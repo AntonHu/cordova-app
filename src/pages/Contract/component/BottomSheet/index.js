@@ -1,7 +1,50 @@
 import React from 'react';
-import { Icon, Tabs, WhiteSpace, Button, Stepper } from 'antd-mobile';
+import { Icon, Tabs, WhiteSpace, Button, Stepper, Toast } from 'antd-mobile';
 import PropTypes from 'prop-types';
 import './index.less';
+
+/**
+ * 策略模式校验输入的各种值是否合法
+ * 可配置校验规则
+ */
+//此变量用来配置校验规则
+const strategies = {
+  isNonEmpty(value, errorMsg) {
+    return value === '' ? errorMsg : void 0;
+  },
+  minLength(value, length, errorMsg) {
+    return value.length < length ? errorMsg : void 0;
+  },
+  isTrue(value, errorMsg) {
+    return !value ? errorMsg : void 0;
+  }
+};
+class Validator {
+  constructor() {
+    this.cache = []; //保存校验规则
+  }
+  add(value, rules) {
+    for (let rule of rules) {
+      let strategyAry = rule.strategy.split(':'); //例如['minLength',6]
+      let errorMsg = rule.errorMsg; //存储校验失败错误信息，例如'用户名不能为空'
+      this.cache.push(() => {
+        let strategy = strategyAry.shift(); //用户挑选的strategy校验规则
+        strategyAry.unshift(value); //把value添加进参数列表
+        strategyAry.push(errorMsg); //把errorMsg添加进参数列表[value,errorMsg]
+        return strategies[strategy].apply(value, strategyAry);
+      });
+    }
+  }
+  start() {
+    for (let validatorFunc of this.cache) {
+      let errorMsg = validatorFunc(); //开始校验，并取得校验后的返回信息
+      if (errorMsg) {
+        //r如果有确切返回值，说明校验没有通过
+        return errorMsg;
+      }
+    }
+  }
+}
 
 /**
  * 电站转让的item
@@ -10,7 +53,8 @@ class BottomSheet extends React.PureComponent {
   state = {
     Height: 0, //设置遮盖整个屏幕
     Width: 0, //设置遮盖整个屏幕
-    val: 3 //测试的默认份数
+    count: 3, //测试的默认份数
+    isAgreen: false //默认是否同意文件
   };
   static defaultProps = {
     isShow: false,
@@ -57,23 +101,70 @@ class BottomSheet extends React.PureComponent {
   /**
    * 选择份数发生变化
    */
-  onChange = val => {
+  onChange = count => {
     this.setState({
-      val
+      count
     });
   };
   /**
    * 确认按钮
+   * 已同意文件已读，并且购买份数大于0
+   * 不合法则无法申购
    */
   _onConfirm = e => {
-    const { onConfirm } = this.props;
+    const { count, isAgreen } = this.state;
+    const { onConfirm, perCountMoney } = this.props;
+    const { errorMsg, formData } = this.validatorFunc(); //开始校验申购的数据
+    if (errorMsg) {
+      Toast.fail(errorMsg);
+      console.log(formData);
+      return;
+    }
+    const resultJson = {
+      totalPay: count * perCountMoney
+    };
     if (onConfirm) {
-      onConfirm(e);
+      onConfirm(e, resultJson);
     }
   };
+  /**
+   * 用来校验输入值是否合法
+   */
+  validatorFunc = () => {
+    const { count, isAgreen } = this.state;
+    let validator = new Validator(); //生成校验实例
+    validator.add(isAgreen, [
+      {
+        strategy: 'isTrue',
+        errorMsg: '请先同意以下文件再申购'
+      }
+    ]);
+    validator.add(count, [
+      {
+        strategy: 'isTrue',
+        errorMsg: '申购份数必须大于0'
+      }
+    ]);
+    let errorMsg = validator.start();
+    return {
+      errorMsg,
+      formData: {
+        isAgreen,
+        count
+      }
+    };
+  };
+  /**
+   * 同意文件
+   */
+  _onAgree = e => {
+    this.setState({
+      isAgreen: !this.state.isAgreen
+    });
+  };
   render() {
-    const { Height, Width } = this.state;
-    const { isShow } = this.props;
+    const { Height, Width, count, isAgreen } = this.state;
+    const { isShow, perCountMoney } = this.props;
     //显示调用内部的onshow
     isShow ? this._show() : void 0;
     return (
@@ -89,12 +180,16 @@ class BottomSheet extends React.PureComponent {
         <div className="sheet-content" onClick={e => e.stopPropagation()}>
           <div className="total-money-container">
             <p className="money-row">
-              <span className="total-money">8000元</span>
+              <span className="total-money">{count * perCountMoney} 元</span>
               <span onClick={this._close}>
                 <Icon type={'cross'} color="#888888" />
               </span>
             </p>
-            <p className="money-row-two">转让标准2000元每份</p>
+            <p className="money-row-two">
+              转让标准
+              {perCountMoney}
+              元每份
+            </p>
           </div>
           <div className="stepper-container">
             <div className="stepper-left">
@@ -105,14 +200,20 @@ class BottomSheet extends React.PureComponent {
                 style={{ width: '100%', minWidth: '100px' }}
                 showNumber
                 max={10}
-                min={1}
-                value={this.state.val}
+                min={0}
+                value={count}
                 onChange={this.onChange}
               />
             </div>
           </div>
-          <div className="has-agree">
-            <span>是否同意《XXXX》</span>
+          <div className="has-agree" onClick={this._onAgree}>
+            <i className={isAgreen ? `agree-document iconfont` : 'iconfont'}>
+              &#xe61d;
+            </i>
+            <span className="agree-document-font">
+              是否同意
+              <span className="agree-document">《XXXX》</span>
+            </span>
           </div>
           <div>
             <Button className="buy-btn" onClick={this._onConfirm}>
