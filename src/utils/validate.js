@@ -50,7 +50,7 @@ export const testInvitationCode = code => {
  * @param str
  * @returns {boolean}
  */
-export const isImage = (str) => {
+export const isImage = str => {
   const reg = /\.(jpg|jpeg|png)$/gi;
   return reg.test(str);
 };
@@ -60,7 +60,7 @@ export const isImage = (str) => {
  * @param str
  * @returns {boolean}
  */
-export const isUrl = (str) => {
+export const isUrl = str => {
   const reg = /^(http|https):\/\//i;
   return reg.test(str);
 };
@@ -69,10 +69,27 @@ export const isUrl = (str) => {
  * 字符串是否是HTML string
  * @param str
  */
-export const isHtml = (str) => {
+export const isHtml = str => {
   const reg = /<(body|div|p|span)[^>]*>/i;
-  return reg.test(str)
+  return reg.test(str);
 };
 
-export const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
+export const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(
+  window.navigator.userAgent
+);
 
+/**
+ * 判断变量类型
+ * @param object
+ */
+export const type = data => {
+  let class2type = {},
+    typeArray = 'Boolean Number String Function Array Date RegExp Object Error Symbol Promise Null Undefined'.split(
+      ' '
+    );
+
+  typeArray.map(v => {
+    class2type['[object ' + v + ']'] = v.toLowerCase();
+  });
+  return class2type[class2type.toString.call(data)];
+};
