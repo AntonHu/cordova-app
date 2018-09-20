@@ -115,12 +115,6 @@ class Contract extends React.Component {
       { title: <span>电站转让</span> },
       { title: <span>转让历史</span> }
     ];
-
-    const tabs2 = [
-      { title: '合约电站', sub: '1' },
-      { title: '电站转让', sub: '2' },
-      { title: '转让历史', sub: '3' }
-    ];
     return (
       <PageWithHeader title="合约电站" leftComponent={null} id="page-contract">
         <Tabs
