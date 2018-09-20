@@ -5,10 +5,12 @@ import ShareConfirm from './ShareConfirm';
 import InvestAgreement from './InvestAgreement'
 import Appeal from './Appeal';
 import LegalDocument from './LegalDocument';
+import LegalDocumentDetail from './LegalDocument/LegalDocumentDetail';
 import InvolvedDetail from './InvolvedDetail';
 import ComponentTrace from './ComponentTrace';
 import Contract from './Contract';
 import AuthorizeDocument from './AuthorizeDocument';
+import MyProjectList from './MyProjectList';
 
 export {
   NotInvolvedDetail,
@@ -21,5 +23,7 @@ export {
   InvolvedDetail,
   ComponentTrace,
   Contract,
-  AuthorizeDocument
+  AuthorizeDocument,
+  MyProjectList,
+  LegalDocumentDetail
 }

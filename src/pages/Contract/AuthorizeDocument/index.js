@@ -29,7 +29,7 @@ class AuthorizeDocument extends React.PureComponent{
     const token = getLocalStorage('token');
     const { projectId, purchaseNumber } = this.props.match.params;
     // todo: type是多少？
-    return `${contractServer}/app/project/legalFile?access_token=${token}&type=1&projectId=${projectId}&purchaseNumber=${purchaseNumber}`
+    return `${contractServer}/app/project/legalFile?access_token=${token}&type=2&projectId=${projectId}&purchaseNumber=${purchaseNumber}`
   };
 
   render() {

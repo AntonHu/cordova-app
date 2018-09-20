@@ -56,6 +56,20 @@ export const fetchPurchaseProject = async ({ projectId, purchaseNumber }) => {
 };
 
 /**
+ * 获取某个项目的申购详情（一些申购信息）
+ * @param purchaseId
+ * @returns {Promise<*>}
+ */
+export const fetchPurchaseDetail = async ({ purchaseId }) => {
+  try {
+    const response = await get(`${serverUrl}/project/purchase/detail`, { purchaseId });
+    return response.data;
+  } catch (err) {
+    throw requestError(err, '申购信息');
+  }
+};
+
+/**
  * 取消申购
  * @param projectId
  * @param purchaseId

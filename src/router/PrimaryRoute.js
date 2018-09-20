@@ -34,7 +34,9 @@ import {
   LegalDocument,
   InvolvedDetail,
   ComponentTrace,
-  AuthorizeDocument
+  AuthorizeDocument,
+  MyProjectList,
+  LegalDocumentDetail
 } from '../pages/Contract';
 import MyPowerStation from '../pages/SunCity/MyPowerStation';
 import EquipmentInfo from '../pages/SunCity/EquipmentInfo';
@@ -152,7 +154,7 @@ class PrimaryRoute extends React.Component {
 
         {/* 合约电站 */}
         <Route exact path="/contract/notInvolvedDetail/:id" component={NotInvolvedDetail}/>
-        <Route exact path="/contract/involvedDetail/:id" component={InvolvedDetail}/>
+        <Route exact path="/contract/involvedDetail/:id/purchaseId/:purchaseId" component={InvolvedDetail}/>
         <Route exact path="/contract/addBankCard" component={BankCard}/>
         <Route exact path="/contract/purchaseShare" component={PurchaseShare}/>
         <Route exact path="/contract/shareConfirm/:projectId/purchaseNumber/:purchaseNumber" component={ShareConfirm}/>
@@ -161,6 +163,8 @@ class PrimaryRoute extends React.Component {
         <Route exact path="/contract/appeal" component={Appeal}/>
         <Route exact path="/contract/legalDocument" component={LegalDocument}/>
         <Route exact path="/contract/componentTrace" component={ComponentTrace}/>
+        <Route exact path="/contract/myProjectList" component={MyProjectList}/>
+        <Route exact path="/contract/legalDocumentDetail" component={LegalDocumentDetail}/>
 
         {/* 应用 */}
         <Route exact path="/apply/earnToken" component={EarnToken}/>

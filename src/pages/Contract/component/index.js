@@ -3,11 +3,13 @@ import ProjectStep from './ProjectStep'
 import FundingStatus from './FundingStatus';
 import StationBuildProgress from './StationBuildProgress';
 import TraceCard from './TraceCard';
+import RejectInfo from './RejectInfo';
 
 export {
   ProjectDetail,
   ProjectStep,
   FundingStatus,
   StationBuildProgress,
-  TraceCard
+  TraceCard,
+  RejectInfo
 }

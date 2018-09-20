@@ -4,11 +4,12 @@ import {
   fetchProjectDetail,
   fetchProjectGroupInformation,
   fetchProjectLegalFile,
-  fetchProjectSiteInformation,
+  fetchProjectSiteInformation, fetchPurchaseDetail,
   fetchRejectInfo
 } from "../request";
 import { Toast } from 'antd-mobile';
 import { ToastError } from "../../ToastError";
+import { PROJECT_STATUS_CODE, USER_PROJECT_STATUS_CODE } from "../../../utils/variable";
 
 // 已参与的合约项目详情
 class InvolvedDetail {
@@ -17,8 +18,12 @@ class InvolvedDetail {
   @observable isDetailLoading = false;
 
   // 历史项目
-  @observable historyList = {};
+  @observable historyList = [];
   @observable isHistoryLoading = false;
+
+  // 申购详情
+  @observable purchaseDetail = {};
+  @observable isPurchaseDetailLoading = false;
 
   // 项目成团（如有）
   @observable groupInfo = {};
@@ -39,6 +44,8 @@ class InvolvedDetail {
   // 4份法律文书
   @observable docList = [];
   @observable isDocListLoading = false;
+  @observable docName = '';
+  @observable docUrl = '';
 
   // goBack的时候，重置store
   @action
@@ -47,6 +54,8 @@ class InvolvedDetail {
     this.isDetailLoading = false;
     this.historyList = {};
     this.isHistoryLoading = false;
+    this.purchaseDetail = {};
+    this.isPurchaseDetailLoading = false;
     this.groupInfo = {};
     this.isGroupInfoLoading = false;
     this.siteInfo = {};
@@ -57,15 +66,29 @@ class InvolvedDetail {
     this.isRejectInfoLoading = false;
     this.docList = [];
     this.isDocListLoading = false;
+    this.docName = '';
+    this.docUrl = '';
   };
 
-  // didMount且不是goBack过来的时候，获取项目详情
-  // 获取项目详情之后，再获取历史项目列表、法律文书
-  // TODO: 根据状态再获取项目成团、电站建设、电站收益、驳回内容等
-  loadData = (id) => {
+  // didMount且不是goBack过来的时候，获取项目详情、购买详情（purchaseDetail）
+  // 获取项目详情之后，再获取历史项目列表、法律文书、项目成团
+  // 根据状态再获取电站建设、电站收益、驳回内容等
+  // 获取购买详情（purchaseDetail）之后，如果是驳回状态，获取驳回信息
+  loadData = ({ id, purchaseId }) => {
     if (this.isDetailLoading) {
       return;
     }
+
+    this.loadPurchaseDetail(purchaseId).then(result => {
+      if (result.success) {
+        const data = result.data;
+        const status = data.status || 0;
+        if (status === USER_PROJECT_STATUS_CODE.REJECTED) {
+          this.loadRejectInfo({ purchaseId, projectId: id })
+        }
+      }
+    });
+
     this.loadDetail(id)
       .then(result => {
         if (result.success) {
@@ -78,6 +101,16 @@ class InvolvedDetail {
             purchaseId: this.projectDetail.purchaseId,
             projectId: id
           });
+          this.loadGroupInfo(id);
+
+          const data = result.data || {};
+          const status = data.status || 0;
+          if (status >= PROJECT_STATUS_CODE.BUILDING_PLANT) {
+            this.loadSiteInfo(id)
+          }
+          if (status >= PROJECT_STATUS_CODE.TO_GRID) {
+            this.loadPowerProfit(id)
+          }
         }
       })
   };
@@ -92,7 +125,7 @@ class InvolvedDetail {
         this.isDetailLoading = false;
         if (result.success) {
           const data = result.data || {};
-          this.projectDetail = data.projectDetail || {};
+          this.projectDetail = data || {};
         } else {
           throw result;
         }
@@ -101,8 +134,31 @@ class InvolvedDetail {
       return result;
     } catch (e) {
       ToastError(e);
+      return e;
     }
+  };
 
+  // 申购详情
+  @action
+  loadPurchaseDetail = async (purchaseId) => {
+    try {
+      this.isPurchaseDetailLoading = true;
+      const result = await fetchPurchaseDetail({ purchaseId });
+      runInAction(() => {
+        this.isPurchaseDetailLoading = false;
+        if (result.success) {
+          const data = result.data || {};
+          this.purchaseDetail = data || {};
+
+        } else {
+          throw result;
+        }
+      });
+      return result;
+    } catch (e) {
+      ToastError(e);
+      return e;
+    }
   };
 
   // 历史项目列表
@@ -124,6 +180,7 @@ class InvolvedDetail {
       return result;
     } catch (e) {
       ToastError(e);
+      return e;
     }
 
   };
@@ -147,6 +204,7 @@ class InvolvedDetail {
       return result;
     } catch (e) {
       ToastError(e);
+      return e;
     }
   };
 
@@ -169,6 +227,7 @@ class InvolvedDetail {
       return result;
     } catch (e) {
       ToastError(e);
+      return e;
     }
   };
 
@@ -180,10 +239,10 @@ class InvolvedDetail {
 
   // 驳回内容
   @action
-  loadRejectInfo = async ({purchaseId, projectId}) => {
+  loadRejectInfo = async ({ purchaseId, projectId }) => {
     try {
       this.isRejectInfoLoading = true;
-      const result = await fetchRejectInfo({purchaseId, projectId});
+      const result = await fetchRejectInfo({ purchaseId, projectId });
       runInAction(() => {
         this.isRejectInfoLoading = false;
         if (result.success) {
@@ -196,6 +255,7 @@ class InvolvedDetail {
       return result;
     } catch (e) {
       ToastError(e);
+      return e;
     }
   };
 
@@ -217,9 +277,15 @@ class InvolvedDetail {
       return result;
     } catch (e) {
       ToastError(e);
+      return e;
     }
-
   };
+
+  @action
+  setLegalDoc = ({ docName, docUrl }) => {
+    this.docName = docName;
+    this.docUrl = docUrl;
+  }
 
 
 }

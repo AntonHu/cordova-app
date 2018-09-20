@@ -19,14 +19,15 @@ const tabs = [
 class ProjectDetail extends React.PureComponent {
   static propTypes = {
     projectDetail: PropTypes.object.isRequired,
-    historyList: PropTypes.array.isRequired
+    historyList: PropTypes.array.isRequired,
+    purchaseDetail: PropTypes.object
   };
 
   render() {
-    const { projectDetail, historyList } = this.props;
+    const { projectDetail, historyList, purchaseDetail } = this.props;
     return (
       <div className="project-detail">
-        <ProjectHeader projectDetail={ projectDetail }/>
+        <ProjectHeader projectDetail={ projectDetail } purchaseDetail={purchaseDetail}/>
         <ProjectIntro projectDetail={ projectDetail }/>
         <div className="tabs-container">
           <Tabs tabs={ tabs } initialPage={ 0 }>

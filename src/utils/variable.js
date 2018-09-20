@@ -1,8 +1,10 @@
 // const backendServer = 'http://47.97.160.168:30089/blockchain/ledger-proxy';
 const backendServer = 'https://api.thundersdata.com/ebcapp';
-const contractServer = 'https://api.thundersdata.com/contractPlant';
-// const userServer = 'https://auths.thundersdata.com';
 // const backendServer = 'http://47.96.158.229:30135';
+
+// const contractServer = 'https://api.thundersdata.com/contractPlant';
+const contractServer = 'http://192.168.1.161:8080';
+
 const userServer = 'https://api.thundersdata.com';
 
 const PAGE_SIZE = 20;
@@ -79,6 +81,25 @@ const STATION_VERIFY_STATUS = {
   SUCCESS: 2
 };
 
+const PROJECT_STATUS_CODE = {
+  UNGROUPED: 0, // "未成团"
+  GROUPED: 1,  //"已成团"
+  PURCHASE_MATERIAL: 2, //"项目已成团，原材料购买"
+  BUILDING_PLANT: 3, //"原材料已购买，电站建设中"
+  TO_GRID: 4, //"电站建设完毕，并网备案中"
+  GRID: 5 //"已并网"
+};
+
+const USER_PROJECT_STATUS_CODE = {
+  NOT_PURCHASED: 0, //"未购买"
+  APPLIED: 1, //"已申请"
+  PAID: 2, //"用户已付款"
+  REJECTED: 3, //"已驳回"
+  SUCCESSFUL_PURCHASE: 4, //"申购成功"
+  CANCELED_PURCHASE: 5, //"取消申购"
+  TIME_OUT: 6 //"超时，自动取消"
+};
+
 export {
   backendServer,
   userServer,
@@ -93,5 +114,7 @@ export {
   DEPLYMENT_KEY,
   INTEGRAL_TYPE,
   VERIFY_STATUS,
-  STATION_VERIFY_STATUS
+  STATION_VERIFY_STATUS,
+  PROJECT_STATUS_CODE,
+  USER_PROJECT_STATUS_CODE
 };

@@ -9,34 +9,40 @@ const Item = List.Item;
 
 const ListData = [
   {
+    text: '合约电站',
+    extra: 'avatar',
+    path: '/contract/myProjectList',
+    unicode: '\ue653'
+  },
+  {
     text: '我的数据',
     extra: 'avatar',
-    path: 'myData',
+    path: '/user/myData',
     unicode: '\ue68d'
   },
   {
     text: '电站资料',
     extra: '华',
-    path: 'myStation',
+    path: '/user/myStation',
     unicode: '\ue609'
   },
   {
     text: '邀请好友',
     horizontal: true,
-    path: 'inviteFriends',
+    path: '/user/inviteFriends',
     unicode: '\ue6b8'
   },
 
   {
     text: '消息中心',
     extra: '女',
-    path: 'msgCenter',
+    path: '/user/msgCenter',
     unicode: '\ue624'
   },
   {
     text: '账号设置',
     horizontal: true,
-    path: 'accountSetting',
+    path: '/user/accountSetting',
     unicode: '\ue60e'
   }
 ];
@@ -94,7 +100,7 @@ class User extends React.Component {
           <List>
             {ListData.map((v, i) => (
               <Item key={i} arrow={'horizontal'}>
-                <Link to={`/user/${v.path}`}>
+                <Link to={v.path}>
                   <i className="iconfont">{v.unicode}</i>
                   {v.text}
                 </Link>
