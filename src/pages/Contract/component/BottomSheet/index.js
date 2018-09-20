@@ -7,31 +7,20 @@ import './index.less';
  * 策略模式校验输入的各种值是否合法
  * 可配置校验规则
  */
-//此变量用来配置校验规则
-const strategies = {
-  isNonEmpty(value, errorMsg) {
-    return value === '' ? errorMsg : void 0;
-  },
-  minLength(value, length, errorMsg) {
-    return value.length < length ? errorMsg : void 0;
-  },
-  isTrue(value, errorMsg) {
-    return !value ? errorMsg : void 0;
-  }
-};
 class Validator {
-  constructor() {
+  constructor(strategies) {
     this.cache = []; //保存校验规则
+    this.strategies = strategies; //每个实例自身需要的校验规则
   }
   add(value, rules) {
     for (let rule of rules) {
-      let strategyAry = rule.strategy.split(':'); //例如['minLength',6]
+      let strategyAry = rule.strategy.split(':'); //例如['minLength:6',6]
       let errorMsg = rule.errorMsg; //存储校验失败错误信息，例如'用户名不能为空'
       this.cache.push(() => {
         let strategy = strategyAry.shift(); //用户挑选的strategy校验规则
         strategyAry.unshift(value); //把value添加进参数列表
         strategyAry.push(errorMsg); //把errorMsg添加进参数列表[value,errorMsg]
-        return strategies[strategy].apply(value, strategyAry);
+        return this.strategies[strategy].apply(value, strategyAry);
       });
     }
   }
@@ -132,7 +121,19 @@ class BottomSheet extends React.PureComponent {
    */
   validatorFunc = () => {
     const { count, isAgreen } = this.state;
-    let validator = new Validator(); //生成校验实例
+    //此变量用来配置校验规则
+    const strategies = {
+      isNonEmpty(value, errorMsg) {
+        return value === '' ? errorMsg : void 0;
+      },
+      minLength(value, length, errorMsg) {
+        return value.length < length ? errorMsg : void 0;
+      },
+      isTrue(value, errorMsg) {
+        return !value ? errorMsg : void 0;
+      }
+    };
+    let validator = new Validator(strategies); //生成校验实例并且配置了该实例所需的校验规则
     validator.add(isAgreen, [
       {
         strategy: 'isTrue',
