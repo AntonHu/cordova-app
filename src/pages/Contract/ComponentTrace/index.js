@@ -7,7 +7,7 @@ import { getLocalStorage } from '../../../utils/storage';
 import Tloader from 'react-touch-loader';
 import PullToRefresh from 'pulltorefreshjs';
 import './index.less';
-import TraceCard from "../component/TraceCard";
+import { TraceCard } from "../component";
 
 // 组件溯源
 class ComponentTrace extends React.PureComponent {
