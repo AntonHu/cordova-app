@@ -57,15 +57,16 @@ class ShareConfirm extends React.Component {
    */
   sendPurchaseReq = async() => {
     const { notInvolvedDetail } = this.props.contractStore;
-    const projectId = notInvolvedDetail.projectDetail.id;
-    const purchaseNumber = notInvolvedDetail.purchaseCount;
+    const {projectId, purchaseNumber} = this.props.match.params;
     const result = await notInvolvedDetail.onPurchase({
       projectId,
       purchaseNumber
     });
     if (result.success) {
+      const data = result.data || {};
+      const purchaseId = data.purchaseId || undefined
       Toast.info('您已申购成功', 3, () => {
-        this.props.history.push('/contract/purchaseShare')
+        this.props.history.push(`/contract/purchaseShare/${projectId}/purchaseId/${purchaseId}`)
       })
     } else {
       Toast.info(result.msg)
@@ -73,7 +74,6 @@ class ShareConfirm extends React.Component {
   };
 
   onDocumentLoad = (data) => {
-    console.log(data.pdfInfo);
     this.setState({
       totalPage: new Array(data.pdfInfo.numPages).fill(1)
     })
@@ -98,7 +98,7 @@ class ShareConfirm extends React.Component {
           >
             {
               this.state.totalPage.map((v, idx) =>
-                <Page pageNumber={ idx + 1 } />
+                <Page pageNumber={ idx + 1 } key={idx + 1} />
               )
             }
 

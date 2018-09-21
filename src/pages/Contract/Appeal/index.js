@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import { Title, PageWithHeader, Picture, Rank, OrangeGradientBtn } from '../../../components';
-import { Icon, Tabs, WhiteSpace, Button, TextareaItem } from 'antd-mobile';
+import { Icon, Tabs, WhiteSpace, Button, TextareaItem, Toast } from 'antd-mobile';
 import { getLocalStorage } from '../../../utils/storage';
 // import PullToRefresh from 'rmc-pull-to-refresh';
 import Tloader from 'react-touch-loader';
@@ -11,7 +11,10 @@ import './index.less';
 
 
 // 我要申诉页面
-class Appeal extends React.PureComponent {
+// todo: 申诉的流程
+@inject('contractStore')
+@observer
+class Appeal extends React.Component {
 
   state = {
     opinion: '',
@@ -19,9 +22,23 @@ class Appeal extends React.PureComponent {
   };
 
   onSubmit = () => {
+    const { appeal } = this.props.contractStore;
+    const { projectId, purchaseId } = this.props.match.params;
+    if (this.validateBeforeSubmit()) {
+      appeal.uploadAppeal({projectId, purchaseId})
+    }
   };
 
   onPhoneCall = () => {
+  };
+
+  validateBeforeSubmit = () => {
+    const { opinion, imgUrl } = this.state;
+    if (!opinion) {
+      Toast.info('请输入申诉内容');
+      return false;
+    }
+    return true;
   };
 
   render() {

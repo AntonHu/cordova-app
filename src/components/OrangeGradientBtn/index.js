@@ -7,11 +7,13 @@ import './index.less';
 class OrangeGradientBtn extends React.PureComponent {
   static propTypes = {
     onClick: PropTypes.func,
-    gradientDirection: PropTypes.oneOf(['h', 's'])// h=横，s=竖
+    gradientDirection: PropTypes.oneOf(['h', 's']),// h=横，s=竖
+    disabled: PropTypes.bool
   };
 
   static defaultProps = {
-    gradientDirection: 'h'
+    gradientDirection: 'h',
+    disabled: false
   };
 
   _onClick = (e) => {
@@ -22,9 +24,9 @@ class OrangeGradientBtn extends React.PureComponent {
   };
 
   render() {
-    const { onClick, gradientDirection } = this.props;
+    const { onClick, gradientDirection, disabled } = this.props;
     return (
-      <Button className={`orange-gradient-button ${gradientDirection}`} onClick={this._onClick}>
+      <Button className={`orange-gradient-button ${gradientDirection}`} onClick={this._onClick} disabled={disabled}>
         {this.props.children}
       </Button>
     )

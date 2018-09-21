@@ -35,7 +35,6 @@ class BankCardStore {
   };
 
   // 填写银行卡
-  // TODO: 从store里拿掉
   @action
   setBankCard = async ({ bank, name, bankCardNumber }) => {
     return await fetchBindBankCard({ bank, name, bankCardNumber });

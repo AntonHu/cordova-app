@@ -16,15 +16,17 @@ class PageWithHeader extends React.PureComponent {
     rightComponent: PropTypes.element,
     headerMarginBottom: PropTypes.number,
     id: PropTypes.string.isRequired,
+    footer: PropTypes.element,
   };
 
   static defaultProps = {
     headerMarginBottom: 20,
-    id: ''
+    id: '',
+    footer: null
   };
 
   render() {
-    const { title, rightComponent, leftComponent, headerMarginBottom, id } = this.props;
+    const { title, rightComponent, leftComponent, headerMarginBottom, id, footer } = this.props;
     const containerProps = {};
     if (id) {
       containerProps.id = id
@@ -40,7 +42,9 @@ class PageWithHeader extends React.PureComponent {
         <div id={BODY_ID}>
           {this.props.children}
         </div>
-
+        <div className="page-with-header-footer">
+          {footer}
+        </div>
       </div>
     );
   }

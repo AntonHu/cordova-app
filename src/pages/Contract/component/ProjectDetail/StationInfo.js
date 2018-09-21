@@ -8,7 +8,6 @@ const Item = List.Item;
 // TODO: 材料计划 跳转
 // TODO: 电站设计图 跳转
 // TODO: 房屋租赁协议 展开
-// TODO: 投资协议 跳转
 class StationInfo extends React.PureComponent {
   static propTypes = {
     projectDetail: PropTypes.object.isRequired
@@ -32,7 +31,6 @@ class StationInfo extends React.PureComponent {
           <Item extra={ `${projectDetail.estimatedElectricityPrice || '-'}` }>预计上网电价</Item>
           <Item arrow="horizontal">电站设计图</Item>
           <Item arrow="horizontal">房屋租赁协议</Item>
-          <Item arrow="horizontal">投资协议</Item>
         </List>
       </div>
     )

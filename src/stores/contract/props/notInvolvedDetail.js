@@ -67,8 +67,8 @@ class NotInvolvedDetail {
   onConfirmPay = async ({projectId, purchaseId}) => {
     try {
       const result = await fetchConfirmPayment({
-        projectId: this.projectDetail.projectId,
-        purchaseId: this.purchaseId
+        projectId,
+        purchaseId
       });
       return result;
     } catch (e) {
@@ -100,10 +100,8 @@ class NotInvolvedDetail {
   // 申购总金额(computed)
   @computed
   get purchaseAmount() {
-    return (this.projectDetail.minInvestmentAmount || 0) * this.purchaseCount;
+    return (this.projectDetail.detail.minInvestmentAmount || 0) * this.purchaseCount;
   }
-
-
 
 }
 

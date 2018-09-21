@@ -35,7 +35,9 @@ class NotInvolvedDetail extends React.Component {
 
   componentWillUnmount() {
     const { notInvolvedDetail } = this.props.contractStore;
-    // notInvolvedDetail.reset();
+    if (this.props.history.action === 'POP') {
+      notInvolvedDetail.reset();
+    }
     this.bankCardLoading();
   }
 
@@ -90,7 +92,7 @@ class NotInvolvedDetail extends React.Component {
   toShareConfirm = () => {
     this.closeModal();
     const { notInvolvedDetail } = this.props.contractStore;
-    const projectId = notInvolvedDetail.projectDetail.id;
+    const projectId = notInvolvedDetail.projectDetail.detail.id;
     const purchaseNumber = notInvolvedDetail.purchaseCount;
     this.props.history.push(`/contract/shareConfirm/${projectId}/purchaseNumber/${purchaseNumber}`);
   };
@@ -124,11 +126,16 @@ class NotInvolvedDetail extends React.Component {
 
     const { loadingText, loading, isModalVisible, isShow } = this.state;
     return (
-      <PageWithHeader title={ '合约电站' } id="page-not-involved-detail">
+      <PageWithHeader
+        title={ '合约电站' }
+        id="page-not-involved-detail"
+        footer={
+          <OrangeGradientBtn onClick={ this.onPurchase } disabled={projectDetail.availableShare <= 0}>
+            申购
+          </OrangeGradientBtn>
+        }>
         <ProjectDetail projectDetail={ projectDetail } historyList={ toJS(historyList) }/>
-        <OrangeGradientBtn onClick={ this.onPurchase }>
-          申购
-        </OrangeGradientBtn>
+
         <ActivityIndicator
           toast
           text={ loadingText }
@@ -139,17 +146,20 @@ class NotInvolvedDetail extends React.Component {
           visible={ isModalVisible }
           onClose={ this.closeModal }
           animationType="slide-up"
+          maskClosable
+          closable
+          className="not-involved-purchase-modal"
         >
-          <div>{ `${purchaseAmount}元` }</div>
-          <div>{ `申购标准：${projectDetail.minInvestmentAmount || 0}元每份` }</div>
+          <div className="amount">{ `${purchaseAmount}元` }</div>
+          <div className="min-invest">{ `申购标准：${projectDetail.minInvestmentAmount || 0}元每份` }</div>
           <List.Item
             wrap
             extra={
               <Stepper
                 style={ { width: '100%', minWidth: '100px' } }
                 showNumber
-                max={ projectDetail.availableShare || 1 }
-                min={ 1 }
+                max={ projectDetail.availableShare || 0 }
+                min={ 0 }
                 value={ purchaseCount }
                 onChange={ notInvolvedDetail.updatePurchaseCount }
               /> }

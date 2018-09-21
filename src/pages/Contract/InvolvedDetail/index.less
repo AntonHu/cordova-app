@@ -1,6 +1,10 @@
 @import '../../../styles/common';
 
+@bottom-btn-color: #F48904;
+
 #page-involved-detail {
+  position: relative;
+  //padding-bottom: 120 * @px;
   .to-legal-doc {
     font-size: @h3;
     &::before {
@@ -14,6 +18,44 @@
     .step-tab-bar {
       margin-top: 30 * @px;
       margin-bottom: 50 * @px;
+    }
+  }
+
+  .reject-btn-wrap {
+    width: 100vw;
+    display: flex;
+    //position: absolute;
+    //bottom: 0;
+    .am-button {
+      flex: 1;
+      height: 100 * @px;
+      border-radius: 0;
+      &::before {
+        border-radius: 0!important;
+      }
+    }
+  }
+
+  .btn-wrap {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100vw;
+    height: 100 * @px;
+    background: @white-text-color;
+    padding-right: 60 * @px;
+    box-sizing: border-box;
+    .am-button {
+      width: 163 * @px;
+      height: 54 * @px;
+      margin-left: 29 * @px;
+      line-height: 54 * @px;
+      font-size: @h5;
+      color: @bottom-btn-color;
+      border: 1px solid @bottom-btn-color;
+      &::before {
+        border: none;
+      }
     }
   }
 }

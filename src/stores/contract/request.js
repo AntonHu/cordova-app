@@ -22,25 +22,6 @@ export const fetchProjectDetail = async ({ id }) => {
 };
 
 /**
- * todo: 废弃
- * 申购后获取份额确认书或投资协议
- * @param type 0=份额确认书 1=投资协议
- * @param projectId
- * @param purchaseNumber
- * @returns {Promise<*>}
- */
-export const fetchPurchaseLegalFile = async ({ type, projectId, purchaseNumber }) => {
-  try {
-    // const response = await get(`${serverUrl}/project/legalFile`, { type, projectId, purchaseNumber });
-    const response = await getFile(`http://192.168.1.161:8080/app/project/legalFile`, { type, projectId, purchaseNumber });
-    console.log(response)
-    return response;
-  } catch (err) {
-    throw requestError(err, type === 0 ? '份额确认书' : '投资协议');
-  }
-};
-
-/**
  * 申购项目
  * @param projectId
  * @param purchaseNumber 申购份额

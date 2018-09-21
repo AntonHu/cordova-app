@@ -35,10 +35,10 @@ class LegalDocumentDetail extends React.Component{
     })
   };
 
+  // todo: url应该要变了
   getPDFUrl = () => {
     const token = getLocalStorage('token');
     const { projectId, purchaseNumber } = this.props.match.params;
-    // todo: type是多少？
     return `${contractServer}/app/project/legalFile?access_token=${token}&type=1&projectId=${projectId}&purchaseNumber=${purchaseNumber}`
   };
 

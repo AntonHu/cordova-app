@@ -9,13 +9,40 @@ import Tloader from 'react-touch-loader';
 import PullToRefresh from 'pulltorefreshjs';
 import './index.less';
 
+const COUNT_DOWN_MIN = 15 * 60;
+
+const secToTimeArray = (totalSec) => {
+  let hours = Math.floor(totalSec / 3600);
+  totalSec = totalSec - hours * 3600;
+  let minutes = Math.floor(totalSec / 60);
+  let seconds = totalSec - minutes * 60;
+
+  hours = hours < 10 ? '0' + hours : '' + hours;
+  minutes = minutes < 10 ? '0' + minutes : '' + minutes;
+  seconds = seconds < 10 ? '0' + seconds : '' + seconds;
+  return (hours + minutes + seconds).split('').map(num => +num);
+};
+
 // 申购份额页面
 @inject('contractStore', 'bankCardStore')
 @observer
 class PurchaseShare extends React.Component {
-  state = {
-    countDown: [0, 0, 1, 4, 3, 5]
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      countDown: COUNT_DOWN_MIN,
+    }
+  }
+
+  componentDidMount() {
+    this.startCountdown();
+  }
+
+  componentWillUnmount() {
+    if (this.interval) {
+      clearInterval(this.interval)
+    }
+  }
 
   onCancel = () => {
     Modal.alert('取消申购', '您确定要取消申购？', [{ text: '再想想' }, {
@@ -35,12 +62,13 @@ class PurchaseShare extends React.Component {
 
   sendCancelReq = async () => {
     const { notInvolvedDetail } = this.props.contractStore;
+    const {projectId, purchaseId} = this.props.match.params;
     const result = await notInvolvedDetail.onCancelPurchase({
-      projectId: notInvolvedDetail.projectDetail.id,
-      purchaseId: notInvolvedDetail.purchaseId
+      projectId,
+      purchaseId
     });
     if (result.success) {
-      Modal.alert('取消', '您已确认支付，即将返回首页', [{
+      Modal.alert('取消', '您已取消支付，即将返回首页', [{
         text: '好的', onPress: () => {
           this.backToContract();
         }
@@ -50,9 +78,10 @@ class PurchaseShare extends React.Component {
 
   sendConfirmReq = async () => {
     const { notInvolvedDetail } = this.props.contractStore;
+    const {projectId, purchaseId} = this.props.match.params;
     const result = await notInvolvedDetail.onConfirmPay({
-      projectId: notInvolvedDetail.projectDetail.id,
-      purchaseId: notInvolvedDetail.purchaseId
+      projectId,
+      purchaseId
     });
 
     if (result.success) {
@@ -71,13 +100,23 @@ class PurchaseShare extends React.Component {
     this.props.history.go(-3)
   };
 
-  // TODO：倒计时函数，传入倒计时的min。
-  startCountdown = (min) => {
+  startCountdown = () => {
+    this.interval = setInterval(() => {
+      if (this.state.countDown === 0) {
+        clearInterval(this.interval);
+      } else {
+        this.setState({
+          countDown: this.state.countDown - 1
+        })
+      }
+    }, 1000);
   };
 
   render() {
     const { countDown } = this.state;
     const { bankCard } = this.props.bankCardStore;
+    const { notInvolvedDetail } = this.props.contractStore;
+    const countDownArray = secToTimeArray(countDown);
     return (
       <PageWithHeader
         title="申购份额"
@@ -87,15 +126,15 @@ class PurchaseShare extends React.Component {
       >
 
         <div className="count-down-wrap">
-          <div className="title">恭喜申购8000元 已锁定！</div>
+          <div className="title">恭喜申购{notInvolvedDetail.purchaseAmount || 0}元 已锁定！</div>
           <div className="title">请尽快支付</div>
           <div className="count-down-box">
-            <span className="count-down-num even">{ countDown[0] }</span>
-            <span className="count-down-num odd">{ countDown[1] }</span>时
-            <span className="count-down-num even">{ countDown[2] }</span>
-            <span className="count-down-num odd">{ countDown[3] }</span>分
-            <span className="count-down-num even">{ countDown[4] }</span>
-            <span className="count-down-num odd">{ countDown[5] }</span>秒
+            <span className="count-down-num even">{ countDownArray[0] }</span>
+            <span className="count-down-num odd">{ countDownArray[1] }</span>时
+            <span className="count-down-num even">{ countDownArray[2] }</span>
+            <span className="count-down-num odd">{ countDownArray[3] }</span>分
+            <span className="count-down-num even">{ countDownArray[4] }</span>
+            <span className="count-down-num odd">{ countDownArray[5] }</span>秒
           </div>
           <div className="warn">请于30分钟内支付受托运营方申购金额，付款完成点击已支付，超期未支付自动取消申购</div>
         </div>

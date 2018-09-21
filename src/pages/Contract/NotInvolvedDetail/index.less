@@ -1,0 +1,50 @@
+@import '../../../styles/common';
+
+#page-not-involved-detail {
+
+}
+
+.not-involved-purchase-modal {
+
+  height: 540 * @px;
+  .am-modal-content {
+    border-top-left-radius: @border-radius;
+    border-top-right-radius: @border-radius;
+  }
+  .am-modal-close {
+    top: 40 * @px;
+    right: 40 * @px;
+  }
+  .am-modal-body {
+    text-align: left;
+    position: relative;
+
+    .amount,
+    .min-invest,
+    .am-list-item {
+      margin-left: 66 * @px;
+    }
+
+    .am-list-line::after {
+      background-color: transparent!important;
+    }
+
+    .amount {
+      color: @annual-rate-color;
+      font-size: 54 * @px;
+      margin-top: 92 * @px;
+    }
+    .min-invest {
+      color: @screen-text-color;
+      font-size: @h4;
+      margin-top: 29 * @px;
+      margin-bottom: 80 * @px;
+    }
+    .orange-gradient-button {
+      position: absolute;
+      bottom: 0;
+      width: 100vw;
+    }
+  }
+
+}

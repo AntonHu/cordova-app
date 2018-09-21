@@ -46,7 +46,7 @@ class FundingStatus extends React.PureComponent {
       <div className="share-wrap" key={ idx }>
         <Picture size={ 60 } src={ item.avatar }/>
         <div>
-          <div className="buyer">{ item.name || '匿名' }</div>
+          <div className="buyer">{ item.nickName || '匿名' }</div>
           <div className="buy-time">{ item.createdAt }</div>
         </div>
         <div>
