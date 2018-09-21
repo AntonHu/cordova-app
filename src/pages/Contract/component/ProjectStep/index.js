@@ -40,7 +40,7 @@ class ProjectStep extends React.PureComponent {
             const activeClass = activeTab === idx ? 'active' : '';
             const ableClass = this.tabIsAbleByStatus(idx, this.props.projectDetail) ? 'able' : '';
             return (
-              <React.Fragment>
+              <React.Fragment key={idx}>
                 {
                   idx > 0
                   &&

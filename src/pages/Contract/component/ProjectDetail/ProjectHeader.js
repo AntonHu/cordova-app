@@ -24,7 +24,7 @@ class ProjectHeader extends React.PureComponent {
   getStatusText = (purchaseDetail) => {
     switch (purchaseDetail.userStatus) {
       case USER_PROJECT_STATUS_CODE.APPLIED:
-        return '代付款';
+        return '待付款';
       case USER_PROJECT_STATUS_CODE.PAID:
         return '已付款';
       case USER_PROJECT_STATUS_CODE.SUCCESSFUL_PURCHASE:

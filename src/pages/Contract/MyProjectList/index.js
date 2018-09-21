@@ -18,12 +18,13 @@ class MyProjectList extends React.Component {
 
   constructor(props) {
     super(props);
+    const { myProjectList } = props.contractStore;
     const dataSource = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1.id !== row2.id
     });
 
     this.state = {
-      dataSource,
+      dataSource: dataSource.cloneWithRows(toJS(myProjectList.list)),
       isLoading: false,
       page: 0
     };

@@ -33,7 +33,6 @@ class PurchaseShare extends React.Component {
     }])
   };
 
-  // todo: 还没调
   sendCancelReq = async () => {
     const { notInvolvedDetail } = this.props.contractStore;
     const result = await notInvolvedDetail.onCancelPurchase({
@@ -46,12 +45,9 @@ class PurchaseShare extends React.Component {
           this.backToContract();
         }
       }])
-    } else {
-      Toast.info(result.msg);
     }
   };
 
-  // todo: 还没调
   sendConfirmReq = async () => {
     const { notInvolvedDetail } = this.props.contractStore;
     const result = await notInvolvedDetail.onConfirmPay({
@@ -65,10 +61,7 @@ class PurchaseShare extends React.Component {
           this.backToContract();
         }
       }])
-    } else {
-      Toast.info(result.msg);
     }
-
   };
 
   // 回到合约电站首页

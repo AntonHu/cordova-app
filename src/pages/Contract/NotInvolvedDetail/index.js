@@ -102,7 +102,10 @@ class NotInvolvedDetail extends React.Component {
 
   render() {
     const { notInvolvedDetail } = this.props.contractStore;
-    const { projectDetail, historyList, purchaseCount, purchaseAmount } = notInvolvedDetail;
+    const { purchaseCount, purchaseAmount } = notInvolvedDetail;
+    const projectDetail = notInvolvedDetail.projectDetail.detail;
+    const historyList = notInvolvedDetail.projectDetail.historyList;
+
     const { loadingText, loading, isModalVisible } = this.state;
     return (
       <PageWithHeader title={ '合约电站' } id="page-not-involved-detail">

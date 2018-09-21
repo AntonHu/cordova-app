@@ -13,6 +13,10 @@ import { PROJECT_STATUS_CODE, USER_PROJECT_STATUS_CODE } from "../../../utils/va
 
 // 已参与的合约项目详情
 class InvolvedDetail {
+
+  constructor(projectDetail) {
+    this.projectDetail = projectDetail;
+  }
   // 项目详情
   @observable projectDetail = {};
   @observable isDetailLoading = false;
@@ -68,6 +72,7 @@ class InvolvedDetail {
     this.isDocListLoading = false;
     this.docName = '';
     this.docUrl = '';
+    this.projectDetail.reset();
   };
 
   // didMount且不是goBack过来的时候，获取项目详情、购买详情（purchaseDetail）
@@ -75,9 +80,6 @@ class InvolvedDetail {
   // 根据状态再获取电站建设、电站收益、驳回内容等
   // 获取购买详情（purchaseDetail）之后，如果是驳回状态，获取驳回信息
   loadData = ({ id, purchaseId }) => {
-    if (this.isDetailLoading) {
-      return;
-    }
 
     this.loadPurchaseDetail(purchaseId).then(result => {
       if (result.success) {
@@ -89,22 +91,19 @@ class InvolvedDetail {
       }
     });
 
-    this.loadDetail(id)
+    this.projectDetail.loadData(id)
       .then(result => {
         if (result.success) {
-          this.loadHistory({
-            enterpriseId: this.projectDetail.enterpriseId,
-            onlyBaseInfo: true,
-            currentProjectId: id
-          });
+          const data = result.data || {};
+          const status = data.status || 0;
+
           this.loadDocList({
-            purchaseId: this.projectDetail.purchaseId,
+            purchaseId,
             projectId: id
           });
           this.loadGroupInfo(id);
 
-          const data = result.data || {};
-          const status = data.status || 0;
+
           if (status >= PROJECT_STATUS_CODE.BUILDING_PLANT) {
             this.loadSiteInfo(id)
           }
@@ -112,30 +111,8 @@ class InvolvedDetail {
             this.loadPowerProfit(id)
           }
         }
-      })
-  };
-
-  // 项目详情
-  @action
-  loadDetail = async (id) => {
-    try {
-      this.isDetailLoading = true;
-      const result = await fetchProjectDetail({ id });
-      runInAction(() => {
-        this.isDetailLoading = false;
-        if (result.success) {
-          const data = result.data || {};
-          this.projectDetail = data || {};
-        } else {
-          throw result;
-        }
       });
 
-      return result;
-    } catch (e) {
-      ToastError(e);
-      return e;
-    }
   };
 
   // 申购详情
@@ -161,30 +138,6 @@ class InvolvedDetail {
     }
   };
 
-  // 历史项目列表
-  @action
-  loadHistory = async ({ enterpriseId, onlyBaseInfo, currentProjectId }) => {
-    try {
-      this.isHistoryLoading = true;
-      const result = await fetchHistoryProjectList({ enterpriseId, onlyBaseInfo, currentProjectId });
-      runInAction(() => {
-        this.isHistoryLoading = false;
-        if (result.success) {
-          const data = result.data || {};
-          this.historyList = data.list || [];
-        } else {
-          throw result;
-        }
-      });
-
-      return result;
-    } catch (e) {
-      ToastError(e);
-      return e;
-    }
-
-  };
-
   // 项目成团
   @action
   loadGroupInfo = async (projectId) => {
@@ -195,7 +148,7 @@ class InvolvedDetail {
         this.isGroupInfoLoading = false;
         if (result.success) {
           const data = result.data || {};
-          this.groupInfo = data.groupInfo || {};
+          this.groupInfo = data || {};
         } else {
           throw result;
         }

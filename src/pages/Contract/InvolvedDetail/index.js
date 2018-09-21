@@ -30,7 +30,10 @@ class InvolvedDetail extends React.Component {
 
   render() {
     const { involvedDetail } = this.props.contractStore;
-    const { projectDetail, historyList, purchaseDetail, rejectInfo } = involvedDetail;
+    const { purchaseDetail, rejectInfo, groupInfo } = involvedDetail;
+    const projectDetail = involvedDetail.projectDetail.detail;
+    const historyList = involvedDetail.projectDetail.historyList;
+
     return (
       <PageWithHeader
         title="合约电站"
@@ -44,11 +47,11 @@ class InvolvedDetail extends React.Component {
           </Button>
         }
       >
-        <ProjectStep projectDetail={projectDetail}>
+        <ProjectStep projectDetail={ projectDetail }>
           <React.Fragment>
             {
               rejectInfo.id &&
-              <RejectInfo info={rejectInfo} />
+              <RejectInfo info={ rejectInfo }/>
             }
             <ProjectDetail
               projectDetail={ projectDetail }
@@ -57,7 +60,7 @@ class InvolvedDetail extends React.Component {
             />
           </React.Fragment>
 
-          <FundingStatus/>
+          <FundingStatus groupInfo={ groupInfo } purchaseDetail={ purchaseDetail }/>
           <StationBuildProgress/>
           <div>发电收益</div>
         </ProjectStep>
