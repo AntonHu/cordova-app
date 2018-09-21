@@ -8,6 +8,8 @@ import { getLocalStorage } from '../../../utils/storage';
 import Tloader from 'react-touch-loader';
 import PullToRefresh from 'pulltorefreshjs';
 import { ProjectDetail } from '../component';
+import { mockDetail } from './mock';
+import { BottomSheet, TransferStationInfo } from '../component';
 import './index.less';
 
 // 未参与的 项目详情页面
@@ -21,7 +23,8 @@ class NotInvolvedDetail extends React.Component {
   state = {
     isModalVisible: false,
     loading: false,
-    loadingText: ''
+    loadingText: '',
+    isShow: false
   };
 
   componentDidMount() {
@@ -100,15 +103,35 @@ class NotInvolvedDetail extends React.Component {
     this.setState({ isModalVisible: true })
   };
 
+  //显示底部选择购买组件
+  onShow = () => {
+    this.setState({ isShow: true });
+  };
+  //关闭底部选择购买组件
+  onClose = () => {
+    this.setState({ isShow: false });
+  };
+  //点击底部确认
+  onConfirm = (e, resultJson) => {
+    console.log(e, resultJson);
+  };
+
   render() {
     const { notInvolvedDetail } = this.props.contractStore;
     const { purchaseCount, purchaseAmount } = notInvolvedDetail;
     const projectDetail = notInvolvedDetail.projectDetail.detail;
     const historyList = notInvolvedDetail.projectDetail.historyList;
 
-    const { loadingText, loading, isModalVisible } = this.state;
+    const { loadingText, loading, isModalVisible, isShow } = this.state;
     return (
       <PageWithHeader title={ '合约电站' } id="page-not-involved-detail">
+        <TransferStationInfo
+          transferTime={ '2019-05-12' }
+          transferMan={ 1888 }
+          stationNumber={ 332122 }
+          projectTime={ '2019-05-12' }
+          historyProfit={ 10 }
+        />
         <ProjectDetail projectDetail={ projectDetail } historyList={ toJS(historyList) }/>
         <OrangeGradientBtn onClick={ this.onPurchase }>
           申购
@@ -132,7 +155,7 @@ class NotInvolvedDetail extends React.Component {
               <Stepper
                 style={ { width: '100%', minWidth: '100px' } }
                 showNumber
-                max={ projectDetail.availableShare || 1}
+                max={ projectDetail.availableShare || 1 }
                 min={ 1 }
                 value={ purchaseCount }
                 onChange={ notInvolvedDetail.updatePurchaseCount }
@@ -143,9 +166,17 @@ class NotInvolvedDetail extends React.Component {
           <OrangeGradientBtn onClick={ this.toShareConfirm }>
             申购
           </OrangeGradientBtn>
+          <BottomSheet
+            isShow={ isShow }
+            onShow={ this.onShow }
+            onClose={ this.onClose }
+            onConfirm={ this.onConfirm }
+            perCountMoney={ 3000 }
+          />
+
         </Modal>
       </PageWithHeader>
-    )
+    );
   }
 }
 

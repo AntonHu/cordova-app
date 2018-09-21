@@ -1,0 +1,74 @@
+@import '../../../../styles/common';
+
+.transfer-history-item {
+  margin: 20 * @px 20 * @px;
+  background-color: #fff;
+  overflow: hidden;
+  .item-top {
+    margin: 55 * @px 41 * @px;
+    .project-name {
+      color: #333333;
+      font-size: 34 * @px;
+      font-family: PingFang-SC-Medium;
+      font-weight: 500;
+      display: inline-block;
+      width: 50%;
+      text-align: left;
+    }
+    .hasPay {
+      color: #0eac81;
+      font-size: 30 * @px;
+      font-family: PingFang-SC-Bold;
+      font-weight: bold;
+      display: inline-block;
+      width: 50%;
+      text-align: right;
+    }
+    .noPay {
+      color: #eb2525;
+      font-size: 30 * @px;
+      font-family: PingFang-SC-Bold;
+      font-weight: bold;
+      display: inline-block;
+      width: 50%;
+      text-align: right;
+    }
+  }
+  .item-detail {
+    padding: 0 41 * @px;
+    border-bottom: 2px solid #f7f7f7;
+    padding-bottom: 44 * @px;
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      .detail-font {
+        width: 50%;
+        text-align: left;
+        margin-top: 20 * @px;
+        color: #333;
+      }
+    }
+  }
+  .item-bottom {
+    height: 100 * @px;
+    line-height: 100 * @px;
+    .hasPay {
+      color: #0eac81;
+      font-size: 30 * @px;
+      font-family: PingFang-SC-Bold;
+      font-weight: bold;
+      display: inline-block;
+      width: 50%;
+      text-align: center;
+    }
+    .pay-money {
+      color: #888888;
+      font-size: 30 * @px;
+      font-family: PingFang-SC-Medium;
+      font-weight: 500;
+      display: inline-block;
+      width: 50%;
+      text-align: center;
+    }
+  }
+}
