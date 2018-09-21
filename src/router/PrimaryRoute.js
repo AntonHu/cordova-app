@@ -36,7 +36,8 @@ import {
   ComponentTrace,
   AuthorizeDocument,
   MyProjectList,
-  LegalDocumentDetail
+  LegalDocumentDetail,
+  TransferDetail
 } from '../pages/Contract';
 import MyPowerStation from '../pages/SunCity/MyPowerStation';
 import EquipmentInfo from '../pages/SunCity/EquipmentInfo';
@@ -153,6 +154,7 @@ class PrimaryRoute extends React.Component {
         <Route exact path="/mining/pointRule" component={PointRule}/>
 
         {/* 合约电站 */}
+        <Route exact path="/contract/transferDetail/:id" component={TransferDetail}/>
         <Route exact path="/contract/notInvolvedDetail/:id" component={NotInvolvedDetail}/>
         <Route exact path="/contract/involvedDetail/:id/purchaseId/:purchaseId" component={InvolvedDetail}/>
         <Route exact path="/contract/addBankCard" component={BankCard}/>

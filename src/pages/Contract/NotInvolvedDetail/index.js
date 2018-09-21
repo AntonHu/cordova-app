@@ -125,13 +125,6 @@ class NotInvolvedDetail extends React.Component {
     const { loadingText, loading, isModalVisible, isShow } = this.state;
     return (
       <PageWithHeader title={ '合约电站' } id="page-not-involved-detail">
-        <TransferStationInfo
-          transferTime={ '2019-05-12' }
-          transferMan={ 1888 }
-          stationNumber={ 332122 }
-          projectTime={ '2019-05-12' }
-          historyProfit={ 10 }
-        />
         <ProjectDetail projectDetail={ projectDetail } historyList={ toJS(historyList) }/>
         <OrangeGradientBtn onClick={ this.onPurchase }>
           申购
@@ -166,15 +159,14 @@ class NotInvolvedDetail extends React.Component {
           <OrangeGradientBtn onClick={ this.toShareConfirm }>
             申购
           </OrangeGradientBtn>
-          <BottomSheet
-            isShow={ isShow }
-            onShow={ this.onShow }
-            onClose={ this.onClose }
-            onConfirm={ this.onConfirm }
-            perCountMoney={ 3000 }
-          />
-
         </Modal>
+        <BottomSheet
+          isShow={ isShow }
+          onShow={ this.onShow }
+          onClose={ this.onClose }
+          onConfirm={ this.onConfirm }
+          perCountMoney={ 3000 }
+        />
       </PageWithHeader>
     );
   }

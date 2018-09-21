@@ -56,6 +56,7 @@ class Contract extends React.Component {
 
   /**
    * 初始化下拉刷新
+   * todo: shouldPullToRefresh要重新弄，还有onRefresh的方法
    */
   initPullToRefresh = () => {
     const { projectList } = this.props.contractStore;

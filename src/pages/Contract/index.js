@@ -11,6 +11,7 @@ import ComponentTrace from './ComponentTrace';
 import Contract from './Contract';
 import AuthorizeDocument from './AuthorizeDocument';
 import MyProjectList from './MyProjectList';
+import TransferDetail from './TransferDetail'
 
 export {
   NotInvolvedDetail,
@@ -25,5 +26,6 @@ export {
   Contract,
   AuthorizeDocument,
   MyProjectList,
-  LegalDocumentDetail
+  LegalDocumentDetail,
+  TransferDetail
 }

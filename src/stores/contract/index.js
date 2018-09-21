@@ -1,5 +1,14 @@
 import { observable, action, runInAction, computed } from 'mobx';
-import { ProjectList, MyProjectList, NotInvolvedDetail, InvolvedDetail, ComponentTrace, Appeal, ProjectDetail } from "./props";
+import {
+  ProjectList,
+  MyProjectList,
+  NotInvolvedDetail,
+  InvolvedDetail,
+  ComponentTrace,
+  Appeal,
+  ProjectDetail,
+  TransferDetail
+} from "./props";
 
 
 class ContractStore {
@@ -19,7 +28,8 @@ class ContractStore {
     // 已参与的合约项目详情（包含项目详情、申购信息、项目成团、电站建设）
     this.involvedDetail = new InvolvedDetail(this.projectDetail);
 
-    // TODO：转让的项目详情（包含项目详情、转让信息）
+    // 转让的项目详情（包含项目详情、转让信息）
+    this.transferDetail = new TransferDetail(this.projectDetail);
 
     // 组件溯源详情
     this.componentTrace = new ComponentTrace();
@@ -36,6 +46,7 @@ class ContractStore {
     this.componentTrace.reset();
     this.appeal.reset();
     this.projectDetail.reset();
+    this.transferDetail.reset();
   };
 
   onLogout = () => {
