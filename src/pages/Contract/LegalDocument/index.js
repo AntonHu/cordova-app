@@ -11,39 +11,54 @@ import './index.less';
 
 // 法律文书页面
 // TODO: 红色"已签约" 的stamp
-class LegalDocument extends React.PureComponent {
+@inject('contractStore')
+@observer
+class LegalDocument extends React.Component {
+
+  onClick = (item) => {
+    const { involvedDetail } = this.props.contractStore;
+    involvedDetail.setLegalDoc({
+      docName: item.fileTypeName,
+      docUrl: item.ossPath
+    });
+    this.props.history.push('/contract/legalDocumentDetail');
+  };
+
   render() {
+    const { involvedDetail } = this.props.contractStore;
+    const docList = involvedDetail.docList || [];
     return (
       <PageWithHeader title="法律文书" id="page-legal-document">
-        <div className="doc-row">
-          <Button className="doc-item">
-            <div className="doc-name">投资份额确认书</div>
-            <div className="doc-time">2018-05-15</div>
-            <img src={ require('../../../images/stamp/signed.png') } className="stamp"/>
-            <div className="customer-name">xxx</div>
-          </Button>
-          <Button className="doc-item">
-            <div className="doc-name">投资份额确认书</div>
-            <div className="doc-time">2018-05-15</div>
-            <img src={ require('../../../images/stamp/signed.png') } className="stamp"/>
-            <div className="customer-name">xxx</div>
-          </Button>
-        </div>
+        {
+          docList.map((item, idx) => {
+            if (idx % 2 === 0) {
+              const firstItem = docList[idx];
+              const secondItem = docList[idx + 1];
+              return (
+                <div className="doc-row">
+                  <Button className="doc-item" onClick={() => this.onClick(firstItem)}>
+                    <div className="doc-name">{firstItem.fileTypeName || '无'}</div>
+                    <div className="doc-time">2018-05-15</div>
+                    <img src={ require('../../../images/stamp/signed.png') } className="stamp"/>
+                    {/*<div className="customer-name">xxx</div>*/}
+                  </Button>
+                  {
+                    secondItem &&
+                    <Button className="doc-item" onClick={() => this.onClick(secondItem)}>
+                      <div className="doc-name">{secondItem.fileTypeName || '无'}</div>
+                      <div className="doc-time">2018-05-15</div>
+                      <img src={ require('../../../images/stamp/signed.png') } className="stamp"/>
+                      {/*<div className="customer-name">xxx</div>*/}
+                    </Button>
+                  }
 
-        <div className="doc-row">
-          <Button className="doc-item">
-            <div className="doc-name">投资份额确认书</div>
-            <div className="doc-time">2018-05-15</div>
-            <img src={ require('../../../images/stamp/signed.png') } className="stamp"/>
-            <div className="customer-name">xxx</div>
-          </Button>
-          <Button className="doc-item">
-            <div className="doc-name">投资份额确认书</div>
-            <div className="doc-time">2018-05-15</div>
-            <img src={ require('../../../images/stamp/signed.png') } className="stamp"/>
-            <div className="customer-name">xxx</div>
-          </Button>
-        </div>
+                </div>
+              )
+            }
+            return null;
+
+          })
+        }
 
       </PageWithHeader>
     )

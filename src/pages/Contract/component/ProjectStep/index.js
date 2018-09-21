@@ -72,7 +72,7 @@ class ProjectStep extends React.PureComponent {
       <div className="project-step">
         <Tabs
           tabs={ tabs }
-          initialPage={ 0 }
+          initialPage={ 3 }
           renderTabBar={ this.renderTabBar }
         >
           { this.props.children }

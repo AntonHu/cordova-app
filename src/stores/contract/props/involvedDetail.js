@@ -1,6 +1,6 @@
 import { observable, action, runInAction, computed } from 'mobx';
 import {
-  fetchHistoryProjectList,
+  fetchHistoryProjectList, fetchPlantInfo,
   fetchProjectDetail,
   fetchProjectGroupInformation,
   fetchProjectLegalFile,
@@ -17,13 +17,6 @@ class InvolvedDetail {
   constructor(projectDetail) {
     this.projectDetail = projectDetail;
   }
-  // 项目详情
-  @observable projectDetail = {};
-  @observable isDetailLoading = false;
-
-  // 历史项目
-  @observable historyList = [];
-  @observable isHistoryLoading = false;
 
   // 申购详情
   @observable purchaseDetail = {};
@@ -51,13 +44,13 @@ class InvolvedDetail {
   @observable docName = '';
   @observable docUrl = '';
 
+  // 电站信息
+  @observable plantInfo = {};
+  @observable plantInfoLoading = false;
+
   // goBack的时候，重置store
   @action
   reset = () => {
-    this.projectDetail = {};
-    this.isDetailLoading = false;
-    this.historyList = {};
-    this.isHistoryLoading = false;
     this.purchaseDetail = {};
     this.isPurchaseDetailLoading = false;
     this.groupInfo = {};
@@ -72,6 +65,9 @@ class InvolvedDetail {
     this.isDocListLoading = false;
     this.docName = '';
     this.docUrl = '';
+    this.plantInfo = {};
+    this.plantInfoLoading = false;
+
     this.projectDetail.reset();
   };
 
@@ -171,7 +167,7 @@ class InvolvedDetail {
         this.isSiteInfoLoading = false;
         if (result.success) {
           const data = result.data || {};
-          this.siteInfo = data.siteInfo || {};
+          this.siteInfo = data || {};
         } else {
           throw result;
         }
@@ -187,7 +183,23 @@ class InvolvedDetail {
   // 发电收益
   @action
   loadPowerProfit = async (projectId) => {
-    // todo: 还没接口
+    try {
+      this.plantInfoLoading = true;
+      const result = await fetchPlantInfo({ projectId });
+      runInAction(() => {
+        this.plantInfoLoading = false;
+        if (result.success) {
+          this.plantInfo = result.data || {};
+        } else {
+          throw result;
+        }
+      });
+
+      return result;
+    } catch (e) {
+      ToastError(e);
+      return e;
+    }
   };
 
   // 驳回内容

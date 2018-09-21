@@ -2,8 +2,8 @@
 const backendServer = 'https://api.thundersdata.com/ebcapp';
 // const backendServer = 'http://47.96.158.229:30135';
 
-// const contractServer = 'https://api.thundersdata.com/contractPlant';
-const contractServer = 'http://192.168.1.161:8080';
+const contractServer = 'https://api.thundersdata.com/contractPlant';
+// const contractServer = 'http://192.168.1.161:8080';
 
 const userServer = 'https://api.thundersdata.com';
 

@@ -199,6 +199,21 @@ export const fetchRejectInfo = async ({ projectId, purchaseId }) => {
   }
 };
 
+/**
+ * 项目中电站信息
+ * @param projectId
+ * @param purchaseId
+ * @returns {Promise<*>}
+ */
+export const fetchPlantInfo = async ({ projectId }) => {
+  try {
+    const response = await get(`${serverUrl}/project/plantInfo`, { projectId });
+    return response.data;
+  } catch (err) {
+    throw requestError(err, '电站信息');
+  }
+};
 
-//TODO: kd写的两个接口不知道在哪用到了
+
+//TODO: kd写的 获取用户电站收益百分比 不知道在哪用到了
 

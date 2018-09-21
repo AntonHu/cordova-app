@@ -1,0 +1,50 @@
+@import "../../styles/common";
+
+@icon-size: 112 * @px;
+
+.plant-info-item {
+  width: @contract-item-width;
+  height: 192 * @px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: @white-text-color;
+  margin: 20 * @px auto 0;
+  border-radius: @border-radius;
+  padding-left: 60 * @px;
+  padding-right: 30 * @px;
+  .left {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .site-icon {
+      font-size: 56 * @px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: @icon-size;
+      height: @icon-size;
+      border-radius: @icon-size;
+      color: @equipment-icon-bg;
+      border: 1px solid @equipment-icon-bg;
+    }
+    .content {
+      margin-left: 42 * @px;
+      .plant-name {
+        color: @main-text-color;
+        font-size: @h4;
+        margin-bottom: 28 * @px;
+      }
+      .capacity {
+        color: @screen-text-color;
+        font-size: @h5;
+      }
+    }
+  }
+  .right {
+    .right-arrow {
+
+    }
+  }
+}

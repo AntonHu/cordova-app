@@ -18,50 +18,51 @@ const AccordionHeader = (props) => {
 
 // TODO：电站建设组件
 class StationBuildProgress extends React.PureComponent {
+  static propTypes = {
+    siteInfo: PropTypes.object.isRequired
+  };
+
+  static defaultProps = {
+    siteInfo: {}
+  };
 
   render() {
+    const { siteInfo } = this.props;
+    const materialOverviewList = siteInfo.materialOverviewList || [];
+    const gridConnectedFileList = siteInfo.gridConnectedFileList || [];
+    const constructionFileList = siteInfo.constructionFileList || [];
+
     return (
       <div className="station-build-progress">
         <div className="panel">
           <div className="panel-name">原材料</div>
+          {
+            materialOverviewList.map((item) => (
+              <div className="detail-wrap" key={ item.id }>
+                <Accordion className="my-accordion">
+                  <Accordion.Panel
+                    header={ <AccordionHeader name={ '已购买组件' } time={ item.purchaseTime } amount={ item.num * item.unitPrice }/> }>
 
-          <div className="detail-wrap">
-            <Accordion className="my-accordion">
-              <Accordion.Panel
-                header={ <AccordionHeader name={ '已购买组件' } time={ '2018-05-12 12:88' } amount={ 1000 }/> }>
-                some thig
-              </Accordion.Panel>
-            </Accordion>
-          </div>
-          <div className="detail-wrap">
-            <Accordion className="my-accordion">
-              <Accordion.Panel
-                header={ <AccordionHeader name={ '已购买组件' } time={ '2018-05-12 12:88' } amount={ 1000 }/> }>
-                some thig
-              </Accordion.Panel>
-            </Accordion>
-          </div>
-
+                  </Accordion.Panel>
+                </Accordion>
+              </div>
+            ))
+          }
         </div>
         <div className="panel">
           <div className="panel-name">电站建设</div>
+          {
+            constructionFileList.map((item) => (
+              <div className="detail-wrap" key={ item.id }>
+                <Accordion className="my-accordion">
+                  <Accordion.Panel
+                    header={ <AccordionHeader name={ item.fileTypeName } time={ item.uploadTime }/> }>
 
-          <div className="detail-wrap">
-            <Accordion className="my-accordion">
-              <Accordion.Panel
-                header={ <AccordionHeader name={ '现场施工图' } time={ '2018-05-12 12:88' } /> }>
-                some thig
-              </Accordion.Panel>
-            </Accordion>
-          </div>
-          <div className="detail-wrap">
-            <Accordion className="my-accordion">
-              <Accordion.Panel
-                header={ <AccordionHeader name={ '电站安装图' } time={ '2018-05-12 12:88' } /> }>
-                some thig
-              </Accordion.Panel>
-            </Accordion>
-          </div>
+                  </Accordion.Panel>
+                </Accordion>
+              </div>
+            ))
+          }
 
         </div>
         <div className="panel">
@@ -70,8 +71,12 @@ class StationBuildProgress extends React.PureComponent {
           <div className="detail-wrap">
             <Accordion className="my-accordion">
               <Accordion.Panel
-                header={ <AccordionHeader name={ '并网备案文件' } time={ '2018-05-12 12:88' } /> }>
-                some thig
+                header={ <AccordionHeader name={ '并网备案文件' } time={ '' }/> }>
+                {
+                  gridConnectedFileList.map((item) => (
+                    <div></div>
+                  ))
+                }
               </Accordion.Panel>
             </Accordion>
           </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import { toJS } from 'mobx';
-import { Title, PageWithHeader, Picture, Rank } from '../../../components';
+import { Title, PageWithHeader, Picture, Rank, PlantInfoItem } from '../../../components';
 import { Icon, Tabs, WhiteSpace, Button } from 'antd-mobile';
 import { getLocalStorage } from '../../../utils/storage';
 // import PullToRefresh from 'rmc-pull-to-refresh';
@@ -18,7 +18,8 @@ import OrangeGradientBtn from "../../../components/OrangeGradientBtn";
 // 如：项目成团、电站建设、发电收益
 
 // 调用的主要组件：ProjectDetail、项目成团、电站建设、发电收益、进度步骤
-// TODO: 调用的次要组件：我要申诉、驳回详情、header右上角的法律文书、申购弹窗、重新申购弹窗、
+// 调用的次要组件：我要申诉、驳回详情、header右上角的法律文书
+// todo: 重新申购弹窗、
 @inject('contractStore')
 @observer
 class InvolvedDetail extends React.Component {
@@ -30,7 +31,10 @@ class InvolvedDetail extends React.Component {
   }
 
   componentWillUnmount() {
-
+    const { involvedDetail } = this.props.contractStore;
+    if (this.props.history.action === 'POP') {
+      involvedDetail.reset();
+    }
   }
 
   toAppeal = () => {
@@ -48,7 +52,7 @@ class InvolvedDetail extends React.Component {
 
   render() {
     const { involvedDetail } = this.props.contractStore;
-    const { purchaseDetail, rejectInfo, groupInfo } = involvedDetail;
+    const { purchaseDetail, rejectInfo, groupInfo, siteInfo, plantInfo } = involvedDetail;
     const projectDetail = involvedDetail.projectDetail.detail;
     const historyList = involvedDetail.projectDetail.historyList;
 
@@ -108,8 +112,8 @@ class InvolvedDetail extends React.Component {
           </React.Fragment>
 
           <FundingStatus groupInfo={ groupInfo } purchaseDetail={ purchaseDetail }/>
-          <StationBuildProgress/>
-          <div>发电收益</div>
+          <StationBuildProgress siteInfo={siteInfo}/>
+          <PlantInfoItem capacity={plantInfo.powerStationCapacity} plantName={plantInfo.plantName}/>
         </ProjectStep>
 
       </PageWithHeader>

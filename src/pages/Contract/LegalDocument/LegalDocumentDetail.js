@@ -35,11 +35,9 @@ class LegalDocumentDetail extends React.Component{
     })
   };
 
-  // todo: url应该要变了
-  getPDFUrl = () => {
+  getPDFUrl = (docUrl) => {
     const token = getLocalStorage('token');
-    const { projectId, purchaseNumber } = this.props.match.params;
-    return `${contractServer}/app/project/legalFile?access_token=${token}&type=1&projectId=${projectId}&purchaseNumber=${purchaseNumber}`
+    return `${contractServer}/oss/preview?access_token=${token}&fileName=${docUrl}`
   };
 
   render() {
@@ -48,17 +46,21 @@ class LegalDocumentDetail extends React.Component{
     return (
       <PageWithHeader title={docName || '法律文书'} id="page-legal-document-detail">
         <div className="content-wrap">
-          <Document
-            file={ { url: docUrl } }
-            onLoadSuccess={ this.onDocumentLoad }
-          >
-            {
-              this.state.totalPage.map((v, idx) =>
-                <Page pageNumber={ idx + 1 } />
-              )
-            }
+          {
+            docUrl &&
+            <Document
+              file={ { url: this.getPDFUrl(docUrl) } }
+              onLoadSuccess={ this.onDocumentLoad }
+            >
+              {
+                this.state.totalPage.map((v, idx) =>
+                  <Page pageNumber={ idx + 1 } />
+                )
+              }
 
-          </Document>
+            </Document>
+          }
+
 
         </div>
 
