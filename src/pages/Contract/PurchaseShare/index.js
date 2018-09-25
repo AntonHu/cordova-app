@@ -1,15 +1,16 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
+import { reaction } from 'mobx';
 import { Title, PageWithHeader, Picture, Rank, OrangeGradientBtn } from '../../../components';
-import { Icon, Tabs, WhiteSpace, Toast, Button, Modal } from 'antd-mobile';
+import { Icon, Tabs, WhiteSpace, Toast, Button, Modal, ActivityIndicator } from 'antd-mobile';
 import { getLocalStorage } from '../../../utils/storage';
 // import PullToRefresh from 'rmc-pull-to-refresh';
 import Tloader from 'react-touch-loader';
 import PullToRefresh from 'pulltorefreshjs';
 import './index.less';
 
-const COUNT_DOWN_MIN = 15 * 60;
+const COUNT_DOWN_MIN = 30 * 60;
 
 const secToTimeArray = (totalSec) => {
   let hours = Math.floor(totalSec / 3600);
@@ -31,6 +32,8 @@ class PurchaseShare extends React.Component {
     super(props);
     this.state = {
       countDown: COUNT_DOWN_MIN,
+      loading: false,
+      loadingText: ''
     }
   }
 
@@ -42,7 +45,29 @@ class PurchaseShare extends React.Component {
     if (this.interval) {
       clearInterval(this.interval)
     }
+    this.confirmSending();
+    this.cancelSending();
   }
+
+  confirmSending = reaction(
+    () => this.props.contractStore.notInvolvedDetail.isConfirmPaying,
+    loading => {
+      this.setState({
+        loading,
+        loadingText: loading ? '正在确认支付，请稍候...' : ''
+      })
+    }
+  );
+
+  cancelSending = reaction(
+    () => this.props.contractStore.notInvolvedDetail.isCancelPurchasing,
+    loading => {
+      this.setState({
+        loading,
+        loadingText: loading ? '正在取消申购，请稍候...' : ''
+      })
+    }
+  );
 
   onCancel = () => {
     Modal.alert('取消申购', '您确定要取消申购？', [{ text: '再想想' }, {
@@ -160,6 +185,11 @@ class PurchaseShare extends React.Component {
             已支付
           </OrangeGradientBtn>
         </div>
+        <ActivityIndicator
+          toast
+          text={ this.state.loadingText }
+          animating={ this.state.loading }
+        />
       </PageWithHeader>
     )
   }

@@ -77,7 +77,7 @@ class NotInvolvedDetail extends React.Component {
         resolve()
       } else {
         const result = await getBankCard();
-        if (result.success && result.data) {
+        if (result.success && result.data && result.data.bankCardNumber) {
           resolve()
         } else {
           reject()

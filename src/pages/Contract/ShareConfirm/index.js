@@ -7,6 +7,7 @@ import { getLocalStorage } from '../../../utils/storage';
 import Tloader from 'react-touch-loader';
 import PullToRefresh from 'pulltorefreshjs';
 import { Document, Page, Outline } from 'react-pdf';
+// import { Document, Page } from 'react-pdf/dist/entry.webpack';
 import './index.less';
 import { contractServer } from "../../../utils/variable";
 import { reaction } from "mobx";
@@ -82,8 +83,9 @@ class ShareConfirm extends React.Component {
   getPDFUrl = () => {
     const token = getLocalStorage('token');
     const { projectId, purchaseNumber } = this.props.match.params;
-
-    return `${contractServer}/app/project/legalFile?access_token=${token}&type=0&projectId=${projectId}&purchaseNumber=${purchaseNumber}`
+    const url = `${contractServer}/app/project/legalFile?access_token=${token}&type=0&projectId=${projectId}&purchaseNumber=${purchaseNumber}`;
+    console.log(url);
+    return url;
   };
 
   render() {
@@ -95,6 +97,17 @@ class ShareConfirm extends React.Component {
           <Document
             file={ { url: this.getPDFUrl() } }
             onLoadSuccess={ this.onDocumentLoad }
+            loading="正在加载文件，请稍候..."
+            noData="没有找到文件"
+            error="读取文件出错"
+            onLoadError={ (err) => {
+              console.log('onLoadError');
+              console.log(JSON.stringify(err))
+            }}
+            onSourceError={(err) => {
+              console.log('onSourceError');
+              console.log(JSON.stringify(err))
+            }}
           >
             {
               this.state.totalPage.map((v, idx) =>

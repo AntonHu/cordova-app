@@ -22,12 +22,18 @@ class NotInvolvedDetail {
   // loading状态
   @observable isPurchasing = false;
 
+  @observable isConfirmPaying = false;
+
+  @observable isCancelPurchasing = false;
+
   // goBack的时候，重置store
   @action
   reset = () => {
     this.purchaseCount = 1;
     this.purchaseId = '';
     this.isPurchasing = false;
+    this.isConfirmPaying = false;
+    this.isCancelPurchasing = false;
     this.projectDetail.reset();
   };
 
@@ -39,7 +45,7 @@ class NotInvolvedDetail {
 
   // 调申购方法
   @action
-  onPurchase = async ({projectId, purchaseNumber}) => {
+  onPurchase = async ({ projectId, purchaseNumber }) => {
     try {
       this.isPurchasing = true;
       const result = await fetchPurchaseProject({
@@ -48,12 +54,12 @@ class NotInvolvedDetail {
       });
       this.isPurchasing = false;
 
-        if (result.success) {
-          const data = result.data || {};
-          this.purchaseId = data.purchaseId + '' || '';
-        } else {
-          throw result;
-        }
+      if (result.success) {
+        const data = result.data || {};
+        this.purchaseId = data.purchaseId + '' || '';
+      } else {
+        throw result;
+      }
 
 
       return result;
@@ -64,13 +70,20 @@ class NotInvolvedDetail {
   };
 
   // "确认已付款"
-  onConfirmPay = async ({projectId, purchaseId}) => {
+  @action
+  onConfirmPay = async ({ projectId, purchaseId }) => {
     try {
+      this.isConfirmPaying = true;
       const result = await fetchConfirmPayment({
         projectId,
         purchaseId
       });
-      return result;
+      this.isConfirmPaying = false;
+      if (result.success) {
+        return result;
+      } else {
+        throw result;
+      }
     } catch (e) {
       ToastError(e);
       return e;
@@ -78,13 +91,20 @@ class NotInvolvedDetail {
   };
 
   // 取消申购
-  onCancelPurchase = async ({projectId, purchaseId}) => {
+  @action
+  onCancelPurchase = async ({ projectId, purchaseId }) => {
     try {
+      this.isCancelPurchasing = true;
       const result = await fetchCancelPurchase({
         projectId,
         purchaseId
       });
-      return result;
+      this.isCancelPurchasing = false;
+      if (result.success) {
+        return result;
+      } else {
+        throw result;
+      }
     } catch (e) {
       ToastError(e);
       return e;

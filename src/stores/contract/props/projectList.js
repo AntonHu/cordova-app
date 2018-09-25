@@ -47,6 +47,7 @@ class ProjectList {
       return result;
     } catch (e) {
       ToastError(e);
+      return e;
     }
 
   };

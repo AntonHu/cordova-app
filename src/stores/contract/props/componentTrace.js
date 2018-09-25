@@ -26,6 +26,7 @@ class ComponentTrace {
       return result;
     } catch (e) {
       ToastError(e);
+      return e;
     }
   }
 }

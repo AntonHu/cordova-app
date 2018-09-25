@@ -99,7 +99,7 @@ class About extends React.PureComponent {
   state = {
     checking: false,
     checkText: '正在检查更新...',
-    appVersion: '2.0.0'
+    appVersion: '2.0.2'
   };
 
   onClick = (v) => {

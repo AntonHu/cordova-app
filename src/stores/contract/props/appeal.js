@@ -21,7 +21,8 @@ class Appeal {
       }
       return result;
     } catch (e) {
-      ToastError(e)
+      ToastError(e);
+      return e;
     }
   };
 

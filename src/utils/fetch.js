@@ -2,8 +2,8 @@ import axios from 'axios';
 import qs from 'qs';
 import { getLocalStorage } from './storage';
 
-// export const TIME_OUT = 10000;
-export const TIME_OUT = 99999999999;
+export const TIME_OUT = 10000;
+// export const TIME_OUT = 99999999999;
 export const LONG_TIME_OUT = 15000;
 export const ERR_CODE = {
   timeout: -TIME_OUT,
