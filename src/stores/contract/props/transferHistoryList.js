@@ -25,7 +25,7 @@ class TransferHistoryList {
         this.isLoading = false;
         if (result.success) {
           const data = result.data || {};
-          this.list = data.historyList || []
+          this.list = data || []
         } else {
           throw result;
         }

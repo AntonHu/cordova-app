@@ -48,6 +48,10 @@ class Contract extends React.Component {
 
   componentDidMount() {
     this.initPullToRefresh();
+    this.initData();
+  }
+
+  initData = () => {
     const { projectList, transferList, transferHistoryList } = this.props.contractStore;
 
     if (projectList.list.length < 1) {
@@ -59,7 +63,14 @@ class Contract extends React.Component {
     if (transferHistoryList.list.length < 1) {
       transferHistoryList.initLoad();
     }
-  }
+  };
+
+  refresh = () => {
+    const { projectList, transferList, transferHistoryList } = this.props.contractStore;
+    projectList.initLoad();
+    transferList.initLoad();
+    transferHistoryList.initLoad();
+  };
 
   componentWillUnmount() {
     PullToRefresh.destroyAll();
@@ -70,21 +81,19 @@ class Contract extends React.Component {
 
   /**
    * 初始化下拉刷新
-   * todo: 加上转让后，shouldPullToRefresh要重新弄，还有onRefresh的方法
    */
   initPullToRefresh = () => {
-    const { projectList } = this.props.contractStore;
     PullToRefresh.init({
       mainElement: '#page-contract', // "下拉刷新"把哪个部分包住
       triggerElement: '#page-contract', // "下拉刷新"把哪个部分包住
-      onRefresh: projectList.initLoad, // 下拉刷新的方法，返回一个promise
+      onRefresh: this.refresh, // 下拉刷新的方法，返回一个promise
       shouldPullToRefresh: function () {
         // 什么情况下的滚动触发下拉刷新，这个很重要
         // 如果这个页面里有height超过窗口高度的元素
         // 那么应该在这个元素滚动位于顶部的时候，返回true
         return (
-          document.querySelector(`#page-contract`)
-            .scrollTop === 0
+          document.querySelector('#page-contract .am-tabs-pane-wrap-active').scrollTop
+             === 0
         );
       },
       instructionsPullToRefresh: '下拉刷新',
@@ -169,7 +178,7 @@ class Contract extends React.Component {
           } }
         >
           { /*第1个tab合约电站列表*/ }
-          <div>
+          <div className="tab-wrap">
             <ListView
               initialListSize={ PAGE_SIZE }
               pageSize={ PAGE_SIZE }
@@ -188,7 +197,7 @@ class Contract extends React.Component {
             <ActivityIndicator toast animating={ projectList.isLoading } text="正在加载列表..."/>
           </div>
           { /*第2个tab电站转让列表*/ }
-          <div>
+          <div className="tab-wrap">
             <ListView
               renderFooter={ () => (
                 <div style={ { padding: '20px', textAlign: 'center' } }>
@@ -199,9 +208,9 @@ class Contract extends React.Component {
               renderRow={ (item) =>
                 <StationTransfer
                   key={item.productId}
-                  money={ 7980 }
+                  money={ item.amount || 0 }
                   projectName={ item.projectName }
-                  stationCapacity={ '10 ' + POWER_UNIT }
+                  stationCapacity={ `${(item.powerStationCapacity || 0)}${POWER_UNIT}` }
                   profitYear={ `${(item.estimatedAnnualizedIncome || 0)}%` }
                 />
               }
@@ -211,7 +220,7 @@ class Contract extends React.Component {
             <ActivityIndicator toast animating={ transferList.isLoading } text="正在加载列表..."/>
           </div>
           { /*第3个tab转让历史列表*/ }
-          <div>
+          <div className="tab-wrap">
             <ListView
               renderFooter={ () => (
                 <div style={ { padding: '20px', textAlign: 'center' } }>
@@ -219,16 +228,17 @@ class Contract extends React.Component {
                 </div>
               ) }
               dataSource={ this.state.historySource }
-              renderRow={ () =>
+              renderRow={ (item) =>
                 <TransferHistory
-                  projectName={ '黄河公道园项目' }
+                  key={item.productId}
+                  projectName={ item.projectName }
                   status={ '未知状态' }
-                  count={ 10 }
-                  price={ 2000 }
-                  sellerName={ '卖家名字' }
-                  openBank={ '中央银行' }
-                  bankAccount={ '1888888888' }
-                  sellerContact={ '杭州市余杭区' }
+                  count={ item.purchaseNumber || 0 }
+                  price={ item.amount || 0 }
+                  sellerName={ item.buyerName }
+                  openBank={ item.buyerBank }
+                  bankAccount={ item.buyerBankCardNumber }
+                  sellerContact={ item.buyerPhone }
                   confirmPay={ () => {
                     alert('警告', '确认打款???', [
                       { text: '取消', onPress: () => console.log('确认') },
