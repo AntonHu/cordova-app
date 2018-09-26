@@ -19,12 +19,15 @@ class ContractProjectItem extends React.PureComponent {
     soldShare = soldShare || 0;
     availableShare = availableShare || 0;
     if (soldShare === 0) {
-      return '无人参团'
+      return <div className="progress-text">无人参团</div>
     }
     if (availableShare === 0) {
-      return '项目满团'
+      return <div className="progress-text">项目满团</div>
     }
-    return `已购${soldShare}份，还剩${availableShare}份`
+    return <div className="progress-text">
+      <div>已购{soldShare}份</div>
+      <div>还剩{availableShare}份</div>
+    </div>
   };
 
   percent = (soldShare, availableShare) => {

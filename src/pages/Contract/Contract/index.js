@@ -9,7 +9,7 @@ import {
   Rank,
   ContractProjectItem
 } from '../../../components';
-import { Icon, ListView, Tabs, WhiteSpace, Modal } from 'antd-mobile';
+import { Icon, ListView, Tabs, WhiteSpace, Modal, ActivityIndicator } from 'antd-mobile';
 import { getLocalStorage } from '../../../utils/storage';
 import Tloader from 'react-touch-loader';
 import PullToRefresh from 'pulltorefreshjs';
@@ -43,10 +43,10 @@ class Contract extends React.Component {
   componentDidMount() {
     this.initPullToRefresh();
     const { projectList } = this.props.contractStore;
-    if (this.props.history.action !== 'POP') {
 
+    if (projectList.list.length < 1) {
+      projectList.initLoad();
     }
-    projectList.initLoad();
   }
 
   componentWillUnmount() {
@@ -56,7 +56,7 @@ class Contract extends React.Component {
 
   /**
    * 初始化下拉刷新
-   * todo: shouldPullToRefresh要重新弄，还有onRefresh的方法
+   * todo: 加上转让后，shouldPullToRefresh要重新弄，还有onRefresh的方法
    */
   initPullToRefresh = () => {
     const { projectList } = this.props.contractStore;
@@ -116,6 +116,7 @@ class Contract extends React.Component {
   render() {
     const { projectList } = this.props.contractStore;
     console.log(toJS(projectList.list));
+    const { isLoading } = projectList;
     /**
      * tabs
      */
@@ -125,86 +126,87 @@ class Contract extends React.Component {
       { title: <span>转让历史</span> }
     ];
     return (
-      <PageWithHeader title="合约电站" leftComponent={null} id="page-contract">
+      <PageWithHeader title="合约电站" leftComponent={ null } id="page-contract">
         <ListView
-          initialListSize={PAGE_SIZE}
-          pageSize={PAGE_SIZE}
-          renderFooter={() => (
-            <div style={{ padding: '20px', textAlign: 'center' }}>
-              {projectList.isLoading ? '加载中...' : '没有更多'}
+          initialListSize={ PAGE_SIZE }
+          pageSize={ PAGE_SIZE }
+          renderFooter={ () => (
+            <div style={ { padding: '20px', textAlign: 'center' } }>
+              { projectList.isLoading ? '加载中...' : '没有更多' }
             </div>
-          )}
-          dataSource={this.state.dataSource}
-          renderRow={this.renderRow}
+          ) }
+          dataSource={ this.state.dataSource }
+          renderRow={ this.renderRow }
           useBodyScroll
-          scrollRenderAheadDistance={800}
-          onEndReached={this.onEndReached}
-          onEndReachedThreshold={10}
+          scrollRenderAheadDistance={ 800 }
+          onEndReached={ this.onEndReached }
+          onEndReachedThreshold={ 10 }
         />
-        {/* TODO: 转让的时候换回来 */}
-        {/*<Tabs*/}
-          {/*tabs={tabs}*/}
-          {/*initialPage={0}*/}
-          {/*onChange={(tab, index) => {*/}
-            {/*console.log('onChange', index, tab);*/}
-          {/*}}*/}
-          {/*onTabClick={(tab, index) => {*/}
-            {/*console.log('onTabClick', index, tab);*/}
-          {/*}}*/}
-        {/*>*/}
-          {/*/!*第1个tab合约电站列表*!/*/}
-          {/*<div>*/}
-            {/*<ListView*/}
-              {/*initialListSize={PAGE_SIZE}*/}
-              {/*pageSize={PAGE_SIZE}*/}
-              {/*renderFooter={() => (*/}
-                {/*<div style={{ padding: '20px', textAlign: 'center' }}>*/}
-                  {/*{projectList.isLoading ? '加载中...' : '没有更多'}*/}
-                {/*</div>*/}
-              {/*)}*/}
-              {/*dataSource={this.state.dataSource}*/}
-              {/*renderRow={this.renderRow}*/}
-              {/*useBodyScroll*/}
-              {/*scrollRenderAheadDistance={800}*/}
-              {/*onEndReached={this.onEndReached}*/}
-              {/*onEndReachedThreshold={10}*/}
-            {/*/>*/}
-          {/*</div>*/}
-          {/*/!*第2个tab电站转让列表*!/*/}
-          {/*<div>*/}
-            {/*<StationTransfer*/}
-              {/*money={7980}*/}
-              {/*projectName={'黄河公道园项目'}*/}
-              {/*stationCapacity={'10 ' + POWER_UNIT}*/}
-              {/*profitYear={'10 %'}*/}
-            {/*/>*/}
-          {/*</div>*/}
-          {/*/!*第3个tab转让历史列表*!/*/}
-          {/*<div>*/}
-            {/*<TransferHistory*/}
-              {/*projectName={'黄河公道园项目'}*/}
-              {/*status={'未知状态'}*/}
-              {/*count={10}*/}
-              {/*price={2000}*/}
-              {/*sellerName={'卖家名字'}*/}
-              {/*openBank={'中央银行'}*/}
-              {/*bankAccount={'1888888888'}*/}
-              {/*sellerContact={'杭州市余杭区'}*/}
-              {/*confirmPay={() => {*/}
-                {/*alert('警告', '确认打款???', [*/}
-                  {/*{ text: '取消', onPress: () => console.log('确认') },*/}
-                  {/*{ text: '确认', onPress: () => console.log('确认') }*/}
-                {/*]);*/}
-              {/*}}*/}
-              {/*cancelPay={() => {*/}
-                {/*alert('警告', '取消转让???', [*/}
-                  {/*{ text: '取消', onPress: () => console.log('确认') },*/}
-                  {/*{ text: '确认', onPress: () => console.log('确认') }*/}
-                {/*]);*/}
-              {/*}}*/}
-            {/*/>*/}
-          {/*</div>*/}
-        {/*</Tabs>*/}
+        { /* TODO: 转让的时候换回来 */ }
+        { /*<Tabs*/ }
+        { /*tabs={tabs}*/ }
+        { /*initialPage={0}*/ }
+        { /*onChange={(tab, index) => {*/ }
+        { /*console.log('onChange', index, tab);*/ }
+        { /*}}*/ }
+        { /*onTabClick={(tab, index) => {*/ }
+        { /*console.log('onTabClick', index, tab);*/ }
+        { /*}}*/ }
+        { /*>*/ }
+        { /*/!*第1个tab合约电站列表*!/*/ }
+        { /*<div>*/ }
+        { /*<ListView*/ }
+        { /*initialListSize={PAGE_SIZE}*/ }
+        { /*pageSize={PAGE_SIZE}*/ }
+        { /*renderFooter={() => (*/ }
+        { /*<div style={{ padding: '20px', textAlign: 'center' }}>*/ }
+        { /*{projectList.isLoading ? '加载中...' : '没有更多'}*/ }
+        { /*</div>*/ }
+        { /*)}*/ }
+        { /*dataSource={this.state.dataSource}*/ }
+        { /*renderRow={this.renderRow}*/ }
+        { /*useBodyScroll*/ }
+        { /*scrollRenderAheadDistance={800}*/ }
+        { /*onEndReached={this.onEndReached}*/ }
+        { /*onEndReachedThreshold={10}*/ }
+        { /*/>*/ }
+        { /*</div>*/ }
+        { /*/!*第2个tab电站转让列表*!/*/ }
+        { /*<div>*/ }
+        { /*<StationTransfer*/ }
+        { /*money={7980}*/ }
+        { /*projectName={'黄河公道园项目'}*/ }
+        { /*stationCapacity={'10 ' + POWER_UNIT}*/ }
+        { /*profitYear={'10 %'}*/ }
+        { /*/>*/ }
+        { /*</div>*/ }
+        { /*/!*第3个tab转让历史列表*!/*/ }
+        { /*<div>*/ }
+        { /*<TransferHistory*/ }
+        { /*projectName={'黄河公道园项目'}*/ }
+        { /*status={'未知状态'}*/ }
+        { /*count={10}*/ }
+        { /*price={2000}*/ }
+        { /*sellerName={'卖家名字'}*/ }
+        { /*openBank={'中央银行'}*/ }
+        { /*bankAccount={'1888888888'}*/ }
+        { /*sellerContact={'杭州市余杭区'}*/ }
+        { /*confirmPay={() => {*/ }
+        { /*alert('警告', '确认打款???', [*/ }
+        { /*{ text: '取消', onPress: () => console.log('确认') },*/ }
+        { /*{ text: '确认', onPress: () => console.log('确认') }*/ }
+        { /*]);*/ }
+        { /*}}*/ }
+        { /*cancelPay={() => {*/ }
+        { /*alert('警告', '取消转让???', [*/ }
+        { /*{ text: '取消', onPress: () => console.log('确认') },*/ }
+        { /*{ text: '确认', onPress: () => console.log('确认') }*/ }
+        { /*]);*/ }
+        { /*}}*/ }
+        { /*/>*/ }
+        { /*</div>*/ }
+        { /*</Tabs>*/ }
+        <ActivityIndicator toast animating={ isLoading } text="正在加载列表..."/>
       </PageWithHeader>
     );
   }

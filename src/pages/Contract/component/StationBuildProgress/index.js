@@ -16,7 +16,7 @@ const AccordionHeader = (props) => {
   )
 };
 
-// TODO：电站建设组件
+// 电站建设组件
 class StationBuildProgress extends React.PureComponent {
   static propTypes = {
     siteInfo: PropTypes.object.isRequired
@@ -37,6 +37,8 @@ class StationBuildProgress extends React.PureComponent {
         <div className="panel">
           <div className="panel-name">原材料</div>
           {
+            materialOverviewList.length > 0
+            ?
             materialOverviewList.map((item) => (
               <div className="detail-wrap" key={ item.id }>
                 <Accordion className="my-accordion">
@@ -47,11 +49,22 @@ class StationBuildProgress extends React.PureComponent {
                 </Accordion>
               </div>
             ))
+              :
+              <div className="detail-wrap" >
+                <Accordion className="my-accordion">
+                  <Accordion.Panel
+                    header={ <AccordionHeader name={ '等待上传' } /> }>
+
+                  </Accordion.Panel>
+                </Accordion>
+              </div>
           }
         </div>
         <div className="panel">
           <div className="panel-name">电站建设</div>
           {
+            constructionFileList.length > 0
+            ?
             constructionFileList.map((item) => (
               <div className="detail-wrap" key={ item.id }>
                 <Accordion className="my-accordion">
@@ -62,6 +75,15 @@ class StationBuildProgress extends React.PureComponent {
                 </Accordion>
               </div>
             ))
+              :
+              <div className="detail-wrap" >
+                <Accordion className="my-accordion">
+                  <Accordion.Panel
+                    header={ <AccordionHeader name={ '等待上传' } /> }>
+
+                  </Accordion.Panel>
+                </Accordion>
+              </div>
           }
 
         </div>

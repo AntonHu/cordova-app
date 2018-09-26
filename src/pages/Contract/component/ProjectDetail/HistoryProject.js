@@ -21,9 +21,9 @@ class HistoryProject extends React.PureComponent{
               <ContractProjectItem
                 key={idx}
                 enterpriseName={item.enterpriseName}
-                annualRate={item.annualRate}
+                annualRate={item.estimatedAnnualizedIncome}
                 availableShare={item.availableShare}
-                dateTime={item.created_at}
+                dateTime={item.createdAt}
                 powerStationCapacity={item.powerStationCapacity}
                 projectName={item.projectName}
                 soldShare={item.soldShare}

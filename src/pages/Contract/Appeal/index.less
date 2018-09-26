@@ -26,7 +26,7 @@
 
   .pic-wrap {
     width: @contract-item-width;
-    height: 398 * @px;
+    min-height: 398 * @px;
     margin: 20 * @px auto 0 auto;
     background: @white-text-color;
     padding: 30 * @px;
@@ -37,10 +37,11 @@
     }
     .pic-box {
       display: flex;
+      flex-wrap: wrap;
       .pic-item {
         width: 206 * @px;
         height: 256 * @px;
-        &:not:first-child {
+        &:not(:first-child) {
           margin-left: 10 * @px;
         }
       }
@@ -61,9 +62,14 @@
     display: flex;
     position: absolute;
     bottom: 0;
+    .iconfont {
+      color: #666666;
+      font-size: 57 * @px;
+    }
     .am-button {
       flex: 1;
       height: 100 * @px;
+      line-height: 100 * @px;
       border-radius: 0;
       &::before {
         border-radius: 0!important;

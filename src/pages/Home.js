@@ -48,7 +48,7 @@ const TabsData = [
 /**
  * 首页
  */
-class Comp extends React.PureComponent {
+class Home extends React.PureComponent {
   state = {
     selectedTab: 'sunCity'
   };
@@ -99,4 +99,4 @@ class Comp extends React.PureComponent {
   }
 }
 
-export default Comp;
+export default Home;

@@ -1,5 +1,7 @@
 import { get, getFile, post, requestError } from '../../utils/fetch';
-import { contractServer, PAGE_SIZE } from '../../utils/variable';
+import { backendServer, contractServer, PAGE_SIZE } from '../../utils/variable';
+import axios from "axios";
+import { getLocalStorage } from "../../utils/storage";
 
 const serverUrl = contractServer + '/app';
 
@@ -85,12 +87,13 @@ export const fetchConfirmPayment = async ({ projectId, purchaseId }) => {
  * @param projectId
  * @param purchaseId
  * @param content 申诉内容
- * @param fileList 上传的文件
+ * @param fileList 上传的文件 数组
  * @returns {Promise<*>}
  */
 export const fetchUploadAppeal = async ({ projectId, purchaseId, content, fileList }) => {
   try {
-    const response = await post(`${serverUrl}/project/appeal`, { projectId, purchaseId, content, fileList });
+    const response = await post(`${serverUrl}/project/appeal`, { projectId, purchaseId, content, fileList: JSON.stringify(fileList) });
+    console.log(JSON.stringify({ projectId, purchaseId, content, fileList }));
     return response.data;
   } catch (err) {
     throw requestError(err, '申诉');
@@ -214,6 +217,33 @@ export const fetchPlantInfo = async ({ projectId }) => {
   }
 };
 
+export const getUploadFunc = (url) => {
+  return (fileBlob) => {
+    const formData = new FormData();
+    formData.append('file', fileBlob);
+
+    let config = {
+      headers:{'Content-Type':'multipart/form-data'}
+    };
+    return axios.post(`${contractServer}${url}?access_token=${getLocalStorage('token')}`, formData, config)
+    // axios.post(`http://192.168.1.100:8080/user/headImg`, formData, config)
+      .then(res => {
+        console.log('upload success!');
+        console.log(JSON.stringify(res));
+        return res.data;
+      })
+      .catch(err => {
+        console.log('upload fail!');
+        console.log(err);
+        console.log(Object.keys(err));
+        console.log(JSON.stringify(err.response));
+        throw requestError(err, '上传文件');
+      })
+  }
+};
+
+export const uploadContractPublicFile = getUploadFunc('/oss/public/upload');
+export const uploadContractPrivateFile = getUploadFunc('/oss/private/upload');
 
 //TODO: kd写的 获取用户电站收益百分比 不知道在哪用到了
 

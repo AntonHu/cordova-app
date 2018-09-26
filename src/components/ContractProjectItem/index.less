@@ -8,12 +8,16 @@
   position: relative;
   box-sizing: border-box;
   .progress-box {
+    width: @contract-item-width - (2 * 30 * @px);
+    top: 40 * @px;
+    position: absolute;
     display: flex;
     font-size: @h5;
     color: @main-text-color;
     align-items: center;
     .am-progress-outer {
-      width: 400 * @px;
+      //width: 400 * @px;
+      flex: 1;
       margin-right: 20 * @px;
       background-color: #DDEDE9;
       .am-progress-bar {
@@ -21,20 +25,31 @@
         border-radius: 5 * @px;
       }
     }
+    .progress-text {
+      width: 110 * @px;
+      text-align: left;
+      div:first-child {
+        margin-bottom: 10 * @px;
+      }
+
+      //background: @screen-text-color;
+    }
   }
 
   .info-box {
     display: flex;
-    margin-top: 49 * @px;
+    margin-top: 73 * @px;
+    text-align: left;
     .annul-box {
       color: @annual-rate-color;
-      .title{
+      .title {
         font-size: @h7;
       }
       .number {
         font-size: 54 * @px;
         font-weight: 500;
         margin-top: 25 * @px;
+        line-height: 1;
       }
     }
     .name-box {
@@ -55,15 +70,15 @@
   .bottom-box {
     position: absolute;
     bottom: 40 * @px;
-    left: 30 * @px;
+    left: 0 * @px;
     display: flex;
-    width: 650 * @px;
+    width: @contract-item-width;
     height: 62 * @px;
     justify-content: space-between;
     align-items: center;
     color: @main-text-color;
     font-size: @h4;
-    padding: 22 * @px;
+    padding: 22 * @px 30 * @px;
     background: @white-grey;
     margin-top: 46 * @px;
     box-sizing: border-box;

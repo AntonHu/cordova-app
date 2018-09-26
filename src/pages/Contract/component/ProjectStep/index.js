@@ -40,7 +40,7 @@ class ProjectStep extends React.PureComponent {
             const activeClass = activeTab === idx ? 'active' : '';
             const ableClass = this.tabIsAbleByStatus(idx, this.props.projectDetail) ? 'able' : '';
             return (
-              <React.Fragment key={idx}>
+              <React.Fragment key={ idx }>
                 {
                   idx > 0
                   &&
@@ -74,6 +74,7 @@ class ProjectStep extends React.PureComponent {
           tabs={ tabs }
           initialPage={ 0 }
           renderTabBar={ this.renderTabBar }
+          swipeable={ false }
         >
           { this.props.children }
         </Tabs>

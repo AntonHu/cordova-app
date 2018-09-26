@@ -33,10 +33,9 @@ class MyProjectList extends React.Component {
   componentDidMount() {
     this.initPullToRefresh();
     const { myProjectList } = this.props.contractStore;
-    if (this.props.history.action !== 'POP') {
-
+    if (myProjectList.list.length < 1) {
+      myProjectList.initLoad();
     }
-    myProjectList.initLoad();
   }
 
   componentWillUnmount() {

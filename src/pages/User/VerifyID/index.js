@@ -36,6 +36,10 @@ function onFail(message) {
 function setStateOnPhotoData(_setState) {
   return function (imageURI) {
     // _setState("data:image/jpeg;base64," + imageData)
+    if (imageURI.substring(0, 21) === "content://com.android") {
+      const photo_split = imageURI.split("%3A");
+      imageURI = "content://media/external/images/media/" + photo_split[1];
+    }
     _setState(imageURI)
   }
 }
