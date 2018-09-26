@@ -1,4 +1,4 @@
-import {get, post, LONG_TIME_OUT} from '../../utils/fetch';
+import { get, post, LONG_TIME_OUT, requestError } from '../../utils/fetch';
 import {backendServer, userServer, PAGE_SIZE} from '../../utils/variable';
 import axios from 'axios';
 
@@ -384,7 +384,7 @@ export const getIsKycInChain = async ({publicKey}) => {
     });
     return response;
   } catch (err) {
-    throw err.response;
+    throw requestError(err, '查询是否身份认证');
   }
 };
 

@@ -9,6 +9,7 @@ import {
   getTodayIntegral,
   geUnconfirmedToken
 } from './request';
+import { ToastError } from "../ToastError";
 
 class MiningStore {
   @observable tokenRecords = [];
@@ -121,10 +122,13 @@ class MiningStore {
           const data = res.data.data || {};
           this.balance = data.amount || 0;
         });
+        return res.data;
+      } else {
+        throw res.data;
       }
-      return res;
     } catch (err) {
-      throw err;
+      ToastError(err);
+      return err;
     }
   };
 

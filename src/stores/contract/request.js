@@ -245,5 +245,20 @@ export const getUploadFunc = (url) => {
 export const uploadContractPublicFile = getUploadFunc('/oss/public/upload');
 export const uploadContractPrivateFile = getUploadFunc('/oss/private/upload');
 
+/**
+ * 合约电站列表
+ * @param projectId
+ * @param purchaseId
+ * @returns {Promise<*>}
+ */
+export const fetchPlantList = async () => {
+  try {
+    const response = await get(`${serverUrl}/project/plantList`);
+    return response.data;
+  } catch (err) {
+    throw requestError(err, '合约电站列表');
+  }
+};
+
 //TODO: kd写的 获取用户电站收益百分比 不知道在哪用到了
 

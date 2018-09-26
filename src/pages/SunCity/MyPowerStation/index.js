@@ -559,7 +559,7 @@ class MyPowerStation extends React.Component {
     }
     return (
       <PageWithHeader
-        title={'我的电站'}
+        title={'普通电站'}
         id="page-powerStation-info"
         rightComponent={
           <i

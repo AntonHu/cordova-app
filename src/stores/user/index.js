@@ -7,6 +7,7 @@ import {VERIFY_STATUS} from '../../utils/variable';
 import {ToastNoMask} from '../../components';
 import {Modal} from 'antd-mobile';
 import User from '../../utils/user';
+import { ToastError } from "../ToastError";
 
 const alert = Modal.alert;
 const IS_KYC_IN_CHAIN = 'IS_KYC_IN_CHAIN';
@@ -147,11 +148,12 @@ class UserStore {
         runInAction(() => {
           this.isKycInChain = status;
         })
+      } else {
+        throw res.data;
       }
     } catch (err) {
-      if (err.data && err.data.code === 0) {
-        ToastNoMask('检查实名认证超时')
-      }
+      ToastError(err);
+      return err
     }
   };
 

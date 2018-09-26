@@ -617,7 +617,7 @@ class SunCity extends React.Component {
             </div>
             <div
               className="powerStation"
-              onClick={() => this.props.history.push('/sunCity/powerStation')}
+              onClick={() => this.props.history.push('/sunCity/allPowerStation')}
             >
               <img className="ufo-png" src={require('../../images/ufo.png')} />
               电站

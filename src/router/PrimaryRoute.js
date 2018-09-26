@@ -41,6 +41,7 @@ import {
   TransferDetail
 } from '../pages/Contract';
 import MyPowerStation from '../pages/SunCity/MyPowerStation';
+import AllPowerStation from '../pages/SunCity/AllPowerStation';
 import EquipmentInfo from '../pages/SunCity/EquipmentInfo';
 import AddInverter from '../pages/SunCity/AddInverter';
 import SunIntegral from '../pages/Mining/SunIntegral';
@@ -143,6 +144,7 @@ class PrimaryRoute extends React.Component {
         <Route exact path={'/contract'} component={Home}/>
         {/* 太阳城 */}
         <Route exact path="/sunCity/powerStation" component={MyPowerStation}/>
+        <Route exact path="/sunCity/allPowerStation" component={AllPowerStation}/>
         <Route
           exact
           path="/sunCity/equipmentInfo/:id"

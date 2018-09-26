@@ -30,7 +30,9 @@ class NotInvolvedDetail extends React.Component {
   componentDidMount() {
     const { notInvolvedDetail } = this.props.contractStore;
     const { id } = this.props.match.params;
-    notInvolvedDetail.loadData(id)
+    if (this.props.history.action !== 'POP') {
+      notInvolvedDetail.loadData(id)
+    }
   }
 
   componentWillUnmount() {

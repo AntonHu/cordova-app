@@ -14,6 +14,7 @@ import {
   fetchModifyElectricityPrice
 } from './request';
 import { deleteLocalStorage, getLocalStorage } from '../../utils/storage';
+import { ToastError } from "../ToastError";
 
 class SunCityStore {
   @observable
@@ -108,10 +109,14 @@ class SunCityStore {
       runInAction(() => {
         if (result.code === 200) {
           this.sunIntegral = result.data.filter(item => !item.pick);
+          return result.data;
+        } else {
+          throw result.data;
         }
       });
     } catch (err) {
-      console.log(err);
+      ToastError(err);
+      return err;
     }
     return result;
   };

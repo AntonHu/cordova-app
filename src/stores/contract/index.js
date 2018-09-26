@@ -7,7 +7,8 @@ import {
   ComponentTrace,
   Appeal,
   ProjectDetail,
-  TransferDetail
+  TransferDetail,
+  PlantList
 } from "./props";
 
 
@@ -36,6 +37,9 @@ class ContractStore {
 
     // 申诉
     this.appeal = new Appeal();
+
+    // 合约电站列表
+    this.plantList = new PlantList();
   }
 
   resetStore = () => {
@@ -47,6 +51,7 @@ class ContractStore {
     this.appeal.reset();
     this.projectDetail.reset();
     this.transferDetail.reset();
+    this.plantList.reset();
   };
 
   onLogout = () => {

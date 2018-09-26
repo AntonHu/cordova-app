@@ -1,4 +1,4 @@
-import { get, post } from '../../utils/fetch';
+import { get, post, requestError } from '../../utils/fetch';
 import { backendServer } from '../../utils/variable';
 
 /**
@@ -23,6 +23,7 @@ export const fetchSunIntegral = async params => {
     response = await get(`${backendServer}/wallet/getWalletData`, params);
   } catch (err) {
     console.log(err);
+    throw requestError(err, '获取太阳积分')
   }
   return response.data || [];
 };

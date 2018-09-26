@@ -1,4 +1,4 @@
-import { get, post } from '../../utils/fetch';
+import { get, post, requestError } from '../../utils/fetch';
 import { backendServer, PAGE_SIZE } from '../../utils/variable';
 
 /**
@@ -62,7 +62,7 @@ export const getTokenBalance = async ({ publicKey }) => {
     });
     return response;
   } catch (err) {
-    return err.response;
+    throw requestError(err, '查询当前积分');
   }
 };
 
