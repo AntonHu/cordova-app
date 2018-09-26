@@ -1,8 +1,19 @@
 @import '../../../styles/common';
-
+* {
+  //outline: 1px solid red;
+}
 #page-contract {
-  .am-list-view-scrollview {
-    //height: 900px;
+  height: 100%;
+  //overflow-y: scroll;
+  //-webkit-overflow-scrolling: touch;
+  .am-tabs-default-bar-tab-active {
+    color: @theme-text-color;
+  }
+  .am-tabs-default-bar-underline {
+    border: 1px solid @theme-text-color;
+  }
+  .am-tabs-pane-wrap-active {
+    overflow-y: scroll;
   }
   .am-list-body {
     background: transparent;
