@@ -247,8 +247,6 @@ export const uploadContractPrivateFile = getUploadFunc('/oss/private/upload');
 
 /**
  * 合约电站列表
- * @param projectId
- * @param purchaseId
  * @returns {Promise<*>}
  */
 export const fetchPlantList = async () => {
@@ -257,6 +255,32 @@ export const fetchPlantList = async () => {
     return response.data;
   } catch (err) {
     throw requestError(err, '合约电站列表');
+  }
+};
+
+/**
+ * 转让电站列表
+ * @returns {Promise<*>}
+ */
+export const fetchTransferList = async () => {
+  try {
+    const response = await get(`${serverUrl}/transferPlant/getTransferList`);
+    return response.data;
+  } catch (err) {
+    throw requestError(err, '转让电站');
+  }
+};
+
+/**
+ * 我的转让历史
+ * @returns {Promise<*>}
+ */
+export const fetchTransferHistory = async () => {
+  try {
+    const response = await get(`${serverUrl}/transferPlant/getTransferHistory`);
+    return response.data;
+  } catch (err) {
+    throw requestError(err, '转让历史');
   }
 };
 

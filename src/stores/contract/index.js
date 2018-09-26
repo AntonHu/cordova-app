@@ -8,7 +8,9 @@ import {
   Appeal,
   ProjectDetail,
   TransferDetail,
-  PlantList
+  PlantList,
+  TransferHistoryList,
+  TransferList
 } from "./props";
 
 
@@ -40,6 +42,12 @@ class ContractStore {
 
     // 合约电站列表
     this.plantList = new PlantList();
+
+    // 转让历史
+    this.transferHistoryList = new TransferHistoryList();
+
+    // 转让列表
+    this.transferList = new TransferList();
   }
 
   resetStore = () => {
@@ -52,6 +60,8 @@ class ContractStore {
     this.projectDetail.reset();
     this.transferDetail.reset();
     this.plantList.reset();
+    this.transferHistoryList.reset();
+    this.transferList.reset();
   };
 
   onLogout = () => {

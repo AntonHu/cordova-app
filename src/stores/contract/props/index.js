@@ -7,6 +7,8 @@ import Appeal from './appeal';
 import ProjectDetail from './projectDetail';
 import TransferDetail from './transferDetail';
 import PlantList from './plantList';
+import TransferList from './transferList';
+import TransferHistoryList from './transferHistoryList';
 
 export {
   ComponentTrace,
@@ -17,5 +19,7 @@ export {
   Appeal,
   ProjectDetail,
   TransferDetail,
-  PlantList
+  PlantList,
+  TransferList,
+  TransferHistoryList
 }

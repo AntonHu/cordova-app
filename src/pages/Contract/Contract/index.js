@@ -28,30 +28,44 @@ const alert = Modal.alert;
 class Contract extends React.Component {
   constructor(props) {
     super(props);
-    const { list } = props.contractStore.projectList;
+    const { projectList, transferList, transferHistoryList } = props.contractStore;
     const dataSource = new ListView.DataSource({
+      rowHasChanged: (row1, row2) => row1.id !== row2.id
+    });
+    const transferSource = new ListView.DataSource({
+      rowHasChanged: (row1, row2) => row1.id !== row2.id
+    });
+    const historySource = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1.id !== row2.id
     });
 
     this.state = {
-      dataSource: dataSource.cloneWithRows(toJS(list)),
-      isLoading: false,
-      page: 0
+      dataSource: dataSource.cloneWithRows(toJS(projectList.list)),
+      transferSource: transferSource.cloneWithRows(toJS(transferList.list)),
+      historySource: historySource.cloneWithRows(toJS(transferHistoryList.list)),
     };
   }
 
   componentDidMount() {
     this.initPullToRefresh();
-    const { projectList } = this.props.contractStore;
+    const { projectList, transferList, transferHistoryList } = this.props.contractStore;
 
     if (projectList.list.length < 1) {
       projectList.initLoad();
+    }
+    if (transferList.list.length < 1) {
+      transferList.initLoad();
+    }
+    if (transferHistoryList.list.length < 1) {
+      transferHistoryList.initLoad();
     }
   }
 
   componentWillUnmount() {
     PullToRefresh.destroyAll();
     this.updateDataSource();
+    this.updateTransferSource();
+    this.updateHistorySource();
   }
 
   /**
@@ -69,7 +83,7 @@ class Contract extends React.Component {
         // 如果这个页面里有height超过窗口高度的元素
         // 那么应该在这个元素滚动位于顶部的时候，返回true
         return (
-          document.querySelector(`#page-contract #${PageWithHeader.bodyId}`)
+          document.querySelector(`#page-contract`)
             .scrollTop === 0
         );
       },
@@ -102,8 +116,25 @@ class Contract extends React.Component {
     () => this.props.contractStore.projectList.list,
     list => {
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(toJS(list)),
-        isLoading: false
+        dataSource: this.state.dataSource.cloneWithRows(toJS(list))
+      });
+    }
+  );
+
+  updateTransferSource = reaction(
+    () => this.props.contractStore.transferList.list,
+    list => {
+      this.setState({
+        transferSource: this.state.dataSource.cloneWithRows(toJS(list))
+      });
+    }
+  );
+
+  updateHistorySource = reaction(
+    () => this.props.contractStore.transferHistoryList.list,
+    list => {
+      this.setState({
+        historySource: this.state.dataSource.cloneWithRows(toJS(list))
       });
     }
   );
@@ -114,9 +145,8 @@ class Contract extends React.Component {
   };
 
   render() {
-    const { projectList } = this.props.contractStore;
+    const { projectList, transferList, transferHistoryList } = this.props.contractStore;
     console.log(toJS(projectList.list));
-    const { isLoading } = projectList;
     /**
      * tabs
      */
@@ -126,88 +156,102 @@ class Contract extends React.Component {
       { title: <span>转让历史</span> }
     ];
     return (
-      <PageWithHeader title="合约电站" leftComponent={ null } id="page-contract">
-        <ListView
-          initialListSize={ PAGE_SIZE }
-          pageSize={ PAGE_SIZE }
-          renderFooter={ () => (
-            <div style={ { padding: '20px', textAlign: 'center' } }>
-              { projectList.isLoading ? '加载中...' : '没有更多' }
-            </div>
-          ) }
-          dataSource={ this.state.dataSource }
-          renderRow={ this.renderRow }
-          useBodyScroll
-          scrollRenderAheadDistance={ 800 }
-          onEndReached={ this.onEndReached }
-          onEndReachedThreshold={ 10 }
-        />
-        { /* TODO: 转让的时候换回来 */ }
-        { /*<Tabs*/ }
-        { /*tabs={tabs}*/ }
-        { /*initialPage={0}*/ }
-        { /*onChange={(tab, index) => {*/ }
-        { /*console.log('onChange', index, tab);*/ }
-        { /*}}*/ }
-        { /*onTabClick={(tab, index) => {*/ }
-        { /*console.log('onTabClick', index, tab);*/ }
-        { /*}}*/ }
-        { /*>*/ }
-        { /*/!*第1个tab合约电站列表*!/*/ }
-        { /*<div>*/ }
-        { /*<ListView*/ }
-        { /*initialListSize={PAGE_SIZE}*/ }
-        { /*pageSize={PAGE_SIZE}*/ }
-        { /*renderFooter={() => (*/ }
-        { /*<div style={{ padding: '20px', textAlign: 'center' }}>*/ }
-        { /*{projectList.isLoading ? '加载中...' : '没有更多'}*/ }
-        { /*</div>*/ }
-        { /*)}*/ }
-        { /*dataSource={this.state.dataSource}*/ }
-        { /*renderRow={this.renderRow}*/ }
-        { /*useBodyScroll*/ }
-        { /*scrollRenderAheadDistance={800}*/ }
-        { /*onEndReached={this.onEndReached}*/ }
-        { /*onEndReachedThreshold={10}*/ }
-        { /*/>*/ }
-        { /*</div>*/ }
-        { /*/!*第2个tab电站转让列表*!/*/ }
-        { /*<div>*/ }
-        { /*<StationTransfer*/ }
-        { /*money={7980}*/ }
-        { /*projectName={'黄河公道园项目'}*/ }
-        { /*stationCapacity={'10 ' + POWER_UNIT}*/ }
-        { /*profitYear={'10 %'}*/ }
-        { /*/>*/ }
-        { /*</div>*/ }
-        { /*/!*第3个tab转让历史列表*!/*/ }
-        { /*<div>*/ }
-        { /*<TransferHistory*/ }
-        { /*projectName={'黄河公道园项目'}*/ }
-        { /*status={'未知状态'}*/ }
-        { /*count={10}*/ }
-        { /*price={2000}*/ }
-        { /*sellerName={'卖家名字'}*/ }
-        { /*openBank={'中央银行'}*/ }
-        { /*bankAccount={'1888888888'}*/ }
-        { /*sellerContact={'杭州市余杭区'}*/ }
-        { /*confirmPay={() => {*/ }
-        { /*alert('警告', '确认打款???', [*/ }
-        { /*{ text: '取消', onPress: () => console.log('确认') },*/ }
-        { /*{ text: '确认', onPress: () => console.log('确认') }*/ }
-        { /*]);*/ }
-        { /*}}*/ }
-        { /*cancelPay={() => {*/ }
-        { /*alert('警告', '取消转让???', [*/ }
-        { /*{ text: '取消', onPress: () => console.log('确认') },*/ }
-        { /*{ text: '确认', onPress: () => console.log('确认') }*/ }
-        { /*]);*/ }
-        { /*}}*/ }
-        { /*/>*/ }
-        { /*</div>*/ }
-        { /*</Tabs>*/ }
-        <ActivityIndicator toast animating={ isLoading } text="正在加载列表..."/>
-      </PageWithHeader>
+      <div id="page-contract">
+
+        <Tabs
+          tabs={ tabs }
+          initialPage={ 0 }
+          onChange={ (tab, index) => {
+            console.log('onChange', index, tab);
+          } }
+          onTabClick={ (tab, index) => {
+            console.log('onTabClick', index, tab);
+          } }
+        >
+          { /*第1个tab合约电站列表*/ }
+          <div>
+            <ListView
+              initialListSize={ PAGE_SIZE }
+              pageSize={ PAGE_SIZE }
+              renderFooter={ () => (
+                <div style={ { padding: '20px', textAlign: 'center' } }>
+                  { projectList.isLoading ? '加载中...' : '没有更多' }
+                </div>
+              ) }
+              dataSource={ this.state.dataSource }
+              renderRow={ this.renderRow }
+              useBodyScroll
+              scrollRenderAheadDistance={ 800 }
+              onEndReached={ this.onEndReached }
+              onEndReachedThreshold={ 10 }
+            />
+            <ActivityIndicator toast animating={ projectList.isLoading } text="正在加载列表..."/>
+          </div>
+          { /*第2个tab电站转让列表*/ }
+          <div>
+            <ListView
+              renderFooter={ () => (
+                <div style={ { padding: '20px', textAlign: 'center' } }>
+                  { transferList.isLoading ? '加载中...' : '没有更多' }
+                </div>
+              ) }
+              dataSource={ this.state.transferSource }
+              renderRow={ (item) =>
+                <StationTransfer
+                  key={item.productId}
+                  money={ 7980 }
+                  projectName={ item.projectName }
+                  stationCapacity={ '10 ' + POWER_UNIT }
+                  profitYear={ `${(item.estimatedAnnualizedIncome || 0)}%` }
+                />
+              }
+              useBodyScroll
+              scrollRenderAheadDistance={ 800 }
+            />
+            <ActivityIndicator toast animating={ transferList.isLoading } text="正在加载列表..."/>
+          </div>
+          { /*第3个tab转让历史列表*/ }
+          <div>
+            <ListView
+              renderFooter={ () => (
+                <div style={ { padding: '20px', textAlign: 'center' } }>
+                  { transferHistoryList.isLoading ? '加载中...' : '没有更多' }
+                </div>
+              ) }
+              dataSource={ this.state.historySource }
+              renderRow={ () =>
+                <TransferHistory
+                  projectName={ '黄河公道园项目' }
+                  status={ '未知状态' }
+                  count={ 10 }
+                  price={ 2000 }
+                  sellerName={ '卖家名字' }
+                  openBank={ '中央银行' }
+                  bankAccount={ '1888888888' }
+                  sellerContact={ '杭州市余杭区' }
+                  confirmPay={ () => {
+                    alert('警告', '确认打款???', [
+                      { text: '取消', onPress: () => console.log('确认') },
+                      { text: '确认', onPress: () => console.log('确认') }
+                    ]);
+                  } }
+                  cancelPay={ () => {
+                    alert('警告', '取消转让???', [
+                      { text: '取消', onPress: () => console.log('确认') },
+                      { text: '确认', onPress: () => console.log('确认') }
+                    ]);
+                  } }
+                />
+              }
+              useBodyScroll
+              scrollRenderAheadDistance={ 800 }
+            />
+            <ActivityIndicator toast animating={ transferHistoryList.isLoading } text="正在加载列表..."/>
+
+          </div>
+        </Tabs>
+
+      </div>
     );
   }
 }

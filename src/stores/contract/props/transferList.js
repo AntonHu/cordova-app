@@ -1,10 +1,10 @@
-import { action, computed, observable, runInAction, toJS } from 'mobx';
+import { action, computed, observable, runInAction } from 'mobx';
 import {
-  fetchPlantList
+  fetchTransferList
 } from "../request";
 import { ToastError } from "../../ToastError";
 
-class PlantList {
+class TransferList {
   @observable page = 1;
   @observable list = [];
   @observable isLoading = false;
@@ -20,12 +20,12 @@ class PlantList {
   loadList = async () => {
     try {
       this.isLoading = true;
-      const result = await fetchPlantList();
+      const result = await fetchTransferList();
       runInAction(() => {
         this.isLoading = false;
         if (result.success) {
           const data = result.data || {};
-          this.list = data.plantList || []
+          this.list = data || []
         } else {
           throw result;
         }
@@ -36,7 +36,6 @@ class PlantList {
       ToastError(e);
       return e;
     }
-
   };
 
   @action
@@ -50,4 +49,4 @@ class PlantList {
   };
 }
 
-export default PlantList;
+export default TransferList;
