@@ -46,6 +46,7 @@ class ProjectList {
       });
       return result;
     } catch (e) {
+      this.isLoading = false;
       ToastError(e);
       return e;
     }

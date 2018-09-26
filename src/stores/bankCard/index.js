@@ -21,14 +21,16 @@ class BankCardStore {
     try {
       this.loadingBankCard = true;
       const result = await fetchLatestBankCard();
+      this.loadingBankCard = false;
       if (result.success) {
         this.bankCard = result.data || {};
-        this.loadingBankCard = false;
       } else {
+
         throw result;
       }
       return result;
     } catch (e) {
+      this.loadingBankCard = false;
       ToastError(e);
       return e;
     }

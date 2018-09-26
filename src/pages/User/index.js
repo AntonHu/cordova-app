@@ -20,6 +20,7 @@ import Agreement from './Agreement';
 import InviteFriends from './InviteFriends';
 import InviteDetail from './InviteFriends/InviteDetail';
 import UploadStationInfo from './MyStation/UploadStationInfo';
+import MyBankCard from './MyBankCard';
 
 export {
   About,
@@ -43,5 +44,6 @@ export {
   InviteFriends,
   InviteDetail,
   NewsDetail,
-  UploadStationInfo
+  UploadStationInfo,
+  MyBankCard
 };

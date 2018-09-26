@@ -19,7 +19,8 @@ import {
   InviteFriends,
   InviteDetail,
   NewsDetail,
-  UploadStationInfo
+  UploadStationInfo,
+  MyBankCard
 } from '../pages/User';
 import  {
   EarnToken
@@ -203,6 +204,7 @@ class PrimaryRoute extends React.Component {
         <Route exact path={'/user/inviteDetail'} component={InviteDetail}/>
         <Route exact path={'/user/UploadStationInfo'} component={UploadStationInfo}/>
         <Route exact path={'/user/UploadStationInfo/:id'} component={UploadStationInfo}/>
+        <Route exact path={'/user/myBankCard'} component={MyBankCard}/>
       </Switch>
     );
   }

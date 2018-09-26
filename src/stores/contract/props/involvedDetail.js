@@ -129,6 +129,7 @@ class InvolvedDetail {
       });
       return result;
     } catch (e) {
+      this.isPurchaseDetailLoading = false;
       ToastError(e);
       return e;
     }
@@ -152,6 +153,7 @@ class InvolvedDetail {
 
       return result;
     } catch (e) {
+      this.isGroupInfoLoading = false;
       ToastError(e);
       return e;
     }
@@ -175,6 +177,7 @@ class InvolvedDetail {
 
       return result;
     } catch (e) {
+      this.isSiteInfoLoading = false;
       ToastError(e);
       return e;
     }
@@ -197,6 +200,7 @@ class InvolvedDetail {
 
       return result;
     } catch (e) {
+      this.plantInfoLoading = false;
       ToastError(e);
       return e;
     }
@@ -219,6 +223,7 @@ class InvolvedDetail {
 
       return result;
     } catch (e) {
+      this.isRejectInfoLoading = false;
       ToastError(e);
       return e;
     }
@@ -241,6 +246,7 @@ class InvolvedDetail {
 
       return result;
     } catch (e) {
+      this.isDocListLoading = false;
       ToastError(e);
       return e;
     }

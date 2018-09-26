@@ -20,26 +20,31 @@ class Appeal {
 
   @action
   uploadData = async({ projectId, purchaseId, content, imageBlob }) => {
-    if (imageBlob === null) {
-      this.loadingText = '正在上传申诉...';
-      this.loading = true;
-      const appealRes = await this.uploadAppeal({projectId, purchaseId, content, fileList: []});
-      this.loading = false;
-      return appealRes;
-    } else {
-      this.loadingText = '正在上传图片...';
-      this.loading = true;
-      const picResponse = await this.uploadPic(imageBlob);
-      if (picResponse.success) {
-        const data = picResponse.data;
+    try {
+      if (imageBlob === null) {
         this.loadingText = '正在上传申诉...';
-        const appealRes = await this.uploadAppeal({projectId, purchaseId, content, fileList: [data.filePath]});
+        this.loading = true;
+        const appealRes = await this.uploadAppeal({projectId, purchaseId, content, fileList: []});
         this.loading = false;
         return appealRes;
       } else {
-        this.loading = false;
+        this.loadingText = '正在上传图片...';
+        this.loading = true;
+        const picResponse = await this.uploadPic(imageBlob);
+        if (picResponse.success) {
+          const data = picResponse.data;
+          this.loadingText = '正在上传申诉...';
+          const appealRes = await this.uploadAppeal({projectId, purchaseId, content, fileList: [data.filePath]});
+          this.loading = false;
+          return appealRes;
+        } else {
+          this.loading = false;
+        }
       }
+    } catch (e) {
+      this.loading = false;
     }
+
   };
 
   uploadAppeal = async ({ projectId, purchaseId, content, fileList }) => {

@@ -53,7 +53,6 @@ class NotInvolvedDetail {
         purchaseNumber
       });
       this.isPurchasing = false;
-
       if (result.success) {
         const data = result.data || {};
         this.purchaseId = data.purchaseId + '' || '';
@@ -64,6 +63,7 @@ class NotInvolvedDetail {
 
       return result;
     } catch (e) {
+      this.isPurchasing = false;
       ToastError(e);
       return e
     }
@@ -85,6 +85,7 @@ class NotInvolvedDetail {
         throw result;
       }
     } catch (e) {
+      this.isConfirmPaying = false;
       ToastError(e);
       return e;
     }
@@ -106,6 +107,7 @@ class NotInvolvedDetail {
         throw result;
       }
     } catch (e) {
+      this.isCancelPurchasing = false;
       ToastError(e);
       return e;
     }

@@ -63,6 +63,7 @@ class ProjectDetail {
       });
       return result;
     } catch (e) {
+      this.isDetailLoading = false;
       ToastError(e);
       return e;
     }
@@ -86,6 +87,7 @@ class ProjectDetail {
 
       return result;
     } catch (e) {
+      this.isDetailLoading = false;
       ToastError(e);
       return e;
     }

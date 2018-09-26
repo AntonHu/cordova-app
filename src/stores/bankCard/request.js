@@ -12,7 +12,7 @@ export const fetchLatestBankCard = async () => {
     const response = await get(`${serverUrl}/bankCard/latest`);
     return response.data;
   } catch (err) {
-    throw requestError(err, '最近使用银行卡');
+    throw requestError(err, '查询银行卡信息');
   }
 };
 

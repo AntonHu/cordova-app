@@ -40,6 +40,12 @@ const ListData = [
     unicode: '\ue624'
   },
   {
+    text: '我的银行卡',
+    horizontal: true,
+    path: '/user/myBankCard',
+    unicode: '\ue655'
+  },
+  {
     text: '账号设置',
     horizontal: true,
     path: '/user/accountSetting',
