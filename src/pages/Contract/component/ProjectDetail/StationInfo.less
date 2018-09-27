@@ -1,0 +1,52 @@
+@import '../../../../styles/common';
+
+._station-info {
+
+  .station-accordion {
+    &::before {
+      background-color: transparent!important;
+    }
+    .am-accordion-item {
+      .am-accordion-content-box::after {
+        background-color: transparent!important;
+      }
+      .am-accordion-header {
+        text-align: left;
+        font-size: @h4;
+        color: @main-text-color;
+        &::after {
+          background-color: transparent!important;
+        }
+      }
+    }
+  }
+
+  .material-item {
+    box-sizing: border-box;
+    padding: 10 * @px 50 * @px;
+    text-align: left;
+    .material-name {
+      font-size: @h4;
+      color: @main-text-color;
+      margin-bottom: 10 * @px;
+    }
+    .material-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: @h4;
+      color: @screen-text-color;
+    }
+  }
+
+  .picture {
+    border-radius: unset!important;
+    width: 100%!important;
+    height: auto!important;
+  }
+  .picture-empty-element {
+    height: 300 * @px;
+    line-height: 300 * @px;
+    color: @screen-text-color;
+    background-color: @white-grey;
+  }
+}

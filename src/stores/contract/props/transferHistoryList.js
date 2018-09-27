@@ -69,6 +69,7 @@ class TransferHistoryList {
       this.isCancelTransferring = false;
       if (result.success) {
         ToastNoMask('取消转让成功');
+        this.initLoad();
         return result
       } else {
         throw result;

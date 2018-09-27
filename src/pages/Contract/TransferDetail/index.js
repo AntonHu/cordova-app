@@ -10,12 +10,13 @@ import PullToRefresh from 'pulltorefreshjs';
 import { ProjectDetail } from '../component';
 import { BottomSheet, TransferStationInfo } from '../component';
 import './index.less';
+import { VERIFY_STATUS } from "../../../utils/variable";
 
 // 转让的 项目详情页面
 // didMount的时候会发请求
 // 然后调用ProjectDetail组件来进行渲染。
 // 还有申购按钮、申购窗口等组件
-@inject('contractStore', 'bankCardStore')
+@inject('contractStore', 'bankCardStore', 'keyPair', 'userStore')
 @observer
 class TransferDetail extends React.Component {
 
@@ -67,6 +68,17 @@ class TransferDetail extends React.Component {
    * 如果有，弹出弹窗
    */
   onPurchase = async () => {
+    if (!this.props.keyPair.showHasKey(this.props)) {
+      return;
+    }
+
+    if (this.props.userStore.isKycInChain === VERIFY_STATUS.UNAUTHORIZED) {
+      Modal.alert('您尚未进行身份认证', '在"我的" => "完善信息"中去认证',
+        [{text: '知道了'}]
+      );
+      return;
+    }
+
     this.isCardBind()
       .then(() => {
         this.openModal();

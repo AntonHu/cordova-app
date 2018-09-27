@@ -2,8 +2,8 @@
 const backendServer = 'https://api.thundersdata.com/ebcapp';
 // const backendServer = 'http://47.96.158.229:30135';
 
-// const contractServer = 'https://api.thundersdata.com/contractPlant';
-const contractServer = 'http://192.168.1.124:8080';
+const contractServer = 'https://api.thundersdata.com/contractPlant';
+// const contractServer = 'http://192.168.1.124:8080';
 
 const userServer = 'https://api.thundersdata.com';
 
@@ -69,6 +69,7 @@ const INTEGRAL_TYPE = {
 
 // 身份认证状态
 const VERIFY_STATUS = {
+  UNKNOWN: -1,
   UNAUTHORIZED: 0,
   AUTHENTICATING: 1,
   AUTHORIZED: 2

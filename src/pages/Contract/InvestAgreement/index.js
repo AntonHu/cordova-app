@@ -32,6 +32,17 @@ class InvestAgreement extends React.PureComponent{
           <Document
             file={ { url: this.getPDFUrl() } }
             onLoadSuccess={ this.onDocumentLoad }
+            loading="正在加载文件，请稍候..."
+            noData="没有找到文件"
+            error="读取文件出错"
+            onLoadError={ (err) => {
+              console.log('onLoadError');
+              console.log(JSON.stringify(err))
+            }}
+            onSourceError={(err) => {
+              console.log('onSourceError');
+              console.log(JSON.stringify(err))
+            }}
           >
             {
               this.state.totalPage.map((v, idx) =>

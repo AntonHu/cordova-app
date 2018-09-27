@@ -200,7 +200,7 @@ class PersonalInfo extends React.Component {
       case VERIFY_STATUS.AUTHORIZED:
         return '您已实名认证成功！';
       default:
-        return ''
+        return '未实名认证'
     }
   };
 
