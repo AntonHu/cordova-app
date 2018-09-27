@@ -9,7 +9,14 @@ import {
   Rank,
   ContractProjectItem
 } from '../../../components';
-import { Icon, ListView, Tabs, WhiteSpace, Modal, ActivityIndicator } from 'antd-mobile';
+import {
+  Icon,
+  ListView,
+  Tabs,
+  WhiteSpace,
+  Modal,
+  ActivityIndicator
+} from 'antd-mobile';
 import { getLocalStorage } from '../../../utils/storage';
 import Tloader from 'react-touch-loader';
 import PullToRefresh from 'pulltorefreshjs';
@@ -28,7 +35,11 @@ const alert = Modal.alert;
 class Contract extends React.Component {
   constructor(props) {
     super(props);
-    const { projectList, transferList, transferHistoryList } = props.contractStore;
+    const {
+      projectList,
+      transferList,
+      transferHistoryList
+    } = props.contractStore;
     const dataSource = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1.id !== row2.id
     });
@@ -42,7 +53,7 @@ class Contract extends React.Component {
     this.state = {
       dataSource: dataSource.cloneWithRows(toJS(projectList.list)),
       transferSource: transferSource.cloneWithRows(toJS(transferList.list)),
-      historySource: historySource.cloneWithRows(toJS(transferHistoryList.list)),
+      historySource: historySource.cloneWithRows(toJS(transferHistoryList.list))
     };
   }
 
@@ -52,7 +63,11 @@ class Contract extends React.Component {
   }
 
   initData = () => {
-    const { projectList, transferList, transferHistoryList } = this.props.contractStore;
+    const {
+      projectList,
+      transferList,
+      transferHistoryList
+    } = this.props.contractStore;
 
     if (projectList.list.length < 1) {
       projectList.initLoad();
@@ -66,7 +81,11 @@ class Contract extends React.Component {
   };
 
   refresh = () => {
-    const { projectList, transferList, transferHistoryList } = this.props.contractStore;
+    const {
+      projectList,
+      transferList,
+      transferHistoryList
+    } = this.props.contractStore;
     projectList.initLoad();
     transferList.initLoad();
     transferHistoryList.initLoad();
@@ -87,13 +106,14 @@ class Contract extends React.Component {
       mainElement: '#page-contract', // "下拉刷新"把哪个部分包住
       triggerElement: '#page-contract', // "下拉刷新"把哪个部分包住
       onRefresh: this.refresh, // 下拉刷新的方法，返回一个promise
-      shouldPullToRefresh: function () {
+      shouldPullToRefresh: function() {
         // 什么情况下的滚动触发下拉刷新，这个很重要
         // 如果这个页面里有height超过窗口高度的元素
         // 那么应该在这个元素滚动位于顶部的时候，返回true
         return (
-          document.querySelector('#page-contract .am-tabs-pane-wrap-active').scrollTop
-          === 0
+
+          document.querySelector('#page-contract .am-tabs-pane-wrap-active')
+            .scrollTop === 0
         );
       },
       instructionsPullToRefresh: '下拉刷新',
@@ -106,19 +126,19 @@ class Contract extends React.Component {
     const item = rowData;
     // TODO: click之前，reset掉notInvolvedDetail
     return (
-      <Link to={ `/contract/notInvolvedDetail/${item.id}` }>
+      <Link to={`/contract/notInvolvedDetail/${item.id}`}>
         <ContractProjectItem
-          key={ item.id }
-          enterpriseName={ item.enterpriseName }
-          annualRate={ item.estimatedAnnualizedIncome }
-          availableShare={ item.availableShare }
-          dateTime={ item.createdAt }
-          powerStationCapacity={ item.powerStationCapacity }
-          projectName={ item.projectName }
-          soldShare={ item.soldShare }
+          key={item.id}
+          enterpriseName={item.enterpriseName}
+          annualRate={item.estimatedAnnualizedIncome}
+          availableShare={item.availableShare}
+          dateTime={item.createdAt}
+          powerStationCapacity={item.powerStationCapacity}
+          projectName={item.projectName}
+          soldShare={item.soldShare}
         />
       </Link>
-    )
+    );
   };
 
   updateDataSource = reaction(
@@ -154,7 +174,11 @@ class Contract extends React.Component {
   };
 
   render() {
-    const { projectList, transferList, transferHistoryList } = this.props.contractStore;
+    const {
+      projectList,
+      transferList,
+      transferHistoryList
+    } = this.props.contractStore;
     console.log(toJS(projectList.list));
     /**
      * tabs
@@ -166,42 +190,45 @@ class Contract extends React.Component {
     ];
     return (
       <div id="page-contract">
-
         <Tabs
-          tabs={ tabs }
-          initialPage={ 0 }
-          onChange={ (tab, index) => {
+          tabs={tabs}
+          initialPage={0}
+          onChange={(tab, index) => {
             console.log('onChange', index, tab);
-          } }
-          onTabClick={ (tab, index) => {
+          }}
+          onTabClick={(tab, index) => {
             console.log('onTabClick', index, tab);
-          } }
+          }}
         >
-          { /*第1个tab合约电站列表*/ }
+          {/*第1个tab合约电站列表*/}
           <div className="tab-wrap">
             <ListView
-              initialListSize={ PAGE_SIZE }
-              pageSize={ PAGE_SIZE }
-              renderFooter={ () => (
-                <div style={ { padding: '20px', textAlign: 'center' } }>
-                  { projectList.isLoading ? '加载中...' : '没有更多' }
+              initialListSize={PAGE_SIZE}
+              pageSize={PAGE_SIZE}
+              renderFooter={() => (
+                <div style={{ padding: '20px', textAlign: 'center' }}>
+                  {projectList.isLoading ? '加载中...' : '没有更多'}
                 </div>
-              ) }
-              dataSource={ this.state.dataSource }
-              renderRow={ this.renderRow }
+              )}
+              dataSource={this.state.dataSource}
+              renderRow={this.renderRow}
               useBodyScroll
-              scrollRenderAheadDistance={ 800 }
-              onEndReached={ this.onEndReached }
-              onEndReachedThreshold={ 10 }
+              scrollRenderAheadDistance={800}
+              onEndReached={this.onEndReached}
+              onEndReachedThreshold={10}
             />
-            <ActivityIndicator toast animating={ projectList.isLoading } text="正在加载列表..."/>
+            <ActivityIndicator
+              toast
+              animating={projectList.isLoading}
+              text="正在加载列表..."
+            />
           </div>
-          { /*第2个tab电站转让列表*/ }
+          {/*第2个tab电站转让列表*/}
           <div className="tab-wrap">
             <ListView
-              renderFooter={ () => (
-                <div style={ { padding: '20px', textAlign: 'center' } }>
-                  { transferList.isLoading ? '加载中...' : '没有更多' }
+              renderFooter={() => (
+                <div style={{ padding: '20px', textAlign: 'center' }}>
+                  {transferList.isLoading ? '加载中...' : '没有更多'}
                 </div>
               ) }
               dataSource={ this.state.transferSource }
@@ -217,20 +244,24 @@ class Contract extends React.Component {
                 </Link>
               }
               useBodyScroll
-              scrollRenderAheadDistance={ 800 }
+              scrollRenderAheadDistance={800}
             />
-            <ActivityIndicator toast animating={ transferList.isLoading } text="正在加载列表..."/>
+            <ActivityIndicator
+              toast
+              animating={transferList.isLoading}
+              text="正在加载列表..."
+            />
           </div>
-          { /*第3个tab转让历史列表*/ }
+          {/*第3个tab转让历史列表*/}
           <div className="tab-wrap">
             <ListView
-              renderFooter={ () => (
-                <div style={ { padding: '20px', textAlign: 'center' } }>
-                  { transferHistoryList.isLoading ? '加载中...' : '没有更多' }
+              renderFooter={() => (
+                <div style={{ padding: '20px', textAlign: 'center' }}>
+                  {transferHistoryList.isLoading ? '加载中...' : '没有更多'}
                 </div>
-              ) }
-              dataSource={ this.state.historySource }
-              renderRow={ (item) =>
+              )}
+              dataSource={this.state.historySource}
+              renderRow={item => (
                 <TransferHistory
                   key={ item.productId }
                   projectName={ item.projectName }
@@ -246,23 +277,25 @@ class Contract extends React.Component {
                       { text: '取消', onPress: () => console.log('确认') },
                       { text: '确认', onPress: () => console.log('确认') }
                     ]);
-                  } }
-                  cancelPay={ () => {
+                  }}
+                  cancelPay={() => {
                     alert('警告', '取消转让???', [
                       { text: '取消', onPress: () => console.log('确认') },
                       { text: '确认', onPress: () => console.log('确认') }
                     ]);
-                  } }
+                  }}
                 />
-              }
+              )}
               useBodyScroll
-              scrollRenderAheadDistance={ 800 }
+              scrollRenderAheadDistance={800}
             />
-            <ActivityIndicator toast animating={ transferHistoryList.isLoading } text="正在加载列表..."/>
-
+            <ActivityIndicator
+              toast
+              animating={transferHistoryList.isLoading}
+              text="正在加载列表..."
+            />
           </div>
         </Tabs>
-
       </div>
     );
   }
