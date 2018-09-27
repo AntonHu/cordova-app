@@ -92,7 +92,12 @@ export const fetchConfirmPayment = async ({ projectId, purchaseId }) => {
  */
 export const fetchUploadAppeal = async ({ projectId, purchaseId, content, fileList }) => {
   try {
-    const response = await post(`${serverUrl}/project/appeal`, { projectId, purchaseId, content, fileList: JSON.stringify(fileList) });
+    const response = await post(`${serverUrl}/project/appeal`, {
+      projectId,
+      purchaseId,
+      content,
+      fileList: JSON.stringify(fileList)
+    });
     console.log(JSON.stringify({ projectId, purchaseId, content, fileList }));
     return response.data;
   } catch (err) {
@@ -223,7 +228,7 @@ export const getUploadFunc = (url) => {
     formData.append('file', fileBlob);
 
     let config = {
-      headers:{'Content-Type':'multipart/form-data'}
+      headers: { 'Content-Type': 'multipart/form-data' }
     };
     return axios.post(`${contractServer}${url}?access_token=${getLocalStorage('token')}`, formData, config)
     // axios.post(`http://192.168.1.100:8080/user/headImg`, formData, config)
@@ -281,6 +286,51 @@ export const fetchTransferHistory = async () => {
     return response.data;
   } catch (err) {
     throw requestError(err, '转让历史');
+  }
+};
+
+/**
+ * 转让 我的项目
+ * @param purchaseNumber
+ * @param amount
+ * @param unitPrice
+ * @param projectId
+ * @returns {Promise<*>}
+ */
+export const fetchSellMyProject = async ({ purchaseNumber, amount, unitPrice, projectId }) => {
+  try {
+    const response = await post(`${serverUrl}/transferPlant/sell`, { purchaseNumber, amount, unitPrice, projectId });
+    return response.data;
+  } catch (err) {
+    throw requestError(err, '申请转让');
+  }
+};
+
+/**
+ * 获取转让信息
+ * @param productId
+ * @returns {Promise<*>}
+ */
+export const fetchTransferInfo = async ({productId}) => {
+  try {
+    const response = await get(`${serverUrl}/transferPlant/getTransferInfo`, { productId });
+    return response.data;
+  } catch (err) {
+    throw requestError(err, '转让信息');
+  }
+};
+
+/**
+ * 购买转让
+ * @param productId
+ * @returns {Promise<*>}
+ */
+export const fetchBuyTransfer = async ({ productId }) => {
+  try {
+    const response = await post(`${serverUrl}/transferPlant/buy`, { productId });
+    return response.data;
+  } catch (err) {
+    throw requestError(err, '购买转让');
   }
 };
 

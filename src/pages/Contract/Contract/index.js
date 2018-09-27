@@ -93,7 +93,7 @@ class Contract extends React.Component {
         // 那么应该在这个元素滚动位于顶部的时候，返回true
         return (
           document.querySelector('#page-contract .am-tabs-pane-wrap-active').scrollTop
-             === 0
+          === 0
         );
       },
       instructionsPullToRefresh: '下拉刷新',
@@ -206,13 +206,15 @@ class Contract extends React.Component {
               ) }
               dataSource={ this.state.transferSource }
               renderRow={ (item) =>
-                <StationTransfer
-                  key={item.productId}
-                  money={ item.amount || 0 }
-                  projectName={ item.projectName }
-                  stationCapacity={ `${(item.powerStationCapacity || 0)}${POWER_UNIT}` }
-                  profitYear={ `${(item.estimatedAnnualizedIncome || 0)}%` }
-                />
+                <Link to={ `/contract/transferDetail/${item.projectId}/productId/${item.productId}` }>
+                  <StationTransfer
+                    key={ item.productId }
+                    money={ item.amount || 0 }
+                    projectName={ item.projectName }
+                    stationCapacity={ `${(item.powerStationCapacity || 0)}${POWER_UNIT}` }
+                    profitYear={ `${(item.estimatedAnnualizedIncome || 0)}%` }
+                  />
+                </Link>
               }
               useBodyScroll
               scrollRenderAheadDistance={ 800 }
@@ -230,7 +232,7 @@ class Contract extends React.Component {
               dataSource={ this.state.historySource }
               renderRow={ (item) =>
                 <TransferHistory
-                  key={item.productId}
+                  key={ item.productId }
                   projectName={ item.projectName }
                   status={ '未知状态' }
                   count={ item.purchaseNumber || 0 }

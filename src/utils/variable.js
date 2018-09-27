@@ -100,6 +100,14 @@ const USER_PROJECT_STATUS_CODE = {
   TIME_OUT: 6 //"超时，自动取消"
 };
 
+const TRANSFER_STATUS_CODE = {
+  DOING: 0, //"转让中"
+  UNPAYMENT: 1, // "未支付"
+  VERIFYPAYMENT: 2, //"待确认打款"
+  DOWN: 3,  //"完成"
+  CANCEL: 4, //"取消"
+};
+
 export {
   backendServer,
   userServer,

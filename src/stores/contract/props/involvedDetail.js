@@ -5,7 +5,7 @@ import {
   fetchProjectGroupInformation,
   fetchProjectLegalFile,
   fetchProjectSiteInformation, fetchPurchaseDetail,
-  fetchRejectInfo
+  fetchRejectInfo, fetchSellMyProject
 } from "../request";
 import { Toast } from 'antd-mobile';
 import { ToastError } from "../../ToastError";
@@ -48,6 +48,9 @@ class InvolvedDetail {
   @observable plantInfo = {};
   @observable plantInfoLoading = false;
 
+  // 转让
+  @observable isTransferring = false;
+
   // goBack的时候，重置store
   @action
   reset = () => {
@@ -67,6 +70,7 @@ class InvolvedDetail {
     this.docUrl = '';
     this.plantInfo = {};
     this.plantInfoLoading = false;
+    this.isTransferring = false;
 
     this.projectDetail.reset();
   };
@@ -247,6 +251,24 @@ class InvolvedDetail {
       return result;
     } catch (e) {
       this.isDocListLoading = false;
+      ToastError(e);
+      return e;
+    }
+  };
+
+  // 发起转让请求
+  @action
+  makeTransfer = async ({ purchaseNumber, amount, unitPrice, projectId }) => {
+    try {
+      this.isTransferring = true;
+      const result = await fetchSellMyProject({ purchaseNumber, amount, unitPrice, projectId });
+      this.isTransferring = false;
+      if (!result.success) {
+        throw result;
+      }
+      return result;
+    } catch (e) {
+      this.isTransferring = false;
       ToastError(e);
       return e;
     }

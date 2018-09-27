@@ -28,52 +28,136 @@ class TransferDetail extends React.Component {
 
   componentDidMount() {
     const { transferDetail } = this.props.contractStore;
-    const { id } = this.props.match.params;
-    transferDetail.loadData(id)
+    const { projectId, productId } = this.props.match.params;
+    transferDetail.loadData({ projectId, productId })
   }
 
   componentWillUnmount() {
     const { transferDetail } = this.props.contractStore;
-    // transferDetail.reset();
+    transferDetail.reset();
+    this.bindBuyLoading();
   }
 
-  //显示底部选择购买组件
-  onShow = () => {
-    this.setState({ isShow: true });
+  bindBuyLoading = reaction(
+    () => this.props.contractStore.transferDetail.isBuying,
+    isBuying => {
+      this.setState({
+        loading: isBuying,
+        loadingText: '正在发送购买请求...'
+      })
+    }
+  );
+
+  closeModal = () => {
+    this.setState({
+      isModalVisible: false
+    })
   };
-  //关闭底部选择购买组件
-  onClose = () => {
-    this.setState({ isShow: false });
+
+  openModal = () => {
+    this.setState({
+      isModalVisible: true
+    })
   };
-  //点击底部确认
-  onConfirm = (e, resultJson) => {
-    console.log(e, resultJson);
+
+  /**
+   * 点击购买
+   * 先看看有没有绑过银行卡
+   * 如果没有，去绑银行卡
+   * 如果有，弹出弹窗
+   */
+  onPurchase = async () => {
+    this.isCardBind()
+      .then(() => {
+        this.openModal();
+      })
+      .catch(() => {
+        this.props.history.push('/contract/addBankCard')
+      });
+    // this.openModal();
+  };
+
+  isCardBind = async () => {
+    const { bankCard, getBankCard } = this.props.bankCardStore;
+    const bankCardObj = toJS(bankCard);
+
+    return new Promise(async (resolve, reject) => {
+      if (JSON.stringify(bankCardObj) !== '{}') {
+        resolve()
+      } else {
+        const result = await getBankCard();
+        if (result.success && result.data && result.data.bankCardNumber) {
+          resolve()
+        } else {
+          reject()
+        }
+      }
+    })
+  };
+
+  buyConfirm = async () => {
+    const { productId } = this.props.match.params;
+    const { transferDetail } = this.props.contractStore;
+    const result = await transferDetail.buyProject({ productId });
+    this.closeModal();
+    if (result.success) {
+      Modal.alert('购买', '您已成功发送购买请求，即将返回上一页', [{ text: '好的', onPress: () => this.props.history.goBack() }])
+    }
   };
 
   render() {
     const { transferDetail } = this.props.contractStore;
-    const { purchaseCount, purchaseAmount } = transferDetail;
+    const { transferInfo } = transferDetail;
     const projectDetail = transferDetail.projectDetail.detail;
     const historyList = transferDetail.projectDetail.historyList;
 
-    const { loadingText, loading, isModalVisible, isShow } = this.state;
+    const { loadingText, loading, isModalVisible } = this.state;
     return (
-      <PageWithHeader title={ '转让详情' } id="page-transfer-detail">
+      <PageWithHeader
+        title={ '转让详情' }
+        id="page-transfer-detail"
+        footer={
+          <OrangeGradientBtn
+            onClick={ this.onPurchase }
+          >
+            购买
+          </OrangeGradientBtn>
+        }
+      >
         <TransferStationInfo
-          transferTime={ '2019-05-12' }
-          transferMan={ 1888 }
-          stationNumber={ 332122 }
-          projectTime={ '2019-05-12' }
-          historyProfit={ 10 }
+          transferTime={ transferInfo.transferPublishTime || '无' }
+          transferMan={ transferInfo.sellerId || '无' }
+          stationNumber={ transferInfo.plantNum || '无' }
+          projectTime={ transferInfo.projectFinishTime || '无' }
+          historyProfit={ transferInfo.historyIncome || 0 }
         />
         <ProjectDetail projectDetail={ projectDetail } historyList={ toJS(historyList) }/>
-        <BottomSheet
-          isShow={ isShow }
-          onShow={ this.onShow }
-          onClose={ this.onClose }
-          onConfirm={ this.onConfirm }
-          perCountMoney={ 3000 }
+        <ActivityIndicator
+          toast
+          text={ loadingText }
+          animating={ loading }
         />
+        <Modal
+          popup
+          visible={ isModalVisible }
+          onClose={ this.closeModal }
+          animationType="slide-up"
+          maskClosable
+          closable
+          className="purchase-modal"
+        >
+          <div className="amount">{ `${0}元` }</div>
+          <div className="min-invest">{ `申购标准：${projectDetail.minInvestmentAmount || 0}元每份` }</div>
+          <List.Item
+            wrap
+            extra={ 0 }
+          >
+            购买份数
+          </List.Item>
+          <OrangeGradientBtn onClick={ this.buyConfirm }>
+            购买
+          </OrangeGradientBtn>
+        </Modal>
       </PageWithHeader>
     );
   }

@@ -135,7 +135,8 @@ class NotInvolvedDetail extends React.Component {
           <OrangeGradientBtn onClick={ this.onPurchase } disabled={projectDetail.availableShare <= 0}>
             申购
           </OrangeGradientBtn>
-        }>
+        }
+      >
         <ProjectDetail projectDetail={ projectDetail } historyList={ toJS(historyList) }/>
 
         <ActivityIndicator
@@ -150,7 +151,7 @@ class NotInvolvedDetail extends React.Component {
           animationType="slide-up"
           maskClosable
           closable
-          className="not-involved-purchase-modal"
+          className="purchase-modal"
         >
           <div className="amount">{ `${purchaseAmount}元` }</div>
           <div className="min-invest">{ `申购标准：${projectDetail.minInvestmentAmount || 0}元每份` }</div>
