@@ -19,20 +19,17 @@ class ContractStore {
     // 合约项目列表
     this.projectList = new ProjectList();
 
-    // 项目详情（用在未参与、已参与、转让的项目详情）
-    this.projectDetail = new ProjectDetail();
-
     // 我参与的合约项目列表
     this.myProjectList = new MyProjectList();
 
     // 未参与的合约项目详情（包含项目详情、申购相关动作）
-    this.notInvolvedDetail = new NotInvolvedDetail(this.projectDetail);
+    this.notInvolvedDetail = new NotInvolvedDetail(new ProjectDetail());
 
     // 已参与的合约项目详情（包含项目详情、申购信息、项目成团、电站建设）
-    this.involvedDetail = new InvolvedDetail(this.projectDetail);
+    this.involvedDetail = new InvolvedDetail(new ProjectDetail());
 
     // 转让的项目详情（包含项目详情、转让信息）
-    this.transferDetail = new TransferDetail(this.projectDetail);
+    this.transferDetail = new TransferDetail(new ProjectDetail());
 
     // 组件溯源详情
     this.componentTrace = new ComponentTrace();
@@ -57,7 +54,6 @@ class ContractStore {
     this.involvedDetail.reset();
     this.componentTrace.reset();
     this.appeal.reset();
-    this.projectDetail.reset();
     this.transferDetail.reset();
     this.plantList.reset();
     this.transferHistoryList.reset();

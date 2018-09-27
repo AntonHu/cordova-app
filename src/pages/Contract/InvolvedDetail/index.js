@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
-import { toJS } from 'mobx';
+import { toJS, reaction } from 'mobx';
 import { Title, PageWithHeader, Picture, Rank, PlantInfoItem } from '../../../components';
 import { Icon, Tabs, WhiteSpace, Button, List, Stepper, Modal, ActivityIndicator } from 'antd-mobile';
 import { getLocalStorage } from '../../../utils/storage';
@@ -12,6 +12,7 @@ import './index.less';
 import { ProjectStep, ProjectDetail, FundingStatus, StationBuildProgress, RejectInfo } from "../component";
 import { mockDetail } from "../NotInvolvedDetail/mock";
 import OrangeGradientBtn from "../../../components/OrangeGradientBtn";
+import { PROJECT_STATUS_CODE, USER_PROJECT_STATUS_CODE } from '../../../utils/variable';
 
 // 已参与的 项目详情页面
 // didMount的时候会发请求，根据详情的status不同，来发送不同请求
@@ -27,6 +28,8 @@ class InvolvedDetail extends React.Component {
   state = {
     isModalVisible: false,
     transferCount: 1,
+    isLoading: false,
+    loadingText: ''
   };
 
   componentDidMount() {
@@ -40,15 +43,61 @@ class InvolvedDetail extends React.Component {
     if (this.props.history.action === 'POP') {
       involvedDetail.reset();
     }
+    this.transferring();
+    this.confirmSending();
+    this.detailLoading();
   }
+
+  transferring = reaction(
+    () => this.props.contractStore.involvedDetail.isTransferring,
+    (loading) => {
+      this.setState({
+        loading,
+        loadingText: loading ? '正在发送转让请求...' : ''
+      })
+    }
+  );
+
+  confirmSending = reaction(
+    () => this.props.contractStore.notInvolvedDetail.isConfirmPaying,
+    loading => {
+      this.setState({
+        loading,
+        loadingText: loading ? '正在确认支付，请稍候...' : ''
+      })
+    }
+  );
+
+  detailLoading = reaction(
+    () => this.props.contractStore.involvedDetail.projectDetail.isDetailLoading,
+    (loading) => {
+      this.setState({
+        loading,
+        loadingText: loading ? '正在获取详情...' : ''
+      })
+    }
+  );
 
   toAppeal = () => {
     const { id, purchaseId } = this.props.match.params;
     this.props.history.push(`/contract/appeal/${id}/purchaseId/${purchaseId}`);
   };
 
-  onRePurchase = () => {
+  onPurchase = async () => {
+    const { notInvolvedDetail } = this.props.contractStore;
+    const { id, purchaseId } = this.props.match.params;
+    const result = await notInvolvedDetail.onConfirmPay({
+      projectId: id,
+      purchaseId
+    });
 
+    if (result.success) {
+      Modal.alert('已支付', '您已确认支付，即将返回上一页', [{
+        text: '好的', onPress: () => {
+          this.props.history.goBack();
+        }
+      }])
+    }
   };
 
   onTransfer = async () => {
@@ -121,7 +170,7 @@ class InvolvedDetail extends React.Component {
                 <Button onClick={ this.toAppeal }>
                   申诉
                 </Button>
-                <OrangeGradientBtn onClick={ this.onRePurchase }>
+                <OrangeGradientBtn onClick={ this.onPurchase }>
                   重新申购
                 </OrangeGradientBtn>
               </div>
@@ -130,9 +179,24 @@ class InvolvedDetail extends React.Component {
               /* 非驳回状态下 */
               !rejectInfo.id &&
               <div className="btn-wrap">
-                <Button onClick={ this.openTransfer }>
-                  我要转让
-                </Button>
+                {
+                  /* 成团后 */
+                  projectDetail.status >= PROJECT_STATUS_CODE.GROUPED
+                  &&
+                  <Button onClick={ this.openTransfer }>
+                    我要转让
+                  </Button>
+                }
+                {
+                  /* 未支付 */
+                  purchaseDetail.userStatus < USER_PROJECT_STATUS_CODE.PAID
+                  &&
+                  <Button onClick={ this.onPurchase }>
+                    已支付
+                  </Button>
+                }
+
+
                 <Button onClick={ this.toAppeal }>
                   我要申诉
                 </Button>
@@ -189,7 +253,7 @@ class InvolvedDetail extends React.Component {
             转让
           </OrangeGradientBtn>
         </Modal>
-        <ActivityIndicator animating={ isTransferring } text="正在发送转让请求..." toast/>
+        <ActivityIndicator animating={ this.state.loading } text={ this.state.loadingText } toast/>
       </PageWithHeader>
     )
   }

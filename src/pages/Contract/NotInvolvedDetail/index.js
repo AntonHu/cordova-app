@@ -30,9 +30,7 @@ class NotInvolvedDetail extends React.Component {
   componentDidMount() {
     const { notInvolvedDetail } = this.props.contractStore;
     const { id } = this.props.match.params;
-    if (this.props.history.action !== 'POP') {
-      notInvolvedDetail.loadData(id)
-    }
+    notInvolvedDetail.loadData(id)
   }
 
   componentWillUnmount() {
@@ -41,6 +39,16 @@ class NotInvolvedDetail extends React.Component {
       notInvolvedDetail.reset();
     }
     this.bankCardLoading();
+    this.detailLoading();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { id } = this.props.match.params;
+    const nextId = nextProps.match.params.id;
+    const { notInvolvedDetail } = this.props.contractStore;
+    if (id !== nextId) {
+      notInvolvedDetail.loadData(nextId)
+    }
   }
 
   bankCardLoading = reaction(
@@ -49,6 +57,16 @@ class NotInvolvedDetail extends React.Component {
       this.setState({
         loading: loading,
         loadingText: loading ? '正在查询银行卡...' : ''
+      });
+    }
+  );
+
+  detailLoading = reaction(
+    () => this.props.contractStore.notInvolvedDetail.projectDetail.isDetailLoading,
+    (loading) => {
+      this.setState({
+        loading: loading,
+        loadingText: loading ? '正在加载详情...' : ''
       });
     }
   );
@@ -94,7 +112,7 @@ class NotInvolvedDetail extends React.Component {
   toShareConfirm = () => {
     this.closeModal();
     const { notInvolvedDetail } = this.props.contractStore;
-    const projectId = notInvolvedDetail.projectDetail.detail.id;
+    const projectId = this.props.match.params.id;
     const purchaseNumber = notInvolvedDetail.purchaseCount;
     this.props.history.push(`/contract/shareConfirm/${projectId}/purchaseNumber/${purchaseNumber}`);
   };

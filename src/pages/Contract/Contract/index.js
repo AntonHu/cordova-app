@@ -1,61 +1,18 @@
 import React from 'react';
-import { withRouter, Link } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
-import { reaction, toJS } from 'mobx';
 import {
-  Title,
-  PageWithHeader,
-  Picture,
-  Rank,
-  ContractProjectItem
-} from '../../../components';
-import {
-  Icon,
-  ListView,
-  Tabs,
-  WhiteSpace,
-  Modal,
-  ActivityIndicator
+  Tabs
 } from 'antd-mobile';
-import { getLocalStorage } from '../../../utils/storage';
-import Tloader from 'react-touch-loader';
 import PullToRefresh from 'pulltorefreshjs';
 import './index.less';
-import { mockDetail } from '../NotInvolvedDetail/mock';
-import { PAGE_SIZE } from '../../../utils/variable';
-//电站转让列表Item
-import { StationTransfer, TransferHistory } from '../component';
-
-const POWER_UNIT = 'kW'; //发电单位
-const alert = Modal.alert;
+import ProjectList from './ProjectList';
+import TransferList from './TransferList';
+import TransferHistoryList from './TransferHistoryList';
 
 // 合约电站首页
 @inject('contractStore')
 @observer
 class Contract extends React.Component {
-  constructor(props) {
-    super(props);
-    const {
-      projectList,
-      transferList,
-      transferHistoryList
-    } = props.contractStore;
-    const dataSource = new ListView.DataSource({
-      rowHasChanged: (row1, row2) => row1.id !== row2.id
-    });
-    const transferSource = new ListView.DataSource({
-      rowHasChanged: (row1, row2) => row1.id !== row2.id
-    });
-    const historySource = new ListView.DataSource({
-      rowHasChanged: (row1, row2) => row1.id !== row2.id
-    });
-
-    this.state = {
-      dataSource: dataSource.cloneWithRows(toJS(projectList.list)),
-      transferSource: transferSource.cloneWithRows(toJS(transferList.list)),
-      historySource: historySource.cloneWithRows(toJS(transferHistoryList.list))
-    };
-  }
 
   componentDidMount() {
     this.initPullToRefresh();
@@ -93,9 +50,6 @@ class Contract extends React.Component {
 
   componentWillUnmount() {
     PullToRefresh.destroyAll();
-    this.updateDataSource();
-    this.updateTransferSource();
-    this.updateHistorySource();
   }
 
   /**
@@ -122,64 +76,7 @@ class Contract extends React.Component {
     });
   };
 
-  renderRow = rowData => {
-    const item = rowData;
-    // TODO: click之前，reset掉notInvolvedDetail
-    return (
-      <Link to={`/contract/notInvolvedDetail/${item.id}`}>
-        <ContractProjectItem
-          key={item.id}
-          enterpriseName={item.enterpriseName}
-          annualRate={item.estimatedAnnualizedIncome}
-          availableShare={item.availableShare}
-          dateTime={item.createdAt}
-          powerStationCapacity={item.powerStationCapacity}
-          projectName={item.projectName}
-          soldShare={item.soldShare}
-        />
-      </Link>
-    );
-  };
-
-  updateDataSource = reaction(
-    () => this.props.contractStore.projectList.list,
-    list => {
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(toJS(list))
-      });
-    }
-  );
-
-  updateTransferSource = reaction(
-    () => this.props.contractStore.transferList.list,
-    list => {
-      this.setState({
-        transferSource: this.state.dataSource.cloneWithRows(toJS(list))
-      });
-    }
-  );
-
-  updateHistorySource = reaction(
-    () => this.props.contractStore.transferHistoryList.list,
-    list => {
-      this.setState({
-        historySource: this.state.dataSource.cloneWithRows(toJS(list))
-      });
-    }
-  );
-
-  onEndReached = () => {
-    const { projectList } = this.props.contractStore;
-    projectList.loadMore();
-  };
-
   render() {
-    const {
-      projectList,
-      transferList,
-      transferHistoryList
-    } = this.props.contractStore;
-    console.log(toJS(projectList.list));
     /**
      * tabs
      */
@@ -201,100 +98,11 @@ class Contract extends React.Component {
           }}
         >
           {/*第1个tab合约电站列表*/}
-          <div className="tab-wrap">
-            <ListView
-              initialListSize={PAGE_SIZE}
-              pageSize={PAGE_SIZE}
-              renderFooter={() => (
-                <div style={{ padding: '20px', textAlign: 'center' }}>
-                  {projectList.isLoading ? '加载中...' : '没有更多'}
-                </div>
-              )}
-              dataSource={this.state.dataSource}
-              renderRow={this.renderRow}
-              useBodyScroll
-              scrollRenderAheadDistance={800}
-              onEndReached={this.onEndReached}
-              onEndReachedThreshold={10}
-            />
-            <ActivityIndicator
-              toast
-              animating={projectList.isLoading}
-              text="正在加载列表..."
-            />
-          </div>
+          <ProjectList />
           {/*第2个tab电站转让列表*/}
-          <div className="tab-wrap">
-            <ListView
-              renderFooter={() => (
-                <div style={{ padding: '20px', textAlign: 'center' }}>
-                  {transferList.isLoading ? '加载中...' : '没有更多'}
-                </div>
-              ) }
-              dataSource={ this.state.transferSource }
-              renderRow={ (item) =>
-                <Link to={ `/contract/transferDetail/${item.projectId}/productId/${item.productId}` }>
-                  <StationTransfer
-                    key={ item.productId }
-                    money={ item.amount || 0 }
-                    projectName={ item.projectName }
-                    stationCapacity={ `${(item.powerStationCapacity || 0)}${POWER_UNIT}` }
-                    profitYear={ `${(item.estimatedAnnualizedIncome || 0)}%` }
-                  />
-                </Link>
-              }
-              useBodyScroll
-              scrollRenderAheadDistance={800}
-            />
-            <ActivityIndicator
-              toast
-              animating={transferList.isLoading}
-              text="正在加载列表..."
-            />
-          </div>
+          <TransferList />
           {/*第3个tab转让历史列表*/}
-          <div className="tab-wrap">
-            <ListView
-              renderFooter={() => (
-                <div style={{ padding: '20px', textAlign: 'center' }}>
-                  {transferHistoryList.isLoading ? '加载中...' : '没有更多'}
-                </div>
-              )}
-              dataSource={this.state.historySource}
-              renderRow={item => (
-                <TransferHistory
-                  key={ item.productId }
-                  projectName={ item.projectName }
-                  status={ '未知状态' }
-                  count={ item.purchaseNumber || 0 }
-                  price={ item.amount || 0 }
-                  sellerName={ item.buyerName }
-                  openBank={ item.buyerBank }
-                  bankAccount={ item.buyerBankCardNumber }
-                  sellerContact={ item.buyerPhone }
-                  confirmPay={ () => {
-                    alert('警告', '确认打款???', [
-                      { text: '取消', onPress: () => console.log('确认') },
-                      { text: '确认', onPress: () => console.log('确认') }
-                    ]);
-                  }}
-                  cancelPay={() => {
-                    alert('警告', '取消转让???', [
-                      { text: '取消', onPress: () => console.log('确认') },
-                      { text: '确认', onPress: () => console.log('确认') }
-                    ]);
-                  }}
-                />
-              )}
-              useBodyScroll
-              scrollRenderAheadDistance={800}
-            />
-            <ActivityIndicator
-              toast
-              animating={transferHistoryList.isLoading}
-              text="正在加载列表..."
-            />
-          </div>
+          <TransferHistoryList />
         </Tabs>
       </div>
     );

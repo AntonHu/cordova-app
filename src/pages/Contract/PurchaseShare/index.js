@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
-import { reaction } from 'mobx';
+import { reaction, toJS } from 'mobx';
 import { Title, PageWithHeader, Picture, Rank, OrangeGradientBtn } from '../../../components';
 import { Icon, Tabs, WhiteSpace, Toast, Button, Modal, ActivityIndicator } from 'antd-mobile';
 import { getLocalStorage } from '../../../utils/storage';
@@ -38,7 +38,7 @@ class PurchaseShare extends React.Component {
   }
 
   componentDidMount() {
-    this.startCountdown();
+    // this.startCountdown();
   }
 
   componentWillUnmount() {
@@ -139,8 +139,9 @@ class PurchaseShare extends React.Component {
 
   render() {
     const { countDown } = this.state;
-    const { bankCard } = this.props.bankCardStore;
     const { notInvolvedDetail } = this.props.contractStore;
+    const projectDetail = notInvolvedDetail.projectDetail.detail;
+    const enterpriseInfo = toJS(projectDetail.enterpriseInfo) || {};
     const countDownArray = secToTimeArray(countDown);
     return (
       <PageWithHeader
@@ -165,12 +166,11 @@ class PurchaseShare extends React.Component {
         </div>
 
         <div className="pay-wrap">
-          { /* todo: 待确认：不是付款信息，是代收卡信息 */ }
-          <div className="info-title">代收卡信息：</div>
-          <div className="info-item">支付账号：{ bankCard.bankCardNumber || '无' }</div>
-          <div className="info-item">开户行：{ bankCard.bank || '无' }</div>
-          <div className="info-item">联系人：{ bankCard.name || '无' }</div>
-          { /*<div className="info-item">联系电话：</div>*/ }
+          <div className="info-title">付款信息：</div>
+          <div className="info-item">支付账号：{ enterpriseInfo.collectionAccount || '无' }</div>
+          <div className="info-item">开户行：{ enterpriseInfo.bank || '无' }</div>
+          <div className="info-item">联系人：{ enterpriseInfo.contact || '无' }</div>
+          <div className="info-item">联系电话：{ enterpriseInfo.phone || '无' }</div>
         </div>
 
         <div className="pay-tip">

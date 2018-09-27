@@ -2,8 +2,8 @@
 const backendServer = 'https://api.thundersdata.com/ebcapp';
 // const backendServer = 'http://47.96.158.229:30135';
 
-const contractServer = 'https://api.thundersdata.com/contractPlant';
-// const contractServer = 'http://192.168.1.161:8080';
+// const contractServer = 'https://api.thundersdata.com/contractPlant';
+const contractServer = 'http://192.168.1.124:8080';
 
 const userServer = 'https://api.thundersdata.com';
 
@@ -124,5 +124,6 @@ export {
   VERIFY_STATUS,
   STATION_VERIFY_STATUS,
   PROJECT_STATUS_CODE,
-  USER_PROJECT_STATUS_CODE
+  USER_PROJECT_STATUS_CODE,
+  TRANSFER_STATUS_CODE
 };

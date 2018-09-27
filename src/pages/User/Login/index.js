@@ -54,6 +54,7 @@ class Login extends React.PureComponent {
             const data = res.data;
             const user = new User();
             user.login(data.access_token);
+            user.setPhone(trimPhone);
             reqIsRegisterCA().then(res => {
               if (res.data && !res.data.msg) {
                 reqRegisterCA({password});

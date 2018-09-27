@@ -1,0 +1,23 @@
+@import '../../../styles/common';
+
+.transfer-history-item {
+  .item-bottom {
+    display: flex;
+    .am-button {
+      flex: 1;
+      height: 100 * @px;
+      line-height: 100 * @px;
+      font-size: 30 * @px;
+      border-radius: 0;
+      &::before {
+        border: none;
+      }
+    }
+    .negative-btn {
+      color: @screen-text-color;
+    }
+    .positive-btn {
+      color: #0EAC81;
+    }
+  }
+}

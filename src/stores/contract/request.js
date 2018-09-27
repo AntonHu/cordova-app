@@ -334,5 +334,47 @@ export const fetchBuyTransfer = async ({ productId }) => {
   }
 };
 
+/**
+ * 卖方取消转让
+ * @param productId
+ * @returns {Promise<*>}
+ */
+export const fetchCancelTransfer = async ({ productId }) => {
+  try {
+    const response = await post(`${serverUrl}/transferPlant/cancelTransferPlant`, { productId });
+    return response.data;
+  } catch (err) {
+    throw requestError(err, '取消转让');
+  }
+};
+
+/**
+ * 卖方确认打款
+ * @param productId
+ * @returns {Promise<*>}
+ */
+export const fetchVerifyPayBySeller = async ({ orderId }) => {
+  try {
+    const response = await post(`${serverUrl}/transferPlant/verifyPayBySeller`, { orderId });
+    return response.data;
+  } catch (err) {
+    throw requestError(err, '确认打款');
+  }
+};
+
+/**
+ * 买方确认支付
+ * @param productId
+ * @returns {Promise<*>}
+ */
+export const fetchVerifyPayByBuyer = async ({ orderId }) => {
+  try {
+    const response = await post(`${serverUrl}/transferPlant/verifyPayByBuyer`, { orderId });
+    return response.data;
+  } catch (err) {
+    throw requestError(err, '确认支付');
+  }
+};
+
 //TODO: kd写的 获取用户电站收益百分比 不知道在哪用到了
 

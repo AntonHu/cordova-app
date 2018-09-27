@@ -10,7 +10,7 @@ import { Document, Page, Outline } from 'react-pdf';
 // import { Document, Page } from 'react-pdf/dist/entry.webpack';
 import './index.less';
 import { contractServer } from "../../../utils/variable";
-import { reaction } from "mobx";
+import { reaction, toJS } from "mobx";
 
 // 投资份额确认书
 @inject('contractStore')
@@ -91,6 +91,10 @@ class ShareConfirm extends React.Component {
   render() {
     const { isAccept } = this.state;
     const { projectId, purchaseNumber } = this.props.match.params;
+    const { notInvolvedDetail } = this.props.contractStore;
+    const projectDetail = notInvolvedDetail.projectDetail.detail;
+    const enterpriseInfo = toJS(projectDetail.enterpriseInfo) || {};
+    console.log(enterpriseInfo)
     return (
       <PageWithHeader title="投资份额确认书" id="page-share-confirm">
         <div className="content-wrap">

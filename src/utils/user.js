@@ -22,6 +22,10 @@ class User {
     setLocalStorage('token', accessToken);
   }
 
+  setPhone(phone) {
+    setLocalStorage('loginPhone', phone);
+  }
+
   /**
    * 判断用户是否登录
    *
@@ -61,7 +65,8 @@ class User {
    * @memberof User
    */
   logout() {
-    deleteLocalStorage('token')
+    deleteLocalStorage('token');
+    deleteLocalStorage('loginPhone');
   }
 }
 

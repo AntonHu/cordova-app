@@ -146,11 +146,11 @@ class TransferDetail extends React.Component {
           closable
           className="purchase-modal"
         >
-          <div className="amount">{ `${0}元` }</div>
-          <div className="min-invest">{ `申购标准：${projectDetail.minInvestmentAmount || 0}元每份` }</div>
+          <div className="amount">{ `${transferInfo.amount}元` }</div>
+          <div className="min-invest">{ `申购标准：${transferInfo.unitPrice || 0}元每份` }</div>
           <List.Item
             wrap
-            extra={ 0 }
+            extra={ transferInfo.purchaseNumber }
           >
             购买份数
           </List.Item>
