@@ -62,7 +62,6 @@ class StationInfo extends React.PureComponent {
                       <div className="material-num">计划采购数量：{ item.num }</div>
                     </div>
                   </div>
-                </div>
               ))}
             </Accordion.Panel>
           </Accordion>
