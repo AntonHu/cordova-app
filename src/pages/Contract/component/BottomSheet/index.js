@@ -11,7 +11,7 @@ class BottomSheet extends React.PureComponent {
   state = {
     Height: 0, //设置遮盖整个屏幕
     Width: 0, //设置遮盖整个屏幕
-    count: 3, //测试的默认份数
+    count: 0, //测试的默认份数
     isAgreen: false //默认是否同意文件
   };
   static defaultProps = {
@@ -46,7 +46,7 @@ class BottomSheet extends React.PureComponent {
    * 关闭底部
    */
   _close = e => {
-    e.stopPropagation(); //除了点击内容，点击整个背景可以关闭遮盖
+    //e.stopPropagation(); //除了点击内容，点击整个背景可以关闭遮盖
     const { onClose } = this.props;
     if (onClose) {
       onClose();
@@ -60,6 +60,7 @@ class BottomSheet extends React.PureComponent {
    * 选择份数发生变化
    */
   onChange = count => {
+    console.log('count is count ', count);
     this.setState({
       count
     });
@@ -147,7 +148,10 @@ class BottomSheet extends React.PureComponent {
           display: isShow ? 'block' : 'none'
         }}
       >
-        <div className="sheet-content" onClick={e => e.stopPropagation()}>
+        <div
+          className="sheet-content"
+          //  onClick={e => e.stopPropagation()}
+        >
           <div className="total-money-container">
             <p className="money-row">
               <span className="total-money">{count * perCountMoney} 元</span>
@@ -172,6 +176,7 @@ class BottomSheet extends React.PureComponent {
                 max={10}
                 min={0}
                 value={count}
+                readOnly={true}
                 onChange={this.onChange}
               />
             </div>
