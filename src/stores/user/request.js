@@ -384,7 +384,7 @@ export const getIsKycInChain = async ({publicKey}) => {
     });
     return response;
   } catch (err) {
-    throw requestError(err, '查询是否身份认证');
+    throw requestError(err, '查询身份认证');
   }
 };
 

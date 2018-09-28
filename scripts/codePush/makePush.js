@@ -2,8 +2,8 @@
 const shell = require('shelljs');
 
 function makePush ({ environment, platform, description }) {
-  const androidCmd = `code-push release-cordova block-chain-android android --deploymentName ${environment} --des "${description}" --targetBinaryVersion ">=1.1.0"`;
-  const iosCmd = `code-push release-cordova block-chain-ios ios --deploymentName ${environment} --des "${description}" --targetBinaryVersion ">=1.1.0"`;
+  const androidCmd = `code-push release-cordova block-chain-android android --deploymentName ${environment} --des "${description}"`;
+  const iosCmd = `code-push release-cordova block-chain-ios ios --deploymentName ${environment} --des "${description}"`;
   let finalCmd = '';
   if (platform === 'android和ios') {
     finalCmd = `${androidCmd} && ${iosCmd}`;

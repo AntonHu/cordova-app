@@ -46,7 +46,7 @@ function syncCallback(syncStatus) {
 class App extends React.Component {
 
   componentDidMount() {
-    // this.checkCodePush();
+    this.checkCodePush();
   }
 
   /**
