@@ -2,8 +2,23 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import { toJS, reaction } from 'mobx';
-import { Title, PageWithHeader, Picture, Rank, OrangeGradientBtn } from '../../../components';
-import { Icon, Tabs, WhiteSpace, Modal, List, Stepper, ActivityIndicator, Toast } from 'antd-mobile';
+import {
+  Title,
+  PageWithHeader,
+  Picture,
+  Rank,
+  OrangeGradientBtn
+} from '../../../components';
+import {
+  Icon,
+  Tabs,
+  WhiteSpace,
+  Modal,
+  List,
+  Stepper,
+  ActivityIndicator,
+  Toast
+} from 'antd-mobile';
 import { getLocalStorage } from '../../../utils/storage';
 import Tloader from 'react-touch-loader';
 import PullToRefresh from 'pulltorefreshjs';
@@ -11,7 +26,7 @@ import { ProjectDetail } from '../component';
 import { mockDetail } from './mock';
 import { BottomSheet, TransferStationInfo } from '../component';
 import './index.less';
-import { VERIFY_STATUS } from "../../../utils/variable";
+import { VERIFY_STATUS } from '../../../utils/variable';
 
 // 未参与的 项目详情页面
 // didMount的时候会发请求
@@ -20,7 +35,6 @@ import { VERIFY_STATUS } from "../../../utils/variable";
 @inject('contractStore', 'bankCardStore', 'keyPair', 'userStore')
 @observer
 class NotInvolvedDetail extends React.Component {
-
   state = {
     isModalVisible: false,
     loading: false,
@@ -54,7 +68,7 @@ class NotInvolvedDetail extends React.Component {
 
   bankCardLoading = reaction(
     () => this.props.bankCardStore.loadingBankCard,
-    (loading) => {
+    loading => {
       this.setState({
         loading: loading,
         loadingText: loading ? '正在查询银行卡...' : ''
@@ -63,8 +77,9 @@ class NotInvolvedDetail extends React.Component {
   );
 
   detailLoading = reaction(
-    () => this.props.contractStore.notInvolvedDetail.projectDetail.isDetailLoading,
-    (loading) => {
+    () =>
+      this.props.contractStore.notInvolvedDetail.projectDetail.isDetailLoading,
+    loading => {
       this.setState({
         loading: loading,
         loadingText: loading ? '正在加载详情...' : ''
@@ -84,9 +99,9 @@ class NotInvolvedDetail extends React.Component {
     }
 
     if (this.props.userStore.isKycInChain === VERIFY_STATUS.UNAUTHORIZED) {
-      Modal.alert('您尚未进行身份认证', '在"我的" => "完善信息"中去认证',
-        [{text: '知道了'}]
-      );
+      Modal.alert('您尚未进行身份认证', '在"我的" => "完善信息"中去认证', [
+        { text: '知道了' }
+      ]);
       return;
     }
 
@@ -95,7 +110,7 @@ class NotInvolvedDetail extends React.Component {
         this.openModal();
       })
       .catch(() => {
-        this.props.history.push('/contract/addBankCard')
+        this.props.history.push('/contract/addBankCard');
       });
     // this.openModal();
   };
@@ -106,35 +121,37 @@ class NotInvolvedDetail extends React.Component {
 
     return new Promise(async (resolve, reject) => {
       if (JSON.stringify(bankCardObj) !== '{}') {
-        resolve()
+        resolve();
       } else {
         const result = await getBankCard();
         if (result.success && result.data && result.data.bankCardNumber) {
-          resolve()
+          resolve();
         } else {
-          reject()
+          reject();
         }
       }
-    })
+    });
   };
 
   /**
    * 去 投资份额确认 页
    */
   toShareConfirm = () => {
-    this.closeModal();
     const { notInvolvedDetail } = this.props.contractStore;
     const projectId = this.props.match.params.projectId;
     const purchaseNumber = notInvolvedDetail.purchaseCount;
-    this.props.history.push(`/contract/shareConfirm/${projectId}/purchaseNumber/${purchaseNumber}`);
+    this.closeModal();
+    this.props.history.push(
+      `/contract/shareConfirm/${projectId}/purchaseNumber/${purchaseNumber}`
+    );
   };
 
   closeModal = () => {
-    this.setState({ isModalVisible: false })
+    this.setState({ isModalVisible: false });
   };
 
   openModal = () => {
-    this.setState({ isModalVisible: true })
+    this.setState({ isModalVisible: true });
   };
 
   //显示底部选择购买组件
@@ -159,56 +176,60 @@ class NotInvolvedDetail extends React.Component {
     const { loadingText, loading, isModalVisible, isShow } = this.state;
     return (
       <PageWithHeader
-        title={ '合约电站' }
+        title={'合约电站'}
         id="page-not-involved-detail"
         footer={
-          <OrangeGradientBtn onClick={ this.onPurchase } disabled={projectDetail.availableShare <= 0}>
+          <OrangeGradientBtn
+            onClick={this.onPurchase}
+            disabled={projectDetail.availableShare <= 0}
+          >
             申购
           </OrangeGradientBtn>
         }
       >
-        <ProjectDetail projectDetail={ projectDetail } historyList={ toJS(historyList) }/>
-
-        <ActivityIndicator
-          toast
-          text={ loadingText }
-          animating={ loading }
+        <ProjectDetail
+          projectDetail={projectDetail}
+          historyList={toJS(historyList)}
         />
+
+        <ActivityIndicator toast text={loadingText} animating={loading} />
         <Modal
           popup
-          visible={ isModalVisible }
-          onClose={ this.closeModal }
+          visible={isModalVisible}
+          onClose={this.closeModal}
           animationType="slide-up"
           maskClosable
           closable
           className="purchase-modal"
         >
-          <div className="amount">{ `${purchaseAmount}元` }</div>
-          <div className="min-invest">{ `申购标准：${projectDetail.minInvestmentAmount || 0}元每份` }</div>
+          <div className="amount">{`${purchaseAmount}元`}</div>
+          <div className="min-invest">{`申购标准：${projectDetail.minInvestmentAmount ||
+            0}元每份`}</div>
           <List.Item
             wrap
             extra={
               <Stepper
-                style={ { width: '100%', minWidth: '100px' } }
+                style={{ width: '100%', minWidth: '100px' }}
                 showNumber
-                max={ projectDetail.availableShare || 0 }
-                min={ 0 }
-                value={ purchaseCount }
-                onChange={ notInvolvedDetail.updatePurchaseCount }
-              /> }
+                max={projectDetail.availableShare || 0}
+                min={0}
+                value={purchaseCount}
+                onChange={notInvolvedDetail.updatePurchaseCount}
+              />
+            }
           >
             申购数
           </List.Item>
-          <OrangeGradientBtn onClick={ this.toShareConfirm }>
+          <OrangeGradientBtn onClick={this.toShareConfirm}>
             申购
           </OrangeGradientBtn>
         </Modal>
         <BottomSheet
-          isShow={ isShow }
-          onShow={ this.onShow }
-          onClose={ this.onClose }
-          onConfirm={ this.onConfirm }
-          perCountMoney={ 3000 }
+          isShow={isShow}
+          onShow={this.onShow}
+          onClose={this.onClose}
+          onConfirm={this.onConfirm}
+          perCountMoney={3000}
         />
       </PageWithHeader>
     );
