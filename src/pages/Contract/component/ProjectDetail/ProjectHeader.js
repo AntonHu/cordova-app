@@ -61,7 +61,7 @@ class ProjectHeader extends React.PureComponent {
         <div className="amount-box">
           <div className="amount">
             投资金额
-            <div className="number">{ projectDetail.minInvestmentAmount || 0 }元</div>
+            <div className="number">{ projectDetail.investmentAmount || 0 }元</div>
           </div>
           <div className="annual-rate">
             预期年化收益

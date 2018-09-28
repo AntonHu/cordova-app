@@ -81,7 +81,7 @@ class InvolvedDetail {
   // 获取购买详情（purchaseDetail）之后，如果是驳回状态，获取驳回信息
   loadData = ({ id, purchaseId }) => {
 
-    this.loadPurchaseDetail(purchaseId).then(result => {
+    this.loadPurchaseDetail({ projectId: id, purchaseId }).then(result => {
       if (result.success) {
         const data = result.data;
         const status = data.status || 0;
@@ -117,10 +117,10 @@ class InvolvedDetail {
 
   // 申购详情
   @action
-  loadPurchaseDetail = async (purchaseId) => {
+  loadPurchaseDetail = async ({ purchaseId, projectId }) => {
     try {
       this.isPurchaseDetailLoading = true;
-      const result = await fetchPurchaseDetail({ purchaseId });
+      const result = await fetchPurchaseDetail({ purchaseId, projectId });
       runInAction(() => {
         this.isPurchaseDetailLoading = false;
         if (result.success) {

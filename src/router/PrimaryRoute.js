@@ -160,6 +160,7 @@ class PrimaryRoute extends React.Component {
         <Route exact path="/contract/transferDetail/:projectId/productId/:productId" component={TransferDetail}/>
         <Route exact path="/contract/notInvolvedDetail/:projectId" component={NotInvolvedDetail}/>
         <Route exact path="/contract/involvedDetail/:projectId/purchaseId/:purchaseId" component={InvolvedDetail}/>
+        <Route exact path="/contract/involvedDetail/:projectId" component={InvolvedDetail}/>
         <Route exact path="/contract/addBankCard" component={BankCard}/>
         <Route exact path="/contract/purchaseShare/:projectId/purchaseId/:purchaseId" component={PurchaseShare}/>
         <Route exact path="/contract/shareConfirm/:projectId/purchaseNumber/:purchaseNumber" component={ShareConfirm}/>

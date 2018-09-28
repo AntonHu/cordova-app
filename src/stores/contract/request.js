@@ -40,12 +40,13 @@ export const fetchPurchaseProject = async ({ projectId, purchaseNumber }) => {
 
 /**
  * 获取某个项目的申购详情（一些申购信息）
- * @param purchaseId
+ * @param projectId
+ * @param purchaseId 如果没有，说明是买的转让。
  * @returns {Promise<*>}
  */
-export const fetchPurchaseDetail = async ({ purchaseId }) => {
+export const fetchPurchaseDetail = async ({ projectId, purchaseId }) => {
   try {
-    const response = await get(`${serverUrl}/project/purchase/detail`, { purchaseId });
+    const response = await get(`${serverUrl}/project/purchase/detail`, { projectId, purchaseId });
     return response.data;
   } catch (err) {
     throw requestError(err, '申购信息');
