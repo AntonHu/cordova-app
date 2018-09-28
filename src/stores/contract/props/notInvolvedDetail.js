@@ -119,20 +119,7 @@ class NotInvolvedDetail {
   // 点击申购的时候，输入申购份数
   @action
   updatePurchaseCount = share => {
-    //只要输入的份数不合法，将份数转成最大份数
-    //不合法的情况：1：非数字或整数 。 2：不和合法范围
-    const MAX_VALUE = toJS(this.projectDetail).detail.availableShare || 0;
-    if (
-      typeof share !== 'number' ||
-      Math.round(share) !== share ||
-      share < 0 ||
-      share > MAX_VALUE
-    ) {
-      //不合法则默认选择最大值
-      this.purchaseCount = MAX_VALUE;
-    } else {
-      this.purchaseCount = share;
-    }
+    this.purchaseCount = share;
   };
 
   // 申购总金额(computed)
