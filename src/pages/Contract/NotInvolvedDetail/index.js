@@ -30,8 +30,8 @@ class NotInvolvedDetail extends React.Component {
 
   componentDidMount() {
     const { notInvolvedDetail } = this.props.contractStore;
-    const { id } = this.props.match.params;
-    notInvolvedDetail.loadData(id)
+    const { projectId } = this.props.match.params;
+    notInvolvedDetail.loadData(projectId)
   }
 
   componentWillUnmount() {
@@ -44,10 +44,10 @@ class NotInvolvedDetail extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { id } = this.props.match.params;
-    const nextId = nextProps.match.params.id;
+    const { projectId } = this.props.match.params;
+    const nextId = nextProps.match.params.projectId;
     const { notInvolvedDetail } = this.props.contractStore;
-    if (id !== nextId) {
+    if (projectId !== nextId) {
       notInvolvedDetail.loadData(nextId)
     }
   }

@@ -21,7 +21,7 @@ class ProjectList extends React.Component{
       projectList
     } = props.contractStore;
     const dataSource = new ListView.DataSource({
-      rowHasChanged: (row1, row2) => row1.id !== row2.id
+      rowHasChanged: (row1, row2) => row1 !== row2
     });
 
     this.state = {

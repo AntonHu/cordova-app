@@ -24,7 +24,7 @@ class TransferList extends React.Component {
       transferList,
     } = props.contractStore;
     const transferSource = new ListView.DataSource({
-      rowHasChanged: (row1, row2) => row1.productId !== row2.productId
+      rowHasChanged: (row1, row2) => row1 !== row2
     });
 
     this.state = {

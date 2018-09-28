@@ -34,8 +34,8 @@ class InvolvedDetail extends React.Component {
 
   componentDidMount() {
     const { involvedDetail } = this.props.contractStore;
-    const { id, purchaseId } = this.props.match.params;
-    involvedDetail.loadData({ id, purchaseId })
+    const { projectId, purchaseId } = this.props.match.params;
+    involvedDetail.loadData({ id: projectId, purchaseId })
   }
 
   componentWillUnmount() {
@@ -79,15 +79,15 @@ class InvolvedDetail extends React.Component {
   );
 
   toAppeal = () => {
-    const { id, purchaseId } = this.props.match.params;
-    this.props.history.push(`/contract/appeal/${id}/purchaseId/${purchaseId}`);
+    const { projectId, purchaseId } = this.props.match.params;
+    this.props.history.push(`/contract/appeal/${projectId}/purchaseId/${purchaseId}`);
   };
 
   onPurchase = async () => {
     const { notInvolvedDetail } = this.props.contractStore;
-    const { id, purchaseId } = this.props.match.params;
+    const { projectId, purchaseId } = this.props.match.params;
     const result = await notInvolvedDetail.onConfirmPay({
-      projectId: id,
+      projectId,
       purchaseId
     });
 
@@ -113,14 +113,14 @@ class InvolvedDetail extends React.Component {
 
   makeTransfer = async () => {
     const { involvedDetail } = this.props.contractStore;
-    const { id } = this.props.match.params;
+    const { projectId } = this.props.match.params;
     const projectDetail = involvedDetail.projectDetail.detail;
     const { transferCount } = this.state;
     const result = await involvedDetail.makeTransfer({
       purchaseNumber: transferCount,
       unitPrice: projectDetail.minInvestmentAmount,
       amount: transferCount * projectDetail.minInvestmentAmount,
-      projectId: id
+      projectId
     });
     if (result.success) {
       Modal.alert('转让', `转让成功，即将回到上一页`,

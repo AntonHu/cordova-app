@@ -11,7 +11,7 @@ const AccordionHeader = (props) => {
         <div className="h-name">{ props.name }</div>
         <div className="h-time">{ props.time }</div>
       </div>
-      <div className="h-amount">{ props.amount === undefined ? '' : props.amount + '元' }</div>
+      <div className="h-amount">{ props.amount === undefined ? '' : `单价：${props.amount}元` }</div>
     </div>
   )
 };
@@ -70,19 +70,17 @@ class StationBuildProgress extends React.PureComponent {
                 <Accordion className="my-accordion">
                   <Accordion.Panel
                     header={ <AccordionHeader name={ item.fileTypeName } time={ item.uploadTime }/> }>
-
+                    <Picture
+                      src={item.ossPath}
+                      emptyElement={(props) => <div className={props.className}>加载图片失败</div>}
+                    />
                   </Accordion.Panel>
                 </Accordion>
               </div>
             ))
               :
               <div className="detail-wrap" >
-                <Accordion className="my-accordion">
-                  <Accordion.Panel
-                    header={ <AccordionHeader name={ '等待上传' } /> }>
-
-                  </Accordion.Panel>
-                </Accordion>
+                <AccordionHeader name={ '等待上传...' } />
               </div>
           }
 
@@ -90,22 +88,31 @@ class StationBuildProgress extends React.PureComponent {
         <div className="panel">
           <div className="panel-name">并网备案文件</div>
 
-          <div className="detail-wrap">
-            <Accordion className="my-accordion">
-              <Accordion.Panel
-                header={ <AccordionHeader name={ '并网备案文件' } time={ '' }/> }>
-                {
-                  gridConnectedFileList.map((item) => (
-                    <div></div>
-                  ))
-                }
-              </Accordion.Panel>
-            </Accordion>
-          </div>
+          {
+            gridConnectedFileList.length > 0
+            ?
+              <div className="detail-wrap">
+                <Accordion className="my-accordion">
+                  <Accordion.Panel
+                    header={ <AccordionHeader name={ '并网备案文件' } time={ '' }/> }>
+                    {
+                      gridConnectedFileList.map((item) => (
+                        <Picture
+                          src={item.ossPath}
+                          emptyElement={(props) => <div className={props.className}>加载图片失败</div>}
+                        />
+                      ))
+                    }
+                  </Accordion.Panel>
+                </Accordion>
+              </div>
+              :
+              <div className="detail-wrap">
+                <AccordionHeader name={ '等待上传...' } />
+              </div>
+          }
 
         </div>
-
-
       </div>
     )
   }

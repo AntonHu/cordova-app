@@ -26,7 +26,7 @@ class TransferHistoryList extends React.Component {
     } = props.contractStore;
 
     const historySource = new ListView.DataSource({
-      rowHasChanged: (row1, row2) => row1.orderId !== row2.orderId && row1.status !== row2.status
+      rowHasChanged: (row1, row2) => row1 !== row2
     });
 
     this.state = {
