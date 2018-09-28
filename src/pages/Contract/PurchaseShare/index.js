@@ -38,7 +38,7 @@ class PurchaseShare extends React.Component {
   }
 
   componentDidMount() {
-    // this.startCountdown();
+    this.startCountdown();
   }
 
   componentWillUnmount() {
@@ -86,7 +86,7 @@ class PurchaseShare extends React.Component {
   };
 
   sendCancelReq = async () => {
-    const { notInvolvedDetail } = this.props.contractStore;
+    const { notInvolvedDetail, projectList } = this.props.contractStore;
     const {projectId, purchaseId} = this.props.match.params;
     const result = await notInvolvedDetail.onCancelPurchase({
       projectId,
@@ -95,6 +95,7 @@ class PurchaseShare extends React.Component {
     if (result.success) {
       Modal.alert('取消', '您已取消支付，即将返回首页', [{
         text: '好的', onPress: () => {
+          projectList.initLoad();
           this.backToContract();
         }
       }])
@@ -102,7 +103,7 @@ class PurchaseShare extends React.Component {
   };
 
   sendConfirmReq = async () => {
-    const { notInvolvedDetail } = this.props.contractStore;
+    const { notInvolvedDetail, projectList } = this.props.contractStore;
     const {projectId, purchaseId} = this.props.match.params;
     const result = await notInvolvedDetail.onConfirmPay({
       projectId,
@@ -112,6 +113,7 @@ class PurchaseShare extends React.Component {
     if (result.success) {
       Modal.alert('已支付', '您已确认支付，即将返回首页', [{
         text: '好的', onPress: () => {
+          projectList.initLoad();
           this.backToContract();
         }
       }])

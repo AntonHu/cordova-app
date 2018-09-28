@@ -66,7 +66,7 @@ class Contract extends React.Component {
         // 那么应该在这个元素滚动位于顶部的时候，返回true
         return (
 
-          document.querySelector('#page-contract .am-tabs-pane-wrap-active')
+          document.querySelector('#page-contract .am-tabs-pane-wrap-active .am-list-view-scrollview')
             .scrollTop === 0
         );
       },

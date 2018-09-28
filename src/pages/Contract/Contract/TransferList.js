@@ -66,9 +66,9 @@ class TransferList extends React.Component {
     return (
       <div className="tab-wrap">
         <ListView
-          renderFooter={() => (
-            <div style={{ padding: '20px', textAlign: 'center' }}>
-              {transferList.isLoading ? '加载中...' : '没有更多'}
+          renderFooter={ () => (
+            <div style={ { padding: '20px', textAlign: 'center' } }>
+              { transferList.isLoading ? '加载中...' : '没有更多' }
             </div>
           ) }
           dataSource={ this.state.transferSource }
@@ -83,12 +83,14 @@ class TransferList extends React.Component {
               />
             </Link>
           }
-          useBodyScroll
-          scrollRenderAheadDistance={800}
+          style={{
+            height: '100%'
+          }}
+          scrollRenderAheadDistance={ 800 }
         />
         <ActivityIndicator
           toast
-          animating={transferList.isLoading}
+          animating={ transferList.isLoading }
           text="正在加载列表..."
         />
       </div>

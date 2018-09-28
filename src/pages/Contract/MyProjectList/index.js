@@ -55,7 +55,7 @@ class MyProjectList extends React.Component {
         // 什么情况下的滚动触发下拉刷新，这个很重要
         // 如果这个页面里有height超过窗口高度的元素
         // 那么应该在这个元素滚动位于顶部的时候，返回true
-        return document.querySelector(`#page-my-project-list #${PageWithHeader.bodyId}`).scrollTop === 0;
+        return document.querySelector(`#page-my-project-list #${PageWithHeader.bodyId} .am-list-view-scrollview`).scrollTop === 0;
       },
       instructionsPullToRefresh: '下拉刷新',
       instructionsReleaseToRefresh: '松开刷新',
@@ -112,7 +112,10 @@ class MyProjectList extends React.Component {
           )}
           dataSource={this.state.dataSource}
           renderRow={this.renderRow}
-          useBodyScroll
+          style={{
+            height: '100%',
+
+          }}
           scrollRenderAheadDistance={800}
           onEndReached={this.onEndReached}
           onEndReachedThreshold={10}

@@ -14,7 +14,7 @@ import { PAGE_SIZE } from '../../../utils/variable';
 
 @inject('contractStore')
 @observer
-class ProjectList extends React.Component{
+class ProjectList extends React.Component {
   constructor(props) {
     super(props);
     const {
@@ -29,19 +29,9 @@ class ProjectList extends React.Component{
     };
   }
 
-  componentDidMount() {
-    this.initData();
+  componentWillUnmount() {
+    this.updateDataSource();
   }
-
-  initData = () => {
-    const {
-      projectList,
-    } = this.props.contractStore;
-
-    if (projectList.list.length < 1) {
-      projectList.initLoad();
-    }
-  };
 
   updateDataSource = reaction(
     () => this.props.contractStore.projectList.list,
@@ -56,16 +46,16 @@ class ProjectList extends React.Component{
     const item = rowData;
     // TODO: click之前，reset掉notInvolvedDetail
     return (
-      <Link to={`/contract/notInvolvedDetail/${item.id}`}>
+      <Link to={ `/contract/notInvolvedDetail/${item.id}` }>
         <ContractProjectItem
-          key={item.id}
-          enterpriseName={item.enterpriseName}
-          annualRate={item.estimatedAnnualizedIncome}
-          availableShare={item.availableShare}
-          dateTime={item.createdAt}
-          powerStationCapacity={item.powerStationCapacity}
-          projectName={item.projectName}
-          soldShare={item.soldShare}
+          key={ item.id }
+          enterpriseName={ item.enterpriseName }
+          annualRate={ item.estimatedAnnualizedIncome }
+          availableShare={ item.availableShare }
+          dateTime={ item.createdAt }
+          powerStationCapacity={ item.powerStationCapacity }
+          projectName={ item.projectName }
+          soldShare={ item.soldShare }
         />
       </Link>
     );
@@ -83,23 +73,26 @@ class ProjectList extends React.Component{
     return (
       <div className="tab-wrap">
         <ListView
-          initialListSize={PAGE_SIZE}
-          pageSize={PAGE_SIZE}
-          renderFooter={() => (
-            <div style={{ padding: '20px', textAlign: 'center' }}>
-              {projectList.isLoading ? '加载中...' : '没有更多'}
+          initialListSize={ PAGE_SIZE }
+          pageSize={ PAGE_SIZE }
+          renderFooter={ () => (
+            <div style={ { padding: '20px', textAlign: 'center' } }>
+              { projectList.isLoading ? '加载中...' : '没有更多' }
             </div>
-          )}
-          dataSource={this.state.dataSource}
-          renderRow={this.renderRow}
-          useBodyScroll
-          scrollRenderAheadDistance={800}
-          onEndReached={this.onEndReached}
-          onEndReachedThreshold={10}
+          ) }
+          dataSource={ this.state.dataSource }
+          renderRow={ this.renderRow }
+          style={{
+            height: '100%',
+
+          }}
+          scrollRenderAheadDistance={ 800 }
+          onEndReached={ this.onEndReached }
+          onEndReachedThreshold={ 10 }
         />
         <ActivityIndicator
           toast
-          animating={projectList.isLoading}
+          animating={ projectList.isLoading }
           text="正在加载列表..."
         />
       </div>

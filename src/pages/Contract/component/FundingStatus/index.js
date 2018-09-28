@@ -1,33 +1,7 @@
 import React from 'react';
-import { Icon, Tabs, WhiteSpace } from 'antd-mobile';
 import PropTypes from 'prop-types';
 import './index.less';
 import Picture from "../../../../components/Picture";
-
-const shares = [
-  {
-    avatar: 'https://api.thundersdata.com/ebcapp//image/HEAD_IMG/2018/8/9/1533785564898.png',
-    name: '124444444',
-    time: '2018-05-12  12:88',
-    buyShare: 4,
-    buyAmount: 4000
-  },
-  {
-    avatar: 'https://api.thundersdata.com/ebcapp//image/HEAD_IMG/2018/8/9/1533785564898.png',
-    name: '124444444',
-    time: '2018-05-12  12:88',
-    buyShare: 4,
-    buyAmount: 4000
-  },
-  {
-    avatar: 'https://api.thundersdata.com/ebcapp//image/HEAD_IMG/2018/8/9/1533785564898.png',
-    name: '124444444',
-    time: '2018-05-12  12:88',
-    buyShare: 4,
-    buyAmount: 4000
-  },
-
-];
 
 // 项目成团组件
 class FundingStatus extends React.PureComponent {

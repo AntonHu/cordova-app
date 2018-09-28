@@ -43,7 +43,7 @@ class StationBuildProgress extends React.PureComponent {
               <div className="detail-wrap" key={ item.id }>
                 <Accordion className="my-accordion">
                   <Accordion.Panel
-                    header={ <AccordionHeader name={ '已购买组件' } time={ item.purchaseTime } amount={ item.num * item.unitPrice }/> }>
+                    header={ <AccordionHeader name={ item.materialTypeName || '无' } time={ item.purchaseTime } amount={ item.num * item.unitPrice }/> }>
 
                   </Accordion.Panel>
                 </Accordion>

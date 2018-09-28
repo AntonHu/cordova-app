@@ -376,5 +376,16 @@ export const fetchVerifyPayByBuyer = async ({ orderId }) => {
   }
 };
 
+export const fetchLegalDocument = async ({ type, projectId, purchaseNumber }) => {
+  try {
+    const response = await getFile(`${serverUrl}/project/legalFile`, { type, projectId, purchaseNumber });
+    console.log(response)
+    return response;
+  } catch (err) {
+    throw requestError(err, '获取协议');
+  }
+};
+
+
 //TODO: kd写的 获取用户电站收益百分比 不知道在哪用到了
 

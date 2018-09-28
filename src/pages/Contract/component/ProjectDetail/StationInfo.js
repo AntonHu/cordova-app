@@ -36,10 +36,10 @@ class StationInfo extends React.PureComponent {
             <Accordion.Panel header="材料计划">
               {
                 materialOverviewList.map((item) => (
-                  <div className="material-item">
-                    <div className="material-name">材料名称：{ item.name || '无' }</div>
+                  <div className="material-item" key={item.id}>
+                    <div className="material-name">材料名称：{ item.materialTypeName || '无' }</div>
                     <div className="material-row">
-                      <div className="material-unit-price">单价：{ item.unitPrice }</div>
+                      <div className="material-unit-price">单价：{ item.unitPrice || 0 }元</div>
                       <div className="material-num">计划采购数量：{ item.num }</div>
                     </div>
 

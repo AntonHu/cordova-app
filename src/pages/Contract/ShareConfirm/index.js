@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
-import { Title, PageWithHeader, Picture, Rank, OrangeGradientBtn } from '../../../components';
+import { Title, PageWithHeader, Picture, Rank, OrangeGradientBtn, ToastNoMask } from '../../../components';
 import { Icon, Tabs, WhiteSpace, Button, Toast, ActivityIndicator, Modal } from 'antd-mobile';
 import { getLocalStorage } from '../../../utils/storage';
 import Tloader from 'react-touch-loader';
@@ -11,6 +11,7 @@ import { Document, Page, Outline } from 'react-pdf';
 import './index.less';
 import { contractServer } from "../../../utils/variable";
 import { reaction, toJS } from "mobx";
+import { fetchLegalDocument } from "../../../stores/contract/request";
 
 // 投资份额确认书
 @inject('contractStore')
@@ -26,10 +27,16 @@ class ShareConfirm extends React.Component {
 
   componentDidMount() {
     // this.makeRequest();
+    // this.getPdf();
   }
 
   componentWillUnmount() {
     this.purchaseLoading();
+  }
+
+  componentDidCatch(err, info) {
+    console.log(err);
+    console.log(info)
   }
 
   purchaseLoading = reaction(
@@ -91,10 +98,6 @@ class ShareConfirm extends React.Component {
   render() {
     const { isAccept } = this.state;
     const { projectId, purchaseNumber } = this.props.match.params;
-    const { notInvolvedDetail } = this.props.contractStore;
-    const projectDetail = notInvolvedDetail.projectDetail.detail;
-    const enterpriseInfo = toJS(projectDetail.enterpriseInfo) || {};
-    console.log(enterpriseInfo)
     return (
       <PageWithHeader title="投资份额确认书" id="page-share-confirm">
         <div className="content-wrap">
@@ -105,12 +108,12 @@ class ShareConfirm extends React.Component {
             noData="没有找到文件"
             error="读取文件出错"
             onLoadError={ (err) => {
-              console.log('onLoadError');
-              console.log(JSON.stringify(err))
+              // console.log('onLoadError');
+              // console.log(JSON.stringify(err))
             }}
             onSourceError={(err) => {
-              console.log('onSourceError');
-              console.log(JSON.stringify(err))
+              // console.log('onSourceError');
+              // console.log(JSON.stringify(err))
             }}
           >
             {

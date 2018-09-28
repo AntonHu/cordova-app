@@ -118,9 +118,17 @@ export const getFile = (url, params) => {
     timeout: TIME_OUT,
     headers: {
       // 'Content-Type': 'application/octet-stream'
-      'Content-Type': 'application/pdf'
+      'Content-Type': 'application/pdf',
+      responseType: 'arraybuffer'
     }
-  }).get(urlStr).catch(errHandler);
+  }).get(urlStr).then(res => {
+    return {
+      success: res.status === 200,
+      data:new Buffer(res.data, 'binary').toString('base64')
+    }
+
+  }
+    ).catch(errHandler);
 };
 
 /*

@@ -124,7 +124,7 @@ class NotInvolvedDetail extends React.Component {
   toShareConfirm = () => {
     this.closeModal();
     const { notInvolvedDetail } = this.props.contractStore;
-    const projectId = this.props.match.params.id;
+    const projectId = this.props.match.params.projectId;
     const purchaseNumber = notInvolvedDetail.purchaseCount;
     this.props.history.push(`/contract/shareConfirm/${projectId}/purchaseNumber/${purchaseNumber}`);
   };

@@ -156,7 +156,9 @@ class TransferHistoryList extends React.Component {
           ) }
           dataSource={ this.state.historySource }
           renderRow={ this.renderRow }
-          useBodyScroll
+          style={{
+            height: '100%'
+          }}
           scrollRenderAheadDistance={ 800 }
         />
         <ActivityIndicator
