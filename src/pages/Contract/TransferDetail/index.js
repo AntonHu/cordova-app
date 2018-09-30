@@ -2,15 +2,30 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import { toJS, reaction } from 'mobx';
-import { Title, PageWithHeader, Picture, Rank, OrangeGradientBtn } from '../../../components';
-import { Icon, Tabs, WhiteSpace, Modal, List, Stepper, ActivityIndicator, Toast } from 'antd-mobile';
+import {
+  Title,
+  PageWithHeader,
+  Picture,
+  Rank,
+  OrangeGradientBtn
+} from '../../../components';
+import {
+  Icon,
+  Tabs,
+  WhiteSpace,
+  Modal,
+  List,
+  Stepper,
+  ActivityIndicator,
+  Toast
+} from 'antd-mobile';
 import { getLocalStorage } from '../../../utils/storage';
 import Tloader from 'react-touch-loader';
 import PullToRefresh from 'pulltorefreshjs';
 import { ProjectDetail } from '../component';
 import { BottomSheet, TransferStationInfo } from '../component';
 import './index.less';
-import { VERIFY_STATUS } from "../../../utils/variable";
+import { VERIFY_STATUS } from '../../../utils/variable';
 
 // 转让的 项目详情页面
 // didMount的时候会发请求
@@ -19,7 +34,6 @@ import { VERIFY_STATUS } from "../../../utils/variable";
 @inject('contractStore', 'bankCardStore', 'keyPair', 'userStore')
 @observer
 class TransferDetail extends React.Component {
-
   state = {
     isModalVisible: false,
     loading: false,
@@ -30,7 +44,7 @@ class TransferDetail extends React.Component {
   componentDidMount() {
     const { transferDetail } = this.props.contractStore;
     const { projectId, productId } = this.props.match.params;
-    transferDetail.loadData({ projectId, productId })
+    transferDetail.loadData({ projectId, productId });
   }
 
   componentWillUnmount() {
@@ -45,20 +59,20 @@ class TransferDetail extends React.Component {
       this.setState({
         loading: isBuying,
         loadingText: '正在发送购买请求...'
-      })
+      });
     }
   );
 
   closeModal = () => {
     this.setState({
       isModalVisible: false
-    })
+    });
   };
 
   openModal = () => {
     this.setState({
       isModalVisible: true
-    })
+    });
   };
 
   /**
@@ -73,9 +87,9 @@ class TransferDetail extends React.Component {
     }
 
     if (this.props.userStore.isKycInChain === VERIFY_STATUS.UNAUTHORIZED) {
-      Modal.alert('您尚未进行身份认证', '在"我的" => "完善信息"中去认证',
-        [{text: '知道了'}]
-      );
+      Modal.alert('您尚未进行身份认证', '在"我的" => "完善信息"中去认证', [
+        { text: '知道了' }
+      ]);
       return;
     }
 
@@ -84,7 +98,7 @@ class TransferDetail extends React.Component {
         this.openModal();
       })
       .catch(() => {
-        this.props.history.push('/contract/addBankCard')
+        this.props.history.push('/contract/addBankCard');
       });
     // this.openModal();
   };
@@ -95,16 +109,16 @@ class TransferDetail extends React.Component {
 
     return new Promise(async (resolve, reject) => {
       if (JSON.stringify(bankCardObj) !== '{}') {
-        resolve()
+        resolve();
       } else {
         const result = await getBankCard();
         if (result.success && result.data && result.data.bankCardNumber) {
-          resolve()
+          resolve();
         } else {
-          reject()
+          reject();
         }
       }
-    })
+    });
   };
 
   buyConfirm = async () => {
@@ -113,7 +127,9 @@ class TransferDetail extends React.Component {
     const result = await transferDetail.buyProject({ productId });
     this.closeModal();
     if (result.success) {
-      Modal.alert('购买', '您已成功发送购买请求，即将返回上一页', [{ text: '好的', onPress: () => this.props.history.goBack() }])
+      Modal.alert('购买', '您已成功发送购买请求，即将返回上一页', [
+        { text: '好的', onPress: () => this.props.history.goBack() }
+      ]);
     }
   };
 
@@ -126,49 +142,41 @@ class TransferDetail extends React.Component {
     const { loadingText, loading, isModalVisible } = this.state;
     return (
       <PageWithHeader
-        title={ '转让详情' }
+        title={'转让详情'}
         id="page-transfer-detail"
         footer={
-          <OrangeGradientBtn
-            onClick={ this.onPurchase }
-          >
-            购买
-          </OrangeGradientBtn>
+          <OrangeGradientBtn onClick={this.onPurchase}>购买</OrangeGradientBtn>
         }
       >
         <TransferStationInfo
-          transferTime={ transferInfo.transferPublishTime || '无' }
-          transferMan={ transferInfo.sellerId || '无' }
-          stationNumber={ transferInfo.plantNum || '无' }
-          projectTime={ transferInfo.projectFinishTime || '无' }
-          historyProfit={ transferInfo.historyIncome || 0 }
+          transferTime={transferInfo.transferPublishTime || '无'}
+          transferMan={transferInfo.sellerId || '无'}
+          stationNumber={transferInfo.plantNum || '无'}
+          projectTime={transferInfo.projectFinishTime || '无'}
+          historyProfit={transferInfo.historyIncome || 0}
         />
-        <ProjectDetail projectDetail={ projectDetail } historyList={ toJS(historyList) }/>
-        <ActivityIndicator
-          toast
-          text={ loadingText }
-          animating={ loading }
+        <ProjectDetail
+          projectDetail={projectDetail}
+          historyList={toJS(historyList)}
+          transferInfo={transferInfo}
         />
+        <ActivityIndicator toast text={loadingText} animating={loading} />
         <Modal
           popup
-          visible={ isModalVisible }
-          onClose={ this.closeModal }
+          visible={isModalVisible}
+          onClose={this.closeModal}
           animationType="slide-up"
           maskClosable
           closable
           className="purchase-modal"
         >
-          <div className="amount">{ `${transferInfo.amount}元` }</div>
-          <div className="min-invest">{ `申购标准：${transferInfo.unitPrice || 0}元每份` }</div>
-          <List.Item
-            wrap
-            extra={ transferInfo.purchaseNumber }
-          >
+          <div className="amount">{`${transferInfo.amount}元`}</div>
+          <div className="min-invest">{`申购标准：${transferInfo.unitPrice ||
+            0}元每份`}</div>
+          <List.Item wrap extra={transferInfo.purchaseNumber}>
             购买份数
           </List.Item>
-          <OrangeGradientBtn onClick={ this.buyConfirm }>
-            购买
-          </OrangeGradientBtn>
+          <OrangeGradientBtn onClick={this.buyConfirm}>购买</OrangeGradientBtn>
         </Modal>
       </PageWithHeader>
     );

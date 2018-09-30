@@ -1,6 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 import { getLocalStorage } from './storage';
+import { KEY_PAIR_LOCAL_STORAGE } from './variable';
 
 export const TIME_OUT = 10000;
 // export const TIME_OUT = 99999999999;
@@ -51,23 +52,23 @@ const errHandler = err => {
       success: false,
       code: ERR_CODE.timeout,
       msg: '请求超时'
-    }
+    };
   }
   if (err.message === 'Request failed with status code 404') {
     throw {
       success: false,
       code: ERR_CODE.notFound,
       msg: '接口404'
-    }
+    };
   }
   if (err.message === 'Network Error') {
     throw {
       success: false,
       code: ERR_CODE.networkError,
       msg: '网络错误'
-    }
+    };
   }
-  throw err
+  throw err;
 };
 
 /**
@@ -78,17 +79,16 @@ const errHandler = err => {
  */
 export const requestError = (err, name) => {
   if (err.code !== undefined && err.msg) {
-    err.msg = name + ' ' + err.msg
+    err.msg = name + ' ' + err.msg;
   } else {
     err = {
       success: false,
       code: -1,
       msg: name + ' 接口错误'
-    }
+    };
   }
   return err;
 };
-
 
 /*
   get请求，参数：params
@@ -114,21 +114,23 @@ export const getFile = (url, params) => {
   } else {
     urlStr += `?access_token=${token}`;
   }
-  return axios.create({
-    timeout: TIME_OUT,
-    headers: {
-      // 'Content-Type': 'application/octet-stream'
-      'Content-Type': 'application/pdf',
-      responseType: 'arraybuffer'
-    }
-  }).get(urlStr).then(res => {
-    return {
-      success: res.status === 200,
-      data:new Buffer(res.data, 'binary').toString('base64')
-    }
-
-  }
-    ).catch(errHandler);
+  return axios
+    .create({
+      timeout: TIME_OUT,
+      headers: {
+        // 'Content-Type': 'application/octet-stream'
+        'Content-Type': 'application/pdf',
+        responseType: 'arraybuffer'
+      }
+    })
+    .get(urlStr)
+    .then(res => {
+      return {
+        success: res.status === 200,
+        data: new Buffer(res.data, 'binary').toString('base64')
+      };
+    })
+    .catch(errHandler);
 };
 
 /*
@@ -149,5 +151,41 @@ export const authPost = (url, params) => {
 /*
   请求头为application/json的post请求
 */
-export const jsonPost = (url, params) =>
-  postInstance.post(url, JSON.stringify(params)).catch(errHandler);
+export const jsonPost = (url, params) => {
+  const token = getLocalStorage('token');
+  const urlStr = `${url}?access_token=${token}`;
+  return postInstance.post(urlStr, JSON.stringify(params)).catch(errHandler);
+};
+/**
+ * 蚂蚁存证服务接口
+ */
+export const saveEvidence = (url, params) => {
+  const token = getLocalStorage('token');
+  const publicKey = getLocalStorage(KEY_PAIR_LOCAL_STORAGE.PUBLIC_KEY);
+  const urlStr = `http://192.168.1.161:8080/app/test/post?access_token=${token}`;
+  const { signData } = params;
+  signData.publicKey = publicKey;
+  params = {
+    ...params,
+    signData
+  };
+  console.log(params);
+  return JSONInstance.post(urlStr, JSON.stringify(params)).catch(errHandler);
+};
+/**
+ * 给所需要的数据签名
+ * @param msg 需要签名的数据
+ */
+export const signData = msg => {
+  const privateKey = getLocalStorage(KEY_PAIR_LOCAL_STORAGE.PRIVATE_KEY);
+  const publicKey = getLocalStorage(KEY_PAIR_LOCAL_STORAGE.PUBLIC_KEY);
+  const url = `https://api.thundersdata.com/grpc/blockchain/crypt-service/sm2/Sign`;
+  return JSONInstance.post(
+    url,
+    JSON.stringify({
+      privateKey,
+      publicKey,
+      msg
+    })
+  ).catch(errHandler);
+};

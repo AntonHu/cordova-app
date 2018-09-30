@@ -11,7 +11,7 @@ import './index.less';
 const tabs = [
   { title: '电站信息' },
   { title: '受托建造运营方信息' },
-  { title: '历史项目' },
+  { title: '历史项目' }
 ];
 
 // 项目详情组件
@@ -20,24 +20,36 @@ class ProjectDetail extends React.PureComponent {
   static propTypes = {
     projectDetail: PropTypes.object.isRequired,
     historyList: PropTypes.array.isRequired,
-    purchaseDetail: PropTypes.object
+    purchaseDetail: PropTypes.object,
+    transferInfo: PropTypes.object
   };
 
   render() {
-    const { projectDetail, historyList, purchaseDetail } = this.props;
+    const {
+      projectDetail,
+      historyList,
+      purchaseDetail,
+      transferInfo
+    } = this.props;
     return (
       <div className="project-detail">
-        <ProjectHeader projectDetail={ projectDetail } purchaseDetail={purchaseDetail}/>
-        <ProjectIntro projectDetail={ projectDetail }/>
+        <ProjectHeader
+          projectDetail={projectDetail}
+          purchaseDetail={purchaseDetail}
+        />
+        <ProjectIntro projectDetail={projectDetail} />
         <div className="tabs-container">
-          <Tabs tabs={ tabs } initialPage={ 0 }>
-            <StationInfo projectDetail={ projectDetail }/>
-            <OperatorInfo projectDetail={ projectDetail }/>
-            <HistoryProject historyList={ historyList }/>
+          <Tabs tabs={tabs} initialPage={0}>
+            <StationInfo
+              projectDetail={projectDetail}
+              transferInfo={transferInfo}
+            />
+            <OperatorInfo projectDetail={projectDetail} />
+            <HistoryProject historyList={historyList} />
           </Tabs>
         </div>
       </div>
-    )
+    );
   }
 }
 

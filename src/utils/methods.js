@@ -1,8 +1,10 @@
+import CryptoJS from 'crypto-js';
+import { KEY_PAIR_LOCAL_STORAGE } from './variable';
 import { JSRsasign } from '../jssign';
 import SM2Cipher from '../jssign/SM2Cipher';
 import { getLocalStorage } from './storage';
-import { JSONInstance, post } from './fetch';
-import {testPhoneNumber} from './validate';
+import { JSONInstance, post, signData } from './fetch';
+import { testPhoneNumber } from './validate';
 const BigInteger = JSRsasign.BigInteger;
 
 /**
@@ -249,4 +251,38 @@ export const getHour_Minute = millisecond => {
   if (mm < 10) clock += '0';
   clock += mm;
   return clock;
+};
+
+/**
+ * 包装数据，蚂蚁存证服务需要将数据打包成指定格式
+ * 需要使用私钥
+ * @param jsonData 当前需要请求的数据
+ * @returns packData
+ */
+export const packJson = async jsonData => {
+  const metadata = {
+    location: {
+      ip: '192.168.1.1',
+      wifiMac: ''
+    }
+  };
+  const packJsonData = {
+    ...jsonData,
+    metadata: JSON.stringify(metadata)
+  };
+  const response = await signData(packJsonData);
+  const { data } = response;
+  if (data.responseCode === 200) {
+    const signedResultString = data.responseJson;
+    let result = {
+      ...packJsonData,
+      signData: JSON.stringify({
+        signedString: JSON.parse(data.responseJson).signedMsg,
+        content: JSON.stringify(packJsonData),
+        publicKey: getLocalStorage(KEY_PAIR_LOCAL_STORAGE.PUBLIC_KEY)
+      })
+    };
+    console.log('packJson的response', result);
+    return result;
+  }
 };
