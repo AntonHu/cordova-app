@@ -1,0 +1,24 @@
+@import '../../styles/common';
+
+._stepper {
+  display: flex;
+  //width: 100%;
+  ._stepper-input {
+    width: 100 * @px;
+    text-align: center;
+    color: @main-text-color!important;
+    font-size: @h2!important;
+  }
+  ._stepper-btn {
+    color: @screen-text-color;
+    flex: 1;
+    height: 76 * @px;
+    background-color: @white-grey;
+    border: none;
+
+    &.disabled {
+      color: @help-text-color;
+    }
+  }
+
+}

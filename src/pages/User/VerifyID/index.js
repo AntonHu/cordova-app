@@ -117,7 +117,7 @@ class VerifyID extends React.Component {
   state = {
     username: '',
     id: '',
-    contractorCode: '',
+    contractorCode: '',// 2018.10.8 拿掉代理商编码的输入框
     idPositive: '',
     idNegative: '',
     idHandheld: '',
@@ -313,15 +313,15 @@ class VerifyID extends React.Component {
             >
               <span className="h3 main-text">身份证号</span>
             </InputItem>
-            <InputItem
-              placeholder="没有可不填"
-              clear
-              onChange={this.changeState('contractorCode')}
-              value={contractorCode}
-              labelNumber={5}
-            >
-              <span className="h3 main-text">代理商编码</span>
-            </InputItem>
+            {/*<InputItem*/}
+              {/*placeholder="没有可不填"*/}
+              {/*clear*/}
+              {/*onChange={this.changeState('contractorCode')}*/}
+              {/*value={contractorCode}*/}
+              {/*labelNumber={5}*/}
+            {/*>*/}
+              {/*<span className="h3 main-text">代理商编码</span>*/}
+            {/*</InputItem>*/}
             <div className="tips-box">
               <div className="title">* 上传证件材料</div>
               您的照片仅用于审核，我们将为您严格保密，请注意证件上的信息无遮挡，清晰可识别

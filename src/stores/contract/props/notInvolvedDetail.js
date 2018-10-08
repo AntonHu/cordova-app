@@ -14,7 +14,7 @@ class NotInvolvedDetail {
 
   // 申购份数
   @observable
-  purchaseCount = 1;
+  purchaseCount = '1';
 
   // 申购Id，申购后返回，用于确认付款
   @observable
@@ -33,7 +33,7 @@ class NotInvolvedDetail {
   // goBack的时候，重置store
   @action
   reset = () => {
-    this.purchaseCount = 1;
+    this.purchaseCount = '1';
     this.purchaseId = '';
     this.isPurchasing = false;
     this.isConfirmPaying = false;
@@ -119,14 +119,14 @@ class NotInvolvedDetail {
   // 点击申购的时候，输入申购份数
   @action
   updatePurchaseCount = share => {
-    this.purchaseCount = share;
+    this.purchaseCount = share + '';
   };
 
   // 申购总金额(computed)
   @computed
   get purchaseAmount() {
     return (
-      (this.projectDetail.detail.minInvestmentAmount || 0) * this.purchaseCount
+      (this.projectDetail.detail.minInvestmentAmount || 0) * parseInt(this.purchaseCount || '0')
     );
   }
 }

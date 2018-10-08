@@ -17,6 +17,7 @@ import ActivityCard from './ActivityCard/ActivityCard';
 import ContractProjectItem from './ContractProjectItem';
 import OrangeGradientBtn from './OrangeGradientBtn';
 import PlantInfoItem from './PlantInfoItem';
+import Stepper from './Stepper';
 
 export {
   BlueBox,
@@ -37,5 +38,6 @@ export {
   ActivityCard,
   ContractProjectItem,
   OrangeGradientBtn,
-  PlantInfoItem
+  PlantInfoItem,
+  Stepper
 };
