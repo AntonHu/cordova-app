@@ -1,0 +1,34 @@
+@import '../../../../styles/common';
+
+._operation-info {
+  .operation-accordion {
+    &::before {
+      background-color: transparent!important;
+    }
+    .am-accordion-item {
+      .am-accordion-content-box::after {
+        background-color: transparent!important;
+      }
+      .am-accordion-header {
+        text-align: left;
+        font-size: @h4;
+        color: @main-text-color;
+        &::after {
+          background-color: transparent!important;
+        }
+      }
+    }
+  }
+
+  .picture {
+    border-radius: unset!important;
+    width: 100%!important;
+    height: auto!important;
+  }
+  .picture-empty-element {
+    height: 300 * @px;
+    line-height: 300 * @px;
+    color: @screen-text-color;
+    background-color: @white-grey;
+  }
+}
