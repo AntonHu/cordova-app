@@ -2,7 +2,7 @@ import React from 'react';
 import { Icon, Tabs, WhiteSpace } from 'antd-mobile';
 import PropTypes from 'prop-types';
 import './index.less';
-import { TRANSFER_STATUS_CODE } from "../../../../utils/variable";
+import { TRANSFER_STATUS_CODE } from '../../../../utils/variable';
 
 /**
  * 转让历史的item组件
@@ -14,12 +14,10 @@ class TransferHistory extends React.PureComponent {
     status: 0, //支付状态
     count: 0, //份数
     price: 0, //价格
-    sellerName: 'XXX', //卖家姓名
-    openBank: 'XXX', //开户行
-    bankAccount: 'XXX', //银行账户
-    sellerContact: 'XXX', //卖家联系方式
-    confirmPay: () => {}, //确认打款
-    cancelPay: () => {}, //取消打款
+    sellerName: '', //卖家姓名
+    openBank: '', //开户行
+    bankAccount: '', //银行账户
+    sellerContact: '', //卖家联系方式
     isBuyer: false //用户相对于当前转让的身份，是卖家还是买家
   };
 
@@ -32,8 +30,6 @@ class TransferHistory extends React.PureComponent {
     openBank: PropTypes.string.isRequired,
     bankAccount: PropTypes.string.isRequired,
     sellerContact: PropTypes.string.isRequired,
-    confirmPay: PropTypes.func,
-    cancelPay: PropTypes.func,
     isBuyer: PropTypes.bool
   };
 
@@ -64,71 +60,55 @@ class TransferHistory extends React.PureComponent {
       openBank,
       bankAccount,
       sellerContact,
-      confirmPay,
-      cancelPay,
       isBuyer
     } = this.props;
     //根据status控制状态的样式
-    const isSure = status === '' ? true : false;
     const roleText = isBuyer ? '卖家' : '买家';
+    console.log(this.props);
     return (
       <div className="transfer-history-item">
         <div className="item-top">
-          <span className="project-name">{projectName}</span>
-          <span className="noPay">状态：{this.getStatusText(status)}</span>
+          <span className="project-name">
+            <span className="top-transfer">转</span>
+            {projectName}
+          </span>
+          <span className="noPay">
+            状态：
+            {this.getStatusText(status)}
+          </span>
         </div>
         {/*详细信息*/}
         <div className="item-detail">
-          <div className="detail-row">
-            <span className="detail-font">
-              份数：
-              {count}
-            </span>
-            <span className="detail-font">
-              价格：
-              {price}
-            </span>
+          <div className="share-money">
+            <span className="share-money-count">￥{price || '0'}</span>
           </div>
-          <div className="detail-row">
-            <span className="detail-font">
-              {roleText}姓名：
-              {sellerName}
-            </span>
-            <span className="detail-font">
-              开户行：
-              {openBank}
-            </span>
-          </div>
-          <div className="detail-row">
-            <span className="detail-font">
-              银行账户：
-              {bankAccount}
-            </span>
-            <span className="detail-font">
-              {roleText}联系方式：
-              {sellerContact}
-            </span>
+
+          <div className="item-per-info">
+            <div className="item-per-detail-info">
+              <span className="detail-info-text-key">买家</span>
+              <span className="detail-info-text-value">{'暂无信息'}</span>
+            </div>
+            <div className="item-per-detail-info">
+              <span className="detail-info-text-key">联系方式</span>
+              <span className="detail-info-text-value">
+                {sellerContact || '暂无信息'}
+              </span>
+            </div>
+            <div className="item-per-detail-info">
+              <span className="detail-info-text-key">开户行</span>
+              <span className="detail-info-text-value">
+                {openBank || '暂无信息'}
+              </span>
+            </div>
+            <div className="item-per-detail-info">
+              <span className="detail-info-text-key">银行账户</span>
+              <span className="detail-info-text-value">
+                {bankAccount || '暂无信息'}
+              </span>
+            </div>
           </div>
         </div>
-
-        <div className="item-bottom">
-          {
-            this.props.children
-          }
-          {/*{isSure ? (*/}
-            {/*<span className="hasPay">已经支付</span>*/}
-          {/*) : (*/}
-            {/*<div>*/}
-              {/*<span className="pay-money" onClick={confirmPay}>*/}
-                {/*确认打款*/}
-              {/*</span>*/}
-              {/*<span className="hasPay" onClick={cancelPay}>*/}
-                {/*取消转让*/}
-              {/*</span>*/}
-            {/*</div>*/}
-          {/*)}*/}
-
-        </div>
+        <div className="item-bottom">{this.props.children}</div>
       </div>
     );
   }

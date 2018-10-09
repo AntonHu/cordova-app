@@ -1,11 +1,32 @@
 @import '../../../../styles/common';
 
 .transfer-history-item {
-  margin: 20 * @px 20 * @px;
   background-color: #fff;
   overflow: hidden;
+  box-sizing: border-box;
+  margin: 20 * @px 20 * @px;
   .item-top {
-    margin: 55 * @px 30 * @px;
+    //margin: 20 * @px 20 * @px;
+    //margin: 55 * @px 30 * @px;
+    height: 100 * @px;
+    line-height: 100 * @px;
+    padding: 0 41 * @px;
+    box-sizing: border-box;
+    border-bottom: 1px solid @icon-color;
+    display: flex;
+    justify-content: space-between;
+    .top-transfer {
+      border: 1px solid @screen-text-color;
+      box-sizing: border-box;
+      height: 38 * @px;
+      display: inline-block;
+      text-align: center;
+      width: 38 * @px;
+      line-height: 34 * @px;
+      border-radius: 19 * @px;
+      margin-right: 20 * @px;
+      font-size: @h3;
+    }
     .project-name {
       color: #333333;
       font-size: 34 * @px;
@@ -14,6 +35,10 @@
       display: inline-block;
       width: 50%;
       text-align: left;
+      width: 500 * @px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .hasPay {
       color: #0eac81;
@@ -35,21 +60,41 @@
     }
   }
   .item-detail {
-    padding: 0 30 * @px;
-    border-bottom: 2px solid #f7f7f7;
-    padding-bottom: 44 * @px;
-    .detail-row {
-      display: flex;
-      justify-content: space-between;
-      .detail-font {
-        width: 50%;
-        text-align: left;
-        margin-top: 20 * @px;
-        color: #333;
-        font-size: 24 * @px;
-        font-family: PingFang-SC-Regular;
-        font-weight: 400;
-        word-break: break-all;
+    padding: 0 30 * @px 44 * @px 30 * @px;
+    border-bottom: 1px solid @icon-color;
+    height: 293 * @px;
+    .share-money {
+      height: 102 * @px;
+      line-height: 102 * @px;
+      text-align: left;
+      .share-money-count {
+        color: @annual-rate-color;
+        font-size: @h1;
+        font-family: PingFang-SC-Medium;
+        font-weight: 500;
+      }
+    }
+    .item-per-info {
+      height: 149 * @px;
+      box-sizing: border-box;
+      .item-per-detail-info {
+        display: flex;
+        justify-content: space-between;
+        height: 32 * @px;
+        line-height: 32 * @px;
+        margin-bottom: 5 * @px;
+        .detail-info-text-key {
+          color: @screen-text-color;
+          font-size: @h5;
+          font-family: PingFang-SC-Medium;
+          font-weight: 500;
+        }
+        .detail-info-text-value {
+          color: @main-text-color;
+          font-size: @h5;
+          font-family: PingFang-SC-Medium;
+          font-weight: 500;
+        }
       }
     }
   }

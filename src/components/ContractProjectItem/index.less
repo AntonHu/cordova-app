@@ -1,26 +1,80 @@
-@import "../../styles/common";
+@import '../../styles/common';
 
 .contract-project-item {
   width: @contract-item-width;
-  height: 350 * @px;
+  height: 360 * @px;
   background: @white-text-color;
-  padding: 40 * @px 30 * @px;
   position: relative;
   box-sizing: border-box;
+  border-radius: 10 * @px;
+  .project-item-content {
+    display: flex;
+    padding: 30 * @px 30 * @px;
+    justify-content: space-between;
+    .project-item-picture {
+      width: 226 * @px;
+      height: 205 * @px;
+    }
+    .project-item-info {
+      flex-grow: 2;
+      text-align: left;
+      padding-left: 40 * @px;
+      position: relative;
+      .item-title {
+        font-size: 32 * @px;
+        margin: 10 * @px 0 13 * @px 0;
+        display: inline-block;
+        color: @main-text-color;
+        font-family: PingFang-SC-Medium;
+        font-weight: 500;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .item-detail-info {
+        font-size: @h5;
+        display: inline-block;
+        margin-top: 10 * @px;
+        color: @screen-text-color;
+        font-family: PingFang-SC-Medium;
+        font-weight: 500;
+      }
+      .item-money {
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 28 * @px;
+        .total-money {
+          font-size: @h1;
+          color: @annual-rate-color;
+          font-family: PingFang-SC-Medium;
+          font-weight: 500;
+        }
+        .current-progress {
+          color: @main-text-color;
+          font-size: @h5;
+        }
+      }
+    }
+  }
   .progress-box {
-    width: @contract-item-width - (2 * 30 * @px);
-    top: 40 * @px;
-    position: absolute;
+    //width: @contract-item-width - (2 * 30 * @px);
+    // top: 40 * @px;
+    // position: absolute;
     display: flex;
     font-size: @h5;
     color: @main-text-color;
     align-items: center;
+    position: relative;
     .am-progress-outer {
       //width: 400 * @px;
       flex: 1;
-      margin-right: 20 * @px;
-      background-color: #DDEDE9;
+      //margin-right: 20 * @px;
+      background-color: #ddede9;
       .am-progress-bar {
+        width: 100%;
+        box-sizing: border-box;
         border: 5 * @px solid @main-color;
         border-radius: 5 * @px;
       }
@@ -34,60 +88,33 @@
 
       //background: @screen-text-color;
     }
-  }
-
-  .info-box {
-    display: flex;
-    margin-top: 73 * @px;
-    text-align: left;
-    .annul-box {
-      color: @annual-rate-color;
-      .title {
-        font-size: @h7;
-      }
-      .number {
-        font-size: 54 * @px;
-        font-weight: 500;
-        margin-top: 25 * @px;
-        line-height: 1;
-      }
-    }
-    .name-box {
-      margin-left: 73 * @px;
+    .current-progress {
+      position: absolute;
+      right: 20 * @px;
+      top: 20 * @px;
       color: @main-text-color;
-      .project-name {
-        font-size: @h2;
-      }
-      .capacity {
-        margin-top: 30 * @px;
-        font-size: @h5;
-      }
+      font-size: @h5;
     }
   }
-
-
-
-  .bottom-box {
-    position: absolute;
-    bottom: 40 * @px;
-    left: 15 * @px;
+  .project-item-bottom {
     display: flex;
-    width: @contract-item-width - 15 * @px * 2;
-    height: 62 * @px;
-    justify-content: space-between;
+    justify-content: left;
     align-items: center;
-    color: @main-text-color;
-    font-size: @h4;
-    padding: 22 * @px 15 * @px;
-    background: @white-grey;
-    margin-top: 46 * @px;
-    box-sizing: border-box;
-    .enterprise-name {
-
+    height: 85 * @px;
+    line-height: 85 * @px;
+    padding: 0 30 * @px;
+    font-size: @h6;
+    color: @screen-text-color;
+    .bottom-font-size-time {
+      font-size: @h7;
+      margin-right: 10 * @px;
     }
-    .created-at {
-
+    .bottom-font-size-count {
+      font-size: @h6;
+      margin-right: 10 * @px;
+    }
+    .bottom-count {
+      margin-left: 25 * @px;
     }
   }
-
 }

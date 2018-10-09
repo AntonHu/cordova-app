@@ -1,18 +1,30 @@
 import React from 'react';
+import { withRouter, Link } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import { toJS, reaction } from 'mobx';
 import {
+  Title,
   PageWithHeader,
-  OrangeGradientBtn,
-  Stepper
+  Picture,
+  Rank,
+  OrangeGradientBtn
 } from '../../../components';
 import {
+  Icon,
+  Tabs,
+  WhiteSpace,
   Modal,
   List,
-  ActivityIndicator
+  Stepper,
+  ActivityIndicator,
+  Toast
 } from 'antd-mobile';
+import { getLocalStorage } from '../../../utils/storage';
+import Tloader from 'react-touch-loader';
 import PullToRefresh from 'pulltorefreshjs';
 import { ProjectDetail } from '../component';
+import { mockDetail } from './mock';
+import { BottomSheet, TransferStationInfo } from '../component';
 import './index.less';
 import { VERIFY_STATUS } from '../../../utils/variable';
 
@@ -26,7 +38,8 @@ class NotInvolvedDetail extends React.Component {
   state = {
     isModalVisible: false,
     loading: false,
-    loadingText: ''
+    loadingText: '',
+    isShow: false
   };
 
   componentDidMount() {
@@ -84,7 +97,7 @@ class NotInvolvedDetail extends React.Component {
     if (!this.props.keyPair.showHasKey(this.props)) {
       return;
     }
-
+    
     if (this.props.userStore.isKycInChain === VERIFY_STATUS.UNAUTHORIZED) {
       Modal.alert('您尚未进行身份认证', '在"我的" => "完善信息"中去认证', [
         { text: '知道了' }
@@ -141,13 +154,26 @@ class NotInvolvedDetail extends React.Component {
     this.setState({ isModalVisible: true });
   };
 
+  //显示底部选择购买组件
+  onShow = () => {
+    this.setState({ isShow: true });
+  };
+  //关闭底部选择购买组件
+  onClose = () => {
+    this.setState({ isShow: false });
+  };
+  //点击底部确认
+  onConfirm = (e, resultJson) => {
+    console.log(e, resultJson);
+  };
+
   render() {
     const { notInvolvedDetail } = this.props.contractStore;
     const { purchaseCount, purchaseAmount } = notInvolvedDetail;
     const projectDetail = notInvolvedDetail.projectDetail.detail;
     const historyList = notInvolvedDetail.projectDetail.historyList;
 
-    const { loadingText, loading, isModalVisible } = this.state;
+    const { loadingText, loading, isModalVisible, isShow } = this.state;
     return (
       <PageWithHeader
         title={'合约电站'}
@@ -183,8 +209,10 @@ class NotInvolvedDetail extends React.Component {
             wrap
             extra={
               <Stepper
+                style={{ width: '100%', minWidth: '100px' }}
+                showNumber
                 max={projectDetail.availableShare || 0}
-                min={1}
+                min={0}
                 value={purchaseCount}
                 onChange={notInvolvedDetail.updatePurchaseCount}
               />
@@ -196,6 +224,13 @@ class NotInvolvedDetail extends React.Component {
             申购
           </OrangeGradientBtn>
         </Modal>
+        <BottomSheet
+          isShow={isShow}
+          onShow={this.onShow}
+          onClose={this.onClose}
+          onConfirm={this.onConfirm}
+          perCountMoney={3000}
+        />
       </PageWithHeader>
     );
   }

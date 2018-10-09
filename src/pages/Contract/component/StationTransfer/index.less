@@ -4,46 +4,89 @@
   margin: 20 * @px 20 * @px;
   background-color: #fff;
   overflow: hidden;
-  .station-row {
+  height: 400 * @px;
+  .transfer-item-top {
+    height: 104 * @px;
     display: flex;
     justify-content: space-between;
-    position: relative;
-    margin: 38 * @px 30 * @px 0 30 * @px;
-    .money-font {
-      color: rgba(235, 45, 45, 1);
-      font-family: PingFang-SC-Medium;
+    align-items: center;
+    padding: 0 46 * @px;
+    .item-picture-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .seller-name {
+        font-size: 24 * @px;
+        color: @main-text-color;
+        margin-left: 20 * @px;
+        font-family: PingFang-SC-Medium;
+        font-weight: 500;
+      }
     }
-    .money {
-      font-size: 54 * @px;
+    .transfer-money {
+      color: @annual-rate-color;
+      font-size: @h1;
       font-family: PingFang-SC-Medium;
-      color: rgba(235, 45, 45, 1);
+      font-weight: 500;
     }
-    .project-name {
-      font-size: 34 * @px;
+    .del-money {
+      color: @screen-text-color;
+      font-size: @h5;
       font-family: PingFang-SC-Medium;
-      color: #333333;
-      line-height: 54 * @px;
+      font-weight: 500;
     }
   }
-  .station-row-two {
+  .transfer-item-content {
+    width: 579 * @px;
+    height: 190 * @px;
+    background-color: #f4f4f4;
+    margin-left: 86 * @px;
+    margin-bottom: 31 * @px;
+    .item-key-box {
+      text-align: left;
+      margin: 0 45 * @px;
+      display: flex;
+      justify-content: space-between;
+      .project-name {
+        font-size: @h2;
+        font-family: PingFang-SC-Medium;
+        font-weight: 500;
+        color: @main-text-color;
+        display: inline-block;
+        margin: 31 * @px 0 20 * @px 0;
+      }
+      .project-item-text {
+        color: @screen-text-color;
+        font-family: PingFang-SC-Medium;
+        font-weight: 500;
+        display: inline-block;
+        margin-bottom: 10 * @px;
+        font-size: @h5;
+      }
+    }
+  }
+  .transfer-item-bottom {
+    height: 75 * @px;
     display: flex;
     justify-content: space-between;
-    position: relative;
-    margin: 38 * @px 30 * @px;
-    background-color: #f7f7f7;
-    .row-two-font {
-      font-size: 24 * @px;
-      font-family: PingFang-SC-Regular;
-      font-weight: 400;
-      color: #333333;
-      line-height: 62 * @px;
-      height: 62 * @px;
+    align-items: center;
+    padding: 0 45 * @px;
+    border-top: 1px solid @icon-color;
+    .bottom-time {
+      color: @screen-text-color;
+      font-size: @h6;
+      .time-size {
+        font-size: 18 * @px;
+        margin-right: 20 * @px;
+      }
     }
-    .capacity {
-      margin-left: 20 * @px;
-    }
-    .profit {
-      margin-right: 20 * @px;
+    .bottom-count {
+      color: @screen-text-color;
+      font-size: @h6;
+      .count-size {
+        margin-right: 20 * @px;
+        margin-top: 5 * @px;
+      }
     }
   }
 }
