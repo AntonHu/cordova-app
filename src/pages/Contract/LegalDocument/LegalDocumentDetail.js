@@ -46,19 +46,29 @@ class LegalDocumentDetail extends React.Component{
     return (
       <PageWithHeader title={docName || '法律文书'} id="page-legal-document-detail">
         <div className="content-wrap">
+          {/*{*/}
+            {/*docUrl &&*/}
+            {/*<Document*/}
+              {/*file={ { url: this.getPDFUrl(docUrl) } }*/}
+              {/*onLoadSuccess={ this.onDocumentLoad }*/}
+            {/*>*/}
+              {/*{*/}
+                {/*this.state.totalPage.map((v, idx) =>*/}
+                  {/*<Page pageNumber={ idx + 1 } />*/}
+                {/*)*/}
+              {/*}*/}
+
+            {/*</Document>*/}
+          {/*}*/}
           {
             docUrl &&
-            <Document
-              file={ { url: this.getPDFUrl(docUrl) } }
-              onLoadSuccess={ this.onDocumentLoad }
-            >
-              {
-                this.state.totalPage.map((v, idx) =>
-                  <Page pageNumber={ idx + 1 } />
-                )
-              }
-
-            </Document>
+            <iframe
+              src={this.getPDFUrl(docUrl)}
+              seamless="seamless"
+              frameBorder={0}
+              width="100%"
+              height="100%"
+            />
           }
 
 
