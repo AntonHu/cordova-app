@@ -425,6 +425,15 @@ module.exports = [
     "clobbers": [
       "plugins.crop"
     ]
+  },
+  {
+    "id": "cordova-plugin-inappbrowser.inappbrowser",
+    "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+    "pluginId": "cordova-plugin-inappbrowser",
+    "clobbers": [
+      "cordova.InAppBrowser.open",
+      "window.open"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -449,7 +458,8 @@ module.exports.metadata =
   "phonegap-plugin-barcodescanner": "8.0.0",
   "cordova-plugin-splashscreen": "5.0.2",
   "cordova-plugin-network-information": "2.0.1",
-  "cordova-plugin-crop": "0.3.1"
+  "cordova-plugin-crop": "0.3.1",
+  "cordova-plugin-inappbrowser": "3.0.0"
 };
 // BOTTOM OF METADATA
 });

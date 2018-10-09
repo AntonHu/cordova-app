@@ -35,7 +35,18 @@
     <true/>
     <key>NSAppTransportSecurity</key>
     <dict>
+      <key>NSExceptionDomains</key>
+      <dict>
+        <key>api.thundersdata.com</key>
+        <dict/>
+      </dict>
       <key>NSAllowsArbitraryLoads</key>
+      <true/>
+      <key>NSAllowsArbitraryLoadsInWebContent</key>
+      <true/>
+      <key>NSAllowsArbitraryLoadsForMedia</key>
+      <true/>
+      <key>NSAllowsLocalNetworking</key>
       <true/>
     </dict>
     <key>NSMainNibFile</key>

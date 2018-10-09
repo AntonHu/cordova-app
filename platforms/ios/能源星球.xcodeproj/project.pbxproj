@@ -108,6 +108,7 @@
 		FE059B0D291B42C49ED16F1E /* CDVSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8064C7B2434D799C1BFE24 /* CDVSplashScreen.m */; };
 		FE6DDD11E1074E54B6974864 /* PECropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2285044F472C4C50B034FC22 /* PECropViewController.m */; };
 		FF9263313EDE4ACAA5C637F6 /* aeskey.c in Sources */ = {isa = PBXBuildFile; fileRef = 9C0EA20A1CBC40E18D15FDE7 /* aeskey.c */; };
+		E12BE6936E104D088F60D631 /* CDVInAppBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = E599D8BAB4A440D1B700D415 /* CDVInAppBrowser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -334,6 +335,8 @@
 		FCD7314039F84EA2A606D8EB /* JANALYTICSEventObject.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = JANALYTICSEventObject.h; path = "cordova-plugin-janalytics/JANALYTICSEventObject.h"; sourceTree = "<group>"; };
 		FD86D5542C9E418597F983F6 /* CodePushJWT.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CodePushJWT.h; path = "cordova-plugin-code-push/CodePushJWT.h"; sourceTree = "<group>"; };
 		FF320943CC8A430490E249EA /* CDVFileTransfer.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVFileTransfer.m; path = "cordova-plugin-file-transfer/CDVFileTransfer.m"; sourceTree = "<group>"; };
+		E599D8BAB4A440D1B700D415 /* CDVInAppBrowser.m */ = {isa = PBXFileReference; name = "CDVInAppBrowser.m"; path = "cordova-plugin-inappbrowser/CDVInAppBrowser.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		62F5DE96F447440797736934 /* CDVInAppBrowser.h */ = {isa = PBXFileReference; name = "CDVInAppBrowser.h"; path = "cordova-plugin-inappbrowser/CDVInAppBrowser.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -637,6 +640,8 @@
 				25A081BE1AEC41F4A91D20A9 /* PECropViewController.h */,
 				8492C04B1B92409FB021C3E8 /* PEResizeControl.h */,
 				564E1588E4CE4FFA876C86B8 /* UIImage+PECrop.h */,
+				E599D8BAB4A440D1B700D415 /* CDVInAppBrowser.m */,
+				62F5DE96F447440797736934 /* CDVInAppBrowser.h */,
 			);
 			name = Plugins;
 			path = "能源星球/Plugins";
@@ -839,6 +844,7 @@
 				FE6DDD11E1074E54B6974864 /* PECropViewController.m in Sources */,
 				E82D6D0C22D64D218F4DC6D9 /* PEResizeControl.m in Sources */,
 				57BBF69FD2F648E9AFCDA14D /* UIImage+PECrop.m in Sources */,
+				E12BE6936E104D088F60D631 /* CDVInAppBrowser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
