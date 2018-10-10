@@ -8,22 +8,26 @@ import { toJS } from 'mobx';
 const Item = List.Item;
 
 // 电站信息组件
-// TODO: 材料计划 跳转
-// TODO: 电站设计图 跳转
-// TODO: 房屋租赁协议 展开
+// 材料计划 展开
+// 电站设计图 展开
+// 房屋租赁协议 展开
 class StationInfo extends React.PureComponent {
   static propTypes = {
-    projectDetail: PropTypes.object.isRequired
+    projectDetail: PropTypes.object.isRequired,
+    siteInfo: PropTypes.object.isRequired
   };
 
   render() {
-    const { projectDetail } = this.props;
+    const { projectDetail, transferInfo, siteInfo } = this.props;
     const fileList = projectDetail.fileList || [];
-    const materialOverviewList = projectDetail.materialOverviewList || [];
+    // const materialOverviewList = projectDetail.materialOverviewList || [];
     const houseRent =
       fileList.find(item => item.fileTypeName === '房屋租赁协议') || {};
     const stationDesign =
       fileList.find(item => item.fileTypeName === '电站设计图') || {};
+    const gridConnectedFileList = siteInfo.gridConnectedFileList || [];
+    const materialOverviewList = siteInfo.materialOverviewList || [];
+    const constructionFileList = siteInfo.constructionFileList || [];
 
     return (
       <div className="_station-info">
@@ -31,12 +35,7 @@ class StationInfo extends React.PureComponent {
           <Item extra={`${projectDetail.powerStationCapacity || 0}kW`}>
             电站容量
           </Item>
-          <Item
-            extra={`成团后${projectDetail.estimatedPowerPlantConstructionCycle ||
-              '-'}天`}
-          >
-            电站建设预计周期
-          </Item>
+
           <Item extra={`${projectDetail.address || '-'}`}>电站位置</Item>
           <Item extra={`${projectDetail.minInvestmentAmount || 0}元`}>
             最低购买金额
@@ -52,7 +51,7 @@ class StationInfo extends React.PureComponent {
             其他配件成本
           </Item>
           <Accordion className="station-accordion">
-            <Accordion.Panel header="材料计划">
+            <Accordion.Panel header="原材料采购">
               {materialOverviewList.map(item => (
                 <div className="material-item" key={item.id}>
                   <div className="material-name">
@@ -99,6 +98,42 @@ class StationInfo extends React.PureComponent {
                   <div className={props.className}>该文件非图片，无法预览</div>
                 )}
               />
+            </Accordion.Panel>
+          </Accordion>
+          <Accordion className="station-accordion">
+            <Accordion.Panel header="电站建设文件">
+              {constructionFileList.map(item => (
+                <div className="file-with-name">
+                  <div className="file-name">{item.fileTypeName || ''}</div>
+                  <Picture
+                    key={item.id}
+                    src={item.ossPath || ''}
+                    emptyElement={props => (
+                      <div className={props.className}>
+                        该文件非图片，无法预览
+                      </div>
+                    )}
+                  />
+                </div>
+              ))}
+            </Accordion.Panel>
+          </Accordion>
+          <Accordion className="station-accordion">
+            <Accordion.Panel header="并网和备案文件">
+              {gridConnectedFileList.map(item => (
+                <div className="file-with-name">
+                  <div className="file-name">{item.fileTypeName || ''}</div>
+                  <Picture
+                    key={item.id}
+                    src={item.ossPath || ''}
+                    emptyElement={props => (
+                      <div className={props.className}>
+                        该文件非图片，无法预览
+                      </div>
+                    )}
+                  />
+                </div>
+              ))}
             </Accordion.Panel>
           </Accordion>
         </List>

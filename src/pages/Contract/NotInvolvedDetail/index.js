@@ -9,19 +9,7 @@ import {
   Rank,
   OrangeGradientBtn
 } from '../../../components';
-import {
-  Icon,
-  Tabs,
-  WhiteSpace,
-  Modal,
-  List,
-  Stepper,
-  ActivityIndicator,
-  Toast
-} from 'antd-mobile';
-import { getLocalStorage } from '../../../utils/storage';
-import Tloader from 'react-touch-loader';
-import PullToRefresh from 'pulltorefreshjs';
+import { Icon, Tabs, WhiteSpace, Modal, ActivityIndicator } from 'antd-mobile';
 import { ProjectDetail } from '../component';
 import { mockDetail } from './mock';
 import { BottomSheet, TransferStationInfo } from '../component';
@@ -169,9 +157,11 @@ class NotInvolvedDetail extends React.Component {
 
   render() {
     const { notInvolvedDetail } = this.props.contractStore;
-    const { purchaseCount, purchaseAmount } = notInvolvedDetail;
-    const projectDetail = notInvolvedDetail.projectDetail.detail;
-    const historyList = notInvolvedDetail.projectDetail.historyList;
+    const {
+      purchaseCount,
+      purchaseAmount,
+      projectDetail: { detail = {}, siteInfo = {}, historyList = [] } = {}
+    } = notInvolvedDetail;
 
     const { loadingText, loading, isModalVisible, isShow } = this.state;
     return (
@@ -181,15 +171,16 @@ class NotInvolvedDetail extends React.Component {
         footer={
           <OrangeGradientBtn
             onClick={this.onPurchase}
-            disabled={projectDetail.availableShare <= 0}
+            disabled={detail.availableShare <= 0}
           >
             申购
           </OrangeGradientBtn>
         }
       >
         <ProjectDetail
-          projectDetail={projectDetail}
+          projectDetail={detail}
           historyList={toJS(historyList)}
+          siteInfo={toJS(siteInfo)}
         />
 
         <ActivityIndicator toast text={loadingText} animating={loading} />
@@ -203,12 +194,12 @@ class NotInvolvedDetail extends React.Component {
           className="purchase-modal"
         >
           <div className="amount">{`${purchaseAmount}元`}</div>
-          <div className="min-invest">{`申购标准：${projectDetail.minInvestmentAmount ||
+          <div className="min-invest">{`申购标准：${detail.minInvestmentAmount ||
             0}元每份`}</div>
           <div className="invest-stepper">
             申购数
             <Stepper
-              max={projectDetail.availableShare || 0}
+              max={detail.availableShare || 0}
               min={1}
               value={purchaseCount}
               onChange={notInvolvedDetail.updatePurchaseCount}

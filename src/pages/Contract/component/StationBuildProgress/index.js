@@ -17,6 +17,7 @@ const AccordionHeader = (props) => {
 };
 
 // 电站建设组件
+// todo:已不用，待删除
 class StationBuildProgress extends React.PureComponent {
   static propTypes = {
     siteInfo: PropTypes.object.isRequired

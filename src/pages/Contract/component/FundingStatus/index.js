@@ -4,6 +4,7 @@ import './index.less';
 import Picture from "../../../../components/Picture";
 
 // 项目成团组件
+// todo:已不用，待删除
 class FundingStatus extends React.PureComponent {
   static propTypes = {
     groupInfo: PropTypes.object.isRequired,

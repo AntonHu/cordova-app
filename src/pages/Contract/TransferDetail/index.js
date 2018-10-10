@@ -1,29 +1,10 @@
 import React from 'react';
-import { withRouter, Link } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import { toJS, reaction } from 'mobx';
-import {
-  Title,
-  PageWithHeader,
-  Picture,
-  Rank,
-  OrangeGradientBtn
-} from '../../../components';
-import {
-  Icon,
-  Tabs,
-  WhiteSpace,
-  Modal,
-  List,
-  Stepper,
-  ActivityIndicator,
-  Toast
-} from 'antd-mobile';
-import { getLocalStorage } from '../../../utils/storage';
-import Tloader from 'react-touch-loader';
-import PullToRefresh from 'pulltorefreshjs';
+import { PageWithHeader, OrangeGradientBtn } from '../../../components';
+import { Modal, List, ActivityIndicator } from 'antd-mobile';
 import { ProjectDetail } from '../component';
-import { BottomSheet, TransferStationInfo } from '../component';
+import { TransferStationInfo } from '../component';
 import './index.less';
 import { VERIFY_STATUS } from '../../../utils/variable';
 
@@ -135,9 +116,11 @@ class TransferDetail extends React.Component {
 
   render() {
     const { transferDetail } = this.props.contractStore;
-    const { transferInfo } = transferDetail;
-    const projectDetail = transferDetail.projectDetail.detail;
-    const historyList = transferDetail.projectDetail.historyList;
+    const {
+      transferInfo,
+      projectDetail: { detail = {}, siteInfo = {}, historyList = [] } = {}
+    } = transferDetail;
+
     const { loadingText, loading, isModalVisible } = this.state;
     return (
       <PageWithHeader
@@ -157,9 +140,10 @@ class TransferDetail extends React.Component {
           purchaseNumber={transferInfo.purchaseNumber || 0}
         />
         <ProjectDetail
-          projectDetail={projectDetail}
+          projectDetail={detail}
           historyList={toJS(historyList)}
           transferInfo={transferInfo}
+          siteInfo={toJS(siteInfo)}
         />
         <ActivityIndicator toast text={loadingText} animating={loading} />
         <Modal
