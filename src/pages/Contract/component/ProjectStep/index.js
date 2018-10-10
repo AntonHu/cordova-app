@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './index.less';
 
 const tabs = [
-  { title: '申购成功' },
+  { title: '项目信息' },
   { title: '发电收益' },
 ];
 
