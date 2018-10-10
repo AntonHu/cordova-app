@@ -9,7 +9,14 @@ import {
   Rank,
   OrangeGradientBtn
 } from '../../../components';
-import { Icon, Tabs, WhiteSpace, Modal, ActivityIndicator } from 'antd-mobile';
+import {
+  Icon,
+  Tabs,
+  WhiteSpace,
+  Modal,
+  ActivityIndicator,
+  Stepper
+} from 'antd-mobile';
 import { ProjectDetail } from '../component';
 import { mockDetail } from './mock';
 import { BottomSheet, TransferStationInfo } from '../component';
