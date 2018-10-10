@@ -119,7 +119,7 @@ class InvolvedDetail extends React.Component {
       '转让',
       `您确定以每份${
         projectDetail.minInvestmentAmount
-      }元的价格，转让${transferCount}份？`,
+        }元的价格，转让${transferCount}份？`,
       [{ text: '取消' }, { text: '确认', onPress: this.makeTransfer }]
     );
   };
@@ -160,10 +160,8 @@ class InvolvedDetail extends React.Component {
       purchaseDetail,
       rejectInfo,
       plantInfo,
+      projectDetail: { detail = {}, siteInfo = {}, historyList = [] } = {}
     } = involvedDetail;
-    const projectDetail = involvedDetail.projectDetail.detail;
-    const siteInfo = involvedDetail.projectDetail.siteInfo;
-    const historyList = involvedDetail.projectDetail.historyList;
     const { isModalVisible, transferCount } = this.state;
     return (
       <PageWithHeader
@@ -172,90 +170,90 @@ class InvolvedDetail extends React.Component {
         rightComponent={
           <Button
             className="to-legal-doc"
-            onClick={() => this.props.history.push('/contract/legalDocument')}
+            onClick={ () => this.props.history.push('/contract/legalDocument') }
           >
             法律文书
           </Button>
         }
         footer={
           <div>
-            {/* 驳回状态下 */
-            rejectInfo.id && (
-              <div className="reject-btn-wrap">
-                <Button onClick={this.toAppeal}>申诉</Button>
-                <OrangeGradientBtn onClick={this.onPurchase}>
-                  重新申购
-                </OrangeGradientBtn>
-              </div>
-            )}
-            {/* 非驳回状态下 */
-            !rejectInfo.id && (
-              <div className="btn-wrap">
-                {/* 支付后 */
-                  purchaseDetail.userStatus >= USER_PROJECT_STATUS_CODE.PAID && (
-                  <Button onClick={this.openTransfer}>我要转让</Button>
-                )}
-                {/* 未支付 */
-                purchaseDetail.userStatus < USER_PROJECT_STATUS_CODE.PAID && (
-                  <Button onClick={this.onPurchase}>已支付</Button>
-                )}
+            { /* 驳回状态下 */
+              rejectInfo.id && (
+                <div className="reject-btn-wrap">
+                  <Button onClick={ this.toAppeal }>申诉</Button>
+                  <OrangeGradientBtn onClick={ this.onPurchase }>
+                    重新申购
+                  </OrangeGradientBtn>
+                </div>
+              ) }
+            { /* 非驳回状态下 */
+              !rejectInfo.id && (
+                <div className="btn-wrap">
+                  { /* 支付后 */
+                    purchaseDetail.userStatus >= USER_PROJECT_STATUS_CODE.PAID && (
+                      <Button onClick={ this.openTransfer }>我要转让</Button>
+                    ) }
+                  { /* 未支付 */
+                    purchaseDetail.userStatus < USER_PROJECT_STATUS_CODE.PAID && (
+                      <Button onClick={ this.onPurchase }>已支付</Button>
+                    ) }
 
-                <Button onClick={this.toAppeal}>我要申诉</Button>
-              </div>
-            )}
+                  <Button onClick={ this.toAppeal }>我要申诉</Button>
+                </div>
+              ) }
           </div>
         }
       >
-        <ProjectStep projectDetail={projectDetail}>
+        <ProjectStep projectDetail={ detail }>
           <React.Fragment>
-            {rejectInfo.id && <RejectInfo info={rejectInfo} />}
+            { rejectInfo.id && <RejectInfo info={ rejectInfo }/> }
             <ProjectDetail
-              projectDetail={projectDetail}
-              historyList={toJS(historyList)}
-              purchaseDetail={purchaseDetail}
-              siteInfo={toJS(siteInfo)}
+              projectDetail={ detail }
+              historyList={ toJS(historyList) }
+              purchaseDetail={ purchaseDetail }
+              siteInfo={ toJS(siteInfo) }
             />
           </React.Fragment>
 
           <PlantInfoItem
-            capacity={plantInfo.powerStationCapacity}
-            plantName={plantInfo.plantName}
+            capacity={ plantInfo.powerStationCapacity }
+            plantName={ plantInfo.plantName }
           />
         </ProjectStep>
 
         <Modal
           popup
-          visible={isModalVisible}
-          onClose={this.closeTransfer}
+          visible={ isModalVisible }
+          onClose={ this.closeTransfer }
           animationType="slide-up"
           maskClosable
           closable
           className="purchase-modal"
         >
-          <div className="amount">{`${transferCount *
-            (projectDetail.minInvestmentAmount || 0)}元`}</div>
-          <div className="min-invest">{`转让标准：${projectDetail.minInvestmentAmount ||
-            0}元每份`}</div>
+          <div className="amount">{ `${transferCount *
+          (detail.minInvestmentAmount || 0)}元` }</div>
+          <div className="min-invest">{ `转让标准：${detail.minInvestmentAmount ||
+          0}元每份` }</div>
           <List.Item
             wrap
             extra={
               <Stepper
-                style={{ width: '100%', minWidth: '100px' }}
+                style={ { width: '100%', minWidth: '100px' } }
                 showNumber
-                max={purchaseDetail.purchaseNumber || 0}
-                min={1}
-                value={transferCount}
-                onChange={transferCount => this.setState({ transferCount })}
+                max={ purchaseDetail.purchaseNumber || 0 }
+                min={ 1 }
+                value={ transferCount }
+                onChange={ transferCount => this.setState({ transferCount }) }
               />
             }
           >
             转让份数
           </List.Item>
-          <OrangeGradientBtn onClick={this.onTransfer}>转让</OrangeGradientBtn>
+          <OrangeGradientBtn onClick={ this.onTransfer }>转让</OrangeGradientBtn>
         </Modal>
         <ActivityIndicator
-          animating={this.state.loading}
-          text={this.state.loadingText}
+          animating={ this.state.loading }
+          text={ this.state.loadingText }
           toast
         />
       </PageWithHeader>

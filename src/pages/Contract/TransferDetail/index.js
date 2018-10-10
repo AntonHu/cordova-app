@@ -123,50 +123,50 @@ class TransferDetail extends React.Component {
 
   render() {
     const { transferDetail } = this.props.contractStore;
-    const { transferInfo } = transferDetail;
-    const projectDetail = transferDetail.projectDetail.detail;
-    const historyList = transferDetail.projectDetail.historyList;
-    const siteInfo = transferDetail.projectDetail.siteInfo;
+    const {
+      transferInfo,
+      projectDetail: { detail = {}, siteInfo = {}, historyList = [] } = {}
+    } = transferDetail;
 
     const { loadingText, loading, isModalVisible } = this.state;
     return (
       <PageWithHeader
-        title={'转让详情'}
+        title={ '转让详情' }
         id="page-transfer-detail"
         footer={
-          <OrangeGradientBtn onClick={this.onPurchase}>购买</OrangeGradientBtn>
+          <OrangeGradientBtn onClick={ this.onPurchase }>购买</OrangeGradientBtn>
         }
       >
         <TransferStationInfo
-          transferTime={transferInfo.transferPublishTime || '无'}
-          transferMan={transferInfo.sellerId || '无'}
-          stationNumber={transferInfo.plantNum || '无'}
-          projectTime={transferInfo.projectFinishTime || '无'}
-          historyProfit={transferInfo.historyIncome || 0}
+          transferTime={ transferInfo.transferPublishTime || '无' }
+          transferMan={ transferInfo.sellerId || '无' }
+          stationNumber={ transferInfo.plantNum || '无' }
+          projectTime={ transferInfo.projectFinishTime || '无' }
+          historyProfit={ transferInfo.historyIncome || 0 }
         />
         <ProjectDetail
-          projectDetail={projectDetail}
-          historyList={toJS(historyList)}
-          transferInfo={transferInfo}
-          siteInfo={toJS(siteInfo)}
+          projectDetail={ detail }
+          historyList={ toJS(historyList) }
+          transferInfo={ transferInfo }
+          siteInfo={ toJS(siteInfo) }
         />
-        <ActivityIndicator toast text={loadingText} animating={loading} />
+        <ActivityIndicator toast text={ loadingText } animating={ loading }/>
         <Modal
           popup
-          visible={isModalVisible}
-          onClose={this.closeModal}
+          visible={ isModalVisible }
+          onClose={ this.closeModal }
           animationType="slide-up"
           maskClosable
           closable
           className="purchase-modal"
         >
-          <div className="amount">{`${transferInfo.amount}元`}</div>
-          <div className="min-invest">{`申购标准：${transferInfo.unitPrice ||
-            0}元每份`}</div>
-          <List.Item wrap extra={transferInfo.purchaseNumber}>
+          <div className="amount">{ `${transferInfo.amount}元` }</div>
+          <div className="min-invest">{ `申购标准：${transferInfo.unitPrice ||
+          0}元每份` }</div>
+          <List.Item wrap extra={ transferInfo.purchaseNumber }>
             购买份数
           </List.Item>
-          <OrangeGradientBtn onClick={this.buyConfirm}>购买</OrangeGradientBtn>
+          <OrangeGradientBtn onClick={ this.buyConfirm }>购买</OrangeGradientBtn>
         </Modal>
       </PageWithHeader>
     );

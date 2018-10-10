@@ -141,54 +141,55 @@ class NotInvolvedDetail extends React.Component {
 
   render() {
     const { notInvolvedDetail } = this.props.contractStore;
-    const { purchaseCount, purchaseAmount } = notInvolvedDetail;
-    const projectDetail = notInvolvedDetail.projectDetail.detail;
-    const siteInfo = notInvolvedDetail.projectDetail.siteInfo;
-    const historyList = notInvolvedDetail.projectDetail.historyList;
+    const {
+      purchaseCount,
+      purchaseAmount,
+      projectDetail: { detail = {}, siteInfo = {}, historyList = [] } = {}
+    } = notInvolvedDetail;
 
     const { loadingText, loading, isModalVisible } = this.state;
     return (
       <PageWithHeader
-        title={'合约电站'}
+        title={ '合约电站' }
         id="page-not-involved-detail"
         footer={
           <OrangeGradientBtn
-            onClick={this.onPurchase}
-            disabled={projectDetail.availableShare <= 0}
+            onClick={ this.onPurchase }
+            disabled={ detail.availableShare <= 0 }
           >
             申购
           </OrangeGradientBtn>
         }
       >
         <ProjectDetail
-          projectDetail={projectDetail}
-          historyList={toJS(historyList)}
-          siteInfo={toJS(siteInfo)}
+          projectDetail={ detail }
+          historyList={ toJS(historyList) }
+          siteInfo={ toJS(siteInfo) }
         />
 
-        <ActivityIndicator toast text={loadingText} animating={loading} />
+        <ActivityIndicator toast text={ loadingText } animating={ loading }/>
         <Modal
           popup
-          visible={isModalVisible}
-          onClose={this.closeModal}
+          visible={ isModalVisible }
+          onClose={ this.closeModal }
           animationType="slide-up"
           maskClosable
           closable
           className="purchase-modal"
         >
-          <div className="amount">{`${purchaseAmount}元`}</div>
-          <div className="min-invest">{`申购标准：${projectDetail.minInvestmentAmount ||
-            0}元每份`}</div>
+          <div className="amount">{ `${purchaseAmount}元` }</div>
+          <div className="min-invest">{ `申购标准：${detail.minInvestmentAmount ||
+          0}元每份` }</div>
           <div className="invest-stepper">
             申购数
             <Stepper
-              max={projectDetail.availableShare || 0}
-              min={1}
-              value={purchaseCount}
-              onChange={notInvolvedDetail.updatePurchaseCount}
+              max={ detail.availableShare || 0 }
+              min={ 1 }
+              value={ purchaseCount }
+              onChange={ notInvolvedDetail.updatePurchaseCount }
             />
           </div>
-          <OrangeGradientBtn onClick={this.toShareConfirm}>
+          <OrangeGradientBtn onClick={ this.toShareConfirm }>
             申购
           </OrangeGradientBtn>
         </Modal>
