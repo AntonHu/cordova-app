@@ -8,10 +8,8 @@ import {
 } from '../../../components';
 import {
   Modal,
-  List,
   ActivityIndicator
 } from 'antd-mobile';
-import PullToRefresh from 'pulltorefreshjs';
 import { ProjectDetail } from '../component';
 import './index.less';
 import { VERIFY_STATUS } from '../../../utils/variable';
@@ -145,6 +143,7 @@ class NotInvolvedDetail extends React.Component {
     const { notInvolvedDetail } = this.props.contractStore;
     const { purchaseCount, purchaseAmount } = notInvolvedDetail;
     const projectDetail = notInvolvedDetail.projectDetail.detail;
+    const siteInfo = notInvolvedDetail.projectDetail.siteInfo;
     const historyList = notInvolvedDetail.projectDetail.historyList;
 
     const { loadingText, loading, isModalVisible } = this.state;
@@ -164,6 +163,7 @@ class NotInvolvedDetail extends React.Component {
         <ProjectDetail
           projectDetail={projectDetail}
           historyList={toJS(historyList)}
+          siteInfo={toJS(siteInfo)}
         />
 
         <ActivityIndicator toast text={loadingText} animating={loading} />

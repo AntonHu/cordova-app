@@ -1,40 +1,25 @@
 import React from 'react';
-import { withRouter, Link } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import { toJS, reaction } from 'mobx';
 import {
-  Title,
   PageWithHeader,
-  Picture,
-  Rank,
   PlantInfoItem
 } from '../../../components';
 import {
-  Icon,
-  Tabs,
-  WhiteSpace,
   Button,
   List,
   Stepper,
   Modal,
   ActivityIndicator
 } from 'antd-mobile';
-import { getLocalStorage } from '../../../utils/storage';
-// import PullToRefresh from 'rmc-pull-to-refresh';
-import Tloader from 'react-touch-loader';
-import PullToRefresh from 'pulltorefreshjs';
 import './index.less';
 import {
   ProjectStep,
   ProjectDetail,
-  FundingStatus,
-  StationBuildProgress,
   RejectInfo
 } from '../component';
-import { mockDetail } from '../NotInvolvedDetail/mock';
 import OrangeGradientBtn from '../../../components/OrangeGradientBtn';
 import {
-  PROJECT_STATUS_CODE,
   USER_PROJECT_STATUS_CODE
 } from '../../../utils/variable';
 
@@ -174,12 +159,10 @@ class InvolvedDetail extends React.Component {
     const {
       purchaseDetail,
       rejectInfo,
-      groupInfo,
-      siteInfo,
       plantInfo,
-      isTransferring
     } = involvedDetail;
     const projectDetail = involvedDetail.projectDetail.detail;
+    const siteInfo = involvedDetail.projectDetail.siteInfo;
     const historyList = involvedDetail.projectDetail.historyList;
     const { isModalVisible, transferCount } = this.state;
     return (
@@ -208,8 +191,8 @@ class InvolvedDetail extends React.Component {
             {/* 非驳回状态下 */
             !rejectInfo.id && (
               <div className="btn-wrap">
-                {/* 成团后 */
-                projectDetail.status >= PROJECT_STATUS_CODE.GROUPED && (
+                {/* 支付后 */
+                  purchaseDetail.userStatus >= USER_PROJECT_STATUS_CODE.PAID && (
                   <Button onClick={this.openTransfer}>我要转让</Button>
                 )}
                 {/* 未支付 */
@@ -230,14 +213,10 @@ class InvolvedDetail extends React.Component {
               projectDetail={projectDetail}
               historyList={toJS(historyList)}
               purchaseDetail={purchaseDetail}
+              siteInfo={toJS(siteInfo)}
             />
           </React.Fragment>
 
-          <FundingStatus
-            groupInfo={groupInfo}
-            purchaseDetail={purchaseDetail}
-          />
-          <StationBuildProgress siteInfo={siteInfo} />
           <PlantInfoItem
             capacity={plantInfo.powerStationCapacity}
             plantName={plantInfo.plantName}

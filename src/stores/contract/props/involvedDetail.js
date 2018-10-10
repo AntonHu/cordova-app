@@ -1,15 +1,17 @@
 import { observable, action, runInAction, computed } from 'mobx';
 import {
-  fetchHistoryProjectList, fetchPlantInfo,
+  fetchHistoryProjectList,
+  fetchPlantInfo,
   fetchProjectDetail,
   fetchProjectGroupInformation,
   fetchProjectLegalFile,
-  fetchProjectSiteInformation, fetchPurchaseDetail,
+  fetchProjectSiteInformation,
+  fetchPurchaseDetail,
   fetchRejectInfo, fetchSellMyProject
 } from "../request";
 import { Toast } from 'antd-mobile';
 import { ToastError } from "../../ToastError";
-import { PROJECT_STATUS_CODE, USER_PROJECT_STATUS_CODE } from "../../../utils/variable";
+import { USER_PROJECT_STATUS_CODE } from "../../../utils/variable";
 
 // 已参与的合约项目详情
 class InvolvedDetail {
@@ -22,13 +24,9 @@ class InvolvedDetail {
   @observable purchaseDetail = {};
   @observable isPurchaseDetailLoading = false;
 
-  // 项目成团（如有）
+  // 项目成团（暂无）
   @observable groupInfo = {};
   @observable isGroupInfoLoading = false;
-
-  // 电站建设（如有）
-  @observable siteInfo = {};
-  @observable isSiteInfoLoading = false;
 
   // 发电收益（如有）
   @observable powerProfit = {};
@@ -58,8 +56,6 @@ class InvolvedDetail {
     this.isPurchaseDetailLoading = false;
     this.groupInfo = {};
     this.isGroupInfoLoading = false;
-    this.siteInfo = {};
-    this.isSiteInfoLoading = false;
     this.powerProfit = {};
     this.isPowerProfitLoading = false;
     this.rejectInfo = {};
@@ -76,8 +72,7 @@ class InvolvedDetail {
   };
 
   // didMount且不是goBack过来的时候，获取项目详情、购买详情（purchaseDetail）
-  // 获取项目详情之后，再获取历史项目列表、法律文书、项目成团
-  // 根据状态再获取电站建设、电站收益、驳回内容等
+  // 获取项目详情之后，再获取历史项目列表、法律文书、电站收益
   // 获取购买详情（purchaseDetail）之后，如果是驳回状态，获取驳回信息
   loadData = ({ id, purchaseId }) => {
 
@@ -101,15 +96,8 @@ class InvolvedDetail {
             purchaseId,
             projectId: id
           });
-          this.loadGroupInfo(id);
-
-
-          if (status >= PROJECT_STATUS_CODE.BUILDING_PLANT) {
-            this.loadSiteInfo(id)
-          }
-          if (status >= PROJECT_STATUS_CODE.TO_GRID) {
-            this.loadPowerProfit(id)
-          }
+          // this.loadGroupInfo(id);
+          this.loadPowerProfit(id)
         }
       });
 
@@ -158,30 +146,6 @@ class InvolvedDetail {
       return result;
     } catch (e) {
       this.isGroupInfoLoading = false;
-      ToastError(e);
-      return e;
-    }
-  };
-
-  // 电站建设
-  @action
-  loadSiteInfo = async (projectId) => {
-    try {
-      this.isSiteInfoLoading = true;
-      const result = await fetchProjectSiteInformation({ projectId });
-      runInAction(() => {
-        this.isSiteInfoLoading = false;
-        if (result.success) {
-          const data = result.data || {};
-          this.siteInfo = data || {};
-        } else {
-          throw result;
-        }
-      });
-
-      return result;
-    } catch (e) {
-      this.isSiteInfoLoading = false;
       ToastError(e);
       return e;
     }

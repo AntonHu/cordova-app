@@ -1,36 +1,22 @@
 import React from 'react';
-import { Icon, Tabs, WhiteSpace } from 'antd-mobile';
+import { Tabs } from 'antd-mobile';
 import PropTypes from 'prop-types';
 import './index.less';
-import { PROJECT_STATUS_CODE } from "../../../../utils/variable";
 
 const tabs = [
   { title: '申购成功' },
-  { title: '项目成团' },
-  { title: '电站建设' },
   { title: '发电收益' },
 ];
 
-// 项目进度（4个阶段）组件
+// 项目进度 tab组件
 class ProjectStep extends React.PureComponent {
   static propTypes = {
     projectDetail: PropTypes.object.isRequired
   };
 
-
-  tabIsAbleByStatus = (idx, projectDetail) => {
-    const status = projectDetail.status || 0;
-    if (idx === 0 || idx === 1) return true;
-    if (idx === 2) {
-      return status >= PROJECT_STATUS_CODE.BUILDING_PLANT;
-    }
-    if (idx === 3) {
-      return status >= PROJECT_STATUS_CODE.TO_GRID
-    }
-  };
-
   // 每个tab有3个可能的状态：able、active、disable
   // able和active之间可以互相切换、disable状态不可点
+  // className有active就是active，有able就是able，都没有就是disable
   renderTabBar = (data) => {
     const { activeTab, tabs, goToTab } = data;
     return (
@@ -38,7 +24,7 @@ class ProjectStep extends React.PureComponent {
         {
           tabs.map((tab, idx) => {
             const activeClass = activeTab === idx ? 'active' : '';
-            const ableClass = this.tabIsAbleByStatus(idx, this.props.projectDetail) ? 'able' : '';
+            const ableClass = 'able';
             return (
               <React.Fragment key={ idx }>
                 {

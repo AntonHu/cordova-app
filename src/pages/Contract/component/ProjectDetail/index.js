@@ -20,8 +20,9 @@ class ProjectDetail extends React.PureComponent {
   static propTypes = {
     projectDetail: PropTypes.object.isRequired,
     historyList: PropTypes.array.isRequired,
+    siteInfo: PropTypes.object.isRequired,
     purchaseDetail: PropTypes.object,
-    transferInfo: PropTypes.object
+    transferInfo: PropTypes.object,
   };
 
   render() {
@@ -29,7 +30,8 @@ class ProjectDetail extends React.PureComponent {
       projectDetail,
       historyList,
       purchaseDetail,
-      transferInfo
+      transferInfo,
+      siteInfo
     } = this.props;
     return (
       <div className="project-detail">
@@ -43,6 +45,7 @@ class ProjectDetail extends React.PureComponent {
             <StationInfo
               projectDetail={projectDetail}
               transferInfo={transferInfo}
+              siteInfo={siteInfo}
             />
             <OperatorInfo projectDetail={projectDetail} />
             <HistoryProject historyList={historyList} />

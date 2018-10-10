@@ -1,7 +1,8 @@
 import { action, computed, observable, runInAction } from 'mobx';
 import {
   fetchHistoryProjectList,
-  fetchProjectDetail
+  fetchProjectDetail,
+  fetchProjectSiteInformation
 } from "../request";
 import { ToastError } from "../../ToastError";
 
@@ -14,6 +15,10 @@ class ProjectDetail {
   @observable historyList = [];
   @observable isHistoryLoading = false;
 
+  // 电站建设
+  @observable siteInfo = {};
+  @observable isSiteInfoLoading = false;
+
   // goBack的时候，重置store
   @action
   reset = () => {
@@ -21,9 +26,11 @@ class ProjectDetail {
     this.isDetailLoading = false;
     this.historyList = [];
     this.isHistoryLoading = false;
+    this.siteInfo = {};
+    this.isSiteInfoLoading = false;
   };
 
-  // didMount且不是goBack过来的时候，获取项目详情
+  // didMount且不是goBack过来的时候，获取项目详情、建站信息
   // 获取项目详情之后，再获取历史项目列表
   loadData = (id) => {
     if (this.isDetailLoading) {
@@ -33,6 +40,7 @@ class ProjectDetail {
         code: -2
       };
     }
+    this.loadSiteInfo(id);
     return this.loadDetail(id)
       .then(result => {
         if (result.success) {
@@ -88,6 +96,30 @@ class ProjectDetail {
       return result;
     } catch (e) {
       this.isDetailLoading = false;
+      ToastError(e);
+      return e;
+    }
+  };
+
+  // 电站建设
+  @action
+  loadSiteInfo = async (projectId) => {
+    try {
+      this.isSiteInfoLoading = true;
+      const result = await fetchProjectSiteInformation({ projectId });
+      runInAction(() => {
+        this.isSiteInfoLoading = false;
+        if (result.success) {
+          const data = result.data || {};
+          this.siteInfo = data || {};
+        } else {
+          throw result;
+        }
+      });
+
+      return result;
+    } catch (e) {
+      this.isSiteInfoLoading = false;
       ToastError(e);
       return e;
     }
