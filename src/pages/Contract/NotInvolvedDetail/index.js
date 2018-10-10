@@ -205,21 +205,15 @@ class NotInvolvedDetail extends React.Component {
           <div className="amount">{`${purchaseAmount}元`}</div>
           <div className="min-invest">{`申购标准：${projectDetail.minInvestmentAmount ||
             0}元每份`}</div>
-          <List.Item
-            wrap
-            extra={
-              <Stepper
-                style={{ width: '100%', minWidth: '100px' }}
-                showNumber
-                max={projectDetail.availableShare || 0}
-                min={0}
-                value={purchaseCount}
-                onChange={notInvolvedDetail.updatePurchaseCount}
-              />
-            }
-          >
+          <div className="invest-stepper">
             申购数
-          </List.Item>
+            <Stepper
+              max={projectDetail.availableShare || 0}
+              min={1}
+              value={purchaseCount}
+              onChange={notInvolvedDetail.updatePurchaseCount}
+            />
+          </div>
           <OrangeGradientBtn onClick={this.toShareConfirm}>
             申购
           </OrangeGradientBtn>

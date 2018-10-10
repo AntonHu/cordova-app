@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.thundersdata.blockChainMobile" version="2.1.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.thundersdata.blockChainMobile" version="2.1.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>能源星球</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
@@ -8,13 +8,14 @@
         Apache Cordova Team
     </author>
     <content src="index.html" />
-    <access origin="*" />
+    <access allows-arbitrary-loads-in-media="true" allows-arbitrary-loads-in-web-content="true" allows-local-networking="true" origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <allow-navigation href="https://api.thundersdata.com/contractPlant/*" />
     <platform name="android">
         <icon density="ldpi" src="res/icon/android/mipmap-ldpi/ic_launcher.png" />
         <icon density="mdpi" src="res/icon/android/mipmap-mdpi/ic_launcher.png" />
@@ -94,6 +95,7 @@
     </plugin>
     <plugin name="cordova-plugin-crop" spec="https://github.com/349989153/cordova-plugin-crop.git" />
     <plugin name="cordova-plugin-zip" spec="^3.1.0" />
+    <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <engine name="android" spec="^6.4.0" />
     <engine name="ios" spec="^4.5.4" />
 </widget>

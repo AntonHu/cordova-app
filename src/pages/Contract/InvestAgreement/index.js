@@ -29,27 +29,34 @@ class InvestAgreement extends React.PureComponent{
     return (
       <PageWithHeader title="投资协议" id="page-invest-agreement">
         <div className="content-wrap">
-          <Document
-            file={ { url: this.getPDFUrl() } }
-            onLoadSuccess={ this.onDocumentLoad }
-            loading="正在加载文件，请稍候..."
-            noData="没有找到文件"
-            error="读取文件出错"
-            onLoadError={ (err) => {
-              console.log('onLoadError');
-              console.log(JSON.stringify(err))
-            }}
-            onSourceError={(err) => {
-              console.log('onSourceError');
-              console.log(JSON.stringify(err))
-            }}
-          >
-            {
-              this.state.totalPage.map((v, idx) =>
-                <Page pageNumber={ idx + 1 } />
-              )
-            }
-          </Document>
+          {/*<Document*/}
+            {/*file={ { url: this.getPDFUrl() } }*/}
+            {/*onLoadSuccess={ this.onDocumentLoad }*/}
+            {/*loading="正在加载文件，请稍候..."*/}
+            {/*noData="没有找到文件"*/}
+            {/*error="读取文件出错"*/}
+            {/*onLoadError={ (err) => {*/}
+              {/*console.log('onLoadError');*/}
+              {/*console.log(JSON.stringify(err))*/}
+            {/*}}*/}
+            {/*onSourceError={(err) => {*/}
+              {/*console.log('onSourceError');*/}
+              {/*console.log(JSON.stringify(err))*/}
+            {/*}}*/}
+          {/*>*/}
+            {/*{*/}
+              {/*this.state.totalPage.map((v, idx) =>*/}
+                {/*<Page pageNumber={ idx + 1 } />*/}
+              {/*)*/}
+            {/*}*/}
+          {/*</Document>*/}
+          <iframe
+            src={this.getPDFUrl()}
+            seamless="seamless"
+            frameBorder={0}
+            width="100%"
+            height="100%"
+          />
         </div>
       </PageWithHeader>
     )

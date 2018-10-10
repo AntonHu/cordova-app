@@ -8,6 +8,7 @@ import { getLocalStorage } from '../../../utils/storage';
 import Tloader from 'react-touch-loader';
 import PullToRefresh from 'pulltorefreshjs';
 import './index.less';
+import { contractServer } from "../../../utils/variable";
 
 // 法律文书页面
 // TODO: 红色"已签约" 的stamp
@@ -21,7 +22,24 @@ class LegalDocument extends React.Component {
       docName: item.fileTypeName,
       docUrl: item.ossPath
     });
-    this.props.history.push('/contract/legalDocumentDetail');
+    // this.props.history.push('/contract/legalDocumentDetail');
+    this.viewPdf(item.ossPath)
+  };
+
+  getPDFUrl = (docUrl) => {
+    const token = getLocalStorage('token');
+    return `${contractServer}/oss/preview?access_token=${token}&fileName=${docUrl}`
+  };
+
+  viewPdf = (docUrl) => {
+    if (window.cordova) {
+      const device = window.device;
+      // const target = device.platform === 'Android' ? '_system' : '_blank';
+      const target = '_system';
+      window.cordova.InAppBrowser.open(this.getPDFUrl(docUrl), target, 'location=no,closebuttoncaption=关闭,closebuttoncolor=#ffffff');
+    } else {
+      window.open(this.getPDFUrl(docUrl), '_blank')
+    }
   };
 
   render() {

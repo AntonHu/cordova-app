@@ -31,6 +31,13 @@ import { fetchLegalDocument } from '../../../stores/contract/request';
 import { saveEvidence, signData } from '../../../utils/fetch';
 import { packJson } from '../../../utils/methods';
 
+const FILE_TYPE = {
+  shareConfirm: 0,
+  investAgreement: 1,
+  authorizeDocument: 2
+
+};
+
 // 投资份额确认书
 @inject('contractStore')
 @observer
@@ -52,7 +59,7 @@ class ShareConfirm extends React.Component {
     // saveEvidence('', packJsonData).then(data => {
     //   console.log('测试晓鹏老师接口', data);
     // });
-    return;
+    // return;
   }
 
   componentWillUnmount() {
@@ -113,12 +120,22 @@ class ShareConfirm extends React.Component {
     });
   };
 
-  getPDFUrl = () => {
+  getPDFUrl = (type) => {
     const token = getLocalStorage('token');
     const { projectId, purchaseNumber } = this.props.match.params;
-    const url = `${contractServer}/app/project/legalFile?access_token=${token}&type=0&projectId=${projectId}&purchaseNumber=${purchaseNumber}`;
+    const url = `${contractServer}/app/project/legalFile?access_token=${token}&type=${type}&projectId=${projectId}&purchaseNumber=${purchaseNumber}`;
     console.log(url);
     return url;
+  };
+
+  viewPdf = (type) => {
+    if (window.cordova) {
+      const device = window.device;
+      const target = device.platform === 'Android' ? '_system' : '_blank';
+      window.cordova.InAppBrowser.open(this.getPDFUrl(type), target, 'location=no,closebuttoncaption=关闭,closebuttoncolor=#ffffff');
+    } else {
+      window.open(this.getPDFUrl(type), '_blank')
+    }
   };
 
   render() {
@@ -127,25 +144,34 @@ class ShareConfirm extends React.Component {
     return (
       <PageWithHeader title="投资份额确认书" id="page-share-confirm">
         <div className="content-wrap">
-          <Document
-            file={{ url: this.getPDFUrl() }}
-            onLoadSuccess={this.onDocumentLoad}
-            loading="正在加载文件，请稍候..."
-            noData="没有找到文件"
-            error="读取文件出错"
-            onLoadError={err => {
-              // console.log('onLoadError');
-              // console.log(JSON.stringify(err))
-            }}
-            onSourceError={err => {
-              // console.log('onSourceError');
-              // console.log(JSON.stringify(err))
-            }}
-          >
-            {this.state.totalPage.map((v, idx) => (
-              <Page pageNumber={idx + 1} key={idx + 1} />
-            ))}
-          </Document>
+          {/*<Document*/}
+            {/*file={{ url: this.getPDFUrl() }}*/}
+            {/*onLoadSuccess={this.onDocumentLoad}*/}
+            {/*loading="正在加载文件，请稍候..."*/}
+            {/*noData="没有找到文件"*/}
+            {/*error="读取文件出错"*/}
+            {/*onLoadError={err => {*/}
+              {/*// console.log('onLoadError');*/}
+              {/*// console.log(JSON.stringify(err))*/}
+            {/*}}*/}
+            {/*onSourceError={err => {*/}
+              {/*// console.log('onSourceError');*/}
+              {/*// console.log(JSON.stringify(err))*/}
+            {/*}}*/}
+          {/*>*/}
+            {/*{this.state.totalPage.map((v, idx) => (*/}
+              {/*<Page pageNumber={idx + 1} key={idx + 1} />*/}
+            {/*))}*/}
+          {/*</Document>*/}
+          {/*<iframe*/}
+            {/*src={this.getPDFUrl()}*/}
+            {/*seamless="seamless"*/}
+            {/*frameBorder={0}*/}
+            {/*width="100%"*/}
+            {/*height={400}*/}
+          {/*/>*/}
+
+          <div className="agreement-tip">点击下方链接浏览或下载相关文件</div>
 
           <div className="agreement-box">
             <div
@@ -155,20 +181,14 @@ class ShareConfirm extends React.Component {
               <i className="iconfont">&#xe61d;</i>
               同意
             </div>
-            <div className="agreement">《投资份额确认书》</div>
-            <div className="agreement">
-              <Link
-                to={`/contract/authorizeDocument/${projectId}/purchaseNumber/${purchaseNumber}`}
-              >
+            <div className="agreement" onClick={() => this.viewPdf(FILE_TYPE.shareConfirm)}>《投资份额确认书》</div>
+            <div className="agreement" onClick={() => this.viewPdf(FILE_TYPE.authorizeDocument)}>
+
                 《电站建造登记运营代收电费授权书》
-              </Link>
+
             </div>
-            <div className="agreement">
-              <Link
-                to={`/contract/investAgreement/${projectId}/purchaseNumber/${purchaseNumber}`}
-              >
+            <div className="agreement" onClick={() => this.viewPdf(FILE_TYPE.investAgreement)}>
                 《投资协议》
-              </Link>
             </div>
           </div>
         </div>

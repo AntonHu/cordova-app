@@ -53,6 +53,9 @@
     },
     "cordova-plugin-crop": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     }
   },
   "dependent_plugins": {
