@@ -50,6 +50,8 @@ class ProjectList extends React.Component {
           projectName={item.projectName}
           soldShare={item.soldShare}
           investmentAmount={item.investmentAmount}
+          count={item.views}
+          imgSrc={item.projectImage}
         />
       </Link>
     );

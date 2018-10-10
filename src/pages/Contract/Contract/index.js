@@ -97,7 +97,7 @@ class Contract extends React.Component {
             console.log('onTabClick', index, tab);
           }}
           tabBarActiveTextColor={'#fff'}
-          tabBarInactiveTextColor={'#8ed1bc'}
+          tabBarInactiveTextColor={'rgba(255, 255, 255, 1)'}
           tabBarUnderlineStyle={{
             backgroundColor: '#fff'
           }}

@@ -76,6 +76,18 @@ class TransferList extends React.Component {
                   0}${POWER_UNIT}`}
                 profitYear={`${item.estimatedAnnualizedIncome || 0}%`}
                 transferPublishTime={item.transferPublishTime}
+                sellerName={
+                  (item.productUserBaseInfo &&
+                    item.productUserBaseInfo.nickName) ||
+                  ''
+                }
+                imageSrc={
+                  (item.productUserBaseInfo &&
+                    item.productUserBaseInfo.avatar) ||
+                  ''
+                }
+                count={item.views}
+                beforeMoney={item.investmentAmount}
               />
             </Link>
           )}

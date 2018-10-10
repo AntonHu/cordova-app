@@ -5,28 +5,28 @@
 #page-contract {
   height: 100%;
   background-image: url(../../../images/contract_index_bg.png);
-  background-position: 0% 25%;
   background-repeat: repeat-y;
+  background-position-y: -100 * @px;
+  background-size: 100%;
   padding-bottom: 200 * @px;
   .page-title {
-    height: 225 * @px;
-    line-height: 225 * @px;
     font-size: 48 * @px;
     font-family: PingFang-SC-Medium;
     font-weight: 500;
     color: #fffefe;
     text-align: left;
     .page-title-name {
+      display: inline-block;
       margin-left: 59 * @px;
+      margin-top: 93 * @px;
+      margin-bottom: 43 * @px;
     }
-  }
-  .am-tabs-default-bar-tab {
-    font-size: @h2;
-    font-family: PingFang-SC-Medium;
-    font-weight: 500;
   }
   .am-tabs-default-bar {
     background-color: rgba(255, 255, 255, 0) !important;
+  }
+  .am-tabs-default-bar-tab::after {
+    background-color: transparent !important;
   }
   .am-tabs-tab-bar-wrap {
     margin-bottom: 30 * @px;
@@ -34,13 +34,21 @@
   //overflow-y: scroll;
   //-webkit-overflow-scrolling: touch;
   .am-tabs-default-bar-tab-active {
-    color: @theme-text-color;
+    color: @white-text-color !important;
+    opacity: 1 !important;
+  }
+  .am-tabs-default-bar-tab {
+    font-size: @h2;
+    font-family: PingFang-SC-Medium;
+    font-weight: 500;
+    opacity: 0.5;
   }
   .am-tabs-default-bar-underline {
     border: 4 * @px solid @white-text-color;
-    border-radius: 2 * @px;
+    border-radius: 5 * @px;
     width: 113 * @px !important;
     margin-left: 66 * @px;
+    height: 10 * @px;
   }
   .am-tabs-pane-wrap-active {
     //overflow-y: scroll;

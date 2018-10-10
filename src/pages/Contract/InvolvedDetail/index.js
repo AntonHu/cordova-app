@@ -1,8 +1,8 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { toJS, reaction } from 'mobx';
-import { PageWithHeader, PlantInfoItem } from '../../../components';
-import { Button, List, Stepper, Modal, ActivityIndicator } from 'antd-mobile';
+import { PageWithHeader, PlantInfoItem, Stepper } from '../../../components';
+import { Button, List, Modal, ActivityIndicator } from 'antd-mobile';
 import './index.less';
 import { ProjectStep, ProjectDetail, RejectInfo } from '../component';
 import OrangeGradientBtn from '../../../components/OrangeGradientBtn';
@@ -148,7 +148,7 @@ class InvolvedDetail extends React.Component {
     // this.openModal();
   };
 
-  onTransfer = async () => {
+  onTransfer = () => {
     const { involvedDetail } = this.props.contractStore;
     const projectDetail = involvedDetail.projectDetail.detail;
     const { transferCount } = this.state;
@@ -158,6 +158,31 @@ class InvolvedDetail extends React.Component {
         projectDetail.minInvestmentAmount
       }元的价格，转让${transferCount}份？`,
       [{ text: '取消' }, { text: '确认', onPress: this.makeTransfer }]
+    );
+  };
+  //确认重新购买
+  confirmRePurchase = () => {
+    const { involvedDetail } = this.props.contractStore;
+    const { purchaseDetail } = involvedDetail;
+    const projectDetail = involvedDetail.projectDetail.detail;
+    Modal.alert(
+      '转让',
+      `您确定以每份${projectDetail.minInvestmentAmount}元的价格，重新购买${
+        purchaseDetail.purchaseNumber
+      }份？`,
+      [{ text: '取消' }, { text: '确认', onPress: this.rePurchase }]
+    );
+  };
+  //重新购买，去投资份额确认页
+  rePurchase = async () => {
+    const { involvedDetail } = this.props.contractStore;
+    const { purchaseDetail } = involvedDetail;
+    const projectId = this.props.match.params.projectId;
+    this.closeTransfer();
+    this.props.history.push(
+      `/contract/shareConfirm/${projectId}/purchaseNumber/${
+        purchaseDetail.purchaseNumber
+      }`
     );
   };
 
@@ -199,7 +224,9 @@ class InvolvedDetail extends React.Component {
       plantInfo,
       projectDetail: { detail = {}, siteInfo = {}, historyList = [] } = {}
     } = involvedDetail;
+    console.log('involvedDetail', toJS(purchaseDetail));
     const { isModalVisible, transferCount } = this.state;
+    console.log('是否有驳回id', rejectInfo.id);
     return (
       <PageWithHeader
         title="合约电站"
@@ -218,7 +245,7 @@ class InvolvedDetail extends React.Component {
             rejectInfo.id && (
               <div className="reject-btn-wrap">
                 <Button onClick={this.toAppeal}>申诉</Button>
-                <OrangeGradientBtn onClick={this.onPurchase}>
+                <OrangeGradientBtn onClick={this.confirmRePurchase}>
                   重新申购
                 </OrangeGradientBtn>
               </div>
@@ -267,26 +294,43 @@ class InvolvedDetail extends React.Component {
           closable
           className="purchase-modal"
         >
-          <div className="amount">{`${transferCount *
-            (detail.minInvestmentAmount || 0)}元`}</div>
+          <div className="amount">{`${
+            !rejectInfo.id
+              ? transferCount * (detail.minInvestmentAmount || 0)
+              : purchaseDetail.purchaseNumber *
+                (detail.minInvestmentAmount || 0)
+          }元`}</div>
           <div className="min-invest">{`转让标准：${detail.minInvestmentAmount ||
             0}元每份`}</div>
           <List.Item
             wrap
             extra={
-              <Stepper
-                style={{ width: '100%', minWidth: '100px' }}
-                showNumber
-                max={purchaseDetail.purchaseNumber || 0}
-                min={1}
-                value={transferCount}
-                onChange={transferCount => this.setState({ transferCount })}
-              />
+              rejectInfo.id ? (
+                <Stepper
+                  value={purchaseDetail.purchaseNumber}
+                  //有rejectInfo.id表示份额不可修改，否则表示可修改
+                />
+              ) : (
+                <Stepper
+                  max={purchaseDetail.purchaseNumber || 0}
+                  min={1}
+                  value={transferCount}
+                  //有rejectInfo.id表示份额不可修改，否则表示可修改
+                  onChange={transferCount => {
+                    this.setState({ transferCount });
+                  }}
+                />
+              )
             }
           >
             转让份数
           </List.Item>
-          <OrangeGradientBtn onClick={this.onTransfer}>转让</OrangeGradientBtn>
+          {/*如果有rejectInfo.id，则点击的操作是重新购买,否则点击的操作是转让*/}
+          <OrangeGradientBtn
+            onClick={!rejectInfo.id ? this.onTransfer : this.confirmRePurchase}
+          >
+            转让
+          </OrangeGradientBtn>
         </Modal>
         <ActivityIndicator
           animating={this.state.loading}

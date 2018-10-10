@@ -7,16 +7,10 @@ import {
   PageWithHeader,
   Picture,
   Rank,
-  OrangeGradientBtn
-} from '../../../components';
-import {
-  Icon,
-  Tabs,
-  WhiteSpace,
-  Modal,
-  ActivityIndicator,
+  OrangeGradientBtn,
   Stepper
-} from 'antd-mobile';
+} from '../../../components';
+import { Icon, Tabs, WhiteSpace, Modal, ActivityIndicator } from 'antd-mobile';
 import { ProjectDetail } from '../component';
 import { mockDetail } from './mock';
 import { BottomSheet, TransferStationInfo } from '../component';
@@ -169,7 +163,7 @@ class NotInvolvedDetail extends React.Component {
       purchaseAmount,
       projectDetail: { detail = {}, siteInfo = {}, historyList = [] } = {}
     } = notInvolvedDetail;
-
+    console.log('purchaseCount', toJS(detail));
     const { loadingText, loading, isModalVisible, isShow } = this.state;
     return (
       <PageWithHeader

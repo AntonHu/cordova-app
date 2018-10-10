@@ -54,7 +54,6 @@ class ContractProjectItem extends React.PureComponent {
   render() {
     const {
       soldShare,
-      annualRate,
       availableShare,
       dateTime,
       enterpriseName,
