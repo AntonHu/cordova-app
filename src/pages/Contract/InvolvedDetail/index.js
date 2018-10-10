@@ -35,7 +35,8 @@ import { mockDetail } from '../NotInvolvedDetail/mock';
 import OrangeGradientBtn from '../../../components/OrangeGradientBtn';
 import {
   PROJECT_STATUS_CODE,
-  USER_PROJECT_STATUS_CODE
+  USER_PROJECT_STATUS_CODE,
+  VERIFY_STATUS
 } from '../../../utils/variable';
 
 // 已参与的 项目详情页面
@@ -45,7 +46,7 @@ import {
 // 调用的主要组件：ProjectDetail、项目成团、电站建设、发电收益、进度步骤
 // 调用的次要组件：我要申诉、驳回详情、header右上角的法律文书
 // todo: 重新申购弹窗、
-@inject('contractStore')
+@inject('contractStore', 'userStore', 'keyPair', 'bankCardStore')
 @observer
 class InvolvedDetail extends React.Component {
   state = {
@@ -58,7 +59,7 @@ class InvolvedDetail extends React.Component {
   componentDidMount() {
     const { involvedDetail } = this.props.contractStore;
     const { projectId, purchaseId } = this.props.match.params;
-    involvedDetail.loadData({ id: projectId, purchaseId })
+    involvedDetail.loadData({ id: projectId, purchaseId });
   }
 
   componentWillUnmount() {
@@ -103,27 +104,75 @@ class InvolvedDetail extends React.Component {
 
   toAppeal = () => {
     const { projectId, purchaseId } = this.props.match.params;
-    this.props.history.push(`/contract/appeal/${projectId}/purchaseId/${purchaseId}`);
+    this.props.history.push(
+      `/contract/appeal/${projectId}/purchaseId/${purchaseId}`
+    );
   };
 
-  onPurchase = async () => {
-    const { notInvolvedDetail } = this.props.contractStore;
-    const { projectId, purchaseId } = this.props.match.params;
-    const result = await notInvolvedDetail.onConfirmPay({
-      projectId,
-      purchaseId
-    });
+  // onPurchase = async () => {
+  //   const { notInvolvedDetail } = this.props.contractStore;
+  //   const { projectId, purchaseId } = this.props.match.params;
+  //   const result = await notInvolvedDetail.onConfirmPay({
+  //     projectId,
+  //     purchaseId
+  //   });
 
-    if (result.success) {
-      Modal.alert('已支付', '您已确认支付，即将返回上一页', [
-        {
-          text: '好的',
-          onPress: () => {
-            this.props.history.goBack();
-          }
+  //   if (result.success) {
+  //     Modal.alert('已支付', '您已确认支付，即将返回上一页', [
+  //       {
+  //         text: '好的',
+  //         onPress: () => {
+  //           this.props.history.goBack();
+  //         }
+  //       }
+  //     ]);
+  //   }
+  // };
+
+  isCardBind = async () => {
+    const { bankCard, getBankCard } = this.props.bankCardStore;
+    const bankCardObj = toJS(bankCard);
+
+    return new Promise(async (resolve, reject) => {
+      if (JSON.stringify(bankCardObj) !== '{}') {
+        resolve();
+      } else {
+        const result = await getBankCard();
+        if (result.success && result.data && result.data.bankCardNumber) {
+          resolve();
+        } else {
+          reject();
         }
-      ]);
+      }
+    });
+  };
+
+  /**
+   * 点击申购
+   * 先看看有没有绑过银行卡
+   * 如果没有，去绑银行卡
+   * 如果有，弹出弹窗
+   */
+  onPurchase = async () => {
+    if (!this.props.keyPair.showHasKey(this.props)) {
+      return;
     }
+
+    if (this.props.userStore.isKycInChain === VERIFY_STATUS.UNAUTHORIZED) {
+      Modal.alert('您尚未进行身份认证', '在"我的" => "完善信息"中去认证', [
+        { text: '知道了' }
+      ]);
+      return;
+    }
+
+    this.isCardBind()
+      .then(() => {
+        this.openTransfer();
+      })
+      .catch(() => {
+        this.props.history.push('/contract/addBankCard');
+      });
+    // this.openModal();
   };
 
   onTransfer = async () => {

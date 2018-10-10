@@ -1,55 +1,77 @@
 import { observable, action, runInAction, computed } from 'mobx';
 import {
-  fetchHistoryProjectList, fetchPlantInfo,
+  fetchHistoryProjectList,
+  fetchPlantInfo,
   fetchProjectDetail,
   fetchProjectGroupInformation,
   fetchProjectLegalFile,
-  fetchProjectSiteInformation, fetchPurchaseDetail,
-  fetchRejectInfo, fetchSellMyProject
-} from "../request";
+  fetchProjectSiteInformation,
+  fetchPurchaseDetail,
+  fetchRejectInfo,
+  fetchSellMyProject
+} from '../request';
 import { Toast } from 'antd-mobile';
-import { ToastError } from "../../ToastError";
-import { PROJECT_STATUS_CODE, USER_PROJECT_STATUS_CODE } from "../../../utils/variable";
+import { ToastError } from '../../ToastError';
+import {
+  PROJECT_STATUS_CODE,
+  USER_PROJECT_STATUS_CODE
+} from '../../../utils/variable';
 
 // 已参与的合约项目详情
 class InvolvedDetail {
-
   constructor(projectDetail) {
     this.projectDetail = projectDetail;
   }
 
   // 申购详情
-  @observable purchaseDetail = {};
-  @observable isPurchaseDetailLoading = false;
+  @observable
+  purchaseDetail = {};
+  @observable
+  isPurchaseDetailLoading = false;
 
   // 项目成团（如有）
-  @observable groupInfo = {};
-  @observable isGroupInfoLoading = false;
+  @observable
+  groupInfo = {};
+  @observable
+  isGroupInfoLoading = false;
 
   // 电站建设（如有）
-  @observable siteInfo = {};
-  @observable isSiteInfoLoading = false;
+  @observable
+  siteInfo = {};
+  @observable
+  isSiteInfoLoading = false;
 
   // 发电收益（如有）
-  @observable powerProfit = {};
-  @observable isPowerProfitLoading = false;
+  @observable
+  powerProfit = {};
+  @observable
+  isPowerProfitLoading = false;
 
   // 驳回内容（如有）
-  @observable rejectInfo = {};
-  @observable isRejectInfoLoading = false;
+  @observable
+  rejectInfo = {};
+  @observable
+  isRejectInfoLoading = false;
 
   // 4份法律文书
-  @observable docList = [];
-  @observable isDocListLoading = false;
-  @observable docName = '';
-  @observable docUrl = '';
+  @observable
+  docList = [];
+  @observable
+  isDocListLoading = false;
+  @observable
+  docName = '';
+  @observable
+  docUrl = '';
 
   // 电站信息
-  @observable plantInfo = {};
-  @observable plantInfoLoading = false;
+  @observable
+  plantInfo = {};
+  @observable
+  plantInfoLoading = false;
 
   // 转让
-  @observable isTransferring = false;
+  @observable
+  isTransferring = false;
 
   // goBack的时候，重置store
   @action
@@ -80,39 +102,35 @@ class InvolvedDetail {
   // 根据状态再获取电站建设、电站收益、驳回内容等
   // 获取购买详情（purchaseDetail）之后，如果是驳回状态，获取驳回信息
   loadData = ({ id, purchaseId }) => {
-
     this.loadPurchaseDetail({ projectId: id, purchaseId }).then(result => {
       if (result.success) {
         const data = result.data;
-        const status = data.status || 0;
+        const status = data.userStatus || 0;
         if (status === USER_PROJECT_STATUS_CODE.REJECTED) {
-          this.loadRejectInfo({ purchaseId, projectId: id })
+          this.loadRejectInfo({ purchaseId, projectId: id });
         }
       }
     });
 
-    this.projectDetail.loadData(id)
-      .then(result => {
-        if (result.success) {
-          const data = result.data || {};
-          const status = data.status || 0;
+    this.projectDetail.loadData(id).then(result => {
+      if (result.success) {
+        const data = result.data || {};
+        const status = data.status || 0;
 
-          this.loadDocList({
-            purchaseId,
-            projectId: id
-          });
-          this.loadGroupInfo(id);
+        this.loadDocList({
+          purchaseId,
+          projectId: id
+        });
+        this.loadGroupInfo(id);
 
-
-          if (status >= PROJECT_STATUS_CODE.BUILDING_PLANT) {
-            this.loadSiteInfo(id)
-          }
-          if (status >= PROJECT_STATUS_CODE.TO_GRID) {
-            this.loadPowerProfit(id)
-          }
+        if (status >= PROJECT_STATUS_CODE.BUILDING_PLANT) {
+          this.loadSiteInfo(id);
         }
-      });
-
+        if (status >= PROJECT_STATUS_CODE.TO_GRID) {
+          this.loadPowerProfit(id);
+        }
+      }
+    });
   };
 
   // 申购详情
@@ -126,7 +144,6 @@ class InvolvedDetail {
         if (result.success) {
           const data = result.data || {};
           this.purchaseDetail = data || {};
-
         } else {
           throw result;
         }
@@ -141,7 +158,7 @@ class InvolvedDetail {
 
   // 项目成团
   @action
-  loadGroupInfo = async (projectId) => {
+  loadGroupInfo = async projectId => {
     try {
       this.isGroupInfoLoading = true;
       const result = await fetchProjectGroupInformation({ projectId });
@@ -165,7 +182,7 @@ class InvolvedDetail {
 
   // 电站建设
   @action
-  loadSiteInfo = async (projectId) => {
+  loadSiteInfo = async projectId => {
     try {
       this.isSiteInfoLoading = true;
       const result = await fetchProjectSiteInformation({ projectId });
@@ -189,7 +206,7 @@ class InvolvedDetail {
 
   // 发电收益
   @action
-  loadPowerProfit = async (projectId) => {
+  loadPowerProfit = async projectId => {
     try {
       this.plantInfoLoading = true;
       const result = await fetchPlantInfo({ projectId });
@@ -261,7 +278,12 @@ class InvolvedDetail {
   makeTransfer = async ({ purchaseNumber, amount, unitPrice, projectId }) => {
     try {
       this.isTransferring = true;
-      const result = await fetchSellMyProject({ purchaseNumber, amount, unitPrice, projectId });
+      const result = await fetchSellMyProject({
+        purchaseNumber,
+        amount,
+        unitPrice,
+        projectId
+      });
       this.isTransferring = false;
       if (!result.success) {
         throw result;
@@ -278,9 +300,7 @@ class InvolvedDetail {
   setLegalDoc = ({ docName, docUrl }) => {
     this.docName = docName;
     this.docUrl = docUrl;
-  }
-
-
+  };
 }
 
 export default InvolvedDetail;

@@ -45,7 +45,7 @@ class NotInvolvedDetail extends React.Component {
   componentDidMount() {
     const { notInvolvedDetail } = this.props.contractStore;
     const { projectId } = this.props.match.params;
-    notInvolvedDetail.loadData(projectId)
+    notInvolvedDetail.loadData(projectId);
   }
 
   componentWillUnmount() {
@@ -62,7 +62,7 @@ class NotInvolvedDetail extends React.Component {
     const nextId = nextProps.match.params.projectId;
     const { notInvolvedDetail } = this.props.contractStore;
     if (projectId !== nextId) {
-      notInvolvedDetail.loadData(nextId)
+      notInvolvedDetail.loadData(nextId);
     }
   }
 
@@ -97,7 +97,7 @@ class NotInvolvedDetail extends React.Component {
     if (!this.props.keyPair.showHasKey(this.props)) {
       return;
     }
-    
+
     if (this.props.userStore.isKycInChain === VERIFY_STATUS.UNAUTHORIZED) {
       Modal.alert('您尚未进行身份认证', '在"我的" => "完善信息"中去认证', [
         { text: '知道了' }

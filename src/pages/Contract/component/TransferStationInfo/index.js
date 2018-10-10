@@ -13,7 +13,9 @@ class TransferStationInfo extends React.PureComponent {
     transferMan: 0, //转让人ID
     stationNumber: 0, //所属电站编号
     projectTime: '2019-05-12', //项目成团时间
-    historyProfit: 0 //历史收益情况
+    historyProfit: 0, //历史收益情况
+    unitPrice: 0, //转让价格
+    purchaseNumber: 0 //转让份数
   };
 
   static propTypes = {
@@ -21,7 +23,9 @@ class TransferStationInfo extends React.PureComponent {
     projetransferManctName: PropTypes.number.isRequired,
     stationNumber: PropTypes.number.isRequired,
     projectTime: PropTypes.string.isRequired,
-    historyProfit: PropTypes.number.isRequired
+    historyProfit: PropTypes.number.isRequired,
+    unitPrice: PropTypes.number.isRequired,
+    purchaseNumber: PropTypes.number.isRequired
   };
   render() {
     const {
@@ -29,7 +33,9 @@ class TransferStationInfo extends React.PureComponent {
       transferMan,
       stationNumber,
       projectTime,
-      historyProfit
+      historyProfit,
+      unitPrice,
+      purchaseNumber
     } = this.props;
     return (
       <div className="transfer-station-info-item">
@@ -45,6 +51,14 @@ class TransferStationInfo extends React.PureComponent {
           <div className="station-row">
             所属电站编号：
             {stationNumber}
+          </div>
+          <div className="station-row">
+            转让份数：
+            {purchaseNumber}
+          </div>
+          <div className="station-row">
+            转让价格：
+            {unitPrice}
           </div>
           <div className="station-row">
             项目成团时间：

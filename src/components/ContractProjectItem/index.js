@@ -15,7 +15,8 @@ class ContractProjectItem extends React.PureComponent {
     enterpriseName: PropTypes.string,
     dateTime: PropTypes.string,
     imgSrc: PropTypes.string, //图片地址
-    count: PropTypes.number //查看次数
+    count: PropTypes.number, //查看次数
+    investmentAmount: PropTypes.number //投资总金额
   };
 
   progressText = (soldShare, availableShare) => {
@@ -60,7 +61,8 @@ class ContractProjectItem extends React.PureComponent {
       powerStationCapacity,
       projectName,
       imgSrc,
-      count
+      count,
+      investmentAmount
     } = this.props;
     return (
       <div className="contract-project-item">
@@ -75,7 +77,7 @@ class ContractProjectItem extends React.PureComponent {
           </div>
           {/*右侧详情*/}
           <div className="project-item-info">
-            <div>
+            <div className="item-title-box">
               <span className="item-title">{projectName || '未知名项目'}</span>
             </div>
             <div>
@@ -91,7 +93,7 @@ class ContractProjectItem extends React.PureComponent {
               </span>
             </div>
             <div className="item-money">
-              <span className="total-money">￥{'0'}</span>
+              <span className="total-money">￥{investmentAmount || '0'}</span>
             </div>
           </div>
         </div>

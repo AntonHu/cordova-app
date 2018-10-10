@@ -64,7 +64,6 @@ class TransferHistory extends React.PureComponent {
     } = this.props;
     //根据status控制状态的样式
     const roleText = isBuyer ? '卖家' : '买家';
-    console.log(this.props);
     return (
       <div className="transfer-history-item">
         <div className="item-top">
@@ -85,8 +84,10 @@ class TransferHistory extends React.PureComponent {
 
           <div className="item-per-info">
             <div className="item-per-detail-info">
-              <span className="detail-info-text-key">买家</span>
-              <span className="detail-info-text-value">{'暂无信息'}</span>
+              <span className="detail-info-text-key">{roleText}</span>
+              <span className="detail-info-text-value">
+                {sellerName || '暂无信息'}
+              </span>
             </div>
             <div className="item-per-detail-info">
               <span className="detail-info-text-key">联系方式</span>

@@ -2,20 +2,25 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import { reaction, toJS } from 'mobx';
-import { Title, PageWithHeader, Picture, Rank, ContractProjectItem } from '../../../components';
+import {
+  Title,
+  PageWithHeader,
+  Picture,
+  Rank,
+  ContractProjectItem
+} from '../../../components';
 import { Icon, ListView, Tabs, WhiteSpace } from 'antd-mobile';
 import { getLocalStorage } from '../../../utils/storage';
 import Tloader from 'react-touch-loader';
 import PullToRefresh from 'pulltorefreshjs';
 import './index.less';
-import { mockDetail } from "../NotInvolvedDetail/mock";
-import { PAGE_SIZE } from "../../../utils/variable";
+import { mockDetail } from '../NotInvolvedDetail/mock';
+import { PAGE_SIZE } from '../../../utils/variable';
 
 // 我的合约电站列表
 @inject('contractStore')
 @observer
 class MyProjectList extends React.Component {
-
   constructor(props) {
     super(props);
     const { myProjectList } = props.contractStore;
@@ -51,11 +56,17 @@ class MyProjectList extends React.Component {
       mainElement: '#page-my-project-list', // "下拉刷新"把哪个部分包住
       triggerElement: '#page-my-project-list', // "下拉刷新"把哪个部分包住
       onRefresh: myProjectList.initLoad, // 下拉刷新的方法，返回一个promise
-      shouldPullToRefresh: function () {
+      shouldPullToRefresh: function() {
         // 什么情况下的滚动触发下拉刷新，这个很重要
         // 如果这个页面里有height超过窗口高度的元素
         // 那么应该在这个元素滚动位于顶部的时候，返回true
-        return document.querySelector(`#page-my-project-list #${PageWithHeader.bodyId} .am-list-view-scrollview`).scrollTop === 0;
+        return (
+          document.querySelector(
+            `#page-my-project-list #${
+              PageWithHeader.bodyId
+            } .am-list-view-scrollview`
+          ).scrollTop === 0
+        );
       },
       instructionsPullToRefresh: '下拉刷新',
       instructionsReleaseToRefresh: '松开刷新',
@@ -63,26 +74,27 @@ class MyProjectList extends React.Component {
     });
   };
 
-  renderRow = (rowData) => {
+  renderRow = rowData => {
     const item = rowData;
     let url = `/contract/involvedDetail/${item.id}`;
     if (item.purchaseId) {
-      url = url + '/purchaseId/' + item.purchaseId
+      url = url + '/purchaseId/' + item.purchaseId;
     }
     return (
-      <Link to={ url }>
+      <Link to={url}>
         <ContractProjectItem
-          key={ item.id }
-          enterpriseName={ item.enterpriseName }
-          annualRate={ item.estimatedAnnualizedIncome }
-          availableShare={ item.availableShare }
-          dateTime={ item.createdAt }
-          powerStationCapacity={ item.powerStationCapacity }
-          projectName={ item.projectName }
-          soldShare={ item.soldShare }
+          key={item.id}
+          enterpriseName={item.enterpriseName}
+          annualRate={item.estimatedAnnualizedIncome}
+          availableShare={item.availableShare}
+          dateTime={item.createdAt}
+          powerStationCapacity={item.powerStationCapacity}
+          projectName={item.projectName}
+          soldShare={item.soldShare}
+          investmentAmount={item.investmentAmount}
         />
       </Link>
-    )
+    );
   };
 
   updateDataSource = reaction(
@@ -97,7 +109,7 @@ class MyProjectList extends React.Component {
 
   onEndReached = () => {
     const { myProjectList } = this.props.contractStore;
-    myProjectList.loadMore()
+    myProjectList.loadMore();
   };
 
   render() {
@@ -105,28 +117,25 @@ class MyProjectList extends React.Component {
     console.log(toJS(myProjectList.list));
     return (
       <PageWithHeader title="我的合约" id="page-my-project-list">
-
         <ListView
-          initialListSize={ PAGE_SIZE }
-          pageSize={ PAGE_SIZE }
-          renderFooter={ () => (
-            <div style={ { padding: '20px', textAlign: 'center' } }>
-              { myProjectList.isLoading ? '加载中...' : '没有更多' }
+          initialListSize={PAGE_SIZE}
+          pageSize={PAGE_SIZE}
+          renderFooter={() => (
+            <div style={{ padding: '20px', textAlign: 'center' }}>
+              {myProjectList.isLoading ? '加载中...' : '没有更多'}
             </div>
-          ) }
-          dataSource={ this.state.dataSource }
-          renderRow={ this.renderRow }
-          style={ {
-            height: '100%',
-
-          } }
-          scrollRenderAheadDistance={ 800 }
-          onEndReached={ this.onEndReached }
-          onEndReachedThreshold={ 10 }
+          )}
+          dataSource={this.state.dataSource}
+          renderRow={this.renderRow}
+          style={{
+            height: '100%'
+          }}
+          scrollRenderAheadDistance={800}
+          onEndReached={this.onEndReached}
+          onEndReachedThreshold={10}
         />
-
       </PageWithHeader>
-    )
+    );
   }
 }
 

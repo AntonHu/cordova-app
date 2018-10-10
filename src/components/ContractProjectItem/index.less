@@ -20,6 +20,12 @@
       text-align: left;
       padding-left: 40 * @px;
       position: relative;
+      .item-title-box {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 400 * @px;
+      }
       .item-title {
         font-size: 32 * @px;
         margin: 10 * @px 0 13 * @px 0;
@@ -27,9 +33,6 @@
         color: @main-text-color;
         font-family: PingFang-SC-Medium;
         font-weight: 500;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
       }
       .item-detail-info {
         font-size: @h5;

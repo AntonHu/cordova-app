@@ -17,14 +17,13 @@ class StationInfo extends React.PureComponent {
   };
 
   render() {
-    const { projectDetail, transferInfo } = this.props;
+    const { projectDetail } = this.props;
     const fileList = projectDetail.fileList || [];
     const materialOverviewList = projectDetail.materialOverviewList || [];
     const houseRent =
       fileList.find(item => item.fileTypeName === '房屋租赁协议') || {};
     const stationDesign =
       fileList.find(item => item.fileTypeName === '电站设计图') || {};
-    console.log('转让的数据', toJS(transferInfo));
 
     return (
       <div className="_station-info">
@@ -52,17 +51,6 @@ class StationInfo extends React.PureComponent {
           <Item extra={`${projectDetail.otherAccessoryCosts || '-'}元`}>
             其他配件成本
           </Item>
-          {//电站信息分为普通电站和转让电站，转让电站又下面2个字段
-          toJS(transferInfo) ? (
-            <div>
-              <Item extra={`${toJS(transferInfo).purchaseNumber || '-'}份`}>
-                转让份数
-              </Item>
-              <Item extra={`${toJS(transferInfo).unitPrice || '-'}元`}>
-                转让价格
-              </Item>
-            </div>
-          ) : null}
           <Accordion className="station-accordion">
             <Accordion.Panel header="材料计划">
               {materialOverviewList.map(item => (

@@ -2,13 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import { reaction, toJS } from 'mobx';
-import {
-  ContractProjectItem
-} from '../../../components';
-import {
-  ListView,
-  ActivityIndicator
-} from 'antd-mobile';
+import { ContractProjectItem } from '../../../components';
+import { ListView, ActivityIndicator } from 'antd-mobile';
 import './index.less';
 import { PAGE_SIZE } from '../../../utils/variable';
 
@@ -17,9 +12,7 @@ import { PAGE_SIZE } from '../../../utils/variable';
 class ProjectList extends React.Component {
   constructor(props) {
     super(props);
-    const {
-      projectList
-    } = props.contractStore;
+    const { projectList } = props.contractStore;
     const dataSource = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2
     });
@@ -46,16 +39,17 @@ class ProjectList extends React.Component {
     const item = rowData;
     // TODO: click之前，reset掉notInvolvedDetail
     return (
-      <Link to={ `/contract/notInvolvedDetail/${item.id}` }>
+      <Link to={`/contract/notInvolvedDetail/${item.id}`}>
         <ContractProjectItem
-          key={ item.id }
-          enterpriseName={ item.enterpriseName }
-          annualRate={ item.estimatedAnnualizedIncome }
-          availableShare={ item.availableShare }
-          dateTime={ item.createdAt }
-          powerStationCapacity={ item.powerStationCapacity }
-          projectName={ item.projectName }
-          soldShare={ item.soldShare }
+          key={item.id}
+          enterpriseName={item.enterpriseName}
+          annualRate={item.estimatedAnnualizedIncome}
+          availableShare={item.availableShare}
+          dateTime={item.createdAt}
+          powerStationCapacity={item.powerStationCapacity}
+          projectName={item.projectName}
+          soldShare={item.soldShare}
+          investmentAmount={item.investmentAmount}
         />
       </Link>
     );
@@ -67,32 +61,29 @@ class ProjectList extends React.Component {
   };
 
   render() {
-    const {
-      projectList
-    } = this.props.contractStore;
+    const { projectList } = this.props.contractStore;
     return (
       <div className="tab-wrap">
         <ListView
-          initialListSize={ PAGE_SIZE }
-          pageSize={ PAGE_SIZE }
-          renderFooter={ () => (
-            <div style={ { padding: '20px', textAlign: 'center' } }>
-              { projectList.isLoading ? '加载中...' : '没有更多' }
+          initialListSize={PAGE_SIZE}
+          pageSize={PAGE_SIZE}
+          renderFooter={() => (
+            <div style={{ padding: '20px', textAlign: 'center' }}>
+              {projectList.isLoading ? '加载中...' : '没有更多'}
             </div>
-          ) }
-          dataSource={ this.state.dataSource }
-          renderRow={ this.renderRow }
+          )}
+          dataSource={this.state.dataSource}
+          renderRow={this.renderRow}
           style={{
-            height: '100%',
-
+            height: '100%'
           }}
-          scrollRenderAheadDistance={ 800 }
-          onEndReached={ this.onEndReached }
-          onEndReachedThreshold={ 10 }
+          scrollRenderAheadDistance={800}
+          onEndReached={this.onEndReached}
+          onEndReachedThreshold={10}
         />
         <ActivityIndicator
           toast
-          animating={ projectList.isLoading }
+          animating={projectList.isLoading}
           text="正在加载列表..."
         />
       </div>

@@ -1,8 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import {
-  Tabs
-} from 'antd-mobile';
+import { Tabs } from 'antd-mobile';
 import PullToRefresh from 'pulltorefreshjs';
 import './index.less';
 import ProjectList from './ProjectList';
@@ -13,7 +11,6 @@ import TransferHistoryList from './TransferHistoryList';
 @inject('contractStore')
 @observer
 class Contract extends React.Component {
-
   componentDidMount() {
     this.initPullToRefresh();
     this.initData();
@@ -65,9 +62,9 @@ class Contract extends React.Component {
         // 如果这个页面里有height超过窗口高度的元素
         // 那么应该在这个元素滚动位于顶部的时候，返回true
         return (
-
-          document.querySelector('#page-contract .am-tabs-pane-wrap-active .am-list-view-scrollview')
-            .scrollTop === 0
+          document.querySelector(
+            '#page-contract .am-tabs-pane-wrap-active .am-list-view-scrollview'
+          ).scrollTop === 0
         );
       },
       instructionsPullToRefresh: '下拉刷新',
@@ -81,12 +78,15 @@ class Contract extends React.Component {
      * tabs
      */
     const tabs = [
-      { title: <span>合约电站</span> },
-      { title: <span>电站转让</span> },
-      { title: <span>转让历史</span> }
+      { title: <span>项目</span> },
+      { title: <span>转让</span> },
+      { title: <span>历史</span> }
     ];
     return (
       <div id="page-contract">
+        <div className="page-title">
+          <span className="page-title-name">合约电站</span>
+        </div>
         <Tabs
           tabs={tabs}
           initialPage={0}
@@ -95,6 +95,11 @@ class Contract extends React.Component {
           }}
           onTabClick={(tab, index) => {
             console.log('onTabClick', index, tab);
+          }}
+          tabBarActiveTextColor={'#fff'}
+          tabBarInactiveTextColor={'#8ed1bc'}
+          tabBarUnderlineStyle={{
+            backgroundColor: '#fff'
           }}
         >
           {/*第1个tab合约电站列表*/}

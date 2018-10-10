@@ -1,16 +1,11 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { reaction, toJS } from 'mobx';
-import {
-  ListView,
-  Modal,
-  ActivityIndicator,
-  Button
-} from 'antd-mobile';
+import { ListView, Modal, ActivityIndicator, Button } from 'antd-mobile';
 import './TransferHistoryList.less';
 import { TransferHistory } from '../component';
-import { TRANSFER_STATUS_CODE } from "../../../utils/variable";
-import { getLocalStorage } from "../../../utils/storage";
+import { TRANSFER_STATUS_CODE } from '../../../utils/variable';
+import { getLocalStorage } from '../../../utils/storage';
 
 const POWER_UNIT = 'kW'; //发电单位
 const alert = Modal.alert;
@@ -21,9 +16,7 @@ const alert = Modal.alert;
 class TransferHistoryList extends React.Component {
   constructor(props) {
     super(props);
-    const {
-      transferHistoryList
-    } = props.contractStore;
+    const { transferHistoryList } = props.contractStore;
 
     const historySource = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2
@@ -67,10 +60,10 @@ class TransferHistoryList extends React.Component {
   // 根据loginPhone判断用户角色
   // 用户是买家，显示卖家信息
   // 用户是卖家，显示买家信息
-  displayInfoByPhone = (item) => {
+  displayInfoByPhone = item => {
     const phone = getLocalStorage('loginPhone');
     const info = {};
-    info.isBuyer = phone === item.buyerPhone;
+    info.isBuyer = phone !== item.sellerPhone;
     if (info.isBuyer) {
       info.phone = item.sellerPhone;
       info.cardNumber = item.sellerBankCardNumber;
@@ -91,79 +84,72 @@ class TransferHistoryList extends React.Component {
   renderRow = rowData => {
     const item = rowData;
     const info = this.displayInfoByPhone(item);
-    const {
-      transferHistoryList
-    } = this.props.contractStore;
+    const { transferHistoryList } = this.props.contractStore;
     return (
       <TransferHistory
-        key={ item.productId }
-        projectName={ item.projectName }
-        status={ item.status }
-        count={ item.purchaseNumber || 0 }
-        price={ item.amount || 0 }
-        isBuyer={ info.isBuyer }
-        sellerName={ info.name }
-        openBank={ info.bank }
-        bankAccount={ info.cardNumber }
-        sellerContact={ item.phone }
+        key={item.productId}
+        projectName={item.projectName}
+        status={item.status}
+        count={item.purchaseNumber || 0}
+        price={item.amount || 0}
+        isBuyer={info.isBuyer}
+        sellerName={info.name}
+        openBank={info.bank}
+        bankAccount={info.cardNumber}
+        sellerContact={info.phone}
       >
-        {
-          !info.isBuyer && item.status === TRANSFER_STATUS_CODE.VERIFYPAYMENT
-          &&
-          <Button
-            className="positive-btn"
-            onClick={ () => transferHistoryList.sellerVerify(item.orderId) }
-          >
-            确认打款
-          </Button>
-        }
-        {
-          /*todo: 还没调 */
-          !info.isBuyer && item.status === TRANSFER_STATUS_CODE.DOING
-          &&
-          <Button
-            className="negative-btn"
-            onClick={ () => transferHistoryList.cancelTransfer(item.productId) }
-          >
-            取消转让
-          </Button>
-        }
-        {
-          info.isBuyer && item.status === TRANSFER_STATUS_CODE.UNPAYMENT
-          &&
-          <Button
-            className="positive-btn"
-            onClick={ () => transferHistoryList.buyerVerify(item.orderId) }
-          >
-            已支付
-          </Button>
-        }
+        {!info.isBuyer &&
+          item.status === TRANSFER_STATUS_CODE.VERIFYPAYMENT && (
+            <Button
+              className="positive-btn"
+              onClick={() => transferHistoryList.sellerVerify(item.orderId)}
+            >
+              确认打款
+            </Button>
+          )}
+        {/*todo: 还没调 */
+        !info.isBuyer &&
+          item.status === TRANSFER_STATUS_CODE.DOING && (
+            <Button
+              className="negative-btn"
+              onClick={() => transferHistoryList.cancelTransfer(item.productId)}
+            >
+              取消转让
+            </Button>
+          )}
+        {info.isBuyer &&
+          item.status === TRANSFER_STATUS_CODE.UNPAYMENT && (
+            <Button
+              className="positive-btn"
+              onClick={() => transferHistoryList.buyerVerify(item.orderId)}
+            >
+              已支付
+            </Button>
+          )}
       </TransferHistory>
     );
   };
 
   render() {
-    const {
-      transferHistoryList
-    } = this.props.contractStore;
+    const { transferHistoryList } = this.props.contractStore;
     return (
       <div className="tab-wrap">
         <ListView
-          renderFooter={ () => (
-            <div style={ { padding: '20px', textAlign: 'center' } }>
-              { transferHistoryList.isLoading ? '加载中...' : '没有更多' }
+          renderFooter={() => (
+            <div style={{ padding: '20px', textAlign: 'center' }}>
+              {transferHistoryList.isLoading ? '加载中...' : '没有更多'}
             </div>
-          ) }
-          dataSource={ this.state.historySource }
-          renderRow={ this.renderRow }
+          )}
+          dataSource={this.state.historySource}
+          renderRow={this.renderRow}
           style={{
             height: '100%'
           }}
-          scrollRenderAheadDistance={ 800 }
+          scrollRenderAheadDistance={800}
         />
         <ActivityIndicator
           toast
-          animating={ transferHistoryList.isLoading }
+          animating={transferHistoryList.isLoading}
           text="正在加载列表..."
         />
       </div>

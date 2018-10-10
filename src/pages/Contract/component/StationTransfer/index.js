@@ -16,7 +16,7 @@ class StationTransfer extends React.PureComponent {
     imageSrc: '', //转让人头像地址
     projectName: '未知项目名', //项目名称
     stationCapacity: 0, //电站容量
-    transferPublishTime: '', //预期年化收益
+    transferPublishTime: '-', //预期年化收益
     carrieroperator: '', //运营商
     count: 0 //观看次数
   };

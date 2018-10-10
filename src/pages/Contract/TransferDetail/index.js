@@ -138,7 +138,6 @@ class TransferDetail extends React.Component {
     const { transferInfo } = transferDetail;
     const projectDetail = transferDetail.projectDetail.detail;
     const historyList = transferDetail.projectDetail.historyList;
-
     const { loadingText, loading, isModalVisible } = this.state;
     return (
       <PageWithHeader
@@ -154,6 +153,8 @@ class TransferDetail extends React.Component {
           stationNumber={transferInfo.plantNum || '无'}
           projectTime={transferInfo.projectFinishTime || '无'}
           historyProfit={transferInfo.historyIncome || 0}
+          unitPrice={transferInfo.unitPrice || 0}
+          purchaseNumber={transferInfo.purchaseNumber || 0}
         />
         <ProjectDetail
           projectDetail={projectDetail}
