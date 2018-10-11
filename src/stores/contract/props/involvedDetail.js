@@ -114,9 +114,6 @@ class InvolvedDetail {
         });
         // this.loadGroupInfo(id);
         this.loadPowerProfit(id);
-        if (status >= PROJECT_STATUS_CODE.TO_GRID) {
-          this.loadPowerProfit(id);
-        }
       }
     });
   };
