@@ -87,7 +87,7 @@ class TransferList extends React.Component {
                   ''
                 }
                 count={item.views}
-                beforeMoney={item.investmentAmount}
+                beforeMoney={item.originalAmount}
               />
             </Link>
           )}
