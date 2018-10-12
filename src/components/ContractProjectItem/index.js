@@ -115,7 +115,7 @@ class ContractProjectItem extends React.PureComponent {
           </span>
           <span className="bottom-count">
             <i className="iconfont bottom-font-size-count">&#xe693;</i>
-            {count || '-'}
+            {count || 0}
           </span>
         </div>
       </div>
