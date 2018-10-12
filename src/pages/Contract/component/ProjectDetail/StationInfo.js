@@ -1,5 +1,5 @@
 import React from 'react';
-import { Accordion, List } from 'antd-mobile';
+import { Accordion, List, Button } from 'antd-mobile';
 import { Picture } from '../../../../components';
 import PropTypes from 'prop-types';
 import './StationInfo.less';
@@ -17,8 +17,26 @@ class StationInfo extends React.PureComponent {
     siteInfo: PropTypes.object.isRequired
   };
 
+  isPdfFile = (url) => {
+    if (!url) {
+      return false;
+    } else {
+      return /\.pdf$/.test(url);
+    }
+  };
+
+  viewPdf = (url) => {
+    if (window.cordova) {
+      const device = window.device;
+      const target = device.platform === 'Android' ? '_system' : '_blank';
+      window.cordova.InAppBrowser.open(url, target, 'location=no,closebuttoncaption=关闭,closebuttoncolor=#ffffff');
+    } else {
+      window.open(url, '_blank')
+    }
+  };
+
   render() {
-    const { projectDetail, transferInfo, siteInfo } = this.props;
+    const { projectDetail, siteInfo } = this.props;
     const fileList = projectDetail.fileList || [];
     // const materialOverviewList = projectDetail.materialOverviewList || [];
     const houseRent =
@@ -92,12 +110,18 @@ class StationInfo extends React.PureComponent {
           </Accordion>
           <Accordion className="station-accordion">
             <Accordion.Panel header="房屋租赁协议">
-              <Picture
-                src={houseRent.ossPath || ''}
-                emptyElement={props => (
-                  <div className={props.className}>该文件非图片，无法预览</div>
-                )}
-              />
+              {
+                this.isPdfFile(houseRent.ossPath)
+                ?
+                  <Button
+                    onClick={() => this.viewPdf(houseRent.ossPath)}
+                    className="view-pdf-btn"
+                  >点击预览PDF</Button>
+                  :
+                  <div className="picture-empty-element">
+                    非PDF文件，无法预览
+                  </div>
+              }
             </Accordion.Panel>
           </Accordion>
           <Accordion className="station-accordion">
