@@ -61,11 +61,11 @@ class StationInfo extends React.PureComponent {
           <Item extra={`${projectDetail.estimatedAnnualizedIncome || 0}%`}>
             预期年化收益
           </Item>
-          <Item extra={`${projectDetail.totalCostOfRawMaterials || '-'}元`}>
+          <Item extra={`${projectDetail.totalCostOfRawMaterials}元`}>
             原材料成本
           </Item>
-          <Item extra={`${projectDetail.otherCosts || '-'}元`}>其他成本</Item>
-          <Item extra={`${projectDetail.otherAccessoryCosts || '-'}元`}>
+          <Item extra={`${projectDetail.otherCosts}元`}>其他成本</Item>
+          <Item extra={`${projectDetail.otherAccessoryCosts}元`}>
             其他配件成本
           </Item>
           <Accordion className="station-accordion">
@@ -90,7 +90,7 @@ class StationInfo extends React.PureComponent {
               ))}
             </Accordion.Panel>
           </Accordion>
-          <Item extra={`${projectDetail.installationCost || '-'}元`}>
+          <Item extra={`${projectDetail.installationCost}元`}>
             安装成本
           </Item>
           <Item
@@ -127,10 +127,9 @@ class StationInfo extends React.PureComponent {
           <Accordion className="station-accordion">
             <Accordion.Panel header="电站建设文件">
               {constructionFileList.map(item => (
-                <div className="file-with-name">
+                <div className="file-with-name" key={item.id}>
                   <div className="file-name">{item.fileTypeName || ''}</div>
                   <Picture
-                    key={item.id}
                     src={item.ossPath || ''}
                     emptyElement={props => (
                       <div className={props.className}>
@@ -145,17 +144,20 @@ class StationInfo extends React.PureComponent {
           <Accordion className="station-accordion">
             <Accordion.Panel header="并网和备案文件">
               {gridConnectedFileList.map(item => (
-                <div className="file-with-name">
+                <div className="file-with-name" key={item.id}>
                   <div className="file-name">{item.fileTypeName || ''}</div>
-                  <Picture
-                    key={item.id}
-                    src={item.ossPath || ''}
-                    emptyElement={props => (
-                      <div className={props.className}>
-                        该文件非图片，无法预览
+                  {
+                    this.isPdfFile(item.ossPath)
+                      ?
+                      <Button
+                        onClick={() => this.viewPdf(item.ossPath)}
+                        className="view-pdf-btn"
+                      >点击预览PDF</Button>
+                      :
+                      <div className="picture-empty-element">
+                        非PDF文件，无法预览
                       </div>
-                    )}
-                  />
+                  }
                 </div>
               ))}
             </Accordion.Panel>
