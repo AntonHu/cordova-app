@@ -9,64 +9,52 @@ import './index.less';
 
 class TransferStationInfo extends React.PureComponent {
   static defaultProps = {
-    transferTime: '2019-05-12', //转让时间
-    transferMan: 0, //转让人ID
-    stationNumber: 0, //所属电站编号
-    projectTime: '2019-05-12', //项目成团时间
-    historyProfit: 0, //历史收益情况
-    unitPrice: 0, //转让价格
-    purchaseNumber: 0 //转让份数
+    transferInfo: {}
   };
 
   static propTypes = {
-    transferTime: PropTypes.string.isRequired,
-    projetransferManctName: PropTypes.number.isRequired,
-    stationNumber: PropTypes.number.isRequired,
-    projectTime: PropTypes.string.isRequired,
-    historyProfit: PropTypes.number.isRequired,
-    unitPrice: PropTypes.number.isRequired,
-    purchaseNumber: PropTypes.number.isRequired
+    transferInfo: PropTypes.object.isRequired
   };
   render() {
     const {
-      transferTime,
-      transferMan,
-      stationNumber,
-      projectTime,
-      historyProfit,
-      unitPrice,
-      purchaseNumber
-    } = this.props;
+      transferPublishTime,
+      sellerId,
+      plantNum,
+      projectFinishTime,
+      historyIncome,
+      purchaseNumber,
+      amount
+    } = this.props.transferInfo;
     return (
       <div className="transfer-station-info-item">
         <div className="transfer-station-info-container">
           <div className="station-row">
             转让发布时间：
-            {transferTime}
+            {transferPublishTime || '无'}
           </div>
           <div className="station-row">
             转让人ID：
-            {transferMan}
+            {sellerId || '无'}
           </div>
           <div className="station-row">
             所属电站编号：
-            {stationNumber}
+            {plantNum || '无'}
           </div>
           <div className="station-row">
             转让份数：
-            {purchaseNumber}
+            {purchaseNumber || 0}
           </div>
           <div className="station-row">
             转让价格：
-            {unitPrice}
+            {amount || 0}元
           </div>
           <div className="station-row">
             项目成团时间：
-            {projectTime}
+            {projectFinishTime || '无'}
           </div>
           <div className="station-row">
             历史收益情况：
-            {historyProfit} %
+            {historyIncome || 0}%
           </div>
         </div>
       </div>

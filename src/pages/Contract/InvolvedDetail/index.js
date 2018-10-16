@@ -160,6 +160,7 @@ class InvolvedDetail extends React.Component {
       [{ text: '取消' }, { text: '确认', onPress: this.makeTransfer }]
     );
   };
+
   //确认重新购买
   confirmRePurchase = () => {
     const { involvedDetail } = this.props.contractStore;
@@ -173,6 +174,7 @@ class InvolvedDetail extends React.Component {
       [{ text: '取消' }, { text: '确认', onPress: this.rePurchase }]
     );
   };
+
   //重新购买，去投资份额确认页
   rePurchase = async () => {
     const { involvedDetail } = this.props.contractStore;

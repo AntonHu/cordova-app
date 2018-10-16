@@ -138,6 +138,7 @@ class TransferDetail extends React.Component {
           historyProfit={transferInfo.historyIncome || 0}
           unitPrice={transferInfo.unitPrice || 0}
           purchaseNumber={transferInfo.purchaseNumber || 0}
+          transferInfo={toJS(transferInfo)}
         />
         <ProjectDetail
           projectDetail={detail}

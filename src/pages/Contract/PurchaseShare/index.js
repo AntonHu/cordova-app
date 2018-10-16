@@ -122,8 +122,9 @@ class PurchaseShare extends React.Component {
 
   // 回到合约电站首页
   backToContract = () => {
-    const { notInvolvedDetail } = this.props.contractStore;
+    const { notInvolvedDetail, myProjectList } = this.props.contractStore;
     notInvolvedDetail.reset();
+    myProjectList.initLoad();
     this.props.history.go(-3)
   };
 

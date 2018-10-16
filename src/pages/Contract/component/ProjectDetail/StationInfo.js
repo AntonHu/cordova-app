@@ -61,11 +61,11 @@ class StationInfo extends React.PureComponent {
           <Item extra={`${projectDetail.estimatedAnnualizedIncome || 0}%`}>
             预期年化收益
           </Item>
-          <Item extra={`${projectDetail.totalCostOfRawMaterials}元`}>
+          <Item extra={`${projectDetail.totalCostOfRawMaterials || 0}元`}>
             原材料成本
           </Item>
-          <Item extra={`${projectDetail.otherCosts}元`}>其他成本</Item>
-          <Item extra={`${projectDetail.otherAccessoryCosts}元`}>
+          <Item extra={`${projectDetail.otherCosts || 0}元`}>其他成本</Item>
+          <Item extra={`${projectDetail.otherAccessoryCosts || 0}元`}>
             其他配件成本
           </Item>
           <Accordion className="station-accordion">
@@ -90,7 +90,7 @@ class StationInfo extends React.PureComponent {
               ))}
             </Accordion.Panel>
           </Accordion>
-          <Item extra={`${projectDetail.installationCost}元`}>
+          <Item extra={`${projectDetail.installationCost || 0}元`}>
             安装成本
           </Item>
           <Item
