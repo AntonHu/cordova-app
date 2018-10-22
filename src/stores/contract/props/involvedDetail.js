@@ -35,12 +35,6 @@ class InvolvedDetail {
   @observable
   isGroupInfoLoading = false;
 
-  // 发电收益（如有）
-  @observable
-  powerProfit = {};
-  @observable
-  isPowerProfitLoading = false;
-
   // 驳回内容（如有）
   @observable
   rejectInfo = {};
@@ -74,8 +68,6 @@ class InvolvedDetail {
     this.isPurchaseDetailLoading = false;
     this.groupInfo = {};
     this.isGroupInfoLoading = false;
-    this.powerProfit = {};
-    this.isPowerProfitLoading = false;
     this.rejectInfo = {};
     this.isRejectInfoLoading = false;
     this.docList = [];

@@ -44,7 +44,6 @@ class ProjectDetail extends React.PureComponent {
           <Tabs tabs={tabs} initialPage={0}>
             <StationInfo
               projectDetail={projectDetail}
-              transferInfo={transferInfo}
               siteInfo={siteInfo}
             />
             <OperatorInfo projectDetail={projectDetail} />

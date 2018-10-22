@@ -46,7 +46,6 @@ class ProjectHeader extends React.PureComponent {
     const purchaseDetail = this.props.purchaseDetail || {};
     const activeClass = this.isActive(purchaseDetail) ? 'active' : '';
     const statusText = this.getStatusText(purchaseDetail);
-    console.log('状态的', toJS(purchaseDetail));
     return (
       <div className={`_project-header ${activeClass}`}>
         {statusText && (
