@@ -95,17 +95,16 @@ class InvolvedDetail {
       }
     });
 
+    this.loadDocList({
+      purchaseId,
+      projectId: id
+    });
+    this.loadPowerProfit(id);
+
     this.projectDetail.loadData(id).then(result => {
       if (result.success) {
         const data = result.data || {};
         const status = data.status || 0;
-
-        this.loadDocList({
-          purchaseId,
-          projectId: id
-        });
-        // this.loadGroupInfo(id);
-        this.loadPowerProfit(id);
       }
     });
   };

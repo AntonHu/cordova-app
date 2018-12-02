@@ -331,7 +331,7 @@ class InvolvedDetail extends React.Component {
           <OrangeGradientBtn
             onClick={!rejectInfo.id ? this.onTransfer : this.confirmRePurchase}
           >
-            转让
+            {!rejectInfo.id ? '转让' : '重新购买'}
           </OrangeGradientBtn>
         </Modal>
         <ActivityIndicator
