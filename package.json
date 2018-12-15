@@ -25,6 +25,7 @@
     "cordova-plugin-code-push": "^1.11.11",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-crop": "git+https://github.com/349989153/cordova-plugin-crop.git",
+    "cordova-plugin-crosswalk-webview": "~2.4.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-dialogs": "^2.0.1",
     "cordova-plugin-file": "^4.3.3",

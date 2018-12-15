@@ -57,7 +57,7 @@
         <param name="android-package" value="com.microsoft.cordova.CodePush" />
         <param name="onload" value="true" />
     </feature>
-    <name>能源星球</name>
+    <name>一度店</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>

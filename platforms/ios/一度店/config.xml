@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.thundersdata.blockChainMobile" version="2.1.5" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="LocalStorage">
+        <param name="ios-package" value="CDVLocalStorage" />
+    </feature>
+    <feature name="Console">
+        <param name="ios-package" value="CDVLogger" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="HandleOpenUrl">
+        <param name="ios-package" value="CDVHandleOpenURL" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="IntentAndNavigationFilter">
+        <param name="ios-package" value="CDVIntentAndNavigationFilter" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="GestureHandler">
+        <param name="ios-package" value="CDVGestureHandler" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="Camera">
+        <param name="ios-package" value="CDVCamera" />
+    </feature>
+    <feature name="Notification">
+        <param name="ios-package" value="CDVNotification" />
+    </feature>
+    <feature name="Device">
+        <param name="ios-package" value="CDVDevice" />
+    </feature>
+    <feature name="CodePush">
+        <param name="ios-package" value="CodePush" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="CropPlugin">
+        <param name="ios-package" value="CTCrop" />
+    </feature>
+    <feature name="File">
+        <param name="ios-package" value="CDVFile" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="FileTransfer">
+        <param name="ios-package" value="CDVFileTransfer" />
+    </feature>
+    <feature name="Geolocation">
+        <param name="ios-package" value="CDVLocation" />
+    </feature>
+    <feature name="InAppBrowser">
+        <param name="ios-package" value="CDVInAppBrowser" />
+    </feature>
+    <feature name="JAnalyticsPlugin">
+        <param name="ios-package" value="JAnalyticsPlugin" />
+    </feature>
+    <feature name="NetworkStatus">
+        <param name="ios-package" value="CDVConnection" />
+    </feature>
+    <feature name="SplashScreen">
+        <param name="ios-package" value="CDVSplashScreen" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="StatusBar">
+        <param name="ios-package" value="CDVStatusBar" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="JPushPlugin">
+        <param name="ios-package" value="JPushPlugin" />
+    </feature>
+    <feature name="BarcodeScanner">
+        <param name="ios-package" value="CDVBarcodeScanner" />
+    </feature>
+    <feature name="Zip">
+        <param name="ios-package" value="ZipPlugin" />
+    </feature>
+    <name>一度店</name>
+    <description>
+        A sample Apache Cordova application that responds to the deviceready event.
+    </description>
+    <author email="dev@cordova.apache.org" href="http://cordova.io">
+        Apache Cordova Team
+    </author>
+    <content src="index.html" />
+    <access allows-arbitrary-loads-in-media="true" allows-arbitrary-loads-in-web-content="true" allows-local-networking="true" origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <allow-navigation href="https://api.thundersdata.com/contractPlant/*" />
+    <icon height="180" src="res/icon/ios/Icon-App-60x60@3x.png" width="180" />
+    <icon height="60" src="res/icon/ios/Icon-App-60x60@1x.png" width="60" />
+    <icon height="120" src="res/icon/ios/Icon-App-60x60@2x.png" width="120" />
+    <icon height="76" src="res/icon/ios/Icon-App-76x76@1x.png" width="76" />
+    <icon height="152" src="res/icon/ios/Icon-App-76x76@2x.png" width="152" />
+    <icon height="40" src="res/icon/ios/Icon-App-40x40@1x.png" width="40" />
+    <icon height="80" src="res/icon/ios/Icon-App-40x40@2x.png" width="80" />
+    <icon height="57" src="res/icon/ios/Icon-App-57x57@1x.png" width="57" />
+    <icon height="114" src="res/icon/ios/Icon-App-57x57@2x.png" width="114" />
+    <icon height="72" src="res/icon/ios/Icon-App-72x72@1x.png" width="72" />
+    <icon height="144" src="res/icon/ios/Icon-App-72x72@2x.png" width="144" />
+    <icon height="29" src="res/icon/ios/Icon-App-29x29@1x.png" width="29" />
+    <icon height="58" src="res/icon/ios/Icon-App-29x29@2x.png" width="58" />
+    <icon height="50" src="res/icon/ios/Icon-Small-50x50@1x.png" width="50" />
+    <icon height="100" src="res/icon/ios/Icon-Small-50x50@2x.png" width="100" />
+    <icon height="167" src="res/icon/ios/Icon-App-83.5x83.5@2x.png" width="167" />
+    <icon height="1024" src="res/icon/ios/ItunesArtwork@2x.png" width="1024" />
+    <splash height="480" src="res/screen/ios/Default~iphone.png" width="320" />
+    <splash height="960" src="res/screen/ios/Default@2x~iphone.png" width="640" />
+    <splash height="1024" src="res/screen/ios/Default-Portrait~ipad.png" width="768" />
+    <splash height="2048" src="res/screen/ios/Default-Portrait@2x~ipad.png" width="1536" />
+    <splash height="1136" src="res/screen/ios/Default-568h@2x~iphone.png" width="640" />
+    <splash height="1334" src="res/screen/ios/Default-667h.png" width="750" />
+    <splash height="2208" src="res/screen/ios/Default-736h.png" width="1242" />
+    <allow-intent href="itms:*" />
+    <allow-intent href="itms-apps:*" />
+    <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
+        <string>扫码添加设备需要开启相机</string>
+    </edit-config>
+    <preference name="AllowInlineMediaPlayback" value="false" />
+    <preference name="BackupWebStorage" value="cloud" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="EnableViewportScale" value="false" />
+    <preference name="KeyboardDisplayRequiresUserAction" value="true" />
+    <preference name="MediaPlaybackRequiresUserAction" value="false" />
+    <preference name="SuppressesIncrementalRendering" value="false" />
+    <preference name="SuppressesLongPressGesture" value="false" />
+    <preference name="Suppresses3DTouchGesture" value="false" />
+    <preference name="GapBetweenPages" value="0" />
+    <preference name="PageLength" value="0" />
+    <preference name="PaginationBreakingMode" value="page" />
+    <preference name="PaginationMode" value="unpaginated" />
+    <preference name="CameraUsesGeolocation" value="false" />
+    <preference name="StatusBarOverlaysWebView" value="true" />
+    <preference name="StatusBarStyle" value="lightcontent" />
+    <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+    <preference name="iosPersistentFileLocation" value="Compatibility" />
+    <preference name="iosExtraFilesystems" value="library,library-nosync,documents,documents-nosync,cache,bundle,root" />
+    <preference name="AndroidExtraFilesystems" value="files,files-external,documents,sdcard,cache,cache-external,assets,root" />
+    <preference name="CodePushDeploymentKey" value="nzYI83mZ03a1Ta1Qprtpupa-gYf50622c1d1-d19c-494b-a7c7-f4e4d3bc9118" />
+</widget>

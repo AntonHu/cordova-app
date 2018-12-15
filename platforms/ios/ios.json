@@ -20,12 +20,6 @@
               "xml": "<dict><key>APP_KEY</key><string>fd96956cb315ba658d256156</string></dict>",
               "count": 1
             }
-          ],
-          "NSAppTransportSecurity": [
-            {
-              "xml": "<dict><key>NSAllowsArbitraryLoads</key><true /></dict>",
-              "count": 2
-            }
           ]
         }
       },
@@ -53,6 +47,10 @@
               "count": 1
             },
             {
+              "xml": "<feature name=\"CropPlugin\"><param name=\"ios-package\" value=\"CTCrop\" /></feature>",
+              "count": 1
+            },
+            {
               "xml": "<feature name=\"File\"><param name=\"ios-package\" value=\"CDVFile\" /><param name=\"onload\" value=\"true\" /></feature>",
               "count": 1
             },
@@ -65,7 +63,19 @@
               "count": 1
             },
             {
+              "xml": "<feature name=\"InAppBrowser\"><param name=\"ios-package\" value=\"CDVInAppBrowser\" /></feature>",
+              "count": 1
+            },
+            {
               "xml": "<feature name=\"JAnalyticsPlugin\"><param name=\"ios-package\" value=\"JAnalyticsPlugin\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"SplashScreen\"><param name=\"ios-package\" value=\"CDVSplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
               "count": 1
             },
             {
@@ -86,22 +96,6 @@
             },
             {
               "xml": "<feature name=\"BarcodeScanner\"><param name=\"ios-package\" value=\"CDVBarcodeScanner\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"SplashScreen\"><param name=\"ios-package\" value=\"CDVSplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"CropPlugin\"><param name=\"ios-package\" value=\"CTCrop\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"InAppBrowser\"><param name=\"ios-package\" value=\"CDVInAppBrowser\" /></feature>",
               "count": 1
             }
           ],
@@ -144,6 +138,9 @@
     "cordova-plugin-compat": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
+    "cordova-plugin-crop": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
     "cordova-plugin-crosswalk-webview": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
@@ -156,11 +153,20 @@
     "cordova-plugin-geolocation": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
     "cordova-plugin-jcore": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
     "cordova-plugin-janalytics": {
       "APP_KEY": "fd96956cb315ba658d256156",
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-splashscreen": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
     "cordova-plugin-statusbar": {
@@ -177,18 +183,6 @@
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
     "phonegap-plugin-barcodescanner": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-network-information": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-crop": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-inappbrowser": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     }
   },
@@ -325,6 +319,14 @@
       "file": "plugins/cordova-plugin-code-push/bin/www/sdk.js",
       "pluginId": "cordova-plugin-code-push",
       "runs": true
+    },
+    {
+      "id": "cordova-plugin-crop.CropPlugin",
+      "file": "plugins/cordova-plugin-crop/www/crop.js",
+      "pluginId": "cordova-plugin-crop",
+      "clobbers": [
+        "plugins.crop"
+      ]
     },
     {
       "id": "cordova-plugin-file.DirectoryEntry",
@@ -548,11 +550,45 @@
       ]
     },
     {
+      "id": "cordova-plugin-inappbrowser.inappbrowser",
+      "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+      "pluginId": "cordova-plugin-inappbrowser",
+      "clobbers": [
+        "cordova.InAppBrowser.open",
+        "window.open"
+      ]
+    },
+    {
       "id": "cordova-plugin-janalytics.JAnalytics",
       "file": "plugins/cordova-plugin-janalytics/www/JAnalytics.js",
       "pluginId": "cordova-plugin-janalytics",
       "clobbers": [
         "JAnalytics"
+      ]
+    },
+    {
+      "id": "cordova-plugin-network-information.network",
+      "file": "plugins/cordova-plugin-network-information/www/network.js",
+      "pluginId": "cordova-plugin-network-information",
+      "clobbers": [
+        "navigator.connection",
+        "navigator.network.connection"
+      ]
+    },
+    {
+      "id": "cordova-plugin-network-information.Connection",
+      "file": "plugins/cordova-plugin-network-information/www/Connection.js",
+      "pluginId": "cordova-plugin-network-information",
+      "clobbers": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "cordova-plugin-splashscreen.SplashScreen",
+      "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+      "pluginId": "cordova-plugin-splashscreen",
+      "clobbers": [
+        "navigator.splashscreen"
       ]
     },
     {
@@ -586,48 +622,6 @@
       "clobbers": [
         "cordova.plugins.barcodeScanner"
       ]
-    },
-    {
-      "id": "cordova-plugin-splashscreen.SplashScreen",
-      "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
-      "pluginId": "cordova-plugin-splashscreen",
-      "clobbers": [
-        "navigator.splashscreen"
-      ]
-    },
-    {
-      "id": "cordova-plugin-network-information.network",
-      "file": "plugins/cordova-plugin-network-information/www/network.js",
-      "pluginId": "cordova-plugin-network-information",
-      "clobbers": [
-        "navigator.connection",
-        "navigator.network.connection"
-      ]
-    },
-    {
-      "id": "cordova-plugin-network-information.Connection",
-      "file": "plugins/cordova-plugin-network-information/www/Connection.js",
-      "pluginId": "cordova-plugin-network-information",
-      "clobbers": [
-        "Connection"
-      ]
-    },
-    {
-      "id": "cordova-plugin-crop.CropPlugin",
-      "file": "plugins/cordova-plugin-crop/www/crop.js",
-      "pluginId": "cordova-plugin-crop",
-      "clobbers": [
-        "plugins.crop"
-      ]
-    },
-    {
-      "id": "cordova-plugin-inappbrowser.inappbrowser",
-      "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
-      "pluginId": "cordova-plugin-inappbrowser",
-      "clobbers": [
-        "cordova.InAppBrowser.open",
-        "window.open"
-      ]
     }
   ],
   "plugin_metadata": {
@@ -637,20 +631,20 @@
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-code-push": "1.11.11",
     "cordova-plugin-compat": "1.2.0",
+    "cordova-plugin-crop": "0.3.1",
     "cordova-plugin-crosswalk-webview": "2.4.0",
     "cordova-plugin-file": "4.3.3",
     "cordova-plugin-file-transfer": "1.6.3",
     "cordova-plugin-geolocation": "4.0.1",
+    "cordova-plugin-inappbrowser": "3.0.0",
     "cordova-plugin-jcore": "1.1.12",
     "cordova-plugin-janalytics": "1.1.3",
+    "cordova-plugin-network-information": "2.0.1",
+    "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-statusbar": "2.4.2",
     "cordova-plugin-whitelist": "1.3.3",
     "cordova-plugin-zip": "3.1.0",
     "jpush-phonegap-plugin": "3.3.2",
-    "phonegap-plugin-barcodescanner": "8.0.0",
-    "cordova-plugin-splashscreen": "5.0.2",
-    "cordova-plugin-network-information": "2.0.1",
-    "cordova-plugin-crop": "0.3.1",
-    "cordova-plugin-inappbrowser": "3.0.0"
+    "phonegap-plugin-barcodescanner": "8.0.0"
   }
 }
