@@ -9,6 +9,14 @@ module.exports = [
     ]
   },
   {
+    "id": "cordova-plugin-alipay-v2.alipay",
+    "file": "plugins/cordova-plugin-alipay-v2/www/alipay.js",
+    "pluginId": "cordova-plugin-alipay-v2",
+    "clobbers": [
+      "cordova.plugins.alipay"
+    ]
+  },
+  {
     "id": "cordova-plugin-camera.Camera",
     "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
     "pluginId": "cordova-plugin-camera",
@@ -139,6 +147,14 @@ module.exports = [
     "file": "plugins/cordova-plugin-code-push/bin/www/sdk.js",
     "pluginId": "cordova-plugin-code-push",
     "runs": true
+  },
+  {
+    "id": "cordova-plugin-crop.CropPlugin",
+    "file": "plugins/cordova-plugin-crop/www/crop.js",
+    "pluginId": "cordova-plugin-crop",
+    "clobbers": [
+      "plugins.crop"
+    ]
   },
   {
     "id": "cordova-plugin-file.DirectoryEntry",
@@ -344,51 +360,20 @@ module.exports = [
     "runs": true
   },
   {
+    "id": "cordova-plugin-inappbrowser.inappbrowser",
+    "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+    "pluginId": "cordova-plugin-inappbrowser",
+    "clobbers": [
+      "cordova.InAppBrowser.open",
+      "window.open"
+    ]
+  },
+  {
     "id": "cordova-plugin-janalytics.JAnalytics",
     "file": "plugins/cordova-plugin-janalytics/www/JAnalytics.js",
     "pluginId": "cordova-plugin-janalytics",
     "clobbers": [
       "JAnalytics"
-    ]
-  },
-  {
-    "id": "cordova-plugin-zip.Zip",
-    "file": "plugins/cordova-plugin-zip/zip.js",
-    "pluginId": "cordova-plugin-zip",
-    "clobbers": [
-      "zip"
-    ]
-  },
-  {
-    "id": "phonegap-plugin-barcodescanner.BarcodeScanner",
-    "file": "plugins/phonegap-plugin-barcodescanner/www/barcodescanner.js",
-    "pluginId": "phonegap-plugin-barcodescanner",
-    "clobbers": [
-      "cordova.plugins.barcodeScanner"
-    ]
-  },
-  {
-    "id": "jpush-phonegap-plugin.JPushPlugin",
-    "file": "plugins/jpush-phonegap-plugin/www/JPushPlugin.js",
-    "pluginId": "jpush-phonegap-plugin",
-    "clobbers": [
-      "JPush"
-    ]
-  },
-  {
-    "id": "cordova-plugin-statusbar.statusbar",
-    "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
-    "pluginId": "cordova-plugin-statusbar",
-    "clobbers": [
-      "window.StatusBar"
-    ]
-  },
-  {
-    "id": "cordova-plugin-splashscreen.SplashScreen",
-    "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
-    "pluginId": "cordova-plugin-splashscreen",
-    "clobbers": [
-      "navigator.splashscreen"
     ]
   },
   {
@@ -409,20 +394,43 @@ module.exports = [
     ]
   },
   {
-    "id": "cordova-plugin-crop.CropPlugin",
-    "file": "plugins/cordova-plugin-crop/www/crop.js",
-    "pluginId": "cordova-plugin-crop",
+    "id": "cordova-plugin-splashscreen.SplashScreen",
+    "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+    "pluginId": "cordova-plugin-splashscreen",
     "clobbers": [
-      "plugins.crop"
+      "navigator.splashscreen"
     ]
   },
   {
-    "id": "cordova-plugin-inappbrowser.inappbrowser",
-    "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
-    "pluginId": "cordova-plugin-inappbrowser",
+    "id": "cordova-plugin-statusbar.statusbar",
+    "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+    "pluginId": "cordova-plugin-statusbar",
     "clobbers": [
-      "cordova.InAppBrowser.open",
-      "window.open"
+      "window.StatusBar"
+    ]
+  },
+  {
+    "id": "cordova-plugin-zip.Zip",
+    "file": "plugins/cordova-plugin-zip/zip.js",
+    "pluginId": "cordova-plugin-zip",
+    "clobbers": [
+      "zip"
+    ]
+  },
+  {
+    "id": "jpush-phonegap-plugin.JPushPlugin",
+    "file": "plugins/jpush-phonegap-plugin/www/JPushPlugin.js",
+    "pluginId": "jpush-phonegap-plugin",
+    "clobbers": [
+      "JPush"
+    ]
+  },
+  {
+    "id": "phonegap-plugin-barcodescanner.BarcodeScanner",
+    "file": "plugins/phonegap-plugin-barcodescanner/www/barcodescanner.js",
+    "pluginId": "phonegap-plugin-barcodescanner",
+    "clobbers": [
+      "cordova.plugins.barcodeScanner"
     ]
   }
 ];
@@ -430,25 +438,26 @@ module.exports.metadata =
 // TOP OF METADATA
 {
   "code-push": "2.0.4",
+  "cordova-plugin-alipay-v2": "0.0.3",
   "cordova-plugin-camera": "4.0.3",
   "cordova-plugin-dialogs": "2.0.1",
   "cordova-plugin-device": "2.0.2",
   "cordova-plugin-code-push": "1.11.11",
+  "cordova-plugin-crop": "0.3.1",
+  "cordova-plugin-crosswalk-webview": "2.4.0",
   "cordova-plugin-file": "4.3.3",
   "cordova-plugin-file-transfer": "1.6.3",
   "cordova-plugin-geolocation": "4.0.1",
+  "cordova-plugin-inappbrowser": "3.0.0",
   "cordova-plugin-jcore": "1.1.12",
   "cordova-plugin-janalytics": "1.1.3",
+  "cordova-plugin-network-information": "2.0.1",
+  "cordova-plugin-splashscreen": "5.0.2",
+  "cordova-plugin-statusbar": "2.4.2",
   "cordova-plugin-whitelist": "1.3.3",
   "cordova-plugin-zip": "3.1.0",
-  "phonegap-plugin-barcodescanner": "8.0.0",
   "jpush-phonegap-plugin": "3.3.2",
-  "cordova-plugin-statusbar": "2.4.2",
-  "cordova-plugin-splashscreen": "5.0.2",
-  "cordova-plugin-network-information": "2.0.1",
-  "cordova-plugin-crosswalk-webview": "2.4.0",
-  "cordova-plugin-crop": "0.3.1",
-  "cordova-plugin-inappbrowser": "3.0.0"
+  "phonegap-plugin-barcodescanner": "8.0.0"
 };
 // BOTTOM OF METADATA
 });

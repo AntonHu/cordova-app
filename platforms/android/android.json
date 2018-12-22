@@ -9,6 +9,10 @@
         "parents": {
           "/*": [
             {
+              "xml": "<feature name=\"alipay\"><param name=\"android-package\" value=\"cn.hhjjj.alipay.alipay\" /></feature>",
+              "count": 1
+            },
+            {
               "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
               "count": 1
             },
@@ -21,47 +25,7 @@
               "count": 1
             },
             {
-              "xml": "<feature name=\"File\"><param name=\"android-package\" value=\"org.apache.cordova.file.FileUtils\" /><param name=\"onload\" value=\"true\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<allow-navigation href=\"cdvfile:*\" />",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"FileTransfer\"><param name=\"android-package\" value=\"org.apache.cordova.filetransfer.FileTransfer\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.Geolocation\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"JAnalyticsPlugin\"><param name=\"android-package\" value=\"cn.jiguang.cordova.analytics.JAnalyticsPlugin\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"BarcodeScanner\"><param name=\"android-package\" value=\"com.phonegap.plugins.barcodescanner.BarcodeScanner\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"JPushPlugin\"><param name=\"android-package\" value=\"cn.jiguang.cordova.push.JPushPlugin\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"StatusBar\"><param name=\"android-package\" value=\"org.apache.cordova.statusbar.StatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"NetworkStatus\"><param name=\"android-package\" value=\"org.apache.cordova.networkinformation.NetworkManager\" /></feature>",
+              "xml": "<feature name=\"CropPlugin\"><param name=\"android-package\" value=\"com.jeduan.crop.CropPlugin\" /></feature>",
               "count": 1
             },
             {
@@ -93,11 +57,51 @@
               "count": 1
             },
             {
-              "xml": "<feature name=\"CropPlugin\"><param name=\"android-package\" value=\"com.jeduan.crop.CropPlugin\" /></feature>",
+              "xml": "<feature name=\"File\"><param name=\"android-package\" value=\"org.apache.cordova.file.FileUtils\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<allow-navigation href=\"cdvfile:*\" />",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"FileTransfer\"><param name=\"android-package\" value=\"org.apache.cordova.filetransfer.FileTransfer\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.Geolocation\" /></feature>",
               "count": 1
             },
             {
               "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"JAnalyticsPlugin\"><param name=\"android-package\" value=\"cn.jiguang.cordova.analytics.JAnalyticsPlugin\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"NetworkStatus\"><param name=\"android-package\" value=\"org.apache.cordova.networkinformation.NetworkManager\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"StatusBar\"><param name=\"android-package\" value=\"org.apache.cordova.statusbar.StatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"JPushPlugin\"><param name=\"android-package\" value=\"cn.jiguang.cordova.push.JPushPlugin\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"BarcodeScanner\"><param name=\"android-package\" value=\"com.phonegap.plugins.barcodescanner.BarcodeScanner\" /></feature>",
               "count": 1
             }
           ],
@@ -113,8 +117,24 @@
         "parents": {
           "/*": [
             {
-              "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+              "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
               "count": 3
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />",
+              "count": 2
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+              "count": 4
             },
             {
               "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
@@ -127,100 +147,24 @@
             {
               "xml": "<uses-feature android:name=\"android.hardware.location.gps\" />",
               "count": 1
-            },
-            {
-              "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
-              "count": 2
-            },
-            {
-              "xml": "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />",
-              "count": 1
-            }
-          ],
-          "application": [
-            {
-              "xml": "<provider android:authorities=\"${applicationId}.provider\" android:exported=\"false\" android:grantUriPermissions=\"true\" android:name=\"org.apache.cordova.camera.FileProvider\"><meta-data android:name=\"android.support.FILE_PROVIDER_PATHS\" android:resource=\"@xml/camera_provider_paths\" /></provider>",
-              "count": 1
-            }
-          ],
-          "/manifest": [
-            {
-              "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
-              "count": 2
-            },
-            {
-              "xml": "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\" />",
-              "count": 2
-            },
-            {
-              "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-              "count": 3
-            },
-            {
-              "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
-              "count": 2
-            },
-            {
-              "xml": "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />",
-              "count": 2
-            },
-            {
-              "xml": "<uses-permission android:name=\"android.permission.CAMERA\" />",
-              "count": 1
-            },
-            {
-              "xml": "<uses-permission android:name=\"android.permission.FLASHLIGHT\" />",
-              "count": 1
-            },
-            {
-              "xml": "<uses-feature android:name=\"android.hardware.camera\" android:required=\"true\" />",
-              "count": 1
-            },
-            {
-              "xml": "<permission android:name=\"com.thundersdata.blockChainMobile.permission.JPUSH_MESSAGE\" android:protectionLevel=\"signature\" />",
-              "count": 1
-            },
-            {
-              "xml": "<uses-permission android:name=\"com.thundersdata.blockChainMobile.permission.JPUSH_MESSAGE\" />",
-              "count": 1
-            },
-            {
-              "xml": "<uses-permission android:name=\"android.permission.RECEIVE_USER_PRESENT\" />",
-              "count": 1
-            },
-            {
-              "xml": "<uses-permission android:name=\"android.permission.WAKE_LOCK\" />",
-              "count": 1
-            },
-            {
-              "xml": "<uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />",
-              "count": 1
-            },
-            {
-              "xml": "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\" />",
-              "count": 1
-            },
-            {
-              "xml": "<uses-permission android:name=\"android.permission.VIBRATE\" />",
-              "count": 1
-            },
-            {
-              "xml": "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\" />",
-              "count": 1
             }
           ],
           "/manifest/application": [
             {
+              "xml": "<activity android:configChanges=\"orientation|keyboardHidden|navigation|screenSize\" android:exported=\"false\" android:name=\"com.alipay.sdk.app.H5PayActivity\" android:screenOrientation=\"behind\" android:windowSoftInputMode=\"adjustResize|stateHidden\"></activity>",
+              "count": 1
+            },
+            {
+              "xml": "<activity android:configChanges=\"orientation|keyboardHidden|navigation\" android:exported=\"false\" android:name=\"com.alipay.sdk.app.H5AuthActivity\" android:screenOrientation=\"behind\" android:windowSoftInputMode=\"adjustResize|stateHidden\"></activity>",
+              "count": 1
+            },
+            {
+              "xml": "<activity android:name=\"com.soundcloud.android.crop.CropImageActivity\" />",
+              "count": 1
+            },
+            {
               "xml": "<meta-data android:name=\"JPUSH_APPKEY\" android:value=\"fd96956cb315ba658d256156\" />",
               "count": 2
-            },
-            {
-              "xml": "<activity android:clearTaskOnLaunch=\"true\" android:configChanges=\"orientation|keyboardHidden|screenSize\" android:exported=\"false\" android:name=\"com.google.zxing.client.android.CaptureActivity\" android:theme=\"@android:style/Theme.NoTitleBar.Fullscreen\" android:windowSoftInputMode=\"stateAlwaysHidden\" />",
-              "count": 1
-            },
-            {
-              "xml": "<activity android:label=\"Share\" android:name=\"com.google.zxing.client.android.encode.EncodeActivity\" />",
-              "count": 1
             },
             {
               "xml": "<activity android:configChanges=\"orientation|keyboardHidden\" android:name=\"cn.jpush.android.ui.PushActivity\" android:theme=\"@android:style/Theme.Translucent.NoTitleBar\"><intent-filter><action android:name=\"cn.jpush.android.ui.PushActivity\" /><category android:name=\"android.intent.category.DEFAULT\" /><category android:name=\"com.thundersdata.blockChainMobile\" /></intent-filter></activity>",
@@ -267,24 +211,84 @@
               "count": 1
             },
             {
-              "xml": "<activity android:name=\"com.soundcloud.android.crop.CropImageActivity\" />",
+              "xml": "<activity android:clearTaskOnLaunch=\"true\" android:configChanges=\"orientation|keyboardHidden|screenSize\" android:exported=\"false\" android:name=\"com.google.zxing.client.android.CaptureActivity\" android:theme=\"@android:style/Theme.NoTitleBar.Fullscreen\" android:windowSoftInputMode=\"stateAlwaysHidden\" />",
+              "count": 1
+            },
+            {
+              "xml": "<activity android:label=\"Share\" android:name=\"com.google.zxing.client.android.encode.EncodeActivity\" />",
               "count": 1
             }
           ],
-          "/manifest/application/activity[@android:name='MainActivity']": [
+          "application": [
             {
-              "xml": "<activity android:windowSoftInputMode=\"adjustResize\" />",
-              "count": 1,
-              "mode": "merge",
-              "id": "config.xml",
-              "oldAttrib": {
-                "android:configChanges": "orientation|keyboardHidden|keyboard|screenSize|locale",
-                "android:label": "@string/activity_name",
-                "android:launchMode": "singleTop",
-                "android:name": "MainActivity",
-                "android:theme": "@android:style/Theme.DeviceDefault.NoActionBar",
-                "android:windowSoftInputMode": "adjustResize"
-              }
+              "xml": "<provider android:authorities=\"${applicationId}.provider\" android:exported=\"false\" android:grantUriPermissions=\"true\" android:name=\"org.apache.cordova.camera.FileProvider\"><meta-data android:name=\"android.support.FILE_PROVIDER_PATHS\" android:resource=\"@xml/camera_provider_paths\" /></provider>",
+              "count": 1
+            }
+          ],
+          "/manifest": [
+            {
+              "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+              "count": 3
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
+              "count": 2
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\" />",
+              "count": 2
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+              "count": 2
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />",
+              "count": 2
+            },
+            {
+              "xml": "<permission android:name=\"com.thundersdata.blockChainMobile.permission.JPUSH_MESSAGE\" android:protectionLevel=\"signature\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"com.thundersdata.blockChainMobile.permission.JPUSH_MESSAGE\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.RECEIVE_USER_PRESENT\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.WAKE_LOCK\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.VIBRATE\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.CAMERA\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.FLASHLIGHT\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-feature android:name=\"android.hardware.camera\" android:required=\"true\" />",
+              "count": 1
             }
           ]
         }
@@ -298,23 +302,15 @@
             }
           ]
         }
-      },
-      "*-Info.plist": {
-        "parents": {
-          "NSCameraUsageDescription": [
-            {
-              "xml": "<string>扫码添加设备需要开启相机</string>",
-              "count": 1,
-              "mode": "merge",
-              "id": "config.xml"
-            }
-          ]
-        }
       }
     }
   },
   "installed_plugins": {
     "code-push": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-alipay-v2": {
+      "APP_ID": "2018111162083907",
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
     "cordova-plugin-camera": {
@@ -329,43 +325,7 @@
     "cordova-plugin-code-push": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
-    "cordova-plugin-file": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-file-transfer": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-geolocation": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-jcore": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-janalytics": {
-      "APP_KEY": "fd96956cb315ba658d256156",
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-zip": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "phonegap-plugin-barcodescanner": {
-      "ANDROID_SUPPORT_V4_VERSION": "27.+",
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "jpush-phonegap-plugin": {
-      "APP_KEY": "fd96956cb315ba658d256156",
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-statusbar": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-network-information": {
+    "cordova-plugin-crop": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
     "cordova-plugin-crosswalk-webview": {
@@ -376,10 +336,46 @@
       "XWALK_MULTIPLEAPK": "true",
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
-    "cordova-plugin-crop": {
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-geolocation": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     },
     "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-jcore": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-janalytics": {
+      "APP_KEY": "fd96956cb315ba658d256156",
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-zip": {
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "jpush-phonegap-plugin": {
+      "APP_KEY": "fd96956cb315ba658d256156",
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "phonegap-plugin-barcodescanner": {
+      "ANDROID_SUPPORT_V4_VERSION": "27.+",
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     }
   },
@@ -391,6 +387,14 @@
       "pluginId": "code-push",
       "merges": [
         "window"
+      ]
+    },
+    {
+      "id": "cordova-plugin-alipay-v2.alipay",
+      "file": "plugins/cordova-plugin-alipay-v2/www/alipay.js",
+      "pluginId": "cordova-plugin-alipay-v2",
+      "clobbers": [
+        "cordova.plugins.alipay"
       ]
     },
     {
@@ -524,6 +528,14 @@
       "file": "plugins/cordova-plugin-code-push/bin/www/sdk.js",
       "pluginId": "cordova-plugin-code-push",
       "runs": true
+    },
+    {
+      "id": "cordova-plugin-crop.CropPlugin",
+      "file": "plugins/cordova-plugin-crop/www/crop.js",
+      "pluginId": "cordova-plugin-crop",
+      "clobbers": [
+        "plugins.crop"
+      ]
     },
     {
       "id": "cordova-plugin-file.DirectoryEntry",
@@ -729,51 +741,20 @@
       "runs": true
     },
     {
+      "id": "cordova-plugin-inappbrowser.inappbrowser",
+      "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+      "pluginId": "cordova-plugin-inappbrowser",
+      "clobbers": [
+        "cordova.InAppBrowser.open",
+        "window.open"
+      ]
+    },
+    {
       "id": "cordova-plugin-janalytics.JAnalytics",
       "file": "plugins/cordova-plugin-janalytics/www/JAnalytics.js",
       "pluginId": "cordova-plugin-janalytics",
       "clobbers": [
         "JAnalytics"
-      ]
-    },
-    {
-      "id": "cordova-plugin-zip.Zip",
-      "file": "plugins/cordova-plugin-zip/zip.js",
-      "pluginId": "cordova-plugin-zip",
-      "clobbers": [
-        "zip"
-      ]
-    },
-    {
-      "id": "phonegap-plugin-barcodescanner.BarcodeScanner",
-      "file": "plugins/phonegap-plugin-barcodescanner/www/barcodescanner.js",
-      "pluginId": "phonegap-plugin-barcodescanner",
-      "clobbers": [
-        "cordova.plugins.barcodeScanner"
-      ]
-    },
-    {
-      "id": "jpush-phonegap-plugin.JPushPlugin",
-      "file": "plugins/jpush-phonegap-plugin/www/JPushPlugin.js",
-      "pluginId": "jpush-phonegap-plugin",
-      "clobbers": [
-        "JPush"
-      ]
-    },
-    {
-      "id": "cordova-plugin-statusbar.statusbar",
-      "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
-      "pluginId": "cordova-plugin-statusbar",
-      "clobbers": [
-        "window.StatusBar"
-      ]
-    },
-    {
-      "id": "cordova-plugin-splashscreen.SplashScreen",
-      "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
-      "pluginId": "cordova-plugin-splashscreen",
-      "clobbers": [
-        "navigator.splashscreen"
       ]
     },
     {
@@ -794,43 +775,67 @@
       ]
     },
     {
-      "id": "cordova-plugin-crop.CropPlugin",
-      "file": "plugins/cordova-plugin-crop/www/crop.js",
-      "pluginId": "cordova-plugin-crop",
+      "id": "cordova-plugin-splashscreen.SplashScreen",
+      "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+      "pluginId": "cordova-plugin-splashscreen",
       "clobbers": [
-        "plugins.crop"
+        "navigator.splashscreen"
       ]
     },
     {
-      "id": "cordova-plugin-inappbrowser.inappbrowser",
-      "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
-      "pluginId": "cordova-plugin-inappbrowser",
+      "id": "cordova-plugin-statusbar.statusbar",
+      "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+      "pluginId": "cordova-plugin-statusbar",
       "clobbers": [
-        "cordova.InAppBrowser.open",
-        "window.open"
+        "window.StatusBar"
+      ]
+    },
+    {
+      "id": "cordova-plugin-zip.Zip",
+      "file": "plugins/cordova-plugin-zip/zip.js",
+      "pluginId": "cordova-plugin-zip",
+      "clobbers": [
+        "zip"
+      ]
+    },
+    {
+      "id": "jpush-phonegap-plugin.JPushPlugin",
+      "file": "plugins/jpush-phonegap-plugin/www/JPushPlugin.js",
+      "pluginId": "jpush-phonegap-plugin",
+      "clobbers": [
+        "JPush"
+      ]
+    },
+    {
+      "id": "phonegap-plugin-barcodescanner.BarcodeScanner",
+      "file": "plugins/phonegap-plugin-barcodescanner/www/barcodescanner.js",
+      "pluginId": "phonegap-plugin-barcodescanner",
+      "clobbers": [
+        "cordova.plugins.barcodeScanner"
       ]
     }
   ],
   "plugin_metadata": {
     "code-push": "2.0.4",
+    "cordova-plugin-alipay-v2": "0.0.3",
     "cordova-plugin-camera": "4.0.3",
     "cordova-plugin-dialogs": "2.0.1",
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-code-push": "1.11.11",
+    "cordova-plugin-crop": "0.3.1",
+    "cordova-plugin-crosswalk-webview": "2.4.0",
     "cordova-plugin-file": "4.3.3",
     "cordova-plugin-file-transfer": "1.6.3",
     "cordova-plugin-geolocation": "4.0.1",
+    "cordova-plugin-inappbrowser": "3.0.0",
     "cordova-plugin-jcore": "1.1.12",
     "cordova-plugin-janalytics": "1.1.3",
+    "cordova-plugin-network-information": "2.0.1",
+    "cordova-plugin-splashscreen": "5.0.2",
+    "cordova-plugin-statusbar": "2.4.2",
     "cordova-plugin-whitelist": "1.3.3",
     "cordova-plugin-zip": "3.1.0",
-    "phonegap-plugin-barcodescanner": "8.0.0",
     "jpush-phonegap-plugin": "3.3.2",
-    "cordova-plugin-statusbar": "2.4.2",
-    "cordova-plugin-splashscreen": "5.0.2",
-    "cordova-plugin-network-information": "2.0.1",
-    "cordova-plugin-crosswalk-webview": "2.4.0",
-    "cordova-plugin-crop": "0.3.1",
-    "cordova-plugin-inappbrowser": "3.0.0"
+    "phonegap-plugin-barcodescanner": "8.0.0"
   }
 }

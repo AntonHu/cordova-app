@@ -178,5 +178,15 @@
     },
     "is_top_level": true,
     "variables": {}
+  },
+  "cordova-plugin-alipay-v2": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-alipay-v2@0.0.4"
+    },
+    "is_top_level": true,
+    "variables": {
+      "APP_ID": "2018111162083907"
+    }
   }
 }

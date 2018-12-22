@@ -21,31 +21,28 @@
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
-    <string>2.1.5</string>
+    <string>2.3.0</string>
     <key>CFBundleSignature</key>
     <string>????</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleURLName</key>
+        <string>alipay</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>ali2018111162083907</string>
+        </array>
+      </dict>
+    </array>
     <key>CFBundleVersion</key>
-    <string>2.1.5</string>
+    <string>2.3.0</string>
+    <key>JAnalytics</key>
+    <dict>
+      <key>APP_KEY</key>
+      <string>fd96956cb315ba658d256156</string>
+    </dict>
     <key>LSRequiresIPhoneOS</key>
-    <true/>
-    <key>NSMainNibFile</key>
-    <string/>
-    <key>NSMainNibFile~ipad</key>
-    <string/>
-    <key>UISupportedInterfaceOrientations</key>
-    <array>
-      <string>UIInterfaceOrientationPortrait</string>
-      <string>UIInterfaceOrientationLandscapeLeft</string>
-      <string>UIInterfaceOrientationLandscapeRight</string>
-    </array>
-    <key>UISupportedInterfaceOrientations~ipad</key>
-    <array>
-      <string>UIInterfaceOrientationPortrait</string>
-      <string>UIInterfaceOrientationLandscapeLeft</string>
-      <string>UIInterfaceOrientationPortraitUpsideDown</string>
-      <string>UIInterfaceOrientationLandscapeRight</string>
-    </array>
-    <key>UIRequiresFullScreen</key>
     <true/>
     <key>NSAppTransportSecurity</key>
     <dict>
@@ -63,11 +60,27 @@
       <key>NSAllowsLocalNetworking</key>
       <true/>
     </dict>
-    <key>JAnalytics</key>
-    <dict>
-      <key>APP_KEY</key>
-      <string>fd96956cb315ba658d256156</string>
-    </dict>
+    <key>NSMainNibFile</key>
+    <string/>
+    <key>NSMainNibFile~ipad</key>
+    <string/>
+    <key>UIRequiresFullScreen</key>
+    <true/>
+    <key>UIStatusBarStyle</key>
+    <string>UIStatusBarStyleDefault</string>
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+      <string>UIInterfaceOrientationPortrait</string>
+      <string>UIInterfaceOrientationLandscapeLeft</string>
+      <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+      <string>UIInterfaceOrientationPortrait</string>
+      <string>UIInterfaceOrientationLandscapeLeft</string>
+      <string>UIInterfaceOrientationPortraitUpsideDown</string>
+      <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
     <key>NSCameraUsageDescription</key>
     <string>扫码添加设备需要开启相机</string>
   </dict>

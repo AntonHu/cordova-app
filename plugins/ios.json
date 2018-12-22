@@ -56,6 +56,10 @@
     },
     "phonegap-plugin-barcodescanner": {
       "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    },
+    "cordova-plugin-alipay-v2": {
+      "APP_ID": "2018111162083907",
+      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
     }
   },
   "dependent_plugins": {

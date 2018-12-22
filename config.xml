@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.thundersdata.blockChainMobile" version="2.1.5" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.thundersdata.blockChainMobile" version="2.3.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>一度店</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
@@ -96,6 +96,9 @@
     <plugin name="cordova-plugin-crop" spec="https://github.com/349989153/cordova-plugin-crop.git" />
     <plugin name="cordova-plugin-zip" spec="^3.1.0" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
+    <plugin name="cordova-plugin-alipay-v2" spec="0.0.4">
+        <variable name="APP_ID" value="2018111162083907" />
+    </plugin>
+    <engine name="ios" spec="^4.5.4" />
     <engine name="android" spec="^6.4.0" />
-    <engine name="ios" spec="~4.5.4" />
 </widget>

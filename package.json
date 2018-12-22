@@ -21,6 +21,7 @@
     "code-push": "^2.0.4",
     "cordova-android": "^6.4.0",
     "cordova-ios": "^4.5.4",
+    "cordova-plugin-alipay-v2": "0.0.4",
     "cordova-plugin-camera": "^4.0.3",
     "cordova-plugin-code-push": "^1.11.11",
     "cordova-plugin-compat": "^1.2.0",
@@ -170,11 +171,14 @@
         "XWALK_MULTIPLEAPK": "true"
       },
       "cordova-plugin-crop": {},
-      "cordova-plugin-inappbrowser": {}
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-alipay-v2": {
+        "APP_ID": "2018111162083907"
+      }
     },
     "platforms": [
-      "android",
-      "ios"
+      "ios",
+      "android"
     ]
   },
   "devDependencies": {
