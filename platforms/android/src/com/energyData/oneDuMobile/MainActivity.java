@@ -17,7 +17,7 @@
        under the License.
  */
 
-package com.thundersdata.blockChainMobile;
+package com.energyData.oneDuMobile;
 
 import android.os.Bundle;
 import org.apache.cordova.*;
