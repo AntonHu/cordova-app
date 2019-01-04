@@ -40,7 +40,14 @@ var AcquisitionManager = (function () {
                 return;
             }
             if (response.statusCode !== 200) {
-                callback(new Error(response.statusCode + ": " + response.body), null);
+                var errorMessage;
+                if (response.statusCode === 0) {
+                    errorMessage = "Couldn't send request to " + requestUrl + ", xhr.statusCode = 0 was returned. One of the possible reasons for that might be connection problems. Please, check your internet connection.";
+                }
+                else {
+                    errorMessage = response.statusCode + ": " + response.body;
+                }
+                callback(new Error(errorMessage), null);
                 return;
             }
             try {
@@ -168,5 +175,7 @@ function queryStringify(object) {
     }
     return queryString;
 }
+
+//# sourceMappingURL=acquisition-sdk.js.map
 
 });

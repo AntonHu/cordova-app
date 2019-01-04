@@ -437,12 +437,12 @@ module.exports = [
 module.exports.metadata = 
 // TOP OF METADATA
 {
-  "code-push": "2.0.4",
+  "code-push": "2.0.6",
   "cordova-plugin-alipay-v2": "0.0.3",
   "cordova-plugin-camera": "4.0.3",
   "cordova-plugin-dialogs": "2.0.1",
   "cordova-plugin-device": "2.0.2",
-  "cordova-plugin-code-push": "1.11.11",
+  "cordova-plugin-code-push": "1.11.16",
   "cordova-plugin-crop": "0.3.1",
   "cordova-plugin-crosswalk-webview": "2.4.0",
   "cordova-plugin-file": "4.3.3",

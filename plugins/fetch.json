@@ -7,18 +7,10 @@
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-code-push": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-file@^4.3.3"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
   "code-push": {
     "source": {
       "type": "registry",
-      "id": "code-push@2.0.4"
+      "id": "code-push@2.0.6"
     },
     "is_top_level": false,
     "variables": {}
@@ -149,20 +141,6 @@
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-crosswalk-webview": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-crosswalk-webview@~2.4.0"
-    },
-    "is_top_level": true,
-    "variables": {
-      "XWALK_VERSION": "23+",
-      "XWALK_LITEVERSION": "xwalk_core_library_canary:17+",
-      "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
-      "XWALK_MODE": "embedded",
-      "XWALK_MULTIPLEAPK": "true"
-    }
-  },
   "cordova-plugin-crop": {
     "source": {
       "type": "registry",
@@ -188,5 +166,21 @@
     "variables": {
       "APP_ID": "2018111162083907"
     }
+  },
+  "cordova-plugin-code-push": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-code-push"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-crosswalk-webview": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-crosswalk-webview@2.4.0"
+    },
+    "is_top_level": true,
+    "variables": {}
   }
 }

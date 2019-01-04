@@ -9,16 +9,16 @@
   "installed_plugins": {
     "cordova-plugin-alipay-v2": {
       "APP_ID": "2018111162083907",
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-camera": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-code-push": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-crop": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-crosswalk-webview": {
       "XWALK_VERSION": "23+",
@@ -26,60 +26,60 @@
       "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
       "XWALK_MODE": "embedded",
       "XWALK_MULTIPLEAPK": "true",
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-file": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-file-transfer": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-geolocation": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-inappbrowser": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-janalytics": {
       "APP_KEY": "fd96956cb315ba658d256156",
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-network-information": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-statusbar": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-zip": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "jpush-phonegap-plugin": {
       "APP_KEY": "fd96956cb315ba658d256156",
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "phonegap-plugin-barcodescanner": {
       "ANDROID_SUPPORT_V4_VERSION": "27.+",
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     }
   },
   "dependent_plugins": {
     "code-push": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-dialogs": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-device": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-jcore": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     }
   }
 }

@@ -92,9 +92,9 @@ ext {
 }
 
 // PLUGIN GRADLE EXTENSIONS START
-apply from: "cordova-plugin-code-push/blockChainMobile-build-extras.gradle"
-apply from: "cordova-plugin-crosswalk-webview/blockChainMobile-xwalk.gradle"
-apply from: "phonegap-plugin-barcodescanner/blockChainMobile-barcodescanner.gradle"
+apply from: "cordova-plugin-code-push/oneDuMobile-build-extras.gradle"
+apply from: "cordova-plugin-crosswalk-webview/oneDuMobile-xwalk.gradle"
+apply from: "phonegap-plugin-barcodescanner/oneDuMobile-barcodescanner.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras = file('build-extras.gradle').exists()

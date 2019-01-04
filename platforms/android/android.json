@@ -167,7 +167,7 @@
               "count": 2
             },
             {
-              "xml": "<activity android:configChanges=\"orientation|keyboardHidden\" android:name=\"cn.jpush.android.ui.PushActivity\" android:theme=\"@android:style/Theme.Translucent.NoTitleBar\"><intent-filter><action android:name=\"cn.jpush.android.ui.PushActivity\" /><category android:name=\"android.intent.category.DEFAULT\" /><category android:name=\"com.thundersdata.blockChainMobile\" /></intent-filter></activity>",
+              "xml": "<activity android:configChanges=\"orientation|keyboardHidden\" android:name=\"cn.jpush.android.ui.PushActivity\" android:theme=\"@android:style/Theme.Translucent.NoTitleBar\"><intent-filter><action android:name=\"cn.jpush.android.ui.PushActivity\" /><category android:name=\"android.intent.category.DEFAULT\" /><category android:name=\"com.energyData.oneDuMobile\" /></intent-filter></activity>",
               "count": 1
             },
             {
@@ -183,15 +183,15 @@
               "count": 1
             },
             {
-              "xml": "<receiver android:enabled=\"true\" android:exported=\"false\" android:name=\"cn.jpush.android.service.PushReceiver\"><intent-filter android:priority=\"1000\"><action android:name=\"cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY\" /><category android:name=\"com.thundersdata.blockChainMobile\" /></intent-filter><intent-filter><action android:name=\"android.intent.action.USER_PRESENT\" /><action android:name=\"android.net.conn.CONNECTIVITY_CHANGE\" /></intent-filter><intent-filter><action android:name=\"android.intent.action.PACKAGE_ADDED\" /><action android:name=\"android.intent.action.PACKAGE_REMOVED\" /><data android:scheme=\"package\" /></intent-filter></receiver>",
+              "xml": "<receiver android:enabled=\"true\" android:exported=\"false\" android:name=\"cn.jpush.android.service.PushReceiver\"><intent-filter android:priority=\"1000\"><action android:name=\"cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY\" /><category android:name=\"com.energyData.oneDuMobile\" /></intent-filter><intent-filter><action android:name=\"android.intent.action.USER_PRESENT\" /><action android:name=\"android.net.conn.CONNECTIVITY_CHANGE\" /></intent-filter><intent-filter><action android:name=\"android.intent.action.PACKAGE_ADDED\" /><action android:name=\"android.intent.action.PACKAGE_REMOVED\" /><data android:scheme=\"package\" /></intent-filter></receiver>",
               "count": 1
             },
             {
-              "xml": "<service android:enabled=\"true\" android:exported=\"true\" android:name=\"cn.jpush.android.service.DaemonService\"><intent-filter><action android:name=\"cn.jpush.android.intent.DaemonService\" /><category android:name=\"com.thundersdata.blockChainMobile\" /></intent-filter></service>",
+              "xml": "<service android:enabled=\"true\" android:exported=\"true\" android:name=\"cn.jpush.android.service.DaemonService\"><intent-filter><action android:name=\"cn.jpush.android.intent.DaemonService\" /><category android:name=\"com.energyData.oneDuMobile\" /></intent-filter></service>",
               "count": 1
             },
             {
-              "xml": "<receiver android:enabled=\"true\" android:name=\"cn.jiguang.cordova.push.JPushReceiver\"><intent-filter><action android:name=\"cn.jpush.android.intent.REGISTRATION\" /><action android:name=\"cn.jpush.android.intent.MESSAGE_RECEIVED\" /><action android:name=\"cn.jpush.android.intent.NOTIFICATION_RECEIVED\" /><action android:name=\"cn.jpush.android.intent.NOTIFICATION_OPENED\" /><action android:name=\"cn.jpush.android.intent.CONNECTION\" /><category android:name=\"com.thundersdata.blockChainMobile\" /></intent-filter></receiver>",
+              "xml": "<receiver android:enabled=\"true\" android:name=\"cn.jiguang.cordova.push.JPushReceiver\"><intent-filter><action android:name=\"cn.jpush.android.intent.REGISTRATION\" /><action android:name=\"cn.jpush.android.intent.MESSAGE_RECEIVED\" /><action android:name=\"cn.jpush.android.intent.NOTIFICATION_RECEIVED\" /><action android:name=\"cn.jpush.android.intent.NOTIFICATION_OPENED\" /><action android:name=\"cn.jpush.android.intent.CONNECTION\" /><category android:name=\"com.energyData.oneDuMobile\" /></intent-filter></receiver>",
               "count": 1
             },
             {
@@ -199,11 +199,11 @@
               "count": 1
             },
             {
-              "xml": "<provider android:authorities=\"com.thundersdata.blockChainMobile.DataProvider\" android:exported=\"true\" android:name=\"cn.jpush.android.service.DataProvider\" />",
+              "xml": "<provider android:authorities=\"com.energyData.oneDuMobile.DataProvider\" android:exported=\"true\" android:name=\"cn.jpush.android.service.DataProvider\" />",
               "count": 1
             },
             {
-              "xml": "<receiver android:name=\"cn.jiguang.cordova.push.JPushEventReceiver\"><intent-filter><action android:name=\"cn.jpush.android.intent.RECEIVE_MESSAGE\" /><category android:name=\"com.thundersdata.blockChainMobile\" /></intent-filter></receiver>",
+              "xml": "<receiver android:name=\"cn.jiguang.cordova.push.JPushEventReceiver\"><intent-filter><action android:name=\"cn.jpush.android.intent.RECEIVE_MESSAGE\" /><category android:name=\"com.energyData.oneDuMobile\" /></intent-filter></receiver>",
               "count": 1
             },
             {
@@ -247,11 +247,11 @@
               "count": 2
             },
             {
-              "xml": "<permission android:name=\"com.thundersdata.blockChainMobile.permission.JPUSH_MESSAGE\" android:protectionLevel=\"signature\" />",
+              "xml": "<permission android:name=\"com.energyData.oneDuMobile.permission.JPUSH_MESSAGE\" android:protectionLevel=\"signature\" />",
               "count": 1
             },
             {
-              "xml": "<uses-permission android:name=\"com.thundersdata.blockChainMobile.permission.JPUSH_MESSAGE\" />",
+              "xml": "<uses-permission android:name=\"com.energyData.oneDuMobile.permission.JPUSH_MESSAGE\" />",
               "count": 1
             },
             {
@@ -307,26 +307,26 @@
   },
   "installed_plugins": {
     "code-push": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-alipay-v2": {
       "APP_ID": "2018111162083907",
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-camera": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-dialogs": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-device": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-code-push": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-crop": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-crosswalk-webview": {
       "XWALK_VERSION": "23+",
@@ -334,49 +334,49 @@
       "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
       "XWALK_MODE": "embedded",
       "XWALK_MULTIPLEAPK": "true",
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-file": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-file-transfer": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-geolocation": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-inappbrowser": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-jcore": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-janalytics": {
       "APP_KEY": "fd96956cb315ba658d256156",
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-network-information": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-statusbar": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-zip": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "jpush-phonegap-plugin": {
       "APP_KEY": "fd96956cb315ba658d256156",
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "phonegap-plugin-barcodescanner": {
       "ANDROID_SUPPORT_V4_VERSION": "27.+",
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     }
   },
   "dependent_plugins": {},
@@ -816,12 +816,12 @@
     }
   ],
   "plugin_metadata": {
-    "code-push": "2.0.4",
+    "code-push": "2.0.6",
     "cordova-plugin-alipay-v2": "0.0.3",
     "cordova-plugin-camera": "4.0.3",
     "cordova-plugin-dialogs": "2.0.1",
     "cordova-plugin-device": "2.0.2",
-    "cordova-plugin-code-push": "1.11.11",
+    "cordova-plugin-code-push": "1.11.16",
     "cordova-plugin-crop": "0.3.1",
     "cordova-plugin-crosswalk-webview": "2.4.0",
     "cordova-plugin-file": "4.3.3",
