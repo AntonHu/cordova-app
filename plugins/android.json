@@ -53,6 +53,10 @@
     "cordova-plugin-statusbar": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
+    "cordova-plugin-wechat": {
+      "WECHATAPPID": "wxf56d42ba4b664a15",
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },

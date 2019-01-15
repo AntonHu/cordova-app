@@ -117,14 +117,14 @@ public class XWalkCordovaResourceClient extends XWalkResourceClient {
             appInfo = pm.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
             if ((appInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
                 // debug = true
-                callback.onReceiveValue(true);
+                // callback.onReceiveValue(true);
             } else {
                 // debug = false
-                callback.onReceiveValue(false);
+                //callback.onReceiveValue(false);
             }
         } catch (PackageManager.NameNotFoundException e) {
             // When it doubt, lock it out!
-            callback.onReceiveValue(false);
+            //callback.onReceiveValue(false);
         }
     }
 

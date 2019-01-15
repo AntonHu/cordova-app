@@ -7,55 +7,59 @@
     "files": {}
   },
   "installed_plugins": {
+    "cordova-plugin-alipay-v2": {
+      "APP_ID": "2018111162083907",
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
     "cordova-plugin-camera": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-code-push": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-crop": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-file": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-file-transfer": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-geolocation": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-inappbrowser": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-janalytics": {
       "APP_KEY": "fd96956cb315ba658d256156",
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-network-information": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-statusbar": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-wechat": {
+      "WECHATAPPID": "wxf56d42ba4b664a15",
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-zip": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "jpush-phonegap-plugin": {
       "APP_KEY": "fd96956cb315ba658d256156",
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "phonegap-plugin-barcodescanner": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-alipay-v2": {
-      "APP_ID": "2018111162083907",
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-code-push": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-crosswalk-webview": {
@@ -63,19 +67,19 @@
     }
   },
   "dependent_plugins": {
-    "cordova-plugin-device": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-compat": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-jcore": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
     "code-push": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-dialogs": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-compat": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-jcore": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     }
   }

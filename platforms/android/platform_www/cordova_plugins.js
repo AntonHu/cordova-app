@@ -410,6 +410,14 @@ module.exports = [
     ]
   },
   {
+    "id": "cordova-plugin-wechat.Wechat",
+    "file": "plugins/cordova-plugin-wechat/www/wechat.js",
+    "pluginId": "cordova-plugin-wechat",
+    "clobbers": [
+      "Wechat"
+    ]
+  },
+  {
     "id": "cordova-plugin-zip.Zip",
     "file": "plugins/cordova-plugin-zip/zip.js",
     "pluginId": "cordova-plugin-zip",
@@ -454,6 +462,7 @@ module.exports.metadata =
   "cordova-plugin-network-information": "2.0.1",
   "cordova-plugin-splashscreen": "5.0.2",
   "cordova-plugin-statusbar": "2.4.2",
+  "cordova-plugin-wechat": "2.6.0",
   "cordova-plugin-whitelist": "1.3.3",
   "cordova-plugin-zip": "3.1.0",
   "jpush-phonegap-plugin": "3.3.2",

@@ -9,10 +9,28 @@
         "parents": {
           "NSCameraUsageDescription": [
             {
-              "xml": "<string>扫码添加设备需要开启相机</string>",
+              "xml": "<string>上传头像需要开启相机</string>",
               "count": 1,
               "mode": "merge",
               "id": "config.xml"
+            }
+          ],
+          "NSPhotoLibraryUsageDescription": [
+            {
+              "xml": "<string>上传头像需要访问相册</string>",
+              "count": 1,
+              "mode": "merge",
+              "id": "config.xml"
+            }
+          ],
+          "CFBundleURLTypes": [
+            {
+              "xml": "<array><dict><key>CFBundleURLName</key><string>alipay</string><key>CFBundleURLSchemes</key><array><string>ali2018111162083907</string></array></dict></array>",
+              "count": 1
+            },
+            {
+              "xml": "<array><dict><key>CFBundleURLName</key><string>weixin</string><key>CFBundleURLSchemes</key><array><string>wxf56d42ba4b664a15</string></array></dict></array>",
+              "count": 1
             }
           ],
           "JAnalytics": [
@@ -21,9 +39,15 @@
               "count": 1
             }
           ],
-          "CFBundleURLTypes": [
+          "LSApplicationQueriesSchemes": [
             {
-              "xml": "<array><dict><key>CFBundleURLName</key><string>alipay</string><key>CFBundleURLSchemes</key><array><string>ali2018111162083907</string></array></dict></array>",
+              "xml": "<array><string>weixin</string><string>wechat</string></array>",
+              "count": 1
+            }
+          ],
+          "NSAppTransportSecurity": [
+            {
+              "xml": "<dict><key>NSAllowsArbitraryLoads</key><true /></dict>",
               "count": 1
             }
           ]
@@ -33,6 +57,14 @@
         "parents": {
           "/*": [
             {
+              "xml": "<feature name=\"alipay\"><param name=\"ios-package\" value=\"alipay\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<preference name=\"alipayid\" value=\"2018111162083907\" />",
+              "count": 1
+            },
+            {
               "xml": "<feature name=\"Camera\"><param name=\"ios-package\" value=\"CDVCamera\" /></feature>",
               "count": 1
             },
@@ -41,7 +73,15 @@
               "count": 1
             },
             {
+              "xml": "<feature name=\"Notification\"><param name=\"ios-package\" value=\"CDVNotification\" /></feature>",
+              "count": 1
+            },
+            {
               "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"CodePush\"><param name=\"ios-package\" value=\"CodePush\" /><param name=\"onload\" value=\"true\" /></feature>",
               "count": 1
             },
             {
@@ -89,27 +129,19 @@
               "count": 1
             },
             {
+              "xml": "<feature name=\"Wechat\"><param name=\"ios-package\" value=\"CDVWechat\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<preference name=\"WECHATAPPID\" value=\"wxf56d42ba4b664a15\" />",
+              "count": 1
+            },
+            {
               "xml": "<feature name=\"JPushPlugin\"><param name=\"ios-package\" value=\"JPushPlugin\" /></feature>",
               "count": 1
             },
             {
               "xml": "<feature name=\"BarcodeScanner\"><param name=\"ios-package\" value=\"CDVBarcodeScanner\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"alipay\"><param name=\"ios-package\" value=\"alipay\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<preference name=\"alipayid\" value=\"2018111162083907\" />",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"Notification\"><param name=\"ios-package\" value=\"CDVNotification\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"CodePush\"><param name=\"ios-package\" value=\"CodePush\" /><param name=\"onload\" value=\"true\" /></feature>",
               "count": 1
             }
           ],
@@ -134,70 +166,74 @@
     }
   },
   "installed_plugins": {
-    "cordova-plugin-camera": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-device": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-compat": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-crop": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-file": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-file-transfer": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-geolocation": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-inappbrowser": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-jcore": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-janalytics": {
-      "APP_KEY": "fd96956cb315ba658d256156",
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-network-information": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-statusbar": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "cordova-plugin-zip": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "jpush-phonegap-plugin": {
-      "APP_KEY": "fd96956cb315ba658d256156",
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
-    },
-    "phonegap-plugin-barcodescanner": {
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+    "code-push": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-alipay-v2": {
       "APP_ID": "2018111162083907",
-      "PACKAGE_NAME": "com.thundersdata.blockChainMobile"
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
-    "code-push": {
+    "cordova-plugin-camera": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-dialogs": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
     "cordova-plugin-code-push": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-compat": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-crop": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-geolocation": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-jcore": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-janalytics": {
+      "APP_KEY": "fd96956cb315ba658d256156",
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-wechat": {
+      "WECHATAPPID": "wxf56d42ba4b664a15",
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-zip": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "jpush-phonegap-plugin": {
+      "APP_KEY": "fd96956cb315ba658d256156",
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "phonegap-plugin-barcodescanner": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-crosswalk-webview": {
@@ -206,6 +242,22 @@
   },
   "dependent_plugins": {},
   "modules": [
+    {
+      "id": "code-push.AcquisitionManager",
+      "file": "plugins/code-push/script/acquisition-sdk.js",
+      "pluginId": "code-push",
+      "merges": [
+        "window"
+      ]
+    },
+    {
+      "id": "cordova-plugin-alipay-v2.alipay",
+      "file": "plugins/cordova-plugin-alipay-v2/www/alipay.js",
+      "pluginId": "cordova-plugin-alipay-v2",
+      "clobbers": [
+        "cordova.plugins.alipay"
+      ]
+    },
     {
       "id": "cordova-plugin-camera.Camera",
       "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
@@ -239,12 +291,96 @@
       ]
     },
     {
+      "id": "cordova-plugin-dialogs.notification",
+      "file": "plugins/cordova-plugin-dialogs/www/notification.js",
+      "pluginId": "cordova-plugin-dialogs",
+      "merges": [
+        "navigator.notification"
+      ]
+    },
+    {
       "id": "cordova-plugin-device.device",
       "file": "plugins/cordova-plugin-device/www/device.js",
       "pluginId": "cordova-plugin-device",
       "clobbers": [
         "device"
       ]
+    },
+    {
+      "id": "cordova-plugin-code-push.codePush",
+      "file": "plugins/cordova-plugin-code-push/bin/www/codePush.js",
+      "pluginId": "cordova-plugin-code-push",
+      "clobbers": [
+        "codePush"
+      ]
+    },
+    {
+      "id": "cordova-plugin-code-push.localPackage",
+      "file": "plugins/cordova-plugin-code-push/bin/www/localPackage.js",
+      "pluginId": "cordova-plugin-code-push",
+      "clobbers": [
+        "LocalPackage"
+      ]
+    },
+    {
+      "id": "cordova-plugin-code-push.remotePackage",
+      "file": "plugins/cordova-plugin-code-push/bin/www/remotePackage.js",
+      "pluginId": "cordova-plugin-code-push",
+      "clobbers": [
+        "RemotePackage"
+      ]
+    },
+    {
+      "id": "cordova-plugin-code-push.syncStatus",
+      "file": "plugins/cordova-plugin-code-push/bin/www/syncStatus.js",
+      "pluginId": "cordova-plugin-code-push",
+      "clobbers": [
+        "SyncStatus"
+      ]
+    },
+    {
+      "id": "cordova-plugin-code-push.installMode",
+      "file": "plugins/cordova-plugin-code-push/bin/www/installMode.js",
+      "pluginId": "cordova-plugin-code-push",
+      "clobbers": [
+        "InstallMode"
+      ]
+    },
+    {
+      "id": "cordova-plugin-code-push.codePushUtil",
+      "file": "plugins/cordova-plugin-code-push/bin/www/codePushUtil.js",
+      "pluginId": "cordova-plugin-code-push",
+      "runs": true
+    },
+    {
+      "id": "cordova-plugin-code-push.fileUtil",
+      "file": "plugins/cordova-plugin-code-push/bin/www/fileUtil.js",
+      "pluginId": "cordova-plugin-code-push",
+      "runs": true
+    },
+    {
+      "id": "cordova-plugin-code-push.httpRequester",
+      "file": "plugins/cordova-plugin-code-push/bin/www/httpRequester.js",
+      "pluginId": "cordova-plugin-code-push",
+      "runs": true
+    },
+    {
+      "id": "cordova-plugin-code-push.nativeAppInfo",
+      "file": "plugins/cordova-plugin-code-push/bin/www/nativeAppInfo.js",
+      "pluginId": "cordova-plugin-code-push",
+      "runs": true
+    },
+    {
+      "id": "cordova-plugin-code-push.package",
+      "file": "plugins/cordova-plugin-code-push/bin/www/package.js",
+      "pluginId": "cordova-plugin-code-push",
+      "runs": true
+    },
+    {
+      "id": "cordova-plugin-code-push.sdk",
+      "file": "plugins/cordova-plugin-code-push/bin/www/sdk.js",
+      "pluginId": "cordova-plugin-code-push",
+      "runs": true
     },
     {
       "id": "cordova-plugin-crop.CropPlugin",
@@ -526,6 +662,14 @@
       ]
     },
     {
+      "id": "cordova-plugin-wechat.Wechat",
+      "file": "plugins/cordova-plugin-wechat/www/wechat.js",
+      "pluginId": "cordova-plugin-wechat",
+      "clobbers": [
+        "Wechat"
+      ]
+    },
+    {
       "id": "cordova-plugin-zip.Zip",
       "file": "plugins/cordova-plugin-zip/zip.js",
       "pluginId": "cordova-plugin-zip",
@@ -548,111 +692,15 @@
       "clobbers": [
         "cordova.plugins.barcodeScanner"
       ]
-    },
-    {
-      "id": "cordova-plugin-alipay-v2.alipay",
-      "file": "plugins/cordova-plugin-alipay-v2/www/alipay.js",
-      "pluginId": "cordova-plugin-alipay-v2",
-      "clobbers": [
-        "cordova.plugins.alipay"
-      ]
-    },
-    {
-      "id": "code-push.AcquisitionManager",
-      "file": "plugins/code-push/script/acquisition-sdk.js",
-      "pluginId": "code-push",
-      "merges": [
-        "window"
-      ]
-    },
-    {
-      "id": "cordova-plugin-dialogs.notification",
-      "file": "plugins/cordova-plugin-dialogs/www/notification.js",
-      "pluginId": "cordova-plugin-dialogs",
-      "merges": [
-        "navigator.notification"
-      ]
-    },
-    {
-      "id": "cordova-plugin-code-push.codePush",
-      "file": "plugins/cordova-plugin-code-push/bin/www/codePush.js",
-      "pluginId": "cordova-plugin-code-push",
-      "clobbers": [
-        "codePush"
-      ]
-    },
-    {
-      "id": "cordova-plugin-code-push.localPackage",
-      "file": "plugins/cordova-plugin-code-push/bin/www/localPackage.js",
-      "pluginId": "cordova-plugin-code-push",
-      "clobbers": [
-        "LocalPackage"
-      ]
-    },
-    {
-      "id": "cordova-plugin-code-push.remotePackage",
-      "file": "plugins/cordova-plugin-code-push/bin/www/remotePackage.js",
-      "pluginId": "cordova-plugin-code-push",
-      "clobbers": [
-        "RemotePackage"
-      ]
-    },
-    {
-      "id": "cordova-plugin-code-push.syncStatus",
-      "file": "plugins/cordova-plugin-code-push/bin/www/syncStatus.js",
-      "pluginId": "cordova-plugin-code-push",
-      "clobbers": [
-        "SyncStatus"
-      ]
-    },
-    {
-      "id": "cordova-plugin-code-push.installMode",
-      "file": "plugins/cordova-plugin-code-push/bin/www/installMode.js",
-      "pluginId": "cordova-plugin-code-push",
-      "clobbers": [
-        "InstallMode"
-      ]
-    },
-    {
-      "id": "cordova-plugin-code-push.codePushUtil",
-      "file": "plugins/cordova-plugin-code-push/bin/www/codePushUtil.js",
-      "pluginId": "cordova-plugin-code-push",
-      "runs": true
-    },
-    {
-      "id": "cordova-plugin-code-push.fileUtil",
-      "file": "plugins/cordova-plugin-code-push/bin/www/fileUtil.js",
-      "pluginId": "cordova-plugin-code-push",
-      "runs": true
-    },
-    {
-      "id": "cordova-plugin-code-push.httpRequester",
-      "file": "plugins/cordova-plugin-code-push/bin/www/httpRequester.js",
-      "pluginId": "cordova-plugin-code-push",
-      "runs": true
-    },
-    {
-      "id": "cordova-plugin-code-push.nativeAppInfo",
-      "file": "plugins/cordova-plugin-code-push/bin/www/nativeAppInfo.js",
-      "pluginId": "cordova-plugin-code-push",
-      "runs": true
-    },
-    {
-      "id": "cordova-plugin-code-push.package",
-      "file": "plugins/cordova-plugin-code-push/bin/www/package.js",
-      "pluginId": "cordova-plugin-code-push",
-      "runs": true
-    },
-    {
-      "id": "cordova-plugin-code-push.sdk",
-      "file": "plugins/cordova-plugin-code-push/bin/www/sdk.js",
-      "pluginId": "cordova-plugin-code-push",
-      "runs": true
     }
   ],
   "plugin_metadata": {
+    "code-push": "2.0.6",
+    "cordova-plugin-alipay-v2": "0.0.3",
     "cordova-plugin-camera": "4.0.3",
+    "cordova-plugin-dialogs": "2.0.1",
     "cordova-plugin-device": "2.0.2",
+    "cordova-plugin-code-push": "1.11.16",
     "cordova-plugin-compat": "1.2.0",
     "cordova-plugin-crop": "0.3.1",
     "cordova-plugin-file": "4.3.3",
@@ -664,14 +712,11 @@
     "cordova-plugin-network-information": "2.0.1",
     "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-statusbar": "2.4.2",
+    "cordova-plugin-wechat": "2.6.0",
     "cordova-plugin-whitelist": "1.3.3",
     "cordova-plugin-zip": "3.1.0",
     "jpush-phonegap-plugin": "3.3.2",
     "phonegap-plugin-barcodescanner": "8.0.0",
-    "cordova-plugin-alipay-v2": "0.0.3",
-    "code-push": "2.0.6",
-    "cordova-plugin-dialogs": "2.0.1",
-    "cordova-plugin-code-push": "1.11.16",
     "cordova-plugin-crosswalk-webview": "2.4.0"
   }
 }

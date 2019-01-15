@@ -3,7 +3,7 @@
 <plist version="1.0">
   <dict>
     <key>CFBundleDevelopmentRegion</key>
-    <string>zh_CN</string>
+    <string>English</string>
     <key>CFBundleDisplayName</key>
     <string>一度店</string>
     <key>CFBundleExecutable</key>
@@ -21,9 +21,48 @@
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
-    <string>2.7.1</string>
+    <string>2.8.0</string>
     <key>CFBundleSignature</key>
     <string>????</string>
+    <key>CFBundleVersion</key>
+    <string>2.8.0</string>
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
+    <key>NSMainNibFile</key>
+    <string/>
+    <key>NSMainNibFile~ipad</key>
+    <string/>
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+      <string>UIInterfaceOrientationPortrait</string>
+      <string>UIInterfaceOrientationLandscapeLeft</string>
+      <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+      <string>UIInterfaceOrientationPortrait</string>
+      <string>UIInterfaceOrientationLandscapeLeft</string>
+      <string>UIInterfaceOrientationPortraitUpsideDown</string>
+      <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    <key>UIRequiresFullScreen</key>
+    <true/>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+      <key>NSAllowsArbitraryLoads</key>
+      <true/>
+      <key>NSAllowsArbitraryLoadsInWebContent</key>
+      <true/>
+      <key>NSAllowsArbitraryLoadsForMedia</key>
+      <true/>
+      <key>NSAllowsLocalNetworking</key>
+      <true/>
+      <key>NSExceptionDomains</key>
+      <dict>
+        <key>payment.5upay.com</key>
+        <dict/>
+      </dict>
+    </dict>
     <key>CFBundleURLTypes</key>
     <array>
       <dict>
@@ -34,52 +73,28 @@
           <string>ali2018111162083907</string>
         </array>
       </dict>
+      <dict>
+        <key>CFBundleURLName</key>
+        <string>weixin</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>wxf56d42ba4b664a15</string>
+        </array>
+      </dict>
     </array>
-    <key>CFBundleVersion</key>
-    <string>2.7.1</string>
     <key>JAnalytics</key>
     <dict>
       <key>APP_KEY</key>
       <string>fd96956cb315ba658d256156</string>
     </dict>
-    <key>LSRequiresIPhoneOS</key>
-    <true/>
-    <key>NSAppTransportSecurity</key>
-    <dict>
-      <key>NSExceptionDomains</key>
-      <dict>
-        <key>api.thundersdata.com</key>
-        <dict/>
-      </dict>
-      <key>NSAllowsArbitraryLoads</key>
-      <true/>
-      <key>NSAllowsArbitraryLoadsInWebContent</key>
-      <true/>
-      <key>NSAllowsArbitraryLoadsForMedia</key>
-      <true/>
-      <key>NSAllowsLocalNetworking</key>
-      <true/>
-    </dict>
-    <key>NSMainNibFile</key>
-    <string/>
-    <key>NSMainNibFile~ipad</key>
-    <string/>
-    <key>UIRequiresFullScreen</key>
-    <true/>
-    <key>UIStatusBarStyle</key>
-    <string>UIStatusBarStyleDefault</string>
-    <key>UISupportedInterfaceOrientations</key>
+    <key>LSApplicationQueriesSchemes</key>
     <array>
-      <string>UIInterfaceOrientationPortrait</string>
-    </array>
-    <key>UISupportedInterfaceOrientations~ipad</key>
-    <array>
-      <string>UIInterfaceOrientationPortrait</string>
-      <string>UIInterfaceOrientationLandscapeLeft</string>
-      <string>UIInterfaceOrientationPortraitUpsideDown</string>
-      <string>UIInterfaceOrientationLandscapeRight</string>
+      <string>weixin</string>
+      <string>wechat</string>
     </array>
     <key>NSCameraUsageDescription</key>
-    <string>扫码添加设备需要开启相机</string>
+    <string>上传头像需要开启相机</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>上传头像需要访问相册</string>
   </dict>
 </plist>
