@@ -63,16 +63,6 @@
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-janalytics": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-camera@^4.0.3"
-    },
-    "is_top_level": true,
-    "variables": {
-      "APP_KEY": "fd96956cb315ba658d256156"
-    }
-  },
   "cordova-plugin-jcore": {
     "source": {
       "type": "registry",
@@ -105,16 +95,6 @@
     "is_top_level": true,
     "variables": {
       "ANDROID_SUPPORT_V4_VERSION": "27.+"
-    }
-  },
-  "jpush-phonegap-plugin": {
-    "source": {
-      "type": "registry",
-      "id": "jpush-phonegap-plugin@3.3.2"
-    },
-    "is_top_level": true,
-    "variables": {
-      "APP_KEY": "fd96956cb315ba658d256156"
     }
   },
   "cordova-plugin-statusbar": {
@@ -192,5 +172,27 @@
     },
     "is_top_level": true,
     "variables": {}
+  },
+  "cordova-plugin-janalytics": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-janalytics@1.1.3"
+    },
+    "is_top_level": true,
+    "variables": {
+      "APP_KEY": "c00f7ff7c6f31fdc1b20bff7",
+      "CHANNEL": "default"
+    }
+  },
+  "jpush-phonegap-plugin": {
+    "source": {
+      "type": "registry",
+      "id": "jpush-phonegap-plugin@3.3.2"
+    },
+    "is_top_level": true,
+    "variables": {
+      "APP_KEY": "c00f7ff7c6f31fdc1b20bff7",
+      "CHANNEL": "default"
+    }
   }
 }

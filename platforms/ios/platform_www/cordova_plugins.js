@@ -379,14 +379,6 @@ module.exports = [
     ]
   },
   {
-    "id": "cordova-plugin-janalytics.JAnalytics",
-    "file": "plugins/cordova-plugin-janalytics/www/JAnalytics.js",
-    "pluginId": "cordova-plugin-janalytics",
-    "clobbers": [
-      "JAnalytics"
-    ]
-  },
-  {
     "id": "cordova-plugin-network-information.network",
     "file": "plugins/cordova-plugin-network-information/www/network.js",
     "pluginId": "cordova-plugin-network-information",
@@ -436,19 +428,27 @@ module.exports = [
     ]
   },
   {
-    "id": "jpush-phonegap-plugin.JPushPlugin",
-    "file": "plugins/jpush-phonegap-plugin/www/JPushPlugin.js",
-    "pluginId": "jpush-phonegap-plugin",
-    "clobbers": [
-      "JPush"
-    ]
-  },
-  {
     "id": "phonegap-plugin-barcodescanner.BarcodeScanner",
     "file": "plugins/phonegap-plugin-barcodescanner/www/barcodescanner.js",
     "pluginId": "phonegap-plugin-barcodescanner",
     "clobbers": [
       "cordova.plugins.barcodeScanner"
+    ]
+  },
+  {
+    "id": "cordova-plugin-janalytics.JAnalytics",
+    "file": "plugins/cordova-plugin-janalytics/www/JAnalytics.js",
+    "pluginId": "cordova-plugin-janalytics",
+    "clobbers": [
+      "JAnalytics"
+    ]
+  },
+  {
+    "id": "jpush-phonegap-plugin.JPushPlugin",
+    "file": "plugins/jpush-phonegap-plugin/www/JPushPlugin.js",
+    "pluginId": "jpush-phonegap-plugin",
+    "clobbers": [
+      "JPush"
     ]
   }
 ];
@@ -463,21 +463,21 @@ module.exports.metadata =
   "cordova-plugin-code-push": "1.11.16",
   "cordova-plugin-compat": "1.2.0",
   "cordova-plugin-crop": "0.3.1",
+  "cordova-plugin-crosswalk-webview": "2.4.0",
   "cordova-plugin-file": "4.3.3",
   "cordova-plugin-file-transfer": "1.6.3",
   "cordova-plugin-geolocation": "4.0.1",
   "cordova-plugin-inappbrowser": "3.0.0",
-  "cordova-plugin-jcore": "1.1.12",
-  "cordova-plugin-janalytics": "1.1.3",
   "cordova-plugin-network-information": "2.0.1",
   "cordova-plugin-splashscreen": "5.0.2",
   "cordova-plugin-statusbar": "2.4.2",
   "cordova-plugin-wechat": "2.6.0",
   "cordova-plugin-whitelist": "1.3.3",
   "cordova-plugin-zip": "3.1.0",
-  "jpush-phonegap-plugin": "3.3.2",
   "phonegap-plugin-barcodescanner": "8.0.0",
-  "cordova-plugin-crosswalk-webview": "2.4.0"
+  "cordova-plugin-jcore": "1.1.12",
+  "cordova-plugin-janalytics": "1.1.3",
+  "jpush-phonegap-plugin": "3.3.2"
 };
 // BOTTOM OF METADATA
 });

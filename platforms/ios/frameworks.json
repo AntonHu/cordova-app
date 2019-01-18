@@ -14,11 +14,11 @@
     "AVFoundation.framework": 2,
     "AudioToolbox.framework": 1,
     "Security.framework": 3,
-    "CoreFoundation.framework": 2,
-    "libresolv.tbd": 2,
     "libsqlite3.0.tbd": 1,
     "libstdc++.6.tbd": 1,
     "libz.dylib": 1,
+    "CoreFoundation.framework": 2,
+    "libresolv.tbd": 2,
     "AdSupport.framework": 1,
     "UserNotifications.framework": 1
 }

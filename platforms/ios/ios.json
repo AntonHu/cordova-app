@@ -35,7 +35,7 @@
           ],
           "JAnalytics": [
             {
-              "xml": "<dict><key>APP_KEY</key><string>fd96956cb315ba658d256156</string></dict>",
+              "xml": "<dict><key>APP_KEY</key><string>c00f7ff7c6f31fdc1b20bff7</string></dict>",
               "count": 1
             }
           ],
@@ -105,10 +105,6 @@
               "count": 1
             },
             {
-              "xml": "<feature name=\"JAnalyticsPlugin\"><param name=\"ios-package\" value=\"JAnalyticsPlugin\" /></feature>",
-              "count": 1
-            },
-            {
               "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
               "count": 1
             },
@@ -137,11 +133,15 @@
               "count": 1
             },
             {
-              "xml": "<feature name=\"JPushPlugin\"><param name=\"ios-package\" value=\"JPushPlugin\" /></feature>",
+              "xml": "<feature name=\"BarcodeScanner\"><param name=\"ios-package\" value=\"CDVBarcodeScanner\" /></feature>",
               "count": 1
             },
             {
-              "xml": "<feature name=\"BarcodeScanner\"><param name=\"ios-package\" value=\"CDVBarcodeScanner\" /></feature>",
+              "xml": "<feature name=\"JAnalyticsPlugin\"><param name=\"ios-package\" value=\"JAnalyticsPlugin\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"JPushPlugin\"><param name=\"ios-package\" value=\"JPushPlugin\" /></feature>",
               "count": 1
             }
           ],
@@ -157,7 +157,7 @@
         "parents": {
           "Appkey": [
             {
-              "xml": "<string>fd96956cb315ba658d256156</string>",
+              "xml": "<string>c00f7ff7c6f31fdc1b20bff7</string>",
               "count": 1
             }
           ]
@@ -191,6 +191,9 @@
     "cordova-plugin-crop": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
+    "cordova-plugin-crosswalk-webview": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
     "cordova-plugin-file": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
@@ -201,13 +204,6 @@
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-inappbrowser": {
-      "PACKAGE_NAME": "com.energyData.oneDuMobile"
-    },
-    "cordova-plugin-jcore": {
-      "PACKAGE_NAME": "com.energyData.oneDuMobile"
-    },
-    "cordova-plugin-janalytics": {
-      "APP_KEY": "fd96956cb315ba658d256156",
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-network-information": {
@@ -229,14 +225,18 @@
     "cordova-plugin-zip": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
-    "jpush-phonegap-plugin": {
-      "APP_KEY": "fd96956cb315ba658d256156",
-      "PACKAGE_NAME": "com.energyData.oneDuMobile"
-    },
     "phonegap-plugin-barcodescanner": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
-    "cordova-plugin-crosswalk-webview": {
+    "cordova-plugin-jcore": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-janalytics": {
+      "APP_KEY": "c00f7ff7c6f31fdc1b20bff7",
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "jpush-phonegap-plugin": {
+      "APP_KEY": "c00f7ff7c6f31fdc1b20bff7",
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     }
   },
@@ -621,14 +621,6 @@
       ]
     },
     {
-      "id": "cordova-plugin-janalytics.JAnalytics",
-      "file": "plugins/cordova-plugin-janalytics/www/JAnalytics.js",
-      "pluginId": "cordova-plugin-janalytics",
-      "clobbers": [
-        "JAnalytics"
-      ]
-    },
-    {
       "id": "cordova-plugin-network-information.network",
       "file": "plugins/cordova-plugin-network-information/www/network.js",
       "pluginId": "cordova-plugin-network-information",
@@ -678,19 +670,27 @@
       ]
     },
     {
-      "id": "jpush-phonegap-plugin.JPushPlugin",
-      "file": "plugins/jpush-phonegap-plugin/www/JPushPlugin.js",
-      "pluginId": "jpush-phonegap-plugin",
-      "clobbers": [
-        "JPush"
-      ]
-    },
-    {
       "id": "phonegap-plugin-barcodescanner.BarcodeScanner",
       "file": "plugins/phonegap-plugin-barcodescanner/www/barcodescanner.js",
       "pluginId": "phonegap-plugin-barcodescanner",
       "clobbers": [
         "cordova.plugins.barcodeScanner"
+      ]
+    },
+    {
+      "id": "cordova-plugin-janalytics.JAnalytics",
+      "file": "plugins/cordova-plugin-janalytics/www/JAnalytics.js",
+      "pluginId": "cordova-plugin-janalytics",
+      "clobbers": [
+        "JAnalytics"
+      ]
+    },
+    {
+      "id": "jpush-phonegap-plugin.JPushPlugin",
+      "file": "plugins/jpush-phonegap-plugin/www/JPushPlugin.js",
+      "pluginId": "jpush-phonegap-plugin",
+      "clobbers": [
+        "JPush"
       ]
     }
   ],
@@ -703,20 +703,20 @@
     "cordova-plugin-code-push": "1.11.16",
     "cordova-plugin-compat": "1.2.0",
     "cordova-plugin-crop": "0.3.1",
+    "cordova-plugin-crosswalk-webview": "2.4.0",
     "cordova-plugin-file": "4.3.3",
     "cordova-plugin-file-transfer": "1.6.3",
     "cordova-plugin-geolocation": "4.0.1",
     "cordova-plugin-inappbrowser": "3.0.0",
-    "cordova-plugin-jcore": "1.1.12",
-    "cordova-plugin-janalytics": "1.1.3",
     "cordova-plugin-network-information": "2.0.1",
     "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-statusbar": "2.4.2",
     "cordova-plugin-wechat": "2.6.0",
     "cordova-plugin-whitelist": "1.3.3",
     "cordova-plugin-zip": "3.1.0",
-    "jpush-phonegap-plugin": "3.3.2",
     "phonegap-plugin-barcodescanner": "8.0.0",
-    "cordova-plugin-crosswalk-webview": "2.4.0"
+    "cordova-plugin-jcore": "1.1.12",
+    "cordova-plugin-janalytics": "1.1.3",
+    "jpush-phonegap-plugin": "3.3.2"
   }
 }

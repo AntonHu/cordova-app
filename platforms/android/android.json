@@ -171,7 +171,7 @@
               "count": 1
             },
             {
-              "xml": "<meta-data android:name=\"JPUSH_APPKEY\" android:value=\"fd96956cb315ba658d256156\" />",
+              "xml": "<meta-data android:name=\"JPUSH_APPKEY\" android:value=\"c00f7ff7c6f31fdc1b20bff7\" />",
               "count": 2
             },
             {
@@ -368,7 +368,7 @@
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-janalytics": {
-      "APP_KEY": "fd96956cb315ba658d256156",
+      "APP_KEY": "c00f7ff7c6f31fdc1b20bff7",
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-network-information": {
@@ -391,7 +391,7 @@
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "jpush-phonegap-plugin": {
-      "APP_KEY": "fd96956cb315ba658d256156",
+      "APP_KEY": "c00f7ff7c6f31fdc1b20bff7",
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "phonegap-plugin-barcodescanner": {
