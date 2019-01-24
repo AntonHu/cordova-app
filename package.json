@@ -27,6 +27,7 @@
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-crop": "git+https://github.com/349989153/cordova-plugin-crop.git",
     "cordova-plugin-crosswalk-webview": "^2.4.0",
+    "cordova-plugin-customurlscheme": "^4.3.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-dialogs": "^2.0.1",
     "cordova-plugin-file": "^4.3.3",
@@ -180,6 +181,12 @@
       "jpush-phonegap-plugin": {
         "APP_KEY": "c00f7ff7c6f31fdc1b20bff7",
         "CHANNEL": "default"
+      },
+      "cordova-plugin-customurlscheme": {
+        "URL_SCHEME": "onedushop",
+        "ANDROID_SCHEME": " ",
+        "ANDROID_HOST": " ",
+        "ANDROID_PATHPREFIX": "/"
       }
     },
     "platforms": [

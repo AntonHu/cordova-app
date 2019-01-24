@@ -70,6 +70,13 @@
     "phonegap-plugin-barcodescanner": {
       "ANDROID_SUPPORT_V4_VERSION": "27.+",
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-customurlscheme": {
+      "URL_SCHEME": "onedushop",
+      "ANDROID_SCHEME": " ",
+      "ANDROID_HOST": " ",
+      "ANDROID_PATHPREFIX": "/",
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     }
   },
   "dependent_plugins": {

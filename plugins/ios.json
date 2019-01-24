@@ -64,6 +64,10 @@
     "jpush-phonegap-plugin": {
       "APP_KEY": "c00f7ff7c6f31fdc1b20bff7",
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-customurlscheme": {
+      "URL_SCHEME": "onedushop",
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     }
   },
   "dependent_plugins": {

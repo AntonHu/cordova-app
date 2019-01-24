@@ -450,6 +450,14 @@ module.exports = [
     "clobbers": [
       "JPush"
     ]
+  },
+  {
+    "id": "cordova-plugin-customurlscheme.LaunchMyApp",
+    "file": "plugins/cordova-plugin-customurlscheme/www/ios/LaunchMyApp.js",
+    "pluginId": "cordova-plugin-customurlscheme",
+    "clobbers": [
+      "window.plugins.launchmyapp"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -477,7 +485,8 @@ module.exports.metadata =
   "phonegap-plugin-barcodescanner": "8.0.0",
   "cordova-plugin-jcore": "1.1.12",
   "cordova-plugin-janalytics": "1.1.3",
-  "jpush-phonegap-plugin": "3.3.2"
+  "jpush-phonegap-plugin": "3.3.2",
+  "cordova-plugin-customurlscheme": "4.3.0"
 };
 // BOTTOM OF METADATA
 });

@@ -8,6 +8,18 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="onedushop" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:host=" " android:pathPrefix="/" android:scheme=" " />
+            </intent-filter>
         </activity>
         <activity android:configChanges="orientation|keyboardHidden|navigation|screenSize" android:exported="false" android:name="com.alipay.sdk.app.H5PayActivity" android:screenOrientation="behind" android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:configChanges="orientation|keyboardHidden|navigation" android:exported="false" android:name="com.alipay.sdk.app.H5AuthActivity" android:screenOrientation="behind" android:windowSoftInputMode="adjustResize|stateHidden" />
@@ -86,9 +98,9 @@
                 <category android:name="com.energyData.oneDuMobile" />
             </intent-filter>
         </receiver>
-        <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default" />
         <activity android:clearTaskOnLaunch="true" android:configChanges="orientation|keyboardHidden|screenSize" android:exported="false" android:name="com.google.zxing.client.android.CaptureActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:label="Share" android:name="com.google.zxing.client.android.encode.EncodeActivity" />
+        <meta-data android:name="JPUSH_CHANNEL" android:value="${JPUSH_CHANNEL_VALUE}" />
     </application>
     <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="26" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

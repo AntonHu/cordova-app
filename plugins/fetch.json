@@ -194,5 +194,15 @@
       "APP_KEY": "c00f7ff7c6f31fdc1b20bff7",
       "CHANNEL": "default"
     }
+  },
+  "cordova-plugin-customurlscheme": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-customurlscheme"
+    },
+    "is_top_level": true,
+    "variables": {
+      "URL_SCHEME": "onedushop"
+    }
   }
 }

@@ -111,6 +111,10 @@
             {
               "xml": "<feature name=\"BarcodeScanner\"><param name=\"android-package\" value=\"com.phonegap.plugins.barcodescanner.BarcodeScanner\" /></feature>",
               "count": 1
+            },
+            {
+              "xml": "<feature name=\"LaunchMyApp\"><param name=\"android-package\" value=\"nl.xservices.plugins.LaunchMyApp\" /></feature>",
+              "count": 1
             }
           ],
           "/widget": [
@@ -223,10 +227,6 @@
               "count": 1
             },
             {
-              "xml": "<meta-data android:name=\"JPUSH_CHANNEL\" android:value=\"developer-default\" />",
-              "count": 1
-            },
-            {
               "xml": "<activity android:clearTaskOnLaunch=\"true\" android:configChanges=\"orientation|keyboardHidden|screenSize\" android:exported=\"false\" android:name=\"com.google.zxing.client.android.CaptureActivity\" android:theme=\"@android:style/Theme.NoTitleBar.Fullscreen\" android:windowSoftInputMode=\"stateAlwaysHidden\" />",
               "count": 1
             },
@@ -304,6 +304,28 @@
             },
             {
               "xml": "<uses-feature android:name=\"android.hardware.camera\" android:required=\"true\" />",
+              "count": 1
+            }
+          ],
+          "/manifest/application/meta-data[@android:name='JPUSH_CHANNEL']": [
+            {
+              "xml": "<meta-data android:name=\"JPUSH_CHANNEL\" android:value=\"${JPUSH_CHANNEL_VALUE}\" />",
+              "count": 1,
+              "mode": "merge",
+              "id": "config.xml",
+              "oldAttrib": {
+                "android:name": "JPUSH_CHANNEL",
+                "android:value": "${JPUSH_CHANNEL_VALUE}"
+              }
+            }
+          ],
+          "/manifest/application/activity": [
+            {
+              "xml": "<intent-filter><action android:name=\"android.intent.action.VIEW\" /><category android:name=\"android.intent.category.DEFAULT\" /><category android:name=\"android.intent.category.BROWSABLE\" /><data android:scheme=\"onedushop\" /></intent-filter>",
+              "count": 1
+            },
+            {
+              "xml": "<intent-filter><action android:name=\"android.intent.action.VIEW\" /><category android:name=\"android.intent.category.DEFAULT\" /><category android:name=\"android.intent.category.BROWSABLE\" /><data android:host=\" \" android:pathPrefix=\"/\" android:scheme=\" \" /></intent-filter>",
               "count": 1
             }
           ]
@@ -396,6 +418,13 @@
     },
     "phonegap-plugin-barcodescanner": {
       "ANDROID_SUPPORT_V4_VERSION": "27.+",
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-customurlscheme": {
+      "URL_SCHEME": "onedushop",
+      "ANDROID_SCHEME": " ",
+      "ANDROID_HOST": " ",
+      "ANDROID_PATHPREFIX": "/",
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     }
   },
@@ -841,6 +870,14 @@
       "clobbers": [
         "cordova.plugins.barcodeScanner"
       ]
+    },
+    {
+      "id": "cordova-plugin-customurlscheme.LaunchMyApp",
+      "file": "plugins/cordova-plugin-customurlscheme/www/android/LaunchMyApp.js",
+      "pluginId": "cordova-plugin-customurlscheme",
+      "clobbers": [
+        "window.plugins.launchmyapp"
+      ]
     }
   ],
   "plugin_metadata": {
@@ -865,6 +902,7 @@
     "cordova-plugin-whitelist": "1.3.3",
     "cordova-plugin-zip": "3.1.0",
     "jpush-phonegap-plugin": "3.3.2",
-    "phonegap-plugin-barcodescanner": "8.0.0"
+    "phonegap-plugin-barcodescanner": "8.0.0",
+    "cordova-plugin-customurlscheme": "4.3.0"
   }
 }
