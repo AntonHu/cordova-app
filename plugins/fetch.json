@@ -147,24 +147,6 @@
       "APP_ID": "2018111162083907"
     }
   },
-  "cordova-plugin-code-push": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-code-push"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
-  "cordova-plugin-wechat": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-wechat@2.6.0"
-    },
-    "is_top_level": true,
-    "variables": {
-      "WECHATAPPID": "wxf56d42ba4b664a15"
-    }
-  },
   "cordova-plugin-crosswalk-webview": {
     "source": {
       "type": "registry",
@@ -204,5 +186,23 @@
     "variables": {
       "URL_SCHEME": "onedushop"
     }
+  },
+  "cordova-plugin-wechat": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-wechat@2.6.0"
+    },
+    "is_top_level": true,
+    "variables": {
+      "WECHATAPPID": "wx15f467092eb1667e"
+    }
+  },
+  "cordova-plugin-code-push": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-code-push@1.11.16"
+    },
+    "is_top_level": true,
+    "variables": {}
   }
 }

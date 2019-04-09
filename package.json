@@ -163,10 +163,6 @@
       "cordova-plugin-alipay-v2": {
         "APP_ID": "2018111162083907"
       },
-      "cordova-plugin-code-push": {},
-      "cordova-plugin-wechat": {
-        "WECHATAPPID": "wxf56d42ba4b664a15"
-      },
       "cordova-plugin-crosswalk-webview": {
         "XWALK_VERSION": "23+",
         "XWALK_LITEVERSION": "xwalk_core_library_canary:17+",
@@ -187,11 +183,15 @@
         "ANDROID_SCHEME": " ",
         "ANDROID_HOST": " ",
         "ANDROID_PATHPREFIX": "/"
-      }
+      },
+      "cordova-plugin-wechat": {
+        "WECHATAPPID": "wx15f467092eb1667e"
+      },
+      "cordova-plugin-code-push": {}
     },
     "platforms": [
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   },
   "devDependencies": {

@@ -14,13 +14,14 @@
     "cordova-plugin-camera": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
-    "cordova-plugin-code-push": {
-      "PACKAGE_NAME": "com.energyData.oneDuMobile"
-    },
     "cordova-plugin-crop": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-crosswalk-webview": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-customurlscheme": {
+      "URL_SCHEME": "onedushop",
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-file": {
@@ -35,6 +36,10 @@
     "cordova-plugin-inappbrowser": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
+    "cordova-plugin-janalytics": {
+      "APP_KEY": "c00f7ff7c6f31fdc1b20bff7",
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
     "cordova-plugin-network-information": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
@@ -45,7 +50,7 @@
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-wechat": {
-      "WECHATAPPID": "wxf56d42ba4b664a15",
+      "WECHATAPPID": "wx15f467092eb1667e",
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-whitelist": {
@@ -54,36 +59,31 @@
     "cordova-plugin-zip": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
-    "phonegap-plugin-barcodescanner": {
-      "PACKAGE_NAME": "com.energyData.oneDuMobile"
-    },
-    "cordova-plugin-janalytics": {
-      "APP_KEY": "c00f7ff7c6f31fdc1b20bff7",
-      "PACKAGE_NAME": "com.energyData.oneDuMobile"
-    },
     "jpush-phonegap-plugin": {
       "APP_KEY": "c00f7ff7c6f31fdc1b20bff7",
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
-    "cordova-plugin-customurlscheme": {
-      "URL_SCHEME": "onedushop",
+    "phonegap-plugin-barcodescanner": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-code-push": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     }
   },
   "dependent_plugins": {
-    "code-push": {
-      "PACKAGE_NAME": "com.energyData.oneDuMobile"
-    },
-    "cordova-plugin-dialogs": {
+    "cordova-plugin-compat": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-device": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
-    "cordova-plugin-compat": {
+    "cordova-plugin-jcore": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
-    "cordova-plugin-jcore": {
+    "code-push": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-dialogs": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     }
   }

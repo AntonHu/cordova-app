@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.energyData.oneDuMobile" version="2.8.3" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.energyData.oneDuMobile" version="2.11.3" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>一度店</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
@@ -93,10 +93,6 @@
     <plugin name="cordova-plugin-alipay-v2" spec="0.0.4">
         <variable name="APP_ID" value="2018111162083907" />
     </plugin>
-    <plugin name="cordova-plugin-code-push" spec="^1.11.16" />
-    <plugin name="cordova-plugin-wechat" spec="^2.6.0">
-        <variable name="WECHATAPPID" value="wxf56d42ba4b664a15" />
-    </plugin>
     <plugin name="cordova-plugin-crosswalk-webview" spec="^2.4.0">
         <variable name="XWALK_VERSION" value="23+" />
         <variable name="XWALK_LITEVERSION" value="xwalk_core_library_canary:17+" />
@@ -110,12 +106,16 @@
     <plugin name="jpush-phonegap-plugin" spec="^3.3.2">
         <variable name="APP_KEY" value="c00f7ff7c6f31fdc1b20bff7" />
     </plugin>
-    <engine name="ios" spec="^4.5.4" />
-    <engine name="android" spec="^6.4.0" />
     <plugin name="cordova-plugin-customurlscheme" spec="^4.3.0">
         <variable name="URL_SCHEME" value="onedushop" />
         <variable name="ANDROID_SCHEME" value=" " />
         <variable name="ANDROID_HOST" value=" " />
         <variable name="ANDROID_PATHPREFIX" value="/" />
     </plugin>
+    <plugin name="cordova-plugin-wechat" spec="^2.6.0">
+        <variable name="WECHATAPPID" value="wx15f467092eb1667e" />
+    </plugin>
+    <plugin name="cordova-plugin-code-push" spec="^1.11.16" />
+    <engine name="android" spec="^6.4.0" />
+    <engine name="ios" spec="^4.5.4" />
 </widget>

@@ -2,7 +2,7 @@
  * 检验是否合法手机号
  */
 export const testPhoneNumber = value => {
-  const reg = /^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57]|19[0-9])[0-9]{8}$/;
+  const reg = /^1[0-9]{10}$/;
   return reg.test(value);
 };
 
@@ -74,9 +74,9 @@ export const isHtml = str => {
   return reg.test(str);
 };
 
-export const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(
-  window.navigator.userAgent
-);
+// export const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(
+//   window.navigator.userAgent
+// );
 
 /**
  * 判断变量类型

@@ -1,14 +1,6 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
   {
-    "id": "code-push.AcquisitionManager",
-    "file": "plugins/code-push/script/acquisition-sdk.js",
-    "pluginId": "code-push",
-    "merges": [
-      "window"
-    ]
-  },
-  {
     "id": "cordova-plugin-alipay-v2.alipay",
     "file": "plugins/cordova-plugin-alipay-v2/www/alipay.js",
     "pluginId": "cordova-plugin-alipay-v2",
@@ -49,104 +41,12 @@ module.exports = [
     ]
   },
   {
-    "id": "cordova-plugin-dialogs.notification",
-    "file": "plugins/cordova-plugin-dialogs/www/notification.js",
-    "pluginId": "cordova-plugin-dialogs",
-    "merges": [
-      "navigator.notification"
-    ]
-  },
-  {
-    "id": "cordova-plugin-dialogs.notification_android",
-    "file": "plugins/cordova-plugin-dialogs/www/android/notification.js",
-    "pluginId": "cordova-plugin-dialogs",
-    "merges": [
-      "navigator.notification"
-    ]
-  },
-  {
     "id": "cordova-plugin-device.device",
     "file": "plugins/cordova-plugin-device/www/device.js",
     "pluginId": "cordova-plugin-device",
     "clobbers": [
       "device"
     ]
-  },
-  {
-    "id": "cordova-plugin-code-push.codePush",
-    "file": "plugins/cordova-plugin-code-push/bin/www/codePush.js",
-    "pluginId": "cordova-plugin-code-push",
-    "clobbers": [
-      "codePush"
-    ]
-  },
-  {
-    "id": "cordova-plugin-code-push.localPackage",
-    "file": "plugins/cordova-plugin-code-push/bin/www/localPackage.js",
-    "pluginId": "cordova-plugin-code-push",
-    "clobbers": [
-      "LocalPackage"
-    ]
-  },
-  {
-    "id": "cordova-plugin-code-push.remotePackage",
-    "file": "plugins/cordova-plugin-code-push/bin/www/remotePackage.js",
-    "pluginId": "cordova-plugin-code-push",
-    "clobbers": [
-      "RemotePackage"
-    ]
-  },
-  {
-    "id": "cordova-plugin-code-push.syncStatus",
-    "file": "plugins/cordova-plugin-code-push/bin/www/syncStatus.js",
-    "pluginId": "cordova-plugin-code-push",
-    "clobbers": [
-      "SyncStatus"
-    ]
-  },
-  {
-    "id": "cordova-plugin-code-push.installMode",
-    "file": "plugins/cordova-plugin-code-push/bin/www/installMode.js",
-    "pluginId": "cordova-plugin-code-push",
-    "clobbers": [
-      "InstallMode"
-    ]
-  },
-  {
-    "id": "cordova-plugin-code-push.codePushUtil",
-    "file": "plugins/cordova-plugin-code-push/bin/www/codePushUtil.js",
-    "pluginId": "cordova-plugin-code-push",
-    "runs": true
-  },
-  {
-    "id": "cordova-plugin-code-push.fileUtil",
-    "file": "plugins/cordova-plugin-code-push/bin/www/fileUtil.js",
-    "pluginId": "cordova-plugin-code-push",
-    "runs": true
-  },
-  {
-    "id": "cordova-plugin-code-push.httpRequester",
-    "file": "plugins/cordova-plugin-code-push/bin/www/httpRequester.js",
-    "pluginId": "cordova-plugin-code-push",
-    "runs": true
-  },
-  {
-    "id": "cordova-plugin-code-push.nativeAppInfo",
-    "file": "plugins/cordova-plugin-code-push/bin/www/nativeAppInfo.js",
-    "pluginId": "cordova-plugin-code-push",
-    "runs": true
-  },
-  {
-    "id": "cordova-plugin-code-push.package",
-    "file": "plugins/cordova-plugin-code-push/bin/www/package.js",
-    "pluginId": "cordova-plugin-code-push",
-    "runs": true
-  },
-  {
-    "id": "cordova-plugin-code-push.sdk",
-    "file": "plugins/cordova-plugin-code-push/bin/www/sdk.js",
-    "pluginId": "cordova-plugin-code-push",
-    "runs": true
   },
   {
     "id": "cordova-plugin-crop.CropPlugin",
@@ -410,14 +310,6 @@ module.exports = [
     ]
   },
   {
-    "id": "cordova-plugin-wechat.Wechat",
-    "file": "plugins/cordova-plugin-wechat/www/wechat.js",
-    "pluginId": "cordova-plugin-wechat",
-    "clobbers": [
-      "Wechat"
-    ]
-  },
-  {
     "id": "cordova-plugin-zip.Zip",
     "file": "plugins/cordova-plugin-zip/zip.js",
     "pluginId": "cordova-plugin-zip",
@@ -448,17 +340,122 @@ module.exports = [
     "clobbers": [
       "window.plugins.launchmyapp"
     ]
+  },
+  {
+    "id": "cordova-plugin-wechat.Wechat",
+    "file": "plugins/cordova-plugin-wechat/www/wechat.js",
+    "pluginId": "cordova-plugin-wechat",
+    "clobbers": [
+      "Wechat"
+    ]
+  },
+  {
+    "id": "code-push.AcquisitionManager",
+    "file": "plugins/code-push/script/acquisition-sdk.js",
+    "pluginId": "code-push",
+    "merges": [
+      "window"
+    ]
+  },
+  {
+    "id": "cordova-plugin-dialogs.notification",
+    "file": "plugins/cordova-plugin-dialogs/www/notification.js",
+    "pluginId": "cordova-plugin-dialogs",
+    "merges": [
+      "navigator.notification"
+    ]
+  },
+  {
+    "id": "cordova-plugin-dialogs.notification_android",
+    "file": "plugins/cordova-plugin-dialogs/www/android/notification.js",
+    "pluginId": "cordova-plugin-dialogs",
+    "merges": [
+      "navigator.notification"
+    ]
+  },
+  {
+    "id": "cordova-plugin-code-push.codePush",
+    "file": "plugins/cordova-plugin-code-push/bin/www/codePush.js",
+    "pluginId": "cordova-plugin-code-push",
+    "clobbers": [
+      "codePush"
+    ]
+  },
+  {
+    "id": "cordova-plugin-code-push.localPackage",
+    "file": "plugins/cordova-plugin-code-push/bin/www/localPackage.js",
+    "pluginId": "cordova-plugin-code-push",
+    "clobbers": [
+      "LocalPackage"
+    ]
+  },
+  {
+    "id": "cordova-plugin-code-push.remotePackage",
+    "file": "plugins/cordova-plugin-code-push/bin/www/remotePackage.js",
+    "pluginId": "cordova-plugin-code-push",
+    "clobbers": [
+      "RemotePackage"
+    ]
+  },
+  {
+    "id": "cordova-plugin-code-push.syncStatus",
+    "file": "plugins/cordova-plugin-code-push/bin/www/syncStatus.js",
+    "pluginId": "cordova-plugin-code-push",
+    "clobbers": [
+      "SyncStatus"
+    ]
+  },
+  {
+    "id": "cordova-plugin-code-push.installMode",
+    "file": "plugins/cordova-plugin-code-push/bin/www/installMode.js",
+    "pluginId": "cordova-plugin-code-push",
+    "clobbers": [
+      "InstallMode"
+    ]
+  },
+  {
+    "id": "cordova-plugin-code-push.codePushUtil",
+    "file": "plugins/cordova-plugin-code-push/bin/www/codePushUtil.js",
+    "pluginId": "cordova-plugin-code-push",
+    "runs": true
+  },
+  {
+    "id": "cordova-plugin-code-push.fileUtil",
+    "file": "plugins/cordova-plugin-code-push/bin/www/fileUtil.js",
+    "pluginId": "cordova-plugin-code-push",
+    "runs": true
+  },
+  {
+    "id": "cordova-plugin-code-push.httpRequester",
+    "file": "plugins/cordova-plugin-code-push/bin/www/httpRequester.js",
+    "pluginId": "cordova-plugin-code-push",
+    "runs": true
+  },
+  {
+    "id": "cordova-plugin-code-push.nativeAppInfo",
+    "file": "plugins/cordova-plugin-code-push/bin/www/nativeAppInfo.js",
+    "pluginId": "cordova-plugin-code-push",
+    "runs": true
+  },
+  {
+    "id": "cordova-plugin-code-push.package",
+    "file": "plugins/cordova-plugin-code-push/bin/www/package.js",
+    "pluginId": "cordova-plugin-code-push",
+    "runs": true
+  },
+  {
+    "id": "cordova-plugin-code-push.sdk",
+    "file": "plugins/cordova-plugin-code-push/bin/www/sdk.js",
+    "pluginId": "cordova-plugin-code-push",
+    "runs": true
   }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
-  "code-push": "2.0.6",
   "cordova-plugin-alipay-v2": "0.0.3",
   "cordova-plugin-camera": "4.0.3",
-  "cordova-plugin-dialogs": "2.0.1",
   "cordova-plugin-device": "2.0.2",
-  "cordova-plugin-code-push": "1.11.16",
   "cordova-plugin-crop": "0.3.1",
   "cordova-plugin-crosswalk-webview": "2.4.0",
   "cordova-plugin-file": "4.3.3",
@@ -470,12 +467,15 @@ module.exports.metadata =
   "cordova-plugin-network-information": "2.0.1",
   "cordova-plugin-splashscreen": "5.0.2",
   "cordova-plugin-statusbar": "2.4.2",
-  "cordova-plugin-wechat": "2.6.0",
   "cordova-plugin-whitelist": "1.3.3",
   "cordova-plugin-zip": "3.1.0",
   "jpush-phonegap-plugin": "3.3.2",
   "phonegap-plugin-barcodescanner": "8.0.0",
-  "cordova-plugin-customurlscheme": "4.3.0"
+  "cordova-plugin-customurlscheme": "4.3.0",
+  "cordova-plugin-wechat": "2.6.0",
+  "code-push": "2.0.6",
+  "cordova-plugin-dialogs": "2.0.1",
+  "cordova-plugin-code-push": "1.11.16"
 };
 // BOTTOM OF METADATA
 });

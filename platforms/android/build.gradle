@@ -21,10 +21,11 @@ apply plugin: 'com.android.application'
 
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
         maven {
             url "https://maven.google.com"
         }
+        jcenter()
     }
 
     // Switch the Android Gradle plugin version requirement depending on the
@@ -39,10 +40,12 @@ buildscript {
 // Allow plugins to declare Maven dependencies via build-extras.gradle.
 allprojects {
     repositories {
-        jcenter()
+        mavenCentral()
         maven {
             url "https://maven.google.com"
         }
+        jcenter()
+
     }
 }
 
@@ -92,10 +95,10 @@ ext {
 }
 
 // PLUGIN GRADLE EXTENSIONS START
-apply from: "cordova-plugin-code-push/oneDuMobile-build-extras.gradle"
 apply from: "cordova-plugin-crosswalk-webview/oneDuMobile-xwalk.gradle"
-apply from: "cordova-plugin-wechat/oneDuMobile-android-build.gradle"
 apply from: "phonegap-plugin-barcodescanner/oneDuMobile-barcodescanner.gradle"
+apply from: "cordova-plugin-wechat/oneDuMobile-android-build.gradle"
+apply from: "cordova-plugin-code-push/oneDuMobile-build-extras.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras = file('build-extras.gradle').exists()

@@ -13,9 +13,12 @@ import {
 test('检验是否合法手机号', () => {
   expect(testPhoneNumber(undefined)).toBe(false);
   expect(testPhoneNumber('')).toBe(false);
+  expect(testPhoneNumber('1520145852')).toBe(false);
+  expect(testPhoneNumber('25201458525')).toBe(false);
   expect(testPhoneNumber('15201458525')).toBe(true);
   expect(testPhoneNumber('19975279179')).toBe(true);
-  expect(testPhoneNumber('12345678912')).toBe(false);
+  expect(testPhoneNumber('17557293511')).toBe(true);
+  expect(testPhoneNumber('12345678912')).toBe(true);
 });
 
 test('检查是否合法短信验证码', () => {

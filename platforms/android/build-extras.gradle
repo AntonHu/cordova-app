@@ -9,75 +9,7 @@ android {
 // 每个都要添加 ndk { abiFilters "armeabi-v7a", "" }
 // 因为使用了crosswalk，如果不用，则可把ndk { abiFilters "armeabi-v7a", "" } 去掉
     productFlavors {
-      official {
-        ndk { abiFilters "armeabi-v7a", "" }
-      }
-      baidu {
-        ndk { abiFilters "armeabi-v7a", "" }
-      }
-      _360 {
-        ndk { abiFilters "armeabi-v7a", "" }
-      }
-      yingyongbao {
-        ndk { abiFilters "armeabi-v7a", "" }
-      }
-      xiaomi {
-        ndk { abiFilters "armeabi-v7a", "" }
-      }
-      huawei {
-        ndk { abiFilters "armeabi-v7a", "" }
-      }
-      anzhi {
-        ndk { abiFilters "armeabi-v7a", "" }
-      }
-      lianxiang {
-        ndk { abiFilters "armeabi-v7a", "" }
-      }
-      ali {
-        ndk { abiFilters "armeabi-v7a", "" }
-      }
-      sougou {
-        ndk { abiFilters "armeabi-v7a", "" }
-      }
-      meizu {
-        ndk { abiFilters "armeabi-v7a", "" }
-      }
-      Nduo {
-        ndk { abiFilters "armeabi-v7a", "" }
-      }
-      oppo {
-        ndk { abiFilters "armeabi-v7a", "" }
-      }
-      vivo {
-        ndk { abiFilters "armeabi-v7a", "" }
-      }
-      dianxintianyi {
-        ndk { abiFilters "armeabi-v7a", "" }
-      }
-      liantong {
-        ndk { abiFilters "armeabi-v7a", "" }
-      }
-      aiqiyi {
-        ndk { abiFilters "armeabi-v7a", "" }
-      }
-      smartisan {
-        ndk { abiFilters "armeabi-v7a", "" }
-      }
-      hisense {
-        ndk { abiFilters "armeabi-v7a", "" }
-      }
-      samsung {
-        ndk { abiFilters "armeabi-v7a", "" }
-      }
-      gionee {
-        ndk { abiFilters "armeabi-v7a", "" }
-      }
-      yingyonghui {
-        ndk { abiFilters "armeabi-v7a", "" }
-      }
-      mumayi {
-        ndk { abiFilters "armeabi-v7a", "" }
-      }
+
 
     }
 

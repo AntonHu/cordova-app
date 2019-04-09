@@ -14,9 +14,6 @@
     "cordova-plugin-camera": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
-    "cordova-plugin-code-push": {
-      "PACKAGE_NAME": "com.energyData.oneDuMobile"
-    },
     "cordova-plugin-crop": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
@@ -53,10 +50,6 @@
     "cordova-plugin-statusbar": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
-    "cordova-plugin-wechat": {
-      "WECHATAPPID": "wxf56d42ba4b664a15",
-      "PACKAGE_NAME": "com.energyData.oneDuMobile"
-    },
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
@@ -77,19 +70,26 @@
       "ANDROID_HOST": " ",
       "ANDROID_PATHPREFIX": "/",
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-wechat": {
+      "WECHATAPPID": "wx15f467092eb1667e",
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-code-push": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     }
   },
   "dependent_plugins": {
-    "code-push": {
-      "PACKAGE_NAME": "com.energyData.oneDuMobile"
-    },
-    "cordova-plugin-dialogs": {
-      "PACKAGE_NAME": "com.energyData.oneDuMobile"
-    },
     "cordova-plugin-device": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-jcore": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "code-push": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-dialogs": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     }
   }
