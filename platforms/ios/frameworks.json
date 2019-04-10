@@ -20,5 +20,6 @@
     "libz.dylib": 1,
     "AdSupport.framework": 1,
     "UserNotifications.framework": 1,
-    "AudioToolbox.framework": 1
+    "AudioToolbox.framework": 1,
+    "WebKit.framework": 1
 }

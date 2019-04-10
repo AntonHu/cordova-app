@@ -147,6 +147,14 @@
             {
               "xml": "<feature name=\"CodePush\"><param name=\"ios-package\" value=\"CodePush\" /><param name=\"onload\" value=\"true\" /></feature>",
               "count": 1
+            },
+            {
+              "xml": "<feature name=\"CDVWKWebViewEngine\"><param name=\"ios-package\" value=\"CDVWKWebViewEngine\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<preference name=\"CordovaWebViewEngine\" value=\"CDVWKWebViewEngine\" />",
+              "count": 1
             }
           ],
           "/widget": [
@@ -245,6 +253,9 @@
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
     "cordova-plugin-code-push": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-wkwebview-engine": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     }
   },
@@ -708,6 +719,22 @@
       "file": "plugins/cordova-plugin-code-push/bin/www/sdk.js",
       "pluginId": "cordova-plugin-code-push",
       "runs": true
+    },
+    {
+      "id": "cordova-plugin-wkwebview-engine.ios-wkwebview-exec",
+      "file": "plugins/cordova-plugin-wkwebview-engine/src/www/ios/ios-wkwebview-exec.js",
+      "pluginId": "cordova-plugin-wkwebview-engine",
+      "clobbers": [
+        "cordova.exec"
+      ]
+    },
+    {
+      "id": "cordova-plugin-wkwebview-engine.ios-wkwebview",
+      "file": "plugins/cordova-plugin-wkwebview-engine/src/www/ios/ios-wkwebview.js",
+      "pluginId": "cordova-plugin-wkwebview-engine",
+      "clobbers": [
+        "window.WkWebView"
+      ]
     }
   ],
   "plugin_metadata": {
@@ -734,6 +761,7 @@
     "phonegap-plugin-barcodescanner": "8.0.0",
     "code-push": "2.0.6",
     "cordova-plugin-dialogs": "2.0.1",
-    "cordova-plugin-code-push": "1.11.16"
+    "cordova-plugin-code-push": "1.11.16",
+    "cordova-plugin-wkwebview-engine": "1.1.4"
   }
 }

@@ -120,6 +120,10 @@
 		FC4CE8F8D1DE4983881387ED /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB05DA9DB21471FAAB9EC6C /* libz.dylib */; };
 		FCD4D458861D4CD7B2B09689 /* CodePushJWTCryptoKeyExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = C22FF7F6733A4826A2FD49E3 /* CodePushJWTCryptoKeyExtractor.m */; };
 		FE023D34803448088CE4F0B0 /* CDVViewController+SplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EB67AEA410848BC9F2E01F0 /* CDVViewController+SplashScreen.m */; };
+		A06615EF4C8C44A4BB2FE3AB /* CDVWKWebViewEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FE173EBD67E42B3AB4185EB /* CDVWKWebViewEngine.m */; };
+		88A1238875604CB6997A56A4 /* CDVWKWebViewUIDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EBD450DAC0420EA82D6615 /* CDVWKWebViewUIDelegate.m */; };
+		19DDA14D310842AFA41F70BA /* CDVWKProcessPoolFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 239D2AB16F074125B3F29F94 /* CDVWKProcessPoolFactory.m */; };
+		3DCC8E022B4B42D29E159A95 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBA9140ECD3C4695896D4509 /* WebKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -363,6 +367,13 @@
 		FD49AA227DB34120B1CE8586 /* JAnalyticsPlugin.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = JAnalyticsPlugin.h; path = "cordova-plugin-janalytics/JAnalyticsPlugin.h"; sourceTree = "<group>"; };
 		FE2A2C8C776E48E8A4C891C5 /* JPushDefine.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = JPushDefine.h; path = "jpush-phonegap-plugin/JPushDefine.h"; sourceTree = "<group>"; };
 		FEE133513CB94C348E015C2C /* CodePushJWTCoding+VersionOne.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "CodePushJWTCoding+VersionOne.h"; path = "cordova-plugin-code-push/CodePushJWTCoding+VersionOne.h"; sourceTree = "<group>"; };
+		6FE173EBD67E42B3AB4185EB /* CDVWKWebViewEngine.m */ = {isa = PBXFileReference; name = "CDVWKWebViewEngine.m"; path = "cordova-plugin-wkwebview-engine/CDVWKWebViewEngine.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		30EBD450DAC0420EA82D6615 /* CDVWKWebViewUIDelegate.m */ = {isa = PBXFileReference; name = "CDVWKWebViewUIDelegate.m"; path = "cordova-plugin-wkwebview-engine/CDVWKWebViewUIDelegate.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		239D2AB16F074125B3F29F94 /* CDVWKProcessPoolFactory.m */ = {isa = PBXFileReference; name = "CDVWKProcessPoolFactory.m"; path = "cordova-plugin-wkwebview-engine/CDVWKProcessPoolFactory.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		1E89B5E452E6478292164F4D /* CDVWKWebViewEngine.h */ = {isa = PBXFileReference; name = "CDVWKWebViewEngine.h"; path = "cordova-plugin-wkwebview-engine/CDVWKWebViewEngine.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		AE5443D394D4428DA2861921 /* CDVWKWebViewUIDelegate.h */ = {isa = PBXFileReference; name = "CDVWKWebViewUIDelegate.h"; path = "cordova-plugin-wkwebview-engine/CDVWKWebViewUIDelegate.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		C842FE0024EF4F51BC2753A2 /* CDVWKProcessPoolFactory.h */ = {isa = PBXFileReference; name = "CDVWKProcessPoolFactory.h"; path = "cordova-plugin-wkwebview-engine/CDVWKProcessPoolFactory.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		DBA9140ECD3C4695896D4509 /* WebKit.framework */ = {isa = PBXFileReference; name = "WebKit.framework"; path = "System/Library/Frameworks/WebKit.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -398,6 +409,7 @@
 				52EB370B6FD9499CA95716B0 /* AdSupport.framework in Frameworks */,
 				21581927C7F942F4BFC2E595 /* UserNotifications.framework in Frameworks */,
 				DB2C160D6031470385FC3522 /* AudioToolbox.framework in Frameworks */,
+				3DCC8E022B4B42D29E159A95 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,6 +514,7 @@
 				3D590E739DFB4D4F87DD9CA8 /* AdSupport.framework */,
 				4DECDDB6849A46CE8F93E7FD /* UserNotifications.framework */,
 				689AB0F2214C497596D933F8 /* AudioToolbox.framework */,
+				DBA9140ECD3C4695896D4509 /* WebKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -690,6 +703,12 @@
 				98C3954C4A3B4841AC041125 /* CodePushJWTDeprecations.h */,
 				37CB070D89B14D1280F1C49C /* CodePushJWTErrorDescription.h */,
 				3309A66050C1494092D9B8E9 /* CodePushMF_Base64Additions.h */,
+				6FE173EBD67E42B3AB4185EB /* CDVWKWebViewEngine.m */,
+				30EBD450DAC0420EA82D6615 /* CDVWKWebViewUIDelegate.m */,
+				239D2AB16F074125B3F29F94 /* CDVWKProcessPoolFactory.m */,
+				1E89B5E452E6478292164F4D /* CDVWKWebViewEngine.h */,
+				AE5443D394D4428DA2861921 /* CDVWKWebViewUIDelegate.h */,
+				C842FE0024EF4F51BC2753A2 /* CDVWKProcessPoolFactory.h */,
 			);
 			name = Plugins;
 			path = "一度店/Plugins";
@@ -898,6 +917,9 @@
 				2124940767AA49DDB5714F95 /* CodePushJWTBase64Coder.m in Sources */,
 				F63FB9D06D8340C6A277115A /* CodePushJWTErrorDescription.m in Sources */,
 				AC669A07057E400A975228E2 /* CodePushMF_Base64Additions.m in Sources */,
+				A06615EF4C8C44A4BB2FE3AB /* CDVWKWebViewEngine.m in Sources */,
+				88A1238875604CB6997A56A4 /* CDVWKWebViewUIDelegate.m in Sources */,
+				19DDA14D310842AFA41F70BA /* CDVWKProcessPoolFactory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

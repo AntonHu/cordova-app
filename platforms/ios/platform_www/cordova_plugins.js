@@ -458,6 +458,22 @@ module.exports = [
     "file": "plugins/cordova-plugin-code-push/bin/www/sdk.js",
     "pluginId": "cordova-plugin-code-push",
     "runs": true
+  },
+  {
+    "id": "cordova-plugin-wkwebview-engine.ios-wkwebview-exec",
+    "file": "plugins/cordova-plugin-wkwebview-engine/src/www/ios/ios-wkwebview-exec.js",
+    "pluginId": "cordova-plugin-wkwebview-engine",
+    "clobbers": [
+      "cordova.exec"
+    ]
+  },
+  {
+    "id": "cordova-plugin-wkwebview-engine.ios-wkwebview",
+    "file": "plugins/cordova-plugin-wkwebview-engine/src/www/ios/ios-wkwebview.js",
+    "pluginId": "cordova-plugin-wkwebview-engine",
+    "clobbers": [
+      "window.WkWebView"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -486,7 +502,8 @@ module.exports.metadata =
   "phonegap-plugin-barcodescanner": "8.0.0",
   "code-push": "2.0.6",
   "cordova-plugin-dialogs": "2.0.1",
-  "cordova-plugin-code-push": "1.11.16"
+  "cordova-plugin-code-push": "1.11.16",
+  "cordova-plugin-wkwebview-engine": "1.1.4"
 };
 // BOTTOM OF METADATA
 });

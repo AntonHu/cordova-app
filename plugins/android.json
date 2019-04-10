@@ -77,6 +77,9 @@
     },
     "cordova-plugin-code-push": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-wkwebview-engine": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
     }
   },
   "dependent_plugins": {

@@ -475,7 +475,8 @@ module.exports.metadata =
   "cordova-plugin-wechat": "2.6.0",
   "code-push": "2.0.6",
   "cordova-plugin-dialogs": "2.0.1",
-  "cordova-plugin-code-push": "1.11.16"
+  "cordova-plugin-code-push": "1.11.16",
+  "cordova-plugin-wkwebview-engine": "1.1.4"
 };
 // BOTTOM OF METADATA
 });

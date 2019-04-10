@@ -72,6 +72,11 @@
             <string>上传头像需要访问相册</string>
         </edit-config>
     </platform>
+    <feature name="CDVWKWebViewEngine">
+        <param name="ios-package" value="CDVWKWebViewEngine" />
+    </feature>
+    <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
+    <preference name="AllowBackForwardNavigationGestures" value="true" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     <preference name="iosPersistentFileLocation" value="Compatibility" />
     <preference name="iosExtraFilesystems" value="library,library-nosync,documents,documents-nosync,cache,bundle,root" />
@@ -116,6 +121,7 @@
         <variable name="WECHATAPPID" value="wx15f467092eb1667e" />
     </plugin>
     <plugin name="cordova-plugin-code-push" spec="^1.11.16" />
+    <plugin name="cordova-plugin-wkwebview-engine" spec="^1.1.4" />
     <engine name="android" spec="^6.4.0" />
     <engine name="ios" spec="^4.5.4" />
 </widget>
