@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="91.975" tests="36" failures="17">
+  <testsuite name="Root Suite" timestamp="2018-12-14T09:16:31" tests="0" failures="0" time="0">
+  </testsuite>
+  <testsuite name="CodePush Cordova Plugin" timestamp="2018-12-14T09:16:31" tests="0" file="/Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push/bin/test/test.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Tests /Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push on ios with UIWebView" timestamp="2018-12-14T09:16:31" tests="0" file="/Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push/bin/test/test.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="window.codePush" timestamp="2018-12-14T09:16:31" tests="0" file="/Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push/bin/test/test.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="#window.codePush.checkForUpdate" timestamp="2018-12-14T09:16:33" tests="5" file="/Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push/bin/test/test.js" failures="1" time="6.097">
+    <testcase name="CodePush Cordova Plugin Tests /Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push on ios with UIWebView window.codePush #window.codePush.checkForUpdate &quot;before all&quot; hook" time="6.097" classname="&quot;before all&quot; hook">
+      <failure message="Command failed: cordova build ios
+error: archive not found at path &apos;/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive&apos;
+CordovaError: Promise rejected with non-error: &apos;Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device&apos;
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at &lt;anonymous&gt;
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+" type="Error"><![CDATA[Error: Command failed: cordova build ios
+error: archive not found at path '/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive'
+CordovaError: Promise rejected with non-error: 'Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device'
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+
+    at ChildProcess.exithandler (child_process.js:275:12)
+    at maybeClose (internal/child_process.js:925:16)
+    at Socket.stream.socket.on (internal/child_process.js:346:11)
+    at Pipe._handle.close [as _onclose] (net.js:557:12)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="#window.codePush.checkForUpdate.customKey" timestamp="2018-12-14T09:16:39" tests="1" file="/Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push/bin/test/test.js" failures="1" time="4.798">
+    <testcase name="CodePush Cordova Plugin Tests /Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push on ios with UIWebView window.codePush #window.codePush.checkForUpdate.customKey &quot;before all&quot; hook" time="4.798" classname="&quot;before all&quot; hook">
+      <failure message="Command failed: cordova build ios
+error: archive not found at path &apos;/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive&apos;
+CordovaError: Promise rejected with non-error: &apos;Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device&apos;
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at &lt;anonymous&gt;
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+" type="Error"><![CDATA[Error: Command failed: cordova build ios
+error: archive not found at path '/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive'
+CordovaError: Promise rejected with non-error: 'Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device'
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+
+    at ChildProcess.exithandler (child_process.js:275:12)
+    at maybeClose (internal/child_process.js:925:16)
+    at Socket.stream.socket.on (internal/child_process.js:346:11)
+    at Pipe._handle.close [as _onclose] (net.js:557:12)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="#remotePackage.download" timestamp="2018-12-14T09:16:44" tests="2" file="/Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push/bin/test/test.js" failures="1" time="5.448">
+    <testcase name="CodePush Cordova Plugin Tests /Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push on ios with UIWebView window.codePush #remotePackage.download &quot;before all&quot; hook" time="5.448" classname="&quot;before all&quot; hook">
+      <failure message="Command failed: cordova build ios
+error: archive not found at path &apos;/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive&apos;
+CordovaError: Promise rejected with non-error: &apos;Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device&apos;
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at &lt;anonymous&gt;
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+" type="Error"><![CDATA[Error: Command failed: cordova build ios
+error: archive not found at path '/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive'
+CordovaError: Promise rejected with non-error: 'Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device'
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+
+    at ChildProcess.exithandler (child_process.js:275:12)
+    at maybeClose (internal/child_process.js:925:16)
+    at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="#localPackage.install" timestamp="2018-12-14T09:16:50" tests="3" file="/Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push/bin/test/test.js" failures="1" time="4.776">
+    <testcase name="CodePush Cordova Plugin Tests /Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push on ios with UIWebView window.codePush #localPackage.install &quot;before all&quot; hook" time="4.776" classname="&quot;before all&quot; hook">
+      <failure message="Command failed: cordova build ios
+error: archive not found at path &apos;/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive&apos;
+CordovaError: Promise rejected with non-error: &apos;Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device&apos;
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at &lt;anonymous&gt;
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+" type="Error"><![CDATA[Error: Command failed: cordova build ios
+error: archive not found at path '/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive'
+CordovaError: Promise rejected with non-error: 'Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device'
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+
+    at ChildProcess.exithandler (child_process.js:275:12)
+    at maybeClose (internal/child_process.js:925:16)
+    at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="#localPackage.install.revert" timestamp="2018-12-14T09:16:54" tests="2" file="/Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push/bin/test/test.js" failures="1" time="5.136">
+    <testcase name="CodePush Cordova Plugin Tests /Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push on ios with UIWebView window.codePush #localPackage.install.revert &quot;before all&quot; hook" time="5.136" classname="&quot;before all&quot; hook">
+      <failure message="Command failed: cordova build ios
+error: archive not found at path &apos;/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive&apos;
+CordovaError: Promise rejected with non-error: &apos;Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device&apos;
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at &lt;anonymous&gt;
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+" type="Error"><![CDATA[Error: Command failed: cordova build ios
+error: archive not found at path '/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive'
+CordovaError: Promise rejected with non-error: 'Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device'
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+
+    at ChildProcess.exithandler (child_process.js:275:12)
+    at maybeClose (internal/child_process.js:925:16)
+    at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="#localPackage.installOnNextResume" timestamp="2018-12-14T09:17:00" tests="2" file="/Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push/bin/test/test.js" failures="1" time="5.86">
+    <testcase name="CodePush Cordova Plugin Tests /Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push on ios with UIWebView window.codePush #localPackage.installOnNextResume &quot;before all&quot; hook" time="5.86" classname="&quot;before all&quot; hook">
+      <failure message="Command failed: cordova build ios
+error: archive not found at path &apos;/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive&apos;
+CordovaError: Promise rejected with non-error: &apos;Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device&apos;
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at &lt;anonymous&gt;
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+" type="Error"><![CDATA[Error: Command failed: cordova build ios
+error: archive not found at path '/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive'
+CordovaError: Promise rejected with non-error: 'Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device'
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+
+    at ChildProcess.exithandler (child_process.js:275:12)
+    at maybeClose (internal/child_process.js:925:16)
+    at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="#localPackage.installOnNextRestart" timestamp="2018-12-14T09:17:05" tests="3" file="/Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push/bin/test/test.js" failures="1" time="5.205">
+    <testcase name="CodePush Cordova Plugin Tests /Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push on ios with UIWebView window.codePush #localPackage.installOnNextRestart &quot;before all&quot; hook" time="5.205" classname="&quot;before all&quot; hook">
+      <failure message="Command failed: cordova build ios
+error: archive not found at path &apos;/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive&apos;
+CordovaError: Promise rejected with non-error: &apos;Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device&apos;
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at &lt;anonymous&gt;
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+" type="Error"><![CDATA[Error: Command failed: cordova build ios
+error: archive not found at path '/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive'
+CordovaError: Promise rejected with non-error: 'Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device'
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+
+    at ChildProcess.exithandler (child_process.js:275:12)
+    at maybeClose (internal/child_process.js:925:16)
+    at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="#localPackage.installOnNextRestart2x" timestamp="2018-12-14T09:17:11" tests="1" file="/Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push/bin/test/test.js" failures="1" time="5.545">
+    <testcase name="CodePush Cordova Plugin Tests /Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push on ios with UIWebView window.codePush #localPackage.installOnNextRestart2x &quot;before all&quot; hook" time="5.545" classname="&quot;before all&quot; hook">
+      <failure message="Command failed: cordova build ios
+error: archive not found at path &apos;/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive&apos;
+CordovaError: Promise rejected with non-error: &apos;Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device&apos;
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at &lt;anonymous&gt;
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+" type="Error"><![CDATA[Error: Command failed: cordova build ios
+error: archive not found at path '/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive'
+CordovaError: Promise rejected with non-error: 'Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device'
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+
+    at ChildProcess.exithandler (child_process.js:275:12)
+    at maybeClose (internal/child_process.js:925:16)
+    at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="#codePush.restartApplication" timestamp="2018-12-14T09:17:16" tests="1" file="/Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push/bin/test/test.js" failures="1" time="6.862">
+    <testcase name="CodePush Cordova Plugin Tests /Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push on ios with UIWebView window.codePush #codePush.restartApplication &quot;before all&quot; hook" time="6.862" classname="&quot;before all&quot; hook">
+      <failure message="Command failed: cordova build ios
+error: archive not found at path &apos;/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive&apos;
+CordovaError: Promise rejected with non-error: &apos;Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device&apos;
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at &lt;anonymous&gt;
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+" type="Error"><![CDATA[Error: Command failed: cordova build ios
+error: archive not found at path '/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive'
+CordovaError: Promise rejected with non-error: 'Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device'
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+
+    at ChildProcess.exithandler (child_process.js:275:12)
+    at maybeClose (internal/child_process.js:925:16)
+    at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="#window.codePush.sync" timestamp="2018-12-14T09:17:23" tests="0" file="/Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push/bin/test/test.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="#window.codePush.sync 1x" timestamp="2018-12-14T09:17:23" tests="5" file="/Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push/bin/test/test.js" failures="1" time="4.796">
+    <testcase name="CodePush Cordova Plugin Tests /Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push on ios with UIWebView window.codePush #window.codePush.sync #window.codePush.sync 1x &quot;before all&quot; hook" time="4.796" classname="&quot;before all&quot; hook">
+      <failure message="Command failed: cordova build ios
+error: archive not found at path &apos;/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive&apos;
+CordovaError: Promise rejected with non-error: &apos;Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device&apos;
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at &lt;anonymous&gt;
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+" type="Error"><![CDATA[Error: Command failed: cordova build ios
+error: archive not found at path '/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive'
+CordovaError: Promise rejected with non-error: 'Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device'
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+
+    at ChildProcess.exithandler (child_process.js:275:12)
+    at maybeClose (internal/child_process.js:925:16)
+    at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="#window.codePush.sync 2x" timestamp="2018-12-14T09:17:28" tests="5" file="/Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push/bin/test/test.js" failures="1" time="5.67">
+    <testcase name="CodePush Cordova Plugin Tests /Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push on ios with UIWebView window.codePush #window.codePush.sync #window.codePush.sync 2x &quot;before all&quot; hook" time="5.67" classname="&quot;before all&quot; hook">
+      <failure message="Command failed: cordova build ios
+error: archive not found at path &apos;/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive&apos;
+CordovaError: Promise rejected with non-error: &apos;Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device&apos;
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at &lt;anonymous&gt;
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+" type="Error"><![CDATA[Error: Command failed: cordova build ios
+error: archive not found at path '/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive'
+CordovaError: Promise rejected with non-error: 'Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device'
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+
+    at ChildProcess.exithandler (child_process.js:275:12)
+    at maybeClose (internal/child_process.js:925:16)
+    at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="#window.codePush.sync minimum background duration tests" timestamp="2018-12-14T09:17:34" tests="3" file="/Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push/bin/test/test.js" failures="3" time="16.176000000000002">
+    <testcase name="CodePush Cordova Plugin Tests /Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push on ios with UIWebView window.codePush #window.codePush.sync #window.codePush.sync minimum background duration tests defaults to no minimum" time="5.023" classname="defaults to no minimum">
+      <failure message="Command failed: cordova build ios
+error: archive not found at path &apos;/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive&apos;
+CordovaError: Promise rejected with non-error: &apos;Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device&apos;
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at &lt;anonymous&gt;
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+" type="Error"><![CDATA[Error: Command failed: cordova build ios
+error: archive not found at path '/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive'
+CordovaError: Promise rejected with non-error: 'Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device'
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+
+    at ChildProcess.exithandler (child_process.js:275:12)
+    at maybeClose (internal/child_process.js:925:16)
+    at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)]]></failure>
+    </testcase>
+    <testcase name="CodePush Cordova Plugin Tests /Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push on ios with UIWebView window.codePush #window.codePush.sync #window.codePush.sync minimum background duration tests min background duration 5s" time="5.782" classname="min background duration 5s">
+      <failure message="Command failed: cordova build ios
+error: archive not found at path &apos;/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive&apos;
+CordovaError: Promise rejected with non-error: &apos;Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device&apos;
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at &lt;anonymous&gt;
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+" type="Error"><![CDATA[Error: Command failed: cordova build ios
+error: archive not found at path '/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive'
+CordovaError: Promise rejected with non-error: 'Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device'
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+
+    at ChildProcess.exithandler (child_process.js:275:12)
+    at maybeClose (internal/child_process.js:925:16)
+    at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)]]></failure>
+    </testcase>
+    <testcase name="CodePush Cordova Plugin Tests /Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push on ios with UIWebView window.codePush #window.codePush.sync #window.codePush.sync minimum background duration tests has no effect on restart" time="5.371" classname="has no effect on restart">
+      <failure message="Command failed: cordova build ios
+error: archive not found at path &apos;/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive&apos;
+CordovaError: Promise rejected with non-error: &apos;Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device&apos;
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at &lt;anonymous&gt;
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+" type="Error"><![CDATA[Error: Command failed: cordova build ios
+error: archive not found at path '/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive'
+CordovaError: Promise rejected with non-error: 'Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device'
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+
+    at ChildProcess.exithandler (child_process.js:275:12)
+    at maybeClose (internal/child_process.js:925:16)
+    at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="#window.codePush.sync mandatory install mode tests" timestamp="2018-12-14T09:17:51" tests="3" file="/Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push/bin/test/test.js" failures="3" time="15.606000000000002">
+    <testcase name="CodePush Cordova Plugin Tests /Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push on ios with UIWebView window.codePush #window.codePush.sync #window.codePush.sync mandatory install mode tests defaults to IMMEDIATE" time="5.815" classname="defaults to IMMEDIATE">
+      <failure message="Command failed: cordova build ios
+error: archive not found at path &apos;/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive&apos;
+CordovaError: Promise rejected with non-error: &apos;Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device&apos;
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at &lt;anonymous&gt;
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+" type="Error"><![CDATA[Error: Command failed: cordova build ios
+error: archive not found at path '/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive'
+CordovaError: Promise rejected with non-error: 'Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device'
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+
+    at ChildProcess.exithandler (child_process.js:275:12)
+    at maybeClose (internal/child_process.js:925:16)
+    at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)]]></failure>
+    </testcase>
+    <testcase name="CodePush Cordova Plugin Tests /Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push on ios with UIWebView window.codePush #window.codePush.sync #window.codePush.sync mandatory install mode tests works correctly when update is mandatory and mandatory install mode is specified" time="4.948" classname="works correctly when update is mandatory and mandatory install mode is specified">
+      <failure message="Command failed: cordova build ios
+error: archive not found at path &apos;/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive&apos;
+CordovaError: Promise rejected with non-error: &apos;Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device&apos;
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at &lt;anonymous&gt;
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+" type="Error"><![CDATA[Error: Command failed: cordova build ios
+error: archive not found at path '/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive'
+CordovaError: Promise rejected with non-error: 'Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device'
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+
+    at ChildProcess.exithandler (child_process.js:275:12)
+    at maybeClose (internal/child_process.js:925:16)
+    at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)]]></failure>
+    </testcase>
+    <testcase name="CodePush Cordova Plugin Tests /Users/alexander.goncharov/Documents/Repos/cordova-plugin-code-push on ios with UIWebView window.codePush #window.codePush.sync #window.codePush.sync mandatory install mode tests has no effect on updates that are not mandatory" time="4.843" classname="has no effect on updates that are not mandatory">
+      <failure message="Command failed: cordova build ios
+error: archive not found at path &apos;/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive&apos;
+CordovaError: Promise rejected with non-error: &apos;Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device&apos;
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at &lt;anonymous&gt;
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+" type="Error"><![CDATA[Error: Command failed: cordova build ios
+error: archive not found at path '/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/CodePushTest.xcarchive'
+CordovaError: Promise rejected with non-error: 'Error code 65 for command: xcodebuild with args: -exportArchive,-archivePath,CodePushTest.xcarchive,-exportOptionsPlist,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/exportOptions.plist,-exportPath,/private/var/folders/c3/51j__q9x3x9gt7zdk3qlvphw0000gq/T/cordova-plugin-code-push/test-run/platforms/ios/build/device'
+    at cli.catch.err (/usr/local/lib/node_modules/cordova/bin/cordova:30:15)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+
+    at ChildProcess.exithandler (child_process.js:275:12)
+    at maybeClose (internal/child_process.js:925:16)
+    at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

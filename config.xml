@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.energyData.oneDuMobile" version="2.11.3" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.energyData.oneDuMobile" version="3.4.5" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>一度店</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
@@ -33,6 +33,9 @@
         <hook src="hooks/before_prepare/copy-build-extras-gradle.js" type="before_prepare" />
         <allow-intent href="market:*" />
         <preference name="CodePushDeploymentKey" value="Sr9DnzzrkbNdLixAKXUoLOqMmgdx0622c1d1-d19c-494b-a7c7-f4e4d3bc9118" />
+        <config-file parent="/manifest" target="AndroidManifest.xml" xmlns:android="http://schemas.android.com/apk/res/android">
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        </config-file>
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application/meta-data[@android:name='JPUSH_CHANNEL']">
             <meta-data android:name="JPUSH_CHANNEL" android:value="${JPUSH_CHANNEL_VALUE}" />
         </edit-config>
@@ -62,6 +65,8 @@
         <splash height="1136" src="res/screen/ios/Default-568h@2x~iphone.png" width="640" />
         <splash height="1334" src="res/screen/ios/Default-667h.png" width="750" />
         <splash height="2208" src="res/screen/ios/Default-736h.png" width="1242" />
+        <splash height="2732" src="res/screen/ios/splash.png" width="2732" />
+        <splash height="2436" src="res/screen/ios/Default-2436h.png" width="1125" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <preference name="CodePushDeploymentKey" value="EkPHRgDL5fQQk_lBCFIugJqAt6oA0622c1d1-d19c-494b-a7c7-f4e4d3bc9118" />
@@ -71,6 +76,17 @@
         <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryUsageDescription">
             <string>上传头像需要访问相册</string>
         </edit-config>
+        <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryAddUsageDescription">
+            <string>保存图片需要访问相册</string>
+        </edit-config>
+        <config-file parent="CFBundleDevelopmentRegion" target="*-Info.plist">
+            <string>China</string>
+        </config-file>
+        <config-file parent="CFBundleLocalizations" target="*-Info.plist">
+            <array>
+                <string>zh_CN</string>
+            </array>
+        </config-file>
     </platform>
     <feature name="CDVWKWebViewEngine">
         <param name="ios-package" value="CDVWKWebViewEngine" />
@@ -95,9 +111,6 @@
     <plugin name="cordova-plugin-crop" spec="https://github.com/349989153/cordova-plugin-crop.git" />
     <plugin name="cordova-plugin-zip" spec="^3.1.0" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
-    <plugin name="cordova-plugin-alipay-v2" spec="0.0.4">
-        <variable name="APP_ID" value="2018111162083907" />
-    </plugin>
     <plugin name="cordova-plugin-crosswalk-webview" spec="^2.4.0">
         <variable name="XWALK_VERSION" value="23+" />
         <variable name="XWALK_LITEVERSION" value="xwalk_core_library_canary:17+" />
@@ -121,7 +134,12 @@
         <variable name="WECHATAPPID" value="wx15f467092eb1667e" />
     </plugin>
     <plugin name="cordova-plugin-code-push" spec="^1.11.16" />
+    <plugin name="cordova-plugin-android-permissions" spec="^1.0.0" />
+    <plugin name="cordova-save-image-gallery" spec="0.0.26" />
     <plugin name="cordova-plugin-wkwebview-engine" spec="^1.1.4" />
+    <plugin name="cordova-plugin-alipay-v2" spec="^2.0.0">
+        <variable name="APP_ID" value="2018111162083907" />
+    </plugin>
     <engine name="android" spec="^6.4.0" />
     <engine name="ios" spec="^4.5.4" />
 </widget>

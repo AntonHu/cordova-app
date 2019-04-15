@@ -3,7 +3,7 @@
 <plist version="1.0">
   <dict>
     <key>CFBundleDevelopmentRegion</key>
-    <string>English</string>
+    <string>China</string>
     <key>CFBundleDisplayName</key>
     <string>一度店</string>
     <key>CFBundleExecutable</key>
@@ -16,24 +16,20 @@
     <string>com.energyData.oneDuMobile</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
+    <key>CFBundleLocalizations</key>
+    <array>
+      <string>zh_CN</string>
+    </array>
     <key>CFBundleName</key>
     <string>${PRODUCT_NAME}</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
-    <string>2.11.3</string>
+    <string>3.4.5</string>
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleURLTypes</key>
     <array>
-      <dict>
-        <key>CFBundleURLName</key>
-        <string>alipay</string>
-        <key>CFBundleURLSchemes</key>
-        <array>
-          <string>ali2018111162083907</string>
-        </array>
-      </dict>
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
@@ -48,9 +44,17 @@
           <string>wx15f467092eb1667e</string>
         </array>
       </dict>
+      <dict>
+        <key>CFBundleURLName</key>
+        <string>alipay</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>ali2018111162083907</string>
+        </array>
+      </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>2.11.3</string>
+    <string>3.4.5</string>
     <key>JAnalytics</key>
     <dict>
       <key>APP_KEY</key>
@@ -100,5 +104,7 @@
     <string>上传头像需要开启相机</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>上传头像需要访问相册</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>保存图片需要访问相册</string>
   </dict>
 </plist>

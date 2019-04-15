@@ -1,0 +1,61 @@
+{
+  "_from": "cordova-plugin-janalytics@1.1.3",
+  "_id": "cordova-plugin-janalytics@1.1.3",
+  "_inBundle": false,
+  "_integrity": "sha512-/dRa6YgEkUoY5t/hG5zzHNmGErFOMxV57PBA6uVxe4lrFIr/RMpsJBJw3N+iO3iakmL+JLkaKT9FmGoq7QjCPQ==",
+  "_location": "/cordova-plugin-janalytics",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "cordova-plugin-janalytics@1.1.3",
+    "name": "cordova-plugin-janalytics",
+    "escapedName": "cordova-plugin-janalytics",
+    "rawSpec": "1.1.3",
+    "saveSpec": null,
+    "fetchSpec": "1.1.3"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-janalytics/-/cordova-plugin-janalytics-1.1.3.tgz",
+  "_shasum": "3e37310918e1e05434fe7633c8127b5ba17b9c60",
+  "_spec": "cordova-plugin-janalytics@1.1.3",
+  "_where": "/Users/luyang/workspace/company/block-chain-mobile",
+  "author": {
+    "name": "wilhantian, jiguang"
+  },
+  "bugs": {
+    "url": "https://github.com/wilhantian/cordova-plugin-janalytics/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-janalytics",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "deprecated": false,
+  "description": "JAnalytics",
+  "devDependencies": {
+    "cordova-plugin-device": "*",
+    "cordova-plugin-jcore": "1.1.12"
+  },
+  "homepage": "https://github.com/wilhantian/cordova-plugin-janalytics#readme",
+  "keywords": [
+    "JAnalytics",
+    "analytics",
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android"
+  ],
+  "license": "MIT License",
+  "name": "cordova-plugin-janalytics",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wilhantian/cordova-plugin-janalytics.git"
+  },
+  "version": "1.1.3"
+}

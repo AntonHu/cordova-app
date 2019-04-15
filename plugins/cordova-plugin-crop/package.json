@@ -1,0 +1,53 @@
+{
+  "_from": "git+https://github.com/349989153/cordova-plugin-crop.git",
+  "_id": "cordova-plugin-crop@0.4.0",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/cordova-plugin-crop",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "https://github.com/349989153/cordova-plugin-crop.git",
+    "rawSpec": "https://github.com/349989153/cordova-plugin-crop.git",
+    "saveSpec": "git+https://github.com/349989153/cordova-plugin-crop.git",
+    "fetchSpec": "https://github.com/349989153/cordova-plugin-crop.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+https://github.com/349989153/cordova-plugin-crop.git#2448970050a0d9eca97dc3eda851a978fbd65404",
+  "_spec": "https://github.com/349989153/cordova-plugin-crop.git",
+  "_where": "/Users/luyang/workspace/company/block-chain-mobile",
+  "bugs": {
+    "url": "https://github.com/jeduan/cordova-plugin-crop/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-crop",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "deprecated": false,
+  "description": "Crop an image in a Cordova app",
+  "homepage": "https://github.com/jeduan/cordova-plugin-crop#readme",
+  "keywords": [
+    "cordova",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "image",
+    "image manipulation",
+    "crop"
+  ],
+  "license": "MIT",
+  "name": "cordova-plugin-crop",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeduan/cordova-plugin-crop.git"
+  },
+  "version": "0.4.0"
+}

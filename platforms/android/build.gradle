@@ -99,6 +99,7 @@ apply from: "cordova-plugin-crosswalk-webview/oneDuMobile-xwalk.gradle"
 apply from: "phonegap-plugin-barcodescanner/oneDuMobile-barcodescanner.gradle"
 apply from: "cordova-plugin-wechat/oneDuMobile-android-build.gradle"
 apply from: "cordova-plugin-code-push/oneDuMobile-build-extras.gradle"
+apply from: "cordova-plugin-alipay-v2/oneDuMobile-alipay.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras = file('build-extras.gradle').exists()

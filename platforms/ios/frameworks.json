@@ -1,11 +1,8 @@
 {
     "CoreTelephony.framework": 5,
     "SystemConfiguration.framework": 5,
-    "CoreMotion.framework": 1,
     "CFNetwork.framework": 4,
-    "libc++.tbd": 1,
     "libz.tbd": 4,
-    "CoreText.framework": 1,
     "UIKit.framework": 3,
     "QuartzCore.framework": 2,
     "Foundation.framework": 3,
@@ -21,5 +18,8 @@
     "AdSupport.framework": 1,
     "UserNotifications.framework": 1,
     "AudioToolbox.framework": 1,
-    "WebKit.framework": 1
+    "WebKit.framework": 1,
+    "CoreMotion.framework": 1,
+    "libc++.tbd": 1,
+    "CoreText.framework": 1
 }

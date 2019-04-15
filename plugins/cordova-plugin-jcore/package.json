@@ -1,0 +1,57 @@
+{
+  "_from": "cordova-plugin-jcore@1.1.12",
+  "_id": "cordova-plugin-jcore@1.1.12",
+  "_inBundle": false,
+  "_integrity": "sha512-Ib9pQrypiOaaeAGrrF+8uLdD8JiwXKz5Cv5PTMp4MteRtqE8U4RK+ryquQTMPEUAq/3upPiNZTu4gICON09brg==",
+  "_location": "/cordova-plugin-jcore",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "cordova-plugin-jcore@1.1.12",
+    "name": "cordova-plugin-jcore",
+    "escapedName": "cordova-plugin-jcore",
+    "rawSpec": "1.1.12",
+    "saveSpec": null,
+    "fetchSpec": "1.1.12"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-jcore/-/cordova-plugin-jcore-1.1.12.tgz",
+  "_shasum": "d65fabf5af437083fd7c27678c9f286c2e2d9910",
+  "_spec": "cordova-plugin-jcore@1.1.12",
+  "_where": "/Users/luyang/workspace/company/block-chain-mobile",
+  "author": {
+    "name": "wilhantian, jiguang"
+  },
+  "bugs": {
+    "url": "https://github.com/jpush/cordova-plugin-jcore/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-jcore",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "deprecated": false,
+  "description": "jcore for cordova plugin",
+  "homepage": "https://github.com/jpush/cordova-plugin-jcore#readme",
+  "keywords": [
+    "jcore",
+    "jpush",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "license": "MIT License",
+  "name": "cordova-plugin-jcore",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpush/cordova-plugin-jcore.git"
+  },
+  "version": "1.1.12"
+}

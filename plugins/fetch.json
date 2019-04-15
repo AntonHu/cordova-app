@@ -137,16 +137,6 @@
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-alipay-v2": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-alipay-v2@0.0.4"
-    },
-    "is_top_level": true,
-    "variables": {
-      "APP_ID": "2018111162083907"
-    }
-  },
   "cordova-plugin-crosswalk-webview": {
     "source": {
       "type": "registry",
@@ -205,6 +195,22 @@
     "is_top_level": true,
     "variables": {}
   },
+  "cordova-plugin-android-permissions": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-android-permissions"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-save-image-gallery": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-save-image-gallery"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
   "cordova-plugin-wkwebview-engine": {
     "source": {
       "type": "registry",
@@ -212,5 +218,15 @@
     },
     "is_top_level": true,
     "variables": {}
+  },
+  "cordova-plugin-alipay-v2": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-alipay-v2@^2.0.0"
+    },
+    "is_top_level": true,
+    "variables": {
+      "APP_ID": "2018111162083907"
+    }
   }
 }

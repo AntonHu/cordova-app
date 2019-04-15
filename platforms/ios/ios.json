@@ -5,69 +5,9 @@
   },
   "config_munge": {
     "files": {
-      "*-Info.plist": {
-        "parents": {
-          "NSCameraUsageDescription": [
-            {
-              "xml": "<string>上传头像需要开启相机</string>",
-              "count": 1,
-              "mode": "merge",
-              "id": "config.xml"
-            }
-          ],
-          "NSPhotoLibraryUsageDescription": [
-            {
-              "xml": "<string>上传头像需要访问相册</string>",
-              "count": 1,
-              "mode": "merge",
-              "id": "config.xml"
-            }
-          ],
-          "CFBundleURLTypes": [
-            {
-              "xml": "<array><dict><key>CFBundleURLName</key><string>alipay</string><key>CFBundleURLSchemes</key><array><string>ali2018111162083907</string></array></dict></array>",
-              "count": 1
-            },
-            {
-              "xml": "<array><dict><key>CFBundleURLSchemes</key><array><string>onedushop</string></array></dict></array>",
-              "count": 1
-            },
-            {
-              "xml": "<array><dict><key>CFBundleURLName</key><string>weixin</string><key>CFBundleURLSchemes</key><array><string>wx15f467092eb1667e</string></array></dict></array>",
-              "count": 1
-            }
-          ],
-          "JAnalytics": [
-            {
-              "xml": "<dict><key>APP_KEY</key><string>c00f7ff7c6f31fdc1b20bff7</string></dict>",
-              "count": 1
-            }
-          ],
-          "LSApplicationQueriesSchemes": [
-            {
-              "xml": "<array><string>weixin</string><string>wechat</string></array>",
-              "count": 1
-            }
-          ],
-          "NSAppTransportSecurity": [
-            {
-              "xml": "<dict><key>NSAllowsArbitraryLoads</key><true /></dict>",
-              "count": 1
-            }
-          ]
-        }
-      },
       "config.xml": {
         "parents": {
           "/*": [
-            {
-              "xml": "<feature name=\"alipay\"><param name=\"ios-package\" value=\"alipay\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<preference name=\"alipayid\" value=\"2018111162083907\" />",
-              "count": 1
-            },
             {
               "xml": "<feature name=\"Camera\"><param name=\"ios-package\" value=\"CDVCamera\" /></feature>",
               "count": 1
@@ -149,11 +89,23 @@
               "count": 1
             },
             {
+              "xml": "<feature name=\"SaveImageGallery\"><param name=\"ios-package\" value=\"SaveImageGallery\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
               "xml": "<feature name=\"CDVWKWebViewEngine\"><param name=\"ios-package\" value=\"CDVWKWebViewEngine\" /></feature>",
               "count": 1
             },
             {
               "xml": "<preference name=\"CordovaWebViewEngine\" value=\"CDVWKWebViewEngine\" />",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"alipay\"><param name=\"ios-package\" value=\"alipay\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<preference name=\"alipayid\" value=\"2018111162083907\" />",
               "count": 1
             }
           ],
@@ -174,14 +126,64 @@
             }
           ]
         }
+      },
+      "*-Info.plist": {
+        "parents": {
+          "NSCameraUsageDescription": [
+            {
+              "xml": "<string>上传头像需要开启相机</string>",
+              "count": 1,
+              "mode": "merge",
+              "id": "config.xml"
+            }
+          ],
+          "NSPhotoLibraryUsageDescription": [
+            {
+              "xml": "<string>上传头像需要访问相册</string>",
+              "count": 1,
+              "mode": "merge",
+              "id": "config.xml"
+            }
+          ],
+          "NSPhotoLibraryAddUsageDescription": [
+            {
+              "xml": "<string>保存图片需要访问相册</string>",
+              "count": 1,
+              "mode": "merge",
+              "id": "config.xml"
+            }
+          ],
+          "CFBundleDevelopmentRegion": [
+            {
+              "xml": "<array><string>China</string></array>",
+              "count": 3
+            },
+            {
+              "xml": "<string>China</string>",
+              "count": 234
+            }
+          ],
+          "CFBundleLocalizations": [
+            {
+              "xml": "<string>zh_CN</string>",
+              "count": 95
+            },
+            {
+              "xml": "<array><string>zh_CN</string></array>",
+              "count": 138
+            }
+          ],
+          "CFBundleURLTypes": [
+            {
+              "xml": "<array><dict><key>CFBundleURLName</key><string>alipay</string><key>CFBundleURLSchemes</key><array><string>ali2018111162083907</string></array></dict></array>",
+              "count": 1
+            }
+          ]
+        }
       }
     }
   },
   "installed_plugins": {
-    "cordova-plugin-alipay-v2": {
-      "APP_ID": "2018111162083907",
-      "PACKAGE_NAME": "com.energyData.oneDuMobile"
-    },
     "cordova-plugin-camera": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
@@ -255,20 +257,22 @@
     "cordova-plugin-code-push": {
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     },
+    "cordova-plugin-android-permissions": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-save-image-gallery": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
     "cordova-plugin-wkwebview-engine": {
+      "PACKAGE_NAME": "com.energyData.oneDuMobile"
+    },
+    "cordova-plugin-alipay-v2": {
+      "APP_ID": "2018111162083907",
       "PACKAGE_NAME": "com.energyData.oneDuMobile"
     }
   },
   "dependent_plugins": {},
   "modules": [
-    {
-      "id": "cordova-plugin-alipay-v2.alipay",
-      "file": "plugins/cordova-plugin-alipay-v2/www/alipay.js",
-      "pluginId": "cordova-plugin-alipay-v2",
-      "clobbers": [
-        "cordova.plugins.alipay"
-      ]
-    },
     {
       "id": "cordova-plugin-camera.Camera",
       "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
@@ -721,6 +725,22 @@
       "runs": true
     },
     {
+      "id": "cordova-plugin-android-permissions.Permissions",
+      "file": "plugins/cordova-plugin-android-permissions/www/permissions-dummy.js",
+      "pluginId": "cordova-plugin-android-permissions",
+      "clobbers": [
+        "cordova.plugins.permissions"
+      ]
+    },
+    {
+      "id": "cordova-save-image-gallery.saveImageGallery",
+      "file": "plugins/cordova-save-image-gallery/www/saveImageGallery.js",
+      "pluginId": "cordova-save-image-gallery",
+      "clobbers": [
+        "cordova.saveImageGallery"
+      ]
+    },
+    {
       "id": "cordova-plugin-wkwebview-engine.ios-wkwebview-exec",
       "file": "plugins/cordova-plugin-wkwebview-engine/src/www/ios/ios-wkwebview-exec.js",
       "pluginId": "cordova-plugin-wkwebview-engine",
@@ -735,10 +755,17 @@
       "clobbers": [
         "window.WkWebView"
       ]
+    },
+    {
+      "id": "cordova-plugin-alipay-v2.alipay",
+      "file": "plugins/cordova-plugin-alipay-v2/www/alipay.js",
+      "pluginId": "cordova-plugin-alipay-v2",
+      "clobbers": [
+        "cordova.plugins.alipay"
+      ]
     }
   ],
   "plugin_metadata": {
-    "cordova-plugin-alipay-v2": "0.0.3",
     "cordova-plugin-camera": "4.0.3",
     "cordova-plugin-compat": "1.2.0",
     "cordova-plugin-crop": "0.3.1",
@@ -762,6 +789,9 @@
     "code-push": "2.0.6",
     "cordova-plugin-dialogs": "2.0.1",
     "cordova-plugin-code-push": "1.11.16",
-    "cordova-plugin-wkwebview-engine": "1.1.4"
+    "cordova-plugin-android-permissions": "1.0.0",
+    "cordova-save-image-gallery": "0.0.26",
+    "cordova-plugin-wkwebview-engine": "1.1.4",
+    "cordova-plugin-alipay-v2": "2.0.0"
   }
 }

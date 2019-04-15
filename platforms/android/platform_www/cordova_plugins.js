@@ -1,14 +1,6 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
   {
-    "id": "cordova-plugin-alipay-v2.alipay",
-    "file": "plugins/cordova-plugin-alipay-v2/www/alipay.js",
-    "pluginId": "cordova-plugin-alipay-v2",
-    "clobbers": [
-      "cordova.plugins.alipay"
-    ]
-  },
-  {
     "id": "cordova-plugin-camera.Camera",
     "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
     "pluginId": "cordova-plugin-camera",
@@ -448,12 +440,35 @@ module.exports = [
     "file": "plugins/cordova-plugin-code-push/bin/www/sdk.js",
     "pluginId": "cordova-plugin-code-push",
     "runs": true
+  },
+  {
+    "id": "cordova-plugin-android-permissions.Permissions",
+    "file": "plugins/cordova-plugin-android-permissions/www/permissions.js",
+    "pluginId": "cordova-plugin-android-permissions",
+    "clobbers": [
+      "cordova.plugins.permissions"
+    ]
+  },
+  {
+    "id": "cordova-save-image-gallery.saveImageGallery",
+    "file": "plugins/cordova-save-image-gallery/www/saveImageGallery.js",
+    "pluginId": "cordova-save-image-gallery",
+    "clobbers": [
+      "cordova.saveImageGallery"
+    ]
+  },
+  {
+    "id": "cordova-plugin-alipay-v2.alipay",
+    "file": "plugins/cordova-plugin-alipay-v2/www/alipay.js",
+    "pluginId": "cordova-plugin-alipay-v2",
+    "clobbers": [
+      "cordova.plugins.alipay"
+    ]
   }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
-  "cordova-plugin-alipay-v2": "0.0.3",
   "cordova-plugin-camera": "4.0.3",
   "cordova-plugin-device": "2.0.2",
   "cordova-plugin-crop": "0.3.1",
@@ -476,7 +491,10 @@ module.exports.metadata =
   "code-push": "2.0.6",
   "cordova-plugin-dialogs": "2.0.1",
   "cordova-plugin-code-push": "1.11.16",
-  "cordova-plugin-wkwebview-engine": "1.1.4"
+  "cordova-plugin-android-permissions": "1.0.0",
+  "cordova-save-image-gallery": "0.0.26",
+  "cordova-plugin-wkwebview-engine": "1.1.4",
+  "cordova-plugin-alipay-v2": "2.0.0"
 };
 // BOTTOM OF METADATA
 });

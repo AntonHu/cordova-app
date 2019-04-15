@@ -1,0 +1,58 @@
+{
+  "_from": "cordova-plugin-alipay-v2@^2.0.0",
+  "_id": "cordova-plugin-alipay-v2@2.0.0",
+  "_inBundle": false,
+  "_integrity": "sha512-pKPkzmdkCq3Ep58/bUbzlOehY4H4ZcDBytVSVchHuY4FHSMKrO5T91oFtUi6+fEDLsuu4St1V/4drrlzokz5fA==",
+  "_location": "/cordova-plugin-alipay-v2",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "cordova-plugin-alipay-v2@^2.0.0",
+    "name": "cordova-plugin-alipay-v2",
+    "escapedName": "cordova-plugin-alipay-v2",
+    "rawSpec": "^2.0.0",
+    "saveSpec": null,
+    "fetchSpec": "^2.0.0"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-alipay-v2/-/cordova-plugin-alipay-v2-2.0.0.tgz",
+  "_shasum": "72ae695f0d5404c61ca880a9f04bb8c5b6bf1d1f",
+  "_spec": "cordova-plugin-alipay-v2@^2.0.0",
+  "_where": "/Users/luyang/workspace/company/block-chain-mobile",
+  "author": {
+    "name": "hhjjj1010"
+  },
+  "bugs": {
+    "url": "https://github.com/hhjjj1010/cordova-plugin-alipay-v2/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-alipay-v2",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "deprecated": false,
+  "description": "a cordova plugin, a JS version of Alipay SDK(20190718211148)",
+  "homepage": "https://github.com/hhjjj1010/cordova-plugin-alipay-v2#readme",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "alipay",
+    "cordova-plugin-alipay",
+    "cordova-plugin-alipay-v2"
+  ],
+  "license": "ISC",
+  "name": "cordova-plugin-alipay-v2",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hhjjj1010/cordova-plugin-alipay-v2.git"
+  },
+  "version": "2.0.0"
+}
